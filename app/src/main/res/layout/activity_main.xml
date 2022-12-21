@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1c1c1c"
+    android:minHeight="20dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="265dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15px"
+                android:layout_marginTop="20px"
+                android:layout_weight="1"
+                android:text="GoEasyPro Android"
+                android:textColor="#fff"
+                android:textColorHighlight="#fff"
+                android:textColorHint="#fff"
+                android:textColorLink="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_pair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:layout_marginRight="15px"
+                android:layout_weight="1"
+                android:onClick="onClickPair"
+                android:text="Connect/Pair"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textColorHighlight="#fff"
+                android:textColorHint="#fff"
+                android:textColorLink="#fff"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15px"
+                android:layout_marginTop="15px"
+                android:layout_marginEnd="15px"
+                android:layout_marginBottom="15px"
+                android:background="@drawable/border"
+                android:padding="25px">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/button3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickShutterOn"
+                            android:text="Shutter: on"
+                            android:textAllCaps="false" />
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickShutterOff"
+                            android:text="Shutter: off"
+                            android:textAllCaps="false" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickWifiApOn"
+                            android:text="WiFi AP: on"
+                            android:textAllCaps="false" />
+
+                        <Button
+                            android:id="@+id/button6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickWifiApOff"
+                            android:text="WiFi AP: off"
+                            android:textAllCaps="false" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/button4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickSleep"
+                            android:text="Put cams to sleep"
+                            android:textAllCaps="false" />
+
+                        <Button
+                            android:id="@+id/button5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10px"
+                            android:onClick="onClickHighlight"
+                            android:text="Highlight moment"
+                            android:textAllCaps="false" />
+                    </TableRow>
+
+                </TableLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="#1c1c1c"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:text="Control"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:translationY="-4dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15px"
+                android:layout_marginTop="15px"
+                android:layout_marginEnd="15px"
+                android:layout_marginBottom="15px"
+                android:background="@drawable/border"
+                android:padding="25px">
+
+
+                <ListView
+                    android:id="@+id/goListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#4d4d4d"
+                    android:dividerHeight="1dip"
+                    android:longClickable="true"
+                    tools:listitem="@layout/golist_item" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="#1c1c1c"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:text="Cams"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:translationY="-4dp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

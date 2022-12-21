@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <!-- Request legacy Bluetooth permissions on older devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- Needed only if your app looks for Bluetooth devices.
+             If your app doesn't use Bluetooth scan results to derive physical
+             location information, you can strongly assert that your app
+             doesn't derive physical location. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <!-- Needed only if your app makes the device discoverable to Bluetooth
+      devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <!-- Needed only if your app communicates with already-paired Bluetooth
+           devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Needed only if your app uses Bluetooth scan results to derive physical location. -->
+    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GoPro_RC"
+        tools:targetApi="31">
+        <activity
+            android:name=".PairActivity"
+            android:exported="false"
+
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+    </application>
+
+</manifest>

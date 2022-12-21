@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GoPro_RC" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#009fe0</item>
+        <item name="colorPrimaryVariant">#005eab</item>
+        <item name="colorOnPrimary">#fff</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#009fe0</item>
+        <item name="colorSecondaryVariant">#009fe0</item>
+        <item name="colorOnSecondary">#fff</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
