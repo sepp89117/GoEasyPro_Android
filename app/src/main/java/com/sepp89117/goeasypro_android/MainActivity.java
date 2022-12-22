@@ -4,7 +4,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -15,11 +17,14 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
     private View mLayout;
 
     private static final int BT_PERMISSIONS_CODE = 87;
-    String[] PERMISSIONS = {
+    String[] PERMISSIONS_S_UP = {
+            android.Manifest.permission.BLUETOOTH_SCAN,
+            android.Manifest.permission.BLUETOOTH_CONNECT
+    };
+    String[] PERMISSIONS_R_DOWN = {
             android.Manifest.permission.BLUETOOTH,
             android.Manifest.permission.BLUETOOTH_ADMIN,
-            android.Manifest.permission.BLUETOOTH_SCAN,
-            android.Manifest.permission.BLUETOOTH_ADVERTISE,
-            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
     };
 
     @Override
@@ -82,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(goListView);
 
         //request maybe bluetooth permission
-        if (!hasPermissions(this, PERMISSIONS)) {
-            //ActivityCompat.requestPermissions(this, PERMISSIONS, BT_PERMISSIONS_CODE);
+        if (!hasPermissions()) {
             requestPermissions();
             return;
         }
@@ -118,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         int itemId = item.getItemId();
 
-        switch(itemId) {
+        switch (itemId) {
             case 0:
                 //Locate on
                 goProDevices.get(position).locateOn();
@@ -238,15 +245,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+    public boolean hasPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            for (String permission : PERMISSIONS_S_UP) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                     return false;
                 }
             }
+            return true;
+        } else {
+            for (String permission : PERMISSIONS_R_DOWN) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
     }
 
     private void startApp() {
@@ -284,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == BT_PERMISSIONS_CODE) {
@@ -292,28 +306,73 @@ public class MainActivity extends AppCompatActivity {
                 String permission = permissions[i];
                 int grantResult = grantResults[i];
 
-                if (permission.equals(Manifest.permission.BLUETOOTH_CONNECT)) {
-                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                        if (isBtEnabled()) {
-                            startApp();
-                        }
-                        setOnDataChanged();
-                    } else {
-                        requestPermissions();
-                    }
+                switch (permission) {
+                    case Manifest.permission.BLUETOOTH: //granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH}, BT_PERMISSIONS_CODE);
+                        break;
+                    case Manifest.permission.BLUETOOTH_ADMIN: //granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_ADMIN}, BT_PERMISSIONS_CODE);
+                        break;
+                    case Manifest.permission.BLUETOOTH_SCAN: //not granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, BT_PERMISSIONS_CODE);
+                        break;
+                    case Manifest.permission.BLUETOOTH_CONNECT: //not granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, BT_PERMISSIONS_CODE);
+                        break;
+                    case Manifest.permission.ACCESS_FINE_LOCATION: //granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, BT_PERMISSIONS_CODE);
+                        break;
+                    case Manifest.permission.ACCESS_COARSE_LOCATION: //granted
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, BT_PERMISSIONS_CODE);
+                        break;
                 }
+
+                if (hasPermissions()) {
+                    if (isBtEnabled()) {
+                        startApp();
+                    }
+                    setOnDataChanged();
+                }
+
+//                if (permission.equals(Manifest.permission.BLUETOOTH_CONNECT)) {
+//                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
+//                        if (isBtEnabled()) {
+//                            startApp();
+//                        }
+//                        setOnDataChanged();
+//                    } else {
+//                        requestPermissions();
+//                    }
+//                }
             }
         }
     }
 
     private void requestPermissions() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
-            Snackbar.make(mLayout, "Bluetooth permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, BT_PERMISSIONS_CODE))
-                    .show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                Snackbar.make(mLayout, "Bluetooth permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_S_UP, BT_PERMISSIONS_CODE))
+                        .show();
+            } else {
+                // Camera permission has not been granted yet. Request it directly.
+                ActivityCompat.requestPermissions(this, PERMISSIONS_S_UP, BT_PERMISSIONS_CODE);
+            }
         } else {
-            // Camera permission has not been granted yet. Request it directly.
-            ActivityCompat.requestPermissions(this, PERMISSIONS, BT_PERMISSIONS_CODE);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH)) {
+                Snackbar.make(mLayout, "Bluetooth permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE))
+                        .show();
+            } else {
+                // Camera permission has not been granted yet. Request it directly.
+                ActivityCompat.requestPermissions(this, PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE);
+            }
         }
     }
 
@@ -327,11 +386,35 @@ public class MainActivity extends AppCompatActivity {
         }
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(receiver, filter);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            boolean gps_enabled = false;
+            boolean network_enabled = false;
+
+            try {
+                gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception ignored) {
+            }
+
+            try {
+                network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            } catch (Exception ignored) {
+            }
+
+            if (!gps_enabled && !network_enabled) {
+                new AlertDialog.Builder(this)
+                        .setMessage("Localization is required for the Bluetooth functions. Please turn localization on!")
+                        .setPositiveButton("OK", (paramDialogInterface, paramInt) -> MainActivity.this.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            }
+        }
         return true;
     }
 
     @SuppressLint("MissingPermission")
-    // Create a BroadcastReceiver for ACTION_FOUND.
+    // BroadcastReceiver for ACTION_FOUND.
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
