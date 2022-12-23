@@ -1,7 +1,5 @@
 package com.sepp89117.goeasypro_android;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +15,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -72,7 +69,7 @@ public class PairActivity extends AppCompatActivity {
                 goProDevice.pair(paired -> {
                     if (paired) {
                         Toast.makeText(getApplicationContext(), "Pairing '" + goProDevice.Name + "' succesfull!", Toast.LENGTH_SHORT).show();
-                        goProDevice.connect(connected -> {
+                        goProDevice.connectBt(connected -> {
                             if (connected)
                                 mDeviceStrList.set(position, goProDevice.Name + " (connected)\n" + goProDevice.Address); //green
                             else
@@ -88,7 +85,7 @@ public class PairActivity extends AppCompatActivity {
                 if (goProDevice.connected) {
                     Toast.makeText(getApplicationContext(), "Device always connected!", Toast.LENGTH_SHORT).show();
                 } else {
-                    goProDevice.connect(connected -> {
+                    goProDevice.connectBt(connected -> {
                         if (connected)
                             mDeviceStrList.set(position, goProDevice.Name + " (connected)\n" + goProDevice.Address); //green
                         else
@@ -120,7 +117,7 @@ public class PairActivity extends AppCompatActivity {
         super.onDestroy();
         try {
             unregisterReceiver(receiver);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 
         }
     }

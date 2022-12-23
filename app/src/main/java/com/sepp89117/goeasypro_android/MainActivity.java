@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
-@RequiresApi(api = Build.VERSION_CODES.S)
 public class MainActivity extends AppCompatActivity {
     private Button btn_pair;
 
@@ -106,8 +105,10 @@ public class MainActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            menu.setGroupDividerEnabled(true);
+        }
         menu.setHeaderTitle("Single Control");
-
         // add(int groupId, int itemId, int order, CharSequence title)
         menu.add(0, 0, 0, "Locate: on");
         menu.add(0, 1, 0, "Locate: off");
@@ -115,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, 3, 0, "Shutter: off");
         menu.add(0, 4, 0, "Put to sleep");
         menu.add(0, 5, 0, "Set Date/Time");
+
+        /*if (wifi_granted) {
+            //storage and live view
+            menu.add(1, 6, 0, "Browse storage");
+            menu.add(1, 7, 0, "Live view");
+        }*/
     }
 
     // menu item select listener
@@ -149,6 +156,15 @@ public class MainActivity extends AppCompatActivity {
             case 5:
                 //Set Date/Time
                 goProDevices.get(position).setDateTime();
+                break;
+            case 6:
+                //Browse storage
+
+                break;
+            case 7:
+                //Live view
+                if (isGpsEnabled())
+                    goProDevices.get(position).getLiveStream();
                 break;
         }
         return true;
@@ -324,13 +340,22 @@ public class MainActivity extends AppCompatActivity {
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, BT_PERMISSIONS_CODE);
                         break;
                     case Manifest.permission.ACCESS_FINE_LOCATION: //granted
-                        if (grantResult != PackageManager.PERMISSION_GRANTED)
-                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, BT_PERMISSIONS_CODE);
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S)
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, BT_PERMISSIONS_CODE);
+                            //else
+                            //    wifi_granted = false;
+                        }
                         break;
                     case Manifest.permission.ACCESS_COARSE_LOCATION: //granted
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, BT_PERMISSIONS_CODE);
                         break;
+                    /*case Manifest.permission.CHANGE_WIFI_STATE:
+                    case Manifest.permission.ACCESS_WIFI_STATE:
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            wifi_granted = false;
+                        break;*/
                 }
 
                 if (hasPermissions()) {
@@ -339,17 +364,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     setOnDataChanged();
                 }
-
-//                if (permission.equals(Manifest.permission.BLUETOOTH_CONNECT)) {
-//                    if (grantResult == PackageManager.PERMISSION_GRANTED) {
-//                        if (isBtEnabled()) {
-//                            startApp();
-//                        }
-//                        setOnDataChanged();
-//                    } else {
-//                        requestPermissions();
-//                    }
-//                }
             }
         }
     }
@@ -388,27 +402,34 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            boolean gps_enabled = false;
-            boolean network_enabled = false;
+            if (!isGpsEnabled())
+                return false;
+        }
+        return true;
+    }
 
-            try {
-                gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            } catch (Exception ignored) {
-            }
+    private boolean isGpsEnabled() {
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
 
-            try {
-                network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            } catch (Exception ignored) {
-            }
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ignored) {
+        }
 
-            if (!gps_enabled && !network_enabled) {
-                new AlertDialog.Builder(this)
-                        .setMessage("Localization is required for the Bluetooth functions. Please turn localization on!")
-                        .setPositiveButton("OK", (paramDialogInterface, paramInt) -> MainActivity.this.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
-                        .setNegativeButton("Cancel", null)
-                        .show();
-            }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception ignored) {
+        }
+
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(this)
+                    .setMessage("Localization is required. Please turn localization on!")
+                    .setPositiveButton("OK", (paramDialogInterface, paramInt) -> MainActivity.this.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                    .setNegativeButton("Cancel", null)
+                    .show();
+            return false;
         }
         return true;
     }
@@ -422,7 +443,9 @@ public class MainActivity extends AppCompatActivity {
                 if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF) {
                     isBtEnabled();
                 }
-            }
+            }//else if ((intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE)) == SupplicantState.COMPLETED) {
+//
+//            }
         }
     };
 
@@ -439,7 +462,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         try {
             unregisterReceiver(receiver);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 
         }
     }
