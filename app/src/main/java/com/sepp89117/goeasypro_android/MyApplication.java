@@ -36,4 +36,23 @@ public class MyApplication extends Application {
         }
 
     }
+
+
+    private GoProDevice _focusedDevice = null;
+
+    public GoProDevice getFocusedDevice() {
+        return _focusedDevice;
+    }
+
+    public void setFocusedDevice(GoProDevice goProDevice) {
+        _focusedDevice = goProDevice;
+    }
+
+    private ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>();
+    public ArrayList<GoMediaFile> getGoMediaFiles() {
+        return _goMediaFiles;
+    }
+    public void setGoMediaFiles(ArrayList<GoMediaFile> goMediaFiles) {
+        _goMediaFiles = goMediaFiles;
+    }
 }

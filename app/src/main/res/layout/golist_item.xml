@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/name"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/model"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hero X Black"
             android:textColor="#fff"
@@ -37,14 +37,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="1.1"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp"
+        android:paddingStart="10dp">
 
         <TextView
-            android:id="@+id/text1"
-            android:layout_width="70dp"
+            android:id="@+id/preset2"
+            android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:paddingTop="2dp"
+            android:gravity="bottom"
+            android:paddingBottom="2dp"
             android:text="Preset:"
             android:textColor="#fff"
             android:textSize="14sp"
@@ -52,26 +55,27 @@
 
         <TextView
             android:id="@+id/preset"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cinematic"
+            android:text="NC"
             android:textColor="#fff"
             android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/sd_field"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/sd_symbol"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:contentDescription="SD-Card"
-            app:srcCompat="@drawable/ic_baseline_sd_card_24" />
+            android:src="@drawable/ic_baseline_sd_card_24" />
 
         <TextView
             android:id="@+id/memory"
@@ -88,15 +92,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/batt_symbol"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:contentDescription="Battery"
             android:rotation="270"
-            app:srcCompat="@drawable/ic_baseline_battery_std_24" />
+            android:src="@drawable/ic_baseline_battery_std_24" />
 
         <TextView
             android:id="@+id/battery"
@@ -111,15 +115,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_weight="0.9"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/bt_symbol"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:contentDescription="BT-Symbol"
-            app:srcCompat="@drawable/ic_baseline_bluetooth_24" />
+            android:src="@drawable/ic_baseline_bluetooth_24" />
 
         <TextView
             android:id="@+id/rssi"

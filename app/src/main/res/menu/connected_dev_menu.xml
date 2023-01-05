@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/control" android:title="Control" >
+        <menu>
+            <item android:id="@+id/locate_on" android:title="Locate: on" />
+            <item android:id="@+id/locate_off" android:title="Locate: off" />
+            <item android:id="@+id/shutter_on" android:title="Shutter: on" />
+            <item android:id="@+id/shutter_off" android:title="Shutter: off" />
+            <item android:id="@+id/set_date_time" android:title="Set Date/Time" />
+        </menu>
+    </item>
+
+    <item android:id="@+id/connection" android:title="Connection" >
+        <menu>
+            <item android:id="@+id/ap_on" android:title="WiFi AP: on" />
+            <item android:id="@+id/ap_off" android:title="WiFi AP: off" />
+            <item android:id="@+id/put_sleep" android:title="Put to sleep" />
+            <item android:id="@+id/disconnect" android:title="Disconnect" />
+            <item android:id="@+id/del_device" android:title="Delete device" />
+        </menu>
+    </item>
+
+    <item android:id="@+id/media" android:title="Media" >
+        <menu>
+            <item android:id="@+id/preview" android:title="Live preview" />
+            <item android:id="@+id/browse" android:title="Browse storage" />
+        </menu>
+    </item>
+</menu>

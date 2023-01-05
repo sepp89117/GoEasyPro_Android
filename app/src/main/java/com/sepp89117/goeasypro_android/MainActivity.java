@@ -1,11 +1,11 @@
 package com.sepp89117.goeasypro_android;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
+import static com.sepp89117.goeasypro_android.GoProDevice.BT_CONNECTED;
+import static com.sepp89117.goeasypro_android.GoProDevice.BT_NOT_CONNECTED;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,41 +25,64 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+
 public class MainActivity extends AppCompatActivity {
     private Button btn_pair;
-
     private BluetoothAdapter bluetoothAdapter;
     private final ArrayList<GoProDevice> goProDevices = new ArrayList<>();
-
     private GoListAdapter goListAdapter;
     private ListView goListView;
     private View mLayout;
+    private OkHttpClient client = new OkHttpClient();
 
     private static final int BT_PERMISSIONS_CODE = 87;
-    String[] PERMISSIONS_S_UP = {
-            android.Manifest.permission.BLUETOOTH_SCAN,
-            android.Manifest.permission.BLUETOOTH_CONNECT
+    private static final int WIFI_PERMISSIONS_CODE = 41;
+    private static final String[] BT_PERMISSIONS_S_UP = {
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.BLUETOOTH_CONNECT
     };
-    String[] PERMISSIONS_R_DOWN = {
-            android.Manifest.permission.BLUETOOTH,
-            android.Manifest.permission.BLUETOOTH_ADMIN,
-            android.Manifest.permission.ACCESS_COARSE_LOCATION,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
+    private static final String[] BT_PERMISSIONS_R_DOWN = {
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_ADMIN,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private static final String[] WIFI_PERMISSIONS_Q_UP = {
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.CHANGE_NETWORK_STATE
+    };
+    private static final String[] WIFI_PERMISSIONS_P_DOWN = {
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE
+    };
+    private boolean wifi_granted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +99,26 @@ public class MainActivity extends AppCompatActivity {
         bluetoothAdapter = bluetoothManager.getAdapter();
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not supported! Please use other device!", Toast.LENGTH_LONG).show();
-            return; //TODO exit app
+            this.finish();
+            return;
         }
 
         ((MyApplication) this.getApplication()).setBluetoothAdapter(bluetoothAdapter);
         ((MyApplication) this.getApplication()).setGoProDevices(goProDevices);
 
-        goListAdapter = new GoListAdapter(goProDevices, getApplicationContext());
+        goListAdapter = new GoListAdapter(goProDevices, this);
 
-        goListView = (ListView) findViewById(R.id.goListView);
+        goListView = findViewById(R.id.goListView);
         goListView.setAdapter(goListAdapter);
         registerForContextMenu(goListView);
+        goListView.setOnItemClickListener((parent, view, position, id) -> {
+            lastCamClickedIndex = position;
+            view.showContextMenu();
+        });
 
         //request maybe bluetooth permission
-        if (!hasPermissions()) {
-            requestPermissions();
+        if (!hasBtPermissions()) {
+            requestBtPermissions();
             return;
         }
 
@@ -101,73 +129,235 @@ public class MainActivity extends AppCompatActivity {
         setOnDataChanged();
     }
 
+    private int lastCamClickedIndex = -1;
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        //AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        MenuInflater inflater = getMenuInflater();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            menu.setGroupDividerEnabled(true);
-        }
-        menu.setHeaderTitle("Single Control");
-        // add(int groupId, int itemId, int order, CharSequence title)
-        menu.add(0, 0, 0, "Locate: on");
-        menu.add(0, 1, 0, "Locate: off");
-        menu.add(0, 2, 0, "Shutter: on");
-        menu.add(0, 3, 0, "Shutter: off");
-        menu.add(0, 4, 0, "Put to sleep");
-        menu.add(0, 5, 0, "Set Date/Time");
-
-        /*if (wifi_granted) {
-            //storage and live view
-            menu.add(1, 6, 0, "Browse storage");
-            menu.add(1, 7, 0, "Live view");
-        }*/
+        if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_CONNECTED)
+            inflater.inflate(R.menu.connected_dev_menu, menu);
+        else if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_NOT_CONNECTED)
+            inflater.inflate(R.menu.not_connected_dev_menu, menu);
     }
 
     // menu item select listener
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int position = info.position;
+        int position = lastCamClickedIndex;
 
-        int itemId = item.getItemId();
-
-        switch (itemId) {
-            case 0:
+        switch (item.getItemId()) {
+            case R.id.locate_on:
                 //Locate on
                 goProDevices.get(position).locateOn();
                 break;
-            case 1:
+            case R.id.locate_off:
                 //Locate: off
                 goProDevices.get(position).locateOff();
                 break;
-            case 2:
+            case R.id.shutter_on:
                 //Shutter: on
                 goProDevices.get(position).shutterOn();
                 break;
-            case 3:
+            case R.id.shutter_off:
                 //Shutter: off
                 goProDevices.get(position).shutterOff();
                 break;
-            case 4:
+            case R.id.ap_on:
+                //Shutter: on
+                goProDevices.get(position).wifiApOn();
+                break;
+            case R.id.ap_off:
+                //Shutter: off
+                goProDevices.get(position).wifiApOff();
+                break;
+            case R.id.put_sleep:
                 //Put to sleep
                 goProDevices.get(position).sleep();
                 break;
-            case 5:
+            case R.id.set_date_time:
                 //Set Date/Time
                 goProDevices.get(position).setDateTime();
                 break;
-            case 6:
-                //Browse storage
+            case R.id.browse:
+                // TODO Browse storage
+                if (isGpsEnabled()) {
+                    if (hasWifiPermissions()) {
+                        if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
+                            Log.e("goProDevices", "ModelID unknown!");
+                            return true;
+                        }
+
+                        AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Connecting")
+                                .setMessage("Please wait while the WiFi connection is established!")
+                                .setCancelable(true)
+                                .create();
+
+                        alert.show();
+
+                        goProDevices.get(position).connectWifi(() -> {
+                            alert.dismiss();
+                            //onWifiConnected
+                            Request request = new Request.Builder()
+                                    .url(goProDevices.get(position).getMediaList_query)
+                                    .build();
+                            Log.d("HTTP GET", goProDevices.get(position).getMediaList_query);
+                            try (Response response = client.newCall(request).execute()) {
+                                if (response.isSuccessful()) {
+                                    Log.d("HTTP GET", "successful");
+                                    String resp_Str = response.body().string();
+                                    JSONObject mainObject = new JSONObject(resp_Str);
+
+                                    runOnUiThread(() -> {
+                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevices.get(position));
+                                    });
+                                    parseMediaList(mainObject);
+                                }
+                            } catch (Exception ex) {
+                                Log.e("HTTP GET error", ex.toString());
+                                runOnUiThread(() -> {
+                                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                        });
+                    } else {
+                        requestWifiPermissions();
+                    }
+                }
 
                 break;
-            case 7:
+            case R.id.preview:
                 //Live view
-                if (isGpsEnabled())
-                    goProDevices.get(position).getLiveStream();
+                if (isGpsEnabled()) {
+                    if (hasWifiPermissions()) {
+                        if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
+                            Log.e("goProDevices", "ModelID unknown!");
+                            return true;
+                        }
+
+                        AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Connecting")
+                                .setMessage("Please wait while the WiFi connection is established!")
+                                .setCancelable(true)
+                                .create();
+
+                        alert.show();
+
+                        goProDevices.get(position).connectWifi(() -> {
+                            alert.dismiss();
+                            //onWifiConnected
+                            Request request = new Request.Builder()
+                                    .url(goProDevices.get(position).stopStream_query)
+                                    .build();
+                            Log.d("HTTP GET", goProDevices.get(position).stopStream_query);
+                            try (Response response = client.newCall(request).execute()) {
+                                if (response.isSuccessful()) {
+                                    String resp_Str = response.body().string();
+                                    Log.d("HTTP GET response", resp_Str);
+                                    JSONObject mainObject = new JSONObject(resp_Str);
+                                    if (mainObject.getString("status").equals("0")) {
+                                        //live stream available
+                                        runOnUiThread(() -> {
+                                            ((MyApplication) this.getApplication()).setFocusedDevice(goProDevices.get(position));
+                                            startStream();
+                                        });
+                                    } else {
+                                        //TODO live stream not available
+                                    }
+                                }
+                            } catch (Exception ex) {
+                                Log.e("HTTP GET error", ex.toString());
+                                runOnUiThread(() -> {
+                                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                        });
+                    } else {
+                        requestWifiPermissions();
+                    }
+                }
+                break;
+            case R.id.disconnect:
+                //Disconnect
+                goProDevices.get(position).disconnectBt();
+                break;
+            case R.id.try_connect:
+                //Try to connect
+                goProDevices.get(position).connectBt(connected -> {
+                    runOnUiThread(() -> goListView.setAdapter(goListAdapter));
+                });
+                break;
+            case R.id.del_device:
+                //Delete device
+                AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Delete device")
+                        .setMessage("Are you sure you want to delete " + goProDevices.get(position).name + "?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (goProDevices.get(position).removeBtBond())
+                                    goProDevices.remove(position);
+                            }
+                        })
+                        .create();
+                alert.show();
                 break;
         }
+
         return true;
+    }
+
+    private void parseMediaList(JSONObject medialist) {
+        ArrayList<GoMediaFile> goMediaFiles = new ArrayList<>();
+
+        try {
+            JSONArray medias = medialist.getJSONArray("media");
+
+            for (int i1 = 0; i1 < medias.length(); i1++) {
+                JSONObject media = medias.getJSONObject(i1);
+                String dir_name = media.getString("d");
+                JSONArray files = media.getJSONArray("fs");
+
+                for (int i2 = 0; i2 < files.length(); i2++) {
+                    GoMediaFile goMediaFile = new GoMediaFile();
+                    JSONObject file = files.getJSONObject(i2);
+
+                    goMediaFile.fileName = file.getString("n");
+                    goMediaFile.path = "http://10.5.5.9:8080/videos/DCIM/" + dir_name + "/" + goMediaFile.fileName;
+
+                    long lastModifiedS = Long.parseLong(file.getString("mod"));
+                    long lastModifiedMs = lastModifiedS * 1000;
+                    goMediaFile.lastModified = new Date(lastModifiedMs);
+
+                    goMediaFile.fileByteSize = Long.parseLong(file.getString("s"));
+
+                    goMediaFiles.add(goMediaFile);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (goMediaFiles.size() > 0) {
+            ((MyApplication) this.getApplication()).setGoMediaFiles(goMediaFiles);
+            Intent storageBrowserActivityIntent = new Intent(MainActivity.this, StorageBrowserActivity.class);
+            startActivity(storageBrowserActivityIntent);
+        } else {
+            runOnUiThread(() -> {
+                Toast.makeText(this, "There is no media on the storage", Toast.LENGTH_LONG).show();
+            });
+        }
+    }
+
+    private void startStream() {
+        Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
+        startActivity(previewActivityIntent);
     }
 
     private void setOnDataChanged() {
@@ -183,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         goListView.setAdapter(goListAdapter);
         setOnDataChanged();
     }
+
 
     public void onClickPair(View v) {
         Intent i = new Intent(getApplicationContext(), PairActivity.class);
@@ -225,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("MissingPermission")
+    /*@SuppressLint("MissingPermission")
     public void onClickWifiApOn(View v) {
         if (goProDevices.size() <= 0) {
             Toast.makeText(getApplicationContext(), "Please connect/pair devices", Toast.LENGTH_SHORT).show();
@@ -247,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < goProDevices.size(); i++) {
             goProDevices.get(i).wifiApOff();
         }
-    }
+    }*/
 
     @SuppressLint("MissingPermission")
     public void onClickHighlight(View v) {
@@ -258,24 +449,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < goProDevices.size(); i++) {
             goProDevices.get(i).highlight();
-        }
-    }
-
-    public boolean hasPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            for (String permission : PERMISSIONS_S_UP) {
-                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            for (String permission : PERMISSIONS_R_DOWN) {
-                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 
@@ -301,16 +474,53 @@ public class MainActivity extends AppCompatActivity {
                         GoProDevice goProDevice = new GoProDevice();
                         goProDevice.context = getApplicationContext();
                         goProDevice.bluetoothDevice = device;
-                        goProDevice.paired = true;
-                        goProDevice.Name = deviceName;
+                        goProDevice.btPaired = true;
+                        goProDevice.name = deviceName;
                         goProDevice.Address = deviceHardwareAddress;
-                        goProDevice.connected = MyApplication.checkBtDevConnected(device);
+                        if (MyApplication.checkBtDevConnected(device)) {
+                            goProDevice.disconnectBt();
+                            goProDevice.btConnectionStage = BT_NOT_CONNECTED;
+                        }
                         goProDevices.add(goProDevice);
                         goListView.setAdapter(goListAdapter);
                     }
                 }
             }
         }
+    }
+
+    private boolean hasBtPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            for (String permission : BT_PERMISSIONS_S_UP) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        } else {
+            for (String permission : BT_PERMISSIONS_R_DOWN) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean hasWifiPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            for (String permission : WIFI_PERMISSIONS_Q_UP) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        } else {
+            for (String permission : WIFI_PERMISSIONS_P_DOWN) {
+                if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -323,69 +533,100 @@ public class MainActivity extends AppCompatActivity {
                 int grantResult = grantResults[i];
 
                 switch (permission) {
-                    case Manifest.permission.BLUETOOTH: //granted
+                    case Manifest.permission.BLUETOOTH:
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH}, BT_PERMISSIONS_CODE);
                         break;
-                    case Manifest.permission.BLUETOOTH_ADMIN: //granted
+                    case Manifest.permission.BLUETOOTH_ADMIN:
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_ADMIN}, BT_PERMISSIONS_CODE);
                         break;
-                    case Manifest.permission.BLUETOOTH_SCAN: //not granted
+                    case Manifest.permission.BLUETOOTH_SCAN:
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_SCAN}, BT_PERMISSIONS_CODE);
                         break;
-                    case Manifest.permission.BLUETOOTH_CONNECT: //not granted
+                    case Manifest.permission.BLUETOOTH_CONNECT:
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, BT_PERMISSIONS_CODE);
                         break;
-                    case Manifest.permission.ACCESS_FINE_LOCATION: //granted
+                    case Manifest.permission.ACCESS_FINE_LOCATION:
                         if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                            //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S)
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, BT_PERMISSIONS_CODE);
-                            //else
-                            //    wifi_granted = false;
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, BT_PERMISSIONS_CODE);
                         }
                         break;
-                    case Manifest.permission.ACCESS_COARSE_LOCATION: //granted
+                    case Manifest.permission.ACCESS_COARSE_LOCATION:
                         if (grantResult != PackageManager.PERMISSION_GRANTED)
                             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, BT_PERMISSIONS_CODE);
                         break;
-                    /*case Manifest.permission.CHANGE_WIFI_STATE:
-                    case Manifest.permission.ACCESS_WIFI_STATE:
-                        if (grantResult != PackageManager.PERMISSION_GRANTED)
-                            wifi_granted = false;
-                        break;*/
                 }
 
-                if (hasPermissions()) {
+                if (hasBtPermissions()) {
                     if (isBtEnabled()) {
                         startApp();
                     }
                     setOnDataChanged();
                 }
             }
+        } else if (requestCode == WIFI_PERMISSIONS_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                String permission = permissions[i];
+                int grantResult = grantResults[i];
+
+                wifi_granted = true;
+
+                switch (permission) {
+                    case Manifest.permission.INTERNET:
+                    case Manifest.permission.ACCESS_WIFI_STATE:
+                    case Manifest.permission.CHANGE_WIFI_STATE:
+                    case Manifest.permission.ACCESS_NETWORK_STATE:
+                    case Manifest.permission.CHANGE_NETWORK_STATE:
+                    case Manifest.permission.ACCESS_FINE_LOCATION:
+                    case Manifest.permission.FOREGROUND_SERVICE:
+                        if (grantResult != PackageManager.PERMISSION_GRANTED)
+                            wifi_granted = false;
+                        break;
+                }
+
+            }
         }
     }
 
-    private void requestPermissions() {
+    private void requestBtPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
                 Snackbar.make(mLayout, "Bluetooth permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_S_UP, BT_PERMISSIONS_CODE))
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, BT_PERMISSIONS_S_UP, BT_PERMISSIONS_CODE))
                         .show();
             } else {
-                // Camera permission has not been granted yet. Request it directly.
-                ActivityCompat.requestPermissions(this, PERMISSIONS_S_UP, BT_PERMISSIONS_CODE);
+                ActivityCompat.requestPermissions(this, BT_PERMISSIONS_S_UP, BT_PERMISSIONS_CODE);
             }
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH)) {
                 Snackbar.make(mLayout, "Bluetooth permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE))
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(MainActivity.this, BT_PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE))
                         .show();
             } else {
-                // Camera permission has not been granted yet. Request it directly.
-                ActivityCompat.requestPermissions(this, PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE);
+                ActivityCompat.requestPermissions(this, BT_PERMISSIONS_R_DOWN, BT_PERMISSIONS_CODE);
+            }
+        }
+    }
+
+    public void requestWifiPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                Snackbar.make(mLayout, "Wifi permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(this, WIFI_PERMISSIONS_Q_UP, WIFI_PERMISSIONS_CODE))
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(this, WIFI_PERMISSIONS_Q_UP, WIFI_PERMISSIONS_CODE);
+            }
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH)) {
+                Snackbar.make(mLayout, "Wifi permission is needed to connect GoPros.", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OK", view -> ActivityCompat.requestPermissions(this, WIFI_PERMISSIONS_P_DOWN, WIFI_PERMISSIONS_CODE))
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(this, WIFI_PERMISSIONS_P_DOWN, WIFI_PERMISSIONS_CODE);
             }
         }
     }
@@ -402,8 +643,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            if (!isGpsEnabled())
-                return false;
+            return isGpsEnabled();
         }
         return true;
     }
@@ -425,7 +665,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!gps_enabled && !network_enabled) {
             new AlertDialog.Builder(this)
-                    .setMessage("Localization is required. Please turn localization on!")
+                    .setMessage("Localization is required. Please turn localization on and try again!")
                     .setPositiveButton("OK", (paramDialogInterface, paramInt) -> MainActivity.this.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
                     .setNegativeButton("Cancel", null)
                     .show();
@@ -435,7 +675,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    // BroadcastReceiver for ACTION_FOUND.
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -443,9 +682,7 @@ public class MainActivity extends AppCompatActivity {
                 if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF) {
                     isBtEnabled();
                 }
-            }//else if ((intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE)) == SupplicantState.COMPLETED) {
-//
-//            }
+            }
         }
     };
 

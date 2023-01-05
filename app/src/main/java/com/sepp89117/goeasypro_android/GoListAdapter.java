@@ -1,5 +1,8 @@
 package com.sepp89117.goeasypro_android;
 
+import static com.sepp89117.goeasypro_android.GoProDevice.BT_CONNECTED;
+import static com.sepp89117.goeasypro_android.GoProDevice.BT_NOT_CONNECTED;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,8 +19,8 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
     private final ArrayList<GoProDevice> goProDevices;
     private static LayoutInflater inflater = null;
 
-    private final int ORANGE = Color.argb(255, 255, 128, 0);
-    private final int LIGHTBLUE = Color.argb(255, 0, 0x9F, 0xe0);
+    private static final int ORANGE = Color.argb(255, 255, 128, 0);
+    private static final int LIGHTBLUE = Color.argb(255, 0, 0x9F, 0xe0);
 
     public GoListAdapter(ArrayList<GoProDevice> goProDevices, Context context) {
         super(context, R.layout.golist_item, goProDevices);
@@ -29,39 +32,29 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
 
     @Override
     public void onClick(View v) {
-        int position = (Integer) v.getTag();
-        GoProDevice goProDevice = getItem(position);
 
-        // TODO get wifi connection
-//        switch (v.getId())
-//        {
-//            case R.id.sd_symbol:
-//
-//                break;
-//        }
     }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return goProDevices.size();
     }
 
     @Override
     public GoProDevice getItem(int position) {
-        // TODO Auto-generated method stub
         return goProDevices.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         View rowView = inflater.inflate(R.layout.golist_item, null, true);
+
+        GoProDevice goProDevice = goProDevices.get(position);
 
         TextView name = (TextView) rowView.findViewById(R.id.name);
         TextView model = (TextView) rowView.findViewById(R.id.model);
@@ -73,26 +66,51 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
         ImageView sd_symbol = (ImageView) rowView.findViewById(R.id.sd_symbol);
         ImageView bt_symbol = (ImageView) rowView.findViewById(R.id.bt_symbol);
         ImageView batt_symbol = (ImageView) rowView.findViewById(R.id.batt_symbol);
+        //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
 
+        name.setText(goProDevice.name);
 
-        name.setText(goProDevices.get(position).Name);
+        //Mode icon select
+        /*switch (goProDevice.Mode) {
+            case "Video": // Video
+                mode_imageView.setImageResource(R.drawable.video_mode_ico);
+                break;
+            case "Photo": // Photo
+                mode_imageView.setImageResource(R.drawable.photo_mode_ico);
+                break;
+            case "Burst": // Burst
+                mode_imageView.setImageResource(R.drawable.burst_mode_ico);
+                break;
+            case "Time lapse": // Time lapse
+                mode_imageView.setImageResource(R.drawable.video_timelapse_mode_ico);
+                break;
+            case "?": // ?
+                mode_imageView.setImageResource(R.drawable.photo_timelapse_mode_ico);
+                break;
 
+        }*/
 
-        // TODO get wifi connection
-        // sd_symbol.setColorFilter(Color.RED); // not available
-        // sd_symbol.setColorFilter(Color.YELLOW); // available but not connected
-        // sd_symbol.setColorFilter(Color.GREEN); // connected
-        sd_symbol.setColorFilter(Color.WHITE); // normal
+        if (goProDevice.wifiApState > 0) {
+            if (goProDevice.isWifiConnected)
+                sd_symbol.setColorFilter(Color.GREEN); // AP connected
+            else
+                sd_symbol.setColorFilter(Color.YELLOW); // AP available but not connected
+        } else {
+            sd_symbol.setColorFilter(Color.RED); // AP not available
+        }
 
-        if (goProDevices.get(position).connected) {
+        if (goProDevice.btConnectionStage == BT_CONNECTED) {
             name.setTextColor(LIGHTBLUE);
-            rssi.setText(String.valueOf(goProDevices.get(position).Rssi));
-            battery.setText(goProDevices.get(position).Battery);
-            model.setText(goProDevices.get(position).Model);
-            preset.setText(goProDevices.get(position).Preset);
-            memory.setText(goProDevices.get(position).Memory);
+            rssi.setText(String.valueOf(goProDevice.Rssi));
+            battery.setText(goProDevice.Battery);
+            model.setText(goProDevice.modelName);
+            preset.setText(goProDevice.Preset);
+            memory.setText(goProDevice.Memory);
 
-            int battPercent = Integer.parseInt(goProDevices.get(position).Battery.substring(0, goProDevices.get(position).Battery.length() - 1));
+            String battLvl = goProDevice.Battery.substring(0, goProDevice.Battery.length() - 1);
+            int battPercent = 0;
+            if (!battLvl.equals(""))
+                battPercent = Integer.parseInt(battLvl);
 
             if (battPercent > 30) {
                 batt_symbol.setColorFilter(Color.GREEN);
@@ -102,9 +120,9 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
                 batt_symbol.setColorFilter(Color.RED);
             }
 
-            if (goProDevices.get(position).Rssi <= -80) {
+            if (goProDevice.Rssi <= -80) {
                 bt_symbol.setColorFilter(ORANGE); // pour connection (RSSI <= -80)
-            } else if (goProDevices.get(position).Rssi <= -70) {
+            } else if (goProDevice.Rssi <= -70) {
                 bt_symbol.setColorFilter(Color.YELLOW); // normal connection (RSSI <= -70)
             } else {
                 bt_symbol.setColorFilter(Color.GREEN); // good connection (RSSI > -70)
@@ -112,16 +130,19 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
         } else {
             rssi.setText("NC");
             battery.setText("NC");
-            model.setText("NC");
+            model.setText(goProDevice.modelName);
             preset.setText("NC");
             memory.setText("NC");
 
-            name.setTextColor(Color.RED);
-            bt_symbol.setColorFilter(Color.RED); // not connected
+            if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {
+                name.setTextColor(Color.RED);
+                bt_symbol.setColorFilter(Color.RED);
+            } else {
+                name.setTextColor(ORANGE);
+                bt_symbol.setColorFilter(ORANGE);
+            }
         }
 
         return rowView;
     }
-
-    ;
 }
