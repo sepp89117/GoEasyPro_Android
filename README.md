@@ -28,6 +28,13 @@ Easily control multiple GoPros with your android device with bluetooth
   <li>To connect a paired camera, click on one of the cameras in the list and choose 'try to connect'.</li>
   <li>The "Cams" list shows information about the paired cameras. If you click on a camera in the list, you will see a menu for controlling the individual cameras.</li>
   <li>In the "Control" field you can control all cameras at the same time.</li>
+  
+  <li>The SD card icon shows the WiFi status by its color.</li>
+    <ul>
+      <li>Red means: Camera's WiFi AP is off.</li>
+      <li>Yellow means: Camera's WiFi AP is on but not connected to the app.</li>
+      <li>Green means we are connected to the camera's WiFi.</li>
+    </ul>
 </ul>
 
 # Planned in the future
