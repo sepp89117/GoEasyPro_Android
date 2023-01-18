@@ -40,7 +40,7 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 # Debugging on
 - Samsung Galaxy S10 (Android 12)
 - Xiaomi Redmi Note 11s (Android 11)
-with Hero5 Black and Hero8 Black only!
+- with Hero5 Black and Hero8 Black only!<br>
 If you have trouble with other Android versions or other camera models, please open a detailed issue.
 
 I hope you can help to get the app running safely on other smartphones too!
