@@ -11,11 +11,7 @@ Easily control multiple GoPros with your android device with bluetooth
   <li>Open the app and grant the permission requests</li>
   <li>To pair new cameras, click the "Add cam" button</li>
   <ul>
-    <li>Put the GoPro in pairing mode</li>
-    <ul>
-      <li>Up to Hero 7 Black -> Connect new device -> App</li>
-      <li>From Hero 8 Black -> Connect new device -> Remote</li>
-    </ul>
+    <li>Put the GoPro in app pairing mode (Connect new device -> App)</li>
     <li>If the camera does not appear after the scan is complete, click "Scan again"</li>
     <li>Just click on the cameras to be connected in the list. 
     <ul>
@@ -43,6 +39,8 @@ Easily control multiple GoPros with your android device with bluetooth
 # Debugging on
 - Samsung Galaxy S10 (Android 12)
 - Xiaomi Redmi Note 11s (Android 11)
+with Hero5 Black and Hero8 Black only!
+If you have trouble with other Android versions or other camera models, please open a detailed issue.
 
 I hope you can help to get the app running safely on other smartphones too!
 
