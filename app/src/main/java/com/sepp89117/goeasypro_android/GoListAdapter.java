@@ -56,16 +56,16 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
 
         GoProDevice goProDevice = goProDevices.get(position);
 
-        TextView name = (TextView) rowView.findViewById(R.id.name);
-        TextView model = (TextView) rowView.findViewById(R.id.model);
-        TextView preset = (TextView) rowView.findViewById(R.id.preset);
-        TextView memory = (TextView) rowView.findViewById(R.id.memory);
-        TextView battery = (TextView) rowView.findViewById(R.id.battery);
-        TextView rssi = (TextView) rowView.findViewById(R.id.rssi);
+        TextView name = rowView.findViewById(R.id.name);
+        TextView model = rowView.findViewById(R.id.model);
+        TextView preset = rowView.findViewById(R.id.preset);
+        TextView memory = rowView.findViewById(R.id.memory);
+        TextView battery = rowView.findViewById(R.id.battery);
+        TextView rssi = rowView.findViewById(R.id.rssi);
 
-        ImageView sd_symbol = (ImageView) rowView.findViewById(R.id.sd_symbol);
-        ImageView bt_symbol = (ImageView) rowView.findViewById(R.id.bt_symbol);
-        ImageView batt_symbol = (ImageView) rowView.findViewById(R.id.batt_symbol);
+        ImageView sd_symbol = rowView.findViewById(R.id.sd_symbol);
+        ImageView bt_symbol = rowView.findViewById(R.id.bt_symbol);
+        ImageView batt_symbol = rowView.findViewById(R.id.batt_symbol);
         //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
 
         name.setText(goProDevice.name);
@@ -102,19 +102,15 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
             name.setTextColor(LIGHTBLUE);
             rssi.setText(String.valueOf(goProDevice.Rssi));
-            battery.setText(goProDevice.Battery);
+            battery.setText(String.format("%d%%", goProDevice.BatteryPercent));
             model.setText(goProDevice.modelName);
             preset.setText(goProDevice.Preset);
             memory.setText(goProDevice.Memory);
 
-            String battLvl = goProDevice.Battery.substring(0, goProDevice.Battery.length() - 1);
-            int battPercent = 0;
-            if (!battLvl.equals(""))
-                battPercent = Integer.parseInt(battLvl);
 
-            if (battPercent > 30) {
+            if (goProDevice.BatteryPercent > 30) {
                 batt_symbol.setColorFilter(Color.GREEN);
-            } else if (battPercent > 5) {
+            } else if (goProDevice.BatteryPercent > 5) {
                 batt_symbol.setColorFilter(ORANGE);
             } else {
                 batt_symbol.setColorFilter(Color.RED);

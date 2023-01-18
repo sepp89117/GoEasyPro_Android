@@ -7,6 +7,7 @@ import static com.sepp89117.goeasypro_android.GoProDevice.BT_NOT_CONNECTED;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -67,17 +68,23 @@ public class PairActivity extends AppCompatActivity {
 
         }
 
-
         listView = (ListView) findViewById(R.id.file_listView);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             GoProDevice goProDevice = goProDevices.get(position);
             if (!goProDevice.btPaired) {
+                AlertDialog alert = new AlertDialog.Builder(PairActivity.this)
+                        .setTitle("Pairing")
+                        .setMessage("Please wait while the pairing is established!")
+                        .setCancelable(true)
+                        .create();
+                alert.show();
+
                 //Toast.makeText(getApplicationContext(), "Pairing device...", Toast.LENGTH_SHORT).show();
                 mDeviceStrList.set(position, goProDevice.name + " (pairing...)\n" + goProDevice.Address); //yellow
                 goProDevice.pair(paired -> {
                     if (paired) {
-                        //Toast.makeText(getApplicationContext(), "Pairing '" + goProDevice.Name + "' succesfull!", Toast.LENGTH_SHORT).show();
                         goProDevice.connectBt(connected -> {
+                            alert.dismiss();
                             if (connected)
                                 mDeviceStrList.set(position, goProDevice.name + " (connected)\n" + goProDevice.Address); //green
                             else
@@ -86,6 +93,7 @@ public class PairActivity extends AppCompatActivity {
                             setListAdapter();
                         });
                     } else {
+                        alert.dismiss();
                         Toast.makeText(getApplicationContext(), "Pairing '" + goProDevice.name + "' failed!", Toast.LENGTH_SHORT).show();
                     }
                 });

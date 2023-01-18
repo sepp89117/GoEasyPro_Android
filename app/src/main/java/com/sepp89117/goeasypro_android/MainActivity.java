@@ -30,6 +30,7 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -134,8 +135,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        //AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         MenuInflater inflater = getMenuInflater();
+        if(lastCamClickedIndex < 0) {
+            lastCamClickedIndex = info.position;
+        }
 
         if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_CONNECTED)
             inflater.inflate(R.menu.connected_dev_menu, menu);
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 goProDevices.get(position).setDateTime();
                 break;
             case R.id.browse:
-                // TODO Browse storage
+                // Browse storage
                 if (isGpsEnabled()) {
                     if (hasWifiPermissions()) {
                         if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
@@ -214,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                                     runOnUiThread(() -> {
                                         ((MyApplication) this.getApplication()).setFocusedDevice(goProDevices.get(position));
                                     });
-                                    parseMediaList(mainObject);
+                                    parseMediaList(mainObject, goProDevices.get(position));
                                 }
                             } catch (Exception ex) {
                                 Log.e("HTTP GET error", ex.toString());
@@ -231,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.preview:
-                //Live view
+                // Live view
                 if (isGpsEnabled()) {
                     if (hasWifiPermissions()) {
                         if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
@@ -266,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
                                             startStream();
                                         });
                                     } else {
-                                        //TODO live stream not available
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(getApplicationContext(), "The live stream is currently unavailable", Toast.LENGTH_SHORT).show();
+                                        });
                                     }
                                 }
                             } catch (Exception ex) {
@@ -313,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void parseMediaList(JSONObject medialist) {
+    private void parseMediaList(JSONObject medialist, GoProDevice goProDevice) {
         ArrayList<GoMediaFile> goMediaFiles = new ArrayList<>();
 
         try {
@@ -330,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
 
                     goMediaFile.fileName = file.getString("n");
                     goMediaFile.path = "http://10.5.5.9:8080/videos/DCIM/" + dir_name + "/" + goMediaFile.fileName;
+                    goMediaFile.thumbNail_path = goProDevice.getThumbNail_query + dir_name + "/" + goMediaFile.fileName;
 
                     long lastModifiedS = Long.parseLong(file.getString("mod"));
                     long lastModifiedMs = lastModifiedS * 1000;

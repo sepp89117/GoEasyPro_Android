@@ -37,14 +37,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:text="Select a file"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/ligth_blue"
             android:textStyle="bold" />
 
         <ListView
             android:id="@+id/file_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:listSelector="@drawable/listitem_selector" />
+            android:choiceMode="singleChoice"
+            android:listSelector="@drawable/listitem_selector"
+            tools:listitem="@layout/filelist_item" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

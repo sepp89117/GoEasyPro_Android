@@ -8,6 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="list_bg">#2f2f2f</color>
+
     <color name="darkgray">#1c1c1c</color>
     <color name="gray">#4d4d4d</color>
+    <color name="blue">#005eab</color>
+    <color name="ligth_blue">#009fe0</color>
+
 </resources>

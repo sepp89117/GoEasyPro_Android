@@ -1,22 +1,21 @@
 package com.sepp89117.goeasypro_android;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -29,17 +28,24 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
-import java.text.DateFormat;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class StorageBrowserActivity extends AppCompatActivity {
     private GoProDevice focusedDevice;
     private ArrayList<GoMediaFile> goMediaFiles;
-    private ListView listView;
-    private ArrayList<String> fileStrings;
+    private ListView fileListView;
     private StyledPlayerView playerView;
     private ExoPlayer player;
+    private OkHttpClient client = new OkHttpClient();
+    private FileListAdapter fileListAdapter;
+    private GoMediaFile clickedFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,40 +55,132 @@ public class StorageBrowserActivity extends AppCompatActivity {
         focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         goMediaFiles = ((MyApplication) this.getApplication()).getGoMediaFiles();
 
+        getThumbNailsAsync();
+
+        TextView selFile_textView = findViewById(R.id.textView3);
+        selFile_textView.setText("Select a file from " + focusedDevice.name);
+
         playerView = findViewById(R.id.vid_player_view);
 
-        listView = findViewById(R.id.file_listView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GoMediaFile clickedFile = goMediaFiles.get(position);
+        fileListAdapter = new FileListAdapter(goMediaFiles, this);
 
-                MediaSource mediaSource = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getApplicationContext())).createMediaSource(MediaItem.fromUri(Uri.parse(clickedFile.path)));
-                player.setMediaSource(mediaSource);
-            }
+        fileListView = findViewById(R.id.file_listView);
+        registerForContextMenu(fileListView);
+        fileListView.setOnItemClickListener((parent, view, position, id) -> {
+            if (clickedFile == goMediaFiles.get(position))
+                return;
+
+            clickedFile = goMediaFiles.get(position);
+
+            MediaSource mediaSource = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getApplicationContext())).createMediaSource(MediaItem.fromUri(Uri.parse(clickedFile.path)));
+            player.setMediaSource(mediaSource);
         });
 
-        fileStrings = new ArrayList<>();
-        DateFormat f = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault());
-        for (int i = 0; i < goMediaFiles.size(); i++) {
-            fileStrings.add(
-                    goMediaFiles.get(i).fileName + "\n" + f.format(goMediaFiles.get(i).lastModified)
-            );
-        }
-
-        setListAdapter();
+        fileListView.setAdapter(fileListAdapter);
 
         createPlayer();
+    }
+
+    private void getThumbNailsAsync() {
+        new Thread(() -> {
+            for (int i = 0; i < goMediaFiles.size(); i++) {
+                GoMediaFile file = goMediaFiles.get(i);
+                String tn_url = file.thumbNail_path;
+
+                Request request = new Request.Builder()
+                        .url(tn_url)
+                        .build();
+                Log.d("HTTP GET", tn_url);
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.e("getThumbNailsAsync", "fail");
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (!response.isSuccessful()) {
+                            Log.e("getThumbNailsAsync", "Request response = not success");
+                        } else {
+                            Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
+                            file.thumbNail = bmp;
+
+                            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
+                        }
+                        response.close();
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        int pos = info.position;
+
+        menu.setHeaderTitle("Options");
+        // add menu items
+        menu.add(pos, 0, 0, "Delete file");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int pos = item.getGroupId();
+
+        switch (item.getItemId()) {
+            case 0:
+                //delete file
+                AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this)
+                        .setTitle("Delete device")
+                        .setMessage("Are you sure you want to delete " + goMediaFiles.get(pos).fileName + "?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            //delte File
+                            String fileDelCmd = "http://10.5.5.9/gp/gpControl/command/storage/delete?p=" + goMediaFiles.get(pos).path.substring(32);
+
+                            Request request = new Request.Builder()
+                                    .url(fileDelCmd)
+                                    .build();
+                            Log.d("HTTP GET", fileDelCmd);
+
+                            client.newCall(request).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    Log.e("delFile", "fail");
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    if (!response.isSuccessful()) {
+                                        Log.e("delFile", "Request response = not success");
+                                        runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Something went wrong. Please try again!", Toast.LENGTH_SHORT).show());
+                                    } else {
+                                        goMediaFiles.remove(pos);
+                                        runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
+                                    }
+                                    response.close();
+                                }
+                            });
+                        })
+                        .create();
+                alert.show();
+                break;
+        }
+
+        return true;
     }
 
     private void createPlayer() {
         DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
                 .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(25000, 35000, 20000, 20000)
+                .setBufferDurationsMs(12500, 15000, 10000, 10000)
                 .build();
 
         TrackSelector trackSelector = new DefaultTrackSelector(this);
-
 
         player = new ExoPlayer.Builder(this)
                 .setTrackSelector(trackSelector)
@@ -125,23 +223,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
             Log.e("onPlayerError", error.getMessage() + "\n" + error.getCause());
         }
     };
-
-    private void setListAdapter() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.bt_listitem, fileStrings) {
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        TextView textView = (TextView) super.getView(position, convertView, parent);
-                        //String text = textView.getText().toString();
-                        return textView;
-                    }
-                });
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
