@@ -101,24 +101,24 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
 
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
             name.setTextColor(LIGHTBLUE);
-            rssi.setText(String.valueOf(goProDevice.Rssi));
-            battery.setText(String.format("%d%%", goProDevice.BatteryPercent));
+            rssi.setText(String.valueOf(goProDevice.btRssi));
+            battery.setText(String.format("%d%%", goProDevice.remainingBatteryPercent));
             model.setText(goProDevice.modelName);
             preset.setText(goProDevice.Preset);
-            memory.setText(goProDevice.Memory);
+            memory.setText(goProDevice.remainingMemory);
 
 
-            if (goProDevice.BatteryPercent > 30) {
+            if (goProDevice.remainingBatteryPercent > 30) {
                 batt_symbol.setColorFilter(Color.GREEN);
-            } else if (goProDevice.BatteryPercent > 5) {
+            } else if (goProDevice.remainingBatteryPercent > 5) {
                 batt_symbol.setColorFilter(ORANGE);
             } else {
                 batt_symbol.setColorFilter(Color.RED);
             }
 
-            if (goProDevice.Rssi <= -80) {
+            if (goProDevice.btRssi <= -80) {
                 bt_symbol.setColorFilter(ORANGE); // pour connection (RSSI <= -80)
-            } else if (goProDevice.Rssi <= -70) {
+            } else if (goProDevice.btRssi <= -70) {
                 bt_symbol.setColorFilter(Color.YELLOW); // normal connection (RSSI <= -70)
             } else {
                 bt_symbol.setColorFilter(Color.GREEN); // good connection (RSSI > -70)

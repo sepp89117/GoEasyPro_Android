@@ -177,7 +177,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private void createPlayer() {
         DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
                 .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(12500, 15000, 10000, 10000)
+                .setBufferDurationsMs(12500, 30000, 10000, 10000)
                 .build();
 
         TrackSelector trackSelector = new DefaultTrackSelector(this);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <item android:id="@+id/control" android:title="Control" >
         <menu>
             <item android:id="@+id/locate_on" android:title="Locate: on" />
@@ -26,4 +27,6 @@
             <item android:id="@+id/browse" android:title="Browse storage" />
         </menu>
     </item>
+
+    <item android:id="@+id/dev_info" android:title="Device info" />
 </menu>

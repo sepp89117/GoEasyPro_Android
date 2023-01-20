@@ -37,7 +37,6 @@ import okhttp3.Response;
 
 public class PreviewActivity extends AppCompatActivity {
     private ExoPlayer player;
-    private SurfaceView surfaceView;
     private OkHttpClient httpClient;
     private static String startStream_query = "";
     private String ffmpeg_output_uri;
@@ -66,7 +65,6 @@ public class PreviewActivity extends AppCompatActivity {
         stream_input_uri = "udp://:8554"; // maybe different depending on gopro modelID?
         ffmpeg_output_uri = "udp://@localhost:8555";
         playerView = findViewById(R.id.player_view);
-        surfaceView = findViewById(R.id.surfaceView);
         String keepAlive_str = streamingDevice.keepAlive_msg;
         startStream_query = ((MyApplication) this.getApplication()).getFocusedDevice().startStream_query;
         keepStreamAliveData = keepAlive_str.getBytes();
@@ -84,7 +82,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     private final Thread ffmpegThread = new Thread(() -> {
         try {
-            final String command = "-fflags nobuffer -flags low_delay -an -probesize 3072 -i " + stream_input_uri + " -f mpegts -vcodec copy udp://localhost:8555?pkt_size=1316";
+            final String command = "-fflags nobuffer -flags low_delay -f:v mpegts -an -probesize 64 -i " + stream_input_uri + " -f mpegts -vcodec copy udp://localhost:8555?pkt_size=1316";
 
             FFmpegKit.execute(command);
 
@@ -131,7 +129,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
                 .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(900, 1100, 900, 900)
+                .setBufferDurationsMs(1000, 5000, 900, 900)
                 .build();
 
         TrackSelector trackSelector = new DefaultTrackSelector(this);
@@ -150,8 +148,6 @@ public class PreviewActivity extends AppCompatActivity {
 
         playerView.requestFocus();
 
-        surfaceView.getHolder().setKeepScreenOn(true);
-
         Log.i("createPlayer", "Player created");
     }
 
@@ -162,14 +158,6 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     private void killKeepStreamAliveTimer() {
-        /*try {
-            if (udpSocket != null) {
-                udpSocket.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
         if (keepStreamAliveTimer == null)
             return;
 
@@ -197,21 +185,24 @@ public class PreviewActivity extends AppCompatActivity {
             Player.Listener.super.onPlaybackStateChanged(playbackState);
             switch (playbackState) {
                 case Player.STATE_IDLE:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_IDLE -> finish PreviewActivity");
+                    Log.d("onPlaybackStateChanged", "Player.STATE_IDLE -> finish PreviewActivity");
                     PreviewActivity.this.finish();
                     break;
                 case Player.STATE_BUFFERING:
                     if (!streamStarted) {
                         streamStarted = true;
                         requestStream();
+                        /*if (keepStreamAliveTimer == null) {
+                            initRequestTimer();
+                        }*/
                     }
-                    Log.i("onPlaybackStateChanged", "Player.STATE_BUFFERING");
+                    Log.d("onPlaybackStateChanged", "Player.STATE_BUFFERING");
                     break;
                 case Player.STATE_READY:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_READY");
+                    Log.d("onPlaybackStateChanged", "Player.STATE_READY");
                     break;
                 case Player.STATE_ENDED:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_ENDED -> finish PreviewActivity");
+                    Log.d("onPlaybackStateChanged", "Player.STATE_ENDED -> finish PreviewActivity");
                     PreviewActivity.this.finish();
                     break;
             }
@@ -229,11 +220,6 @@ public class PreviewActivity extends AppCompatActivity {
         super.onDestroy();
         FFmpegKit.cancel();
         killKeepStreamAliveTimer();
-
-        if (surfaceView != null) {
-            surfaceView.getHolder().setKeepScreenOn(false);
-            surfaceView = null;
-        }
 
         if (udpSocket != null)
             udpSocket.disconnect();

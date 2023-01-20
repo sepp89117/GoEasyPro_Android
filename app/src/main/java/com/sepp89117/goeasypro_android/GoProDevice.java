@@ -45,8 +45,6 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import okhttp3.OkHttpClient;
-
 public class GoProDevice {
     //region BT connection stats
     public static final int BT_NOT_CONNECTED = 0;
@@ -163,14 +161,17 @@ public class GoProDevice {
     public boolean btPaired = false;
     public int btConnectionStage = BT_NOT_CONNECTED;
     public String name = "";
-    public String Address = "";
+    public String btMacAddr = "";
     public String modelName = "NC";
-    private int modelID = UNK_MODEL;
+    public int modelID = UNK_MODEL;
+    public String boardType = "";
+    public String firmware = "";
+    public String serialNumber = "";
     public String Preset = "NC";
-    public int BatteryPercent = 0;
-    public String Memory = "NC";
+    public int remainingBatteryPercent = 0;
+    public String remainingMemory = "NC";
     private boolean autoValueUpdatesRegistered = false;
-    public int Rssi = 0;
+    public int btRssi = 0;
     private String LE = "None"; // last error
     private Date lastKeepAlive = new Date();
     private Date lastOtherQueries = new Date();
@@ -192,17 +193,17 @@ public class GoProDevice {
     private ByteBuffer contPackBuffer;
     private static final int btActionDelay = 125;
     private boolean communicationInitiated = false;
-    byte[] statusIDs = {43, 54, 69, 70, 97}; // https://gopro.github.io/OpenGoPro/ble_2_0#status-ids
-
+    public boolean isBusy = false;
     private boolean freshPaired = false;
+    byte[] statusIDs = {8, 43, 54, 69, 70, 97}; // https://gopro.github.io/OpenGoPro/ble_2_0#status-ids
 
     //Wifi
     public static final String goProIp = "10.5.5.9";
     public Integer wifiApState = -1;
     public boolean isWifiConnected = false;
-    private String wifiSsid = "";
-    private String wifiPw = "";
-    private String apMacAddr = "";
+    public String wifiSsid = "";
+    public String wifiPw = "";
+    public String wifiMacAddr = "";
     private ConnectivityManager connectivityManager = null;
     public String startStream_query = "";
     public String stopStream_query = "";
@@ -266,7 +267,7 @@ public class GoProDevice {
                                     nwManCmdCharacteristic = characteristic;
                                     break;
                                 case nwManRespUUID:
-                                    nwManRespCharacteristic = characteristic;
+                                    // nwManRespCharacteristic = characteristic; // currently not used
                                     break;
                                 case queryUUID:
                                     queryCharacteristic = characteristic;
@@ -348,7 +349,7 @@ public class GoProDevice {
         @Override
         public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Rssi = rssi;
+                btRssi = rssi;
 
                 if (dataChangedCallback != null)
                     dataChangedCallback.onDataChanged();
@@ -449,9 +450,9 @@ public class GoProDevice {
                                 buffer.flip();
                                 long memBytes = buffer.getLong();
 
-                                Memory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                                remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
                             } else if (commandId == (byte) 0x13 && id1 == 70 /*&& len1 == 1*/) { // Battery level
-                                BatteryPercent = vlaueBytes[5];
+                                remainingBatteryPercent = vlaueBytes[5];
                             } else if (commandId == (byte) 0x13 && id1 == 43 && len1 == 1) { // Active preset
                                 Preset = modes.getOrDefault((int) vlaueBytes[5], "unknown mode ID " + (int) vlaueBytes[5]);
                             } else if (commandId == (byte) 0x13 && id1 == 97 && len1 == 4) { // Active preset
@@ -605,17 +606,26 @@ public class GoProDevice {
                 nextLen = byteArray[nextStart];
 
                 // board type
-                // skip
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                boardType = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
                 nextStart = nextStart + 1 + nextLen;
                 nextLen = byteArray[nextStart];
 
                 // firmware
-                // skip
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                firmware = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
                 nextStart = nextStart + 1 + nextLen;
                 nextLen = byteArray[nextStart];
 
                 // serial number
-                // skip
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                serialNumber = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
                 nextStart = nextStart + 1 + nextLen;
                 nextLen = byteArray[nextStart];
 
@@ -636,7 +646,7 @@ public class GoProDevice {
                 sb.insert(8, ':');
                 sb.insert(11, ':');
                 sb.insert(14, ':');
-                apMacAddr = sb.toString();
+                wifiMacAddr = sb.toString().toUpperCase();
             } else if (commandId == 0x13 /* 19 */) { // All status values
                 int nextLen = 0;
 
@@ -658,6 +668,9 @@ public class GoProDevice {
 
     private void handleStatusData(int statusID, ByteBuffer buffer) {
         switch (statusID) {
+            case 8: // Is the camera busy?
+                isBusy = buffer.get(0) != 0;
+                break;
             case 43:
                 int presetId = buffer.get(0);
                 Preset = modes.getOrDefault(presetId, "unknown mode ID " + presetId);
@@ -665,13 +678,13 @@ public class GoProDevice {
             case 54: // Remaining space on the sdcard in Kilobytes as integer
                 buffer.flip();
                 long memBytes = buffer.getLong();
-                Memory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
                 break;
             case 69: // AP state as boolean
                 wifiApState = (int) buffer.get(0);
                 break;
             case 70: // Internal battery percentage as percent
-                BatteryPercent = buffer.get(0);
+                remainingBatteryPercent = buffer.get(0);
                 break;
             case 97: // Current Preset ID as integer
                 buffer.flip();
@@ -1532,12 +1545,12 @@ public class GoProDevice {
         if (connectivityManager == null)
             connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (connectivityManager == null || Objects.equals(apMacAddr, ""))
+        if (connectivityManager == null || Objects.equals(wifiMacAddr, ""))
             return;
 
         final WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
                 .setSsid(wifiSsid)
-                .setBssid(MacAddress.fromString(apMacAddr))
+                .setBssid(MacAddress.fromString(wifiMacAddr))
                 .setWpa2Passphrase(wifiPw)
                 .build();
 
@@ -1672,7 +1685,7 @@ public class GoProDevice {
                 }
 
                 // Query "Remaining space"
-                if ((!autoValueUpdatesRegistered || Objects.equals(Memory, "NC")) && now - lastMemoryQuery.getTime() > 7000) {
+                if ((!autoValueUpdatesRegistered || Objects.equals(remainingMemory, "NC")) && now - lastMemoryQuery.getTime() > 7000) {
                     getMemory();
                     lastMemoryQuery = new Date();
                 }
@@ -1706,7 +1719,7 @@ public class GoProDevice {
                 }
 
                 // Read "Battery level"
-                if ((!autoValueUpdatesRegistered || BatteryPercent == 0) && now - lastBatteryRead.getTime() > 10000) {
+                if ((!autoValueUpdatesRegistered || remainingBatteryPercent == 0) && now - lastBatteryRead.getTime() > 10000) {
                     getBatteryLevel();
                     lastBatteryRead = new Date();
                 }

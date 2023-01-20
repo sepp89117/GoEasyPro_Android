@@ -141,55 +141,87 @@ public class MainActivity extends AppCompatActivity {
             lastCamClickedIndex = info.position;
         }
 
+        menu.setHeaderTitle(goProDevices.get(lastCamClickedIndex).name);
+
         if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_CONNECTED)
             inflater.inflate(R.menu.connected_dev_menu, menu);
         else if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_NOT_CONNECTED)
             inflater.inflate(R.menu.not_connected_dev_menu, menu);
+        else
+            Toast.makeText(this,"Please wait until the connection has been established!", Toast.LENGTH_SHORT).show();
     }
 
     // menu item select listener
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = lastCamClickedIndex;
+        GoProDevice goProDevice = goProDevices.get(position);
 
         switch (item.getItemId()) {
+            case R.id.dev_info:
+                String sb = "Device name: " + goProDevice.name + "\n" +
+                        "Model name: " + goProDevice.modelName + "\n" +
+                        "Model ID: " + goProDevice.modelID + "\n" + "\n" +
+                        "Board type: " + goProDevice.boardType + "\n" +
+                        "Firmware version: " + goProDevice.firmware + "\n" +
+                        "Serial number: " + goProDevice.serialNumber + "\n" + "\n" +
+                        "WiFi AP SSID: " + goProDevice.wifiSsid + "\n" +
+                        "WiFi AP password: " + goProDevice.wifiPw + "\n" +
+                        "WiFi MAC address: " + goProDevice.wifiMacAddr + "\n" + "\n" +
+                        "BT MAC address: " + goProDevice.btMacAddr;
+
+                AlertDialog devInfoAlert = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Device Info")
+                        .setMessage(sb)
+                        .setCancelable(true)
+                        .create();
+
+                devInfoAlert.show();
+                break;
             case R.id.locate_on:
                 //Locate on
-                goProDevices.get(position).locateOn();
+                goProDevice.locateOn();
                 break;
             case R.id.locate_off:
                 //Locate: off
-                goProDevices.get(position).locateOff();
+                goProDevice.locateOff();
                 break;
             case R.id.shutter_on:
                 //Shutter: on
-                goProDevices.get(position).shutterOn();
+                goProDevice.shutterOn();
                 break;
             case R.id.shutter_off:
                 //Shutter: off
-                goProDevices.get(position).shutterOff();
+                goProDevice.shutterOff();
                 break;
             case R.id.ap_on:
                 //Shutter: on
-                goProDevices.get(position).wifiApOn();
+                goProDevice.wifiApOn();
                 break;
             case R.id.ap_off:
                 //Shutter: off
-                goProDevices.get(position).wifiApOff();
+                goProDevice.wifiApOff();
                 break;
             case R.id.put_sleep:
                 //Put to sleep
-                goProDevices.get(position).sleep();
+                goProDevice.sleep();
                 break;
             case R.id.set_date_time:
                 //Set Date/Time
-                goProDevices.get(position).setDateTime();
+                goProDevice.setDateTime();
                 break;
             case R.id.browse:
                 // Browse storage
+                if(goProDevice.isBusy) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
+                    });
+                    return true;
+                }
+
                 if (isGpsEnabled()) {
                     if (hasWifiPermissions()) {
-                        if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
+                        if (Objects.equals(goProDevice.startStream_query, "")) {
                             Log.e("goProDevices", "ModelID unknown!");
                             return true;
                         }
@@ -202,13 +234,13 @@ public class MainActivity extends AppCompatActivity {
 
                         alert.show();
 
-                        goProDevices.get(position).connectWifi(() -> {
+                        goProDevice.connectWifi(() -> {
                             alert.dismiss();
                             //onWifiConnected
                             Request request = new Request.Builder()
-                                    .url(goProDevices.get(position).getMediaList_query)
+                                    .url(goProDevice.getMediaList_query)
                                     .build();
-                            Log.d("HTTP GET", goProDevices.get(position).getMediaList_query);
+                            Log.d("HTTP GET", goProDevice.getMediaList_query);
                             try (Response response = client.newCall(request).execute()) {
                                 if (response.isSuccessful()) {
                                     Log.d("HTTP GET", "successful");
@@ -216,9 +248,9 @@ public class MainActivity extends AppCompatActivity {
                                     JSONObject mainObject = new JSONObject(resp_Str);
 
                                     runOnUiThread(() -> {
-                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevices.get(position));
+                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevice);
                                     });
-                                    parseMediaList(mainObject, goProDevices.get(position));
+                                    parseMediaList(mainObject, goProDevice);
                                 }
                             } catch (Exception ex) {
                                 Log.e("HTTP GET error", ex.toString());
@@ -235,10 +267,17 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.preview:
+                if(goProDevice.isBusy) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
+                    });
+                    return true;
+                }
+
                 // Live view
                 if (isGpsEnabled()) {
                     if (hasWifiPermissions()) {
-                        if (Objects.equals(goProDevices.get(position).startStream_query, "")) {
+                        if (Objects.equals(goProDevice.startStream_query, "")) {
                             Log.e("goProDevices", "ModelID unknown!");
                             return true;
                         }
@@ -251,34 +290,32 @@ public class MainActivity extends AppCompatActivity {
 
                         alert.show();
 
-                        goProDevices.get(position).connectWifi(() -> {
+                        goProDevice.connectWifi(() -> {
                             alert.dismiss();
                             //onWifiConnected
                             Request request = new Request.Builder()
-                                    .url(goProDevices.get(position).stopStream_query)
+                                    .url(goProDevice.stopStream_query)
                                     .build();
-                            Log.d("HTTP GET", goProDevices.get(position).stopStream_query);
+                            Log.d("HTTP GET", goProDevice.stopStream_query);
                             try (Response response = client.newCall(request).execute()) {
                                 if (response.isSuccessful()) {
-                                    String resp_Str = response.body().string();
+                                    String resp_Str = "" + response.body().string();
                                     Log.d("HTTP GET response", resp_Str);
-                                    JSONObject mainObject = new JSONObject(resp_Str);
-                                    if (mainObject.getString("status").equals("0")) {
-                                        //live stream available
-                                        runOnUiThread(() -> {
-                                            ((MyApplication) this.getApplication()).setFocusedDevice(goProDevices.get(position));
-                                            startStream();
-                                        });
-                                    } else {
-                                        runOnUiThread(() -> {
-                                            Toast.makeText(getApplicationContext(), "The live stream is currently unavailable", Toast.LENGTH_SHORT).show();
-                                        });
-                                    }
+                                    //live stream available
+                                    runOnUiThread(() -> {
+                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevice);
+                                        Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
+                                        startActivity(previewActivityIntent);
+                                    });
+                                } else {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(getApplicationContext(), "The live stream is currently unavailable", Toast.LENGTH_SHORT).show();
+                                    });
                                 }
                             } catch (Exception ex) {
                                 Log.e("HTTP GET error", ex.toString());
                                 runOnUiThread(() -> {
-                                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
                                 });
                             }
 
@@ -290,11 +327,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.disconnect:
                 //Disconnect
-                goProDevices.get(position).disconnectBt();
+                goProDevice.disconnectBt();
                 break;
             case R.id.try_connect:
                 //Try to connect
-                goProDevices.get(position).connectBt(connected -> {
+                goProDevice.connectBt(connected -> {
                     runOnUiThread(() -> goListView.setAdapter(goListAdapter));
                 });
                 break;
@@ -302,12 +339,12 @@ public class MainActivity extends AppCompatActivity {
                 //Delete device
                 AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Delete device")
-                        .setMessage("Are you sure you want to delete " + goProDevices.get(position).name + "?")
+                        .setMessage("Are you sure you want to delete " + goProDevice.name + "?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (goProDevices.get(position).removeBtBond())
+                                if (goProDevice.removeBtBond())
                                     goProDevices.remove(position);
                             }
                         })
@@ -362,11 +399,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startStream() {
-        Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
-        startActivity(previewActivityIntent);
-    }
-
     private void setOnDataChanged() {
         for (int i = 0; i < goProDevices.size(); i++) {
             GoProDevice goProDevice = goProDevices.get(i);
@@ -380,7 +412,6 @@ public class MainActivity extends AppCompatActivity {
         goListView.setAdapter(goListAdapter);
         setOnDataChanged();
     }
-
 
     public void onClickPair(View v) {
         Intent i = new Intent(getApplicationContext(), PairActivity.class);
@@ -423,30 +454,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@SuppressLint("MissingPermission")
-    public void onClickWifiApOn(View v) {
-        if (goProDevices.size() <= 0) {
-            Toast.makeText(getApplicationContext(), "Please connect/pair devices", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).wifiApOn();
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    public void onClickWifiApOff(View v) {
-        if (goProDevices.size() <= 0) {
-            Toast.makeText(getApplicationContext(), "Please connect/pair devices", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).wifiApOff();
-        }
-    }*/
-
     @SuppressLint("MissingPermission")
     public void onClickHighlight(View v) {
         if (goProDevices.size() <= 0) {
@@ -472,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
                     if (goProDevices.size() > 0) {
                         for (int i = 0; i < goProDevices.size(); i++) {
                             GoProDevice goProDevice = goProDevices.get(i);
-                            if (Objects.equals(goProDevice.Address, device.getAddress())) {
+                            if (Objects.equals(goProDevice.btMacAddr, device.getAddress())) {
                                 inList = true;
                             }
                         }
@@ -483,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
-                        goProDevice.Address = deviceHardwareAddress;
+                        goProDevice.btMacAddr = deviceHardwareAddress;
                         if (MyApplication.checkBtDevConnected(device)) {
                             goProDevice.disconnectBt();
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
