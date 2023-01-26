@@ -13,22 +13,41 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <com.google.android.exoplayer2.ui.StyledPlayerView
-            android:id="@+id/vid_player_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:keepScreenOn="true"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:visibility="visible"
-            app:buffered_color="#C1A5A5A5"
-            app:played_color="#009FE0"
-            app:resize_mode="fit"
-            app:show_buffering="when_playing"
-            app:show_shuffle_button="true"
-            app:unplayed_color="#C15A5A5A"
-            app:use_controller="true" >
+            android:layout_height="wrap_content">
 
-        </com.google.android.exoplayer2.ui.StyledPlayerView>
+            <ImageView
+                android:id="@+id/imagePlayer"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_no_photography_24" />
+
+            <com.google.android.exoplayer2.ui.StyledPlayerView
+                android:id="@+id/vid_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:keepScreenOn="true"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:buffered_color="#C1A5A5A5"
+                app:played_color="#009FE0"
+                app:resize_mode="fit"
+                app:show_buffering="when_playing"
+                app:show_shuffle_button="true"
+                app:unplayed_color="#C15A5A5A"
+                app:use_controller="true"
+                tools:layout_editor_absoluteY="803dp">
+
+            </com.google.android.exoplayer2.ui.StyledPlayerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textView3"

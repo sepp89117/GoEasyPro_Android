@@ -25,13 +25,16 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,6 +44,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -59,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView goListView;
     private View mLayout;
     private OkHttpClient client = new OkHttpClient();
+    private boolean wifi_granted = false;
+    JSONObject settingsValues = null;
+    private int lastCamClickedIndex = -1;
 
     private static final int BT_PERMISSIONS_CODE = 87;
     private static final int WIFI_PERMISSIONS_CODE = 41;
@@ -83,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.CHANGE_WIFI_STATE
     };
-    private boolean wifi_granted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,25 +142,23 @@ public class MainActivity extends AppCompatActivity {
         setOnDataChanged();
     }
 
-    private int lastCamClickedIndex = -1;
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         MenuInflater inflater = getMenuInflater();
-        if(lastCamClickedIndex < 0) {
+        if (lastCamClickedIndex < 0) {
             lastCamClickedIndex = info.position;
         }
 
-        menu.setHeaderTitle(goProDevices.get(lastCamClickedIndex).name);
+        menu.setHeaderTitle(goProDevices.get(lastCamClickedIndex).displayName);
 
         if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_CONNECTED)
             inflater.inflate(R.menu.connected_dev_menu, menu);
         else if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_NOT_CONNECTED)
             inflater.inflate(R.menu.not_connected_dev_menu, menu);
         else
-            Toast.makeText(this,"Please wait until the connection has been established!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please wait until the connection has been established!", Toast.LENGTH_SHORT).show();
     }
 
     // menu item select listener
@@ -156,10 +166,48 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         int position = lastCamClickedIndex;
         GoProDevice goProDevice = goProDevices.get(position);
+        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevice);
 
         switch (item.getItemId()) {
+            case R.id.dev_settings:
+                Intent goSettingsActivityIntent = new Intent(MainActivity.this, GoSettingsActivity.class);
+                startActivity(goSettingsActivityIntent);
+                break;
+            case R.id.dev_rename:
+                final EditText name_input = new EditText(MainActivity.this);
+                name_input.setText(goProDevice.displayName);
+                name_input.requestFocus();
+                name_input.selectAll();
+
+                InputFilter[] filterArray = new InputFilter[1];
+                filterArray[0] = new InputFilter.LengthFilter(10);
+                name_input.setFilters(filterArray);
+
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                AlertDialog devRenameAlert = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Rename " + goProDevice.displayName)
+                        .setMessage("Enter a new name!\nMin. 1 and max. 10 characters!")
+                        .setView(name_input)
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            inputMethodManager.hideSoftInputFromWindow(name_input.getWindowToken(), 0);
+                            String newName = name_input.getText().toString();
+                            if (newName.length() > 0)
+                                goProDevice.saveNewDisplayName(name_input.getText().toString());
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            inputMethodManager.hideSoftInputFromWindow(name_input.getWindowToken(), 0);
+                            dialog.cancel();
+                        })
+                        .setCancelable(true)
+                        .create();
+
+                devRenameAlert.show();
+                break;
             case R.id.dev_info:
                 String sb = "Device name: " + goProDevice.name + "\n" +
+                        "Display name" + goProDevice.displayName + "\n" +
                         "Model name: " + goProDevice.modelName + "\n" +
                         "Model ID: " + goProDevice.modelID + "\n" + "\n" +
                         "Board type: " + goProDevice.boardType + "\n" +
@@ -212,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.browse:
                 // Browse storage
-                if(goProDevice.isBusy) {
+                if (goProDevice.isBusy) {
                     runOnUiThread(() -> {
                         Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
                     });
@@ -237,28 +285,29 @@ public class MainActivity extends AppCompatActivity {
                         goProDevice.connectWifi(() -> {
                             alert.dismiss();
                             //onWifiConnected
-                            Request request = new Request.Builder()
-                                    .url(goProDevice.getMediaList_query)
-                                    .build();
-                            Log.d("HTTP GET", goProDevice.getMediaList_query);
-                            try (Response response = client.newCall(request).execute()) {
-                                if (response.isSuccessful()) {
-                                    Log.d("HTTP GET", "successful");
-                                    String resp_Str = response.body().string();
-                                    JSONObject mainObject = new JSONObject(resp_Str);
-
+                            if(goProDevice.isWifiConnected) {
+                                Request request = new Request.Builder()
+                                        .url(goProDevice.getMediaList_query)
+                                        .build();
+                                Log.d("HTTP GET", goProDevice.getMediaList_query);
+                                try (Response response = client.newCall(request).execute()) {
+                                    if (response.isSuccessful()) {
+                                        Log.d("HTTP GET", "successful");
+                                        String resp_Str = response.body().string();
+                                        JSONObject mainObject = new JSONObject(resp_Str);
+                                        parseMediaList(mainObject, goProDevice);
+                                    } else if (response.code() == 404) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show();
+                                        });
+                                    }
+                                } catch (Exception ex) {
+                                    Log.e("HTTP GET error", ex.toString());
                                     runOnUiThread(() -> {
-                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevice);
+                                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                                     });
-                                    parseMediaList(mainObject, goProDevice);
                                 }
-                            } catch (Exception ex) {
-                                Log.e("HTTP GET error", ex.toString());
-                                runOnUiThread(() -> {
-                                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                                });
                             }
-
                         });
                     } else {
                         requestWifiPermissions();
@@ -267,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.preview:
-                if(goProDevice.isBusy) {
+                if (goProDevice.isBusy) {
                     runOnUiThread(() -> {
                         Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
                     });
@@ -301,15 +350,18 @@ public class MainActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     String resp_Str = "" + response.body().string();
                                     Log.d("HTTP GET response", resp_Str);
-                                    //live stream available
+                                    // preview stream available
                                     runOnUiThread(() -> {
-                                        ((MyApplication) this.getApplication()).setFocusedDevice(goProDevice);
                                         Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
                                         startActivity(previewActivityIntent);
                                     });
+                                } else if (response.code() == 404) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show();
+                                    });
                                 } else {
                                     runOnUiThread(() -> {
-                                        Toast.makeText(getApplicationContext(), "The live stream is currently unavailable", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "The preview stream is currently unavailable", Toast.LENGTH_SHORT).show();
                                     });
                                 }
                             } catch (Exception ex) {
@@ -332,6 +384,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.try_connect:
                 //Try to connect
                 goProDevice.connectBt(connected -> {
+                    if (!connected)
+                        runOnUiThread(() -> Toast.makeText(this, "Something went wrong. Is the GoPro powered on?", Toast.LENGTH_SHORT).show());
+
                     runOnUiThread(() -> goListView.setAdapter(goListAdapter));
                 });
                 break;
@@ -339,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
                 //Delete device
                 AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Delete device")
-                        .setMessage("Are you sure you want to delete " + goProDevice.name + "?")
+                        .setMessage("Are you sure you want to delete " + goProDevice.displayName + "?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                             @Override
@@ -371,8 +426,17 @@ public class MainActivity extends AppCompatActivity {
                     GoMediaFile goMediaFile = new GoMediaFile();
                     JSONObject file = files.getJSONObject(i2);
 
+                    if (file.has("g")) {
+                        goMediaFile.isGroup = true;
+                        if (file.has("b") && file.has("l")) {
+                            goMediaFile.groupBegin = file.getString("b");
+                            goMediaFile.groupLast = file.getString("l");
+                        }
+                    }
+
                     goMediaFile.fileName = file.getString("n");
-                    goMediaFile.path = "http://10.5.5.9:8080/videos/DCIM/" + dir_name + "/" + goMediaFile.fileName;
+                    goMediaFile.extension = goMediaFile.fileName.substring(goMediaFile.fileName.lastIndexOf('.')).toLowerCase();
+                    goMediaFile.url = "http://10.5.5.9:8080/videos/DCIM/" + dir_name + "/" + goMediaFile.fileName;
                     goMediaFile.thumbNail_path = goProDevice.getThumbNail_query + dir_name + "/" + goMediaFile.fileName;
 
                     long lastModifiedS = Long.parseLong(file.getString("mod"));
@@ -467,6 +531,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startApp() {
+        loadSettingsValuesFromRes();
+
         btn_pair.setEnabled(true);
         @SuppressLint("MissingPermission") Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
@@ -485,12 +551,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice();
-                        goProDevice.context = getApplicationContext();
+                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
                         goProDevice.btMacAddr = deviceHardwareAddress;
+                        goProDevice.settingsValues = settingsValues;
                         if (MyApplication.checkBtDevConnected(device)) {
                             goProDevice.disconnectBt();
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
@@ -500,6 +566,41 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+        }
+    }
+
+    private void loadSettingsValuesFromRes() {
+        InputStream is = getResources().openRawResource(R.raw.go_settings);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+        } catch (Exception ignored) {
+
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String jsonString = writer.toString();
+        try {
+            settingsValues = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (settingsValues == null) {
+            runOnUiThread(() -> {
+                Toast.makeText(this, "An error happened. Please restart the app!", Toast.LENGTH_SHORT).show();
+                finish();
+            });
         }
     }
 

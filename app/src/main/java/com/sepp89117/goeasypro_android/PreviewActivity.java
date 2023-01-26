@@ -82,7 +82,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     private final Thread ffmpegThread = new Thread(() -> {
         try {
-            final String command = "-fflags nobuffer -flags low_delay -f:v mpegts -an -probesize 64 -i " + stream_input_uri + " -f mpegts -vcodec copy udp://localhost:8555?pkt_size=1316";
+            final String command = "-fflags nobuffer -flags low_delay -f:v mpegts -an -probesize 100000 -i " + stream_input_uri + " -f mpegts -vcodec copy udp://localhost:8555?pkt_size=1316"; // -probesize 100000 is minimum for Hero 10
 
             FFmpegKit.execute(command);
 

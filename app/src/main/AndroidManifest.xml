@@ -10,14 +10,26 @@
         android:required="true" />
     <uses-feature
         android:name="android.hardware.wifi"
-        android:required="false" /> <!-- BT permissions for Android S up -->
+        android:required="false" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+
+    <!-- BT permissions for Android S up -->
     <uses-permission
         android:name="android.permission.BLUETOOTH_SCAN"
         android:minSdkVersion="31"
         android:usesPermissionFlags="neverForLocation" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_CONNECT"
-        android:minSdkVersion="31" /> <!-- BT permissions for Android R down -->
+        android:minSdkVersion="31" />
+
+    <!-- BT permissions for Android R down -->
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
@@ -27,16 +39,22 @@
     <uses-permission
         android:name="android.permission.ACCESS_COARSE_LOCATION"
         android:maxSdkVersion="30" />
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Wifi permissions for Android Q up -->
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Wifi permissions for Android Q up -->
     <uses-permission
         android:name="android.permission.ACCESS_NETWORK_STATE"
         android:minSdkVersion="29" />
     <uses-permission
         android:name="android.permission.CHANGE_NETWORK_STATE"
-        android:minSdkVersion="29" /> <!-- Wifi permissions for Android P down -->
+        android:minSdkVersion="29" />
+
+    <!-- Wifi permissions for Android P down -->
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
-        android:maxSdkVersion="28" />
+        android:maxSdkVersion="30" />
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
         android:maxSdkVersion="28" />
@@ -55,11 +73,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoPro_RC"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
         <activity
-            android:name=".StorageBrowserActivity"
-            android:screenOrientation="portrait"
+            android:name=".GoSettingsActivity"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".StorageBrowserActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

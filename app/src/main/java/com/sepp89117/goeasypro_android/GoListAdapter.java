@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnClickListener {
+public class GoListAdapter extends ArrayAdapter<GoProDevice> {
     Context context;
     private final ArrayList<GoProDevice> goProDevices;
     private static LayoutInflater inflater = null;
@@ -28,11 +28,6 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
         this.context = context;
         this.goProDevices = goProDevices;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     @Override
@@ -68,7 +63,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> implements View.OnC
         ImageView batt_symbol = rowView.findViewById(R.id.batt_symbol);
         //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
 
-        name.setText(goProDevice.name);
+        name.setText(goProDevice.displayName);
 
         //Mode icon select
         /*switch (goProDevice.Mode) {

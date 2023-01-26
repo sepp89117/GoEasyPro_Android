@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/listitem_selector"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/name"
@@ -37,14 +39,13 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1.1"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:padding="3dp"
         android:paddingStart="10dp">
 
         <TextView
             android:id="@+id/preset2"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="24dp"
             android:gravity="bottom"
             android:paddingBottom="2dp"
@@ -55,7 +56,7 @@
 
         <TextView
             android:id="@+id/preset"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NC"
             android:textColor="#fff"
@@ -66,13 +67,12 @@
         android:id="@+id/sd_field"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <ImageView
             android:id="@+id/sd_symbol"
-            android:layout_width="match_parent"
+            android:layout_width="70dp"
             android:layout_height="24dp"
             android:contentDescription="SD-Card"
             android:src="@drawable/ic_baseline_sd_card_24" />
@@ -90,13 +90,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <ImageView
             android:id="@+id/batt_symbol"
-            android:layout_width="match_parent"
+            android:layout_width="40dp"
             android:layout_height="24dp"
             android:contentDescription="Battery"
             android:rotation="270"
@@ -115,13 +114,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.9"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <ImageView
             android:id="@+id/bt_symbol"
-            android:layout_width="match_parent"
+            android:layout_width="35dp"
             android:layout_height="24dp"
             android:contentDescription="BT-Symbol"
             android:src="@drawable/ic_baseline_bluetooth_24" />

@@ -28,5 +28,9 @@
         </menu>
     </item>
 
+    <item android:id="@+id/dev_settings" android:title="Settings" />
+
+    <item android:id="@+id/dev_rename" android:title="Rename" />
+
     <item android:id="@+id/dev_info" android:title="Device info" />
 </menu>

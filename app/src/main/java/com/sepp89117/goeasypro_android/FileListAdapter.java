@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -17,7 +18,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class FileListAdapter extends ArrayAdapter<GoMediaFile> implements View.OnClickListener {
+public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
     Context context;
     private final ArrayList<GoMediaFile> goMediaFiles;
     private static LayoutInflater inflater = null;
@@ -28,11 +29,6 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> implements View.O
         this.context = context;
         this.goMediaFiles = goMediaFiles;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     @Override
@@ -50,27 +46,54 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> implements View.O
         return position;
     }
 
+    static class ViewHolder {
+        private TextView name;
+        private TextView date;
+        private TextView size;
+        private TextView multishot_size;
+        private ImageView tn;
+        private LinearLayout multishot_layout;
+    }
+
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        View rowView = inflater.inflate(R.layout.filelist_item, null, true);
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        ViewHolder mViewHolder;
 
+        if (convertView == null) {
+            mViewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.filelist_item, null, true);
+
+            mViewHolder.name = convertView.findViewById(R.id.file_name_text);
+            mViewHolder.date = convertView.findViewById(R.id.file_date_text);
+            mViewHolder.size = convertView.findViewById(R.id.file_size_text);
+            mViewHolder.multishot_size = convertView.findViewById(R.id.multishot_size);
+            mViewHolder.tn = convertView.findViewById(R.id.thumbNail_view);
+            mViewHolder.multishot_layout = convertView.findViewById(R.id.multishot_layout);
+
+            convertView.setTag(mViewHolder);
+        } else {
+            mViewHolder = (ViewHolder) convertView.getTag();
+        }
+        
         GoMediaFile goMediaFile = goMediaFiles.get(position);
-
         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault());
 
-        TextView name = rowView.findViewById(R.id.file_name_text);
-        TextView date = rowView.findViewById(R.id.file_date_text);
-        TextView size = rowView.findViewById(R.id.file_size_text);
-        ImageView tn = rowView.findViewById(R.id.thumbNail_view);
+        mViewHolder.name.setText(goMediaFile.fileName);
+        mViewHolder.date.setText(f.format(goMediaFile.lastModified));
+        mViewHolder.size.setText(readableFileSize(goMediaFile.fileByteSize));
 
-        name.setText(goMediaFile.fileName);
-        date.setText(f.format(goMediaFile.lastModified));
-        size.setText(readableFileSize(goMediaFile.fileByteSize));
+        if(goMediaFile.isGroup) {
+            String mSize = String.valueOf(Integer.parseInt(goMediaFile.groupLast) - Integer.parseInt(goMediaFile.groupBegin) + 1);
+            mViewHolder.multishot_size.setText(mSize);
+            mViewHolder.multishot_layout.setVisibility(View.VISIBLE);
+        } else {
+            mViewHolder.multishot_layout.setVisibility(View.INVISIBLE);
+        }
 
         if(goMediaFile.thumbNail != null)
-            tn.setImageBitmap(goMediaFile.thumbNail);
+            mViewHolder.tn.setImageBitmap(goMediaFile.thumbNail);
 
-        return rowView;
+        return convertView;
     }
 
     public static String readableFileSize(long size) {

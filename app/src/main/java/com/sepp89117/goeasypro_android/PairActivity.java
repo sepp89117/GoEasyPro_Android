@@ -33,8 +33,6 @@ import java.util.Objects;
 import java.util.Set;
 
 public class PairActivity extends AppCompatActivity {
-
-
     private ListView listView;
     private ArrayList<String> mDeviceStrList;
     private ArrayList<GoProDevice> goProDevices;
@@ -146,7 +144,6 @@ public class PairActivity extends AppCompatActivity {
         }
     }
 
-
     @SuppressLint("MissingPermission")
     private void findBtDevices() {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
@@ -169,22 +166,16 @@ public class PairActivity extends AppCompatActivity {
                     }
 
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice();
-                        goProDevice.context = getApplicationContext();
+                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
                         goProDevice.btMacAddr = deviceHardwareAddress;
-                        //try {
-                        //Method m = device.getClass().getMethod("isConnected", (Class[]) null);
-                        //boolean connected = (boolean) m.invoke(device, (Object[]) null);
+
                         if (MyApplication.checkBtDevConnected(device)) {
                             goProDevice.disconnectBt();
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
                         }
-                        //} catch (Exception e) {
-                        //    //throw new IllegalStateException(e);
-                        //}
 
                         goProDevices.add(goProDevice);
                         if (goProDevice.btConnectionStage == BT_CONNECTED) {
@@ -278,10 +269,10 @@ public class PairActivity extends AppCompatActivity {
                         return;
                     }
                 }
+
                 //is not a paired device
                 if (deviceName != null && deviceName.contains("GoPro ")) {
-                    GoProDevice goProDevice = new GoProDevice();
-                    goProDevice.context = getApplicationContext();
+                    GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
                     goProDevice.bluetoothDevice = device;
                     goProDevice.name = deviceName;
                     goProDevice.btMacAddr = deviceHardwareAddress;
