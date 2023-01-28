@@ -166,7 +166,7 @@ public class PairActivity extends AppCompatActivity {
                     }
 
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
+                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), this.getApplication(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
@@ -272,7 +272,7 @@ public class PairActivity extends AppCompatActivity {
 
                 //is not a paired device
                 if (deviceName != null && deviceName.contains("GoPro ")) {
-                    GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
+                    GoProDevice goProDevice = new GoProDevice(getApplicationContext(), PairActivity.this.getApplication(), deviceName);
                     goProDevice.bluetoothDevice = device;
                     goProDevice.name = deviceName;
                     goProDevice.btMacAddr = deviceHardwareAddress;

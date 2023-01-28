@@ -13,41 +13,39 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imagePlayer"
-                android:layout_width="0dp"
-                android:layout_height="240dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_no_photography_24" />
 
             <com.google.android.exoplayer2.ui.StyledPlayerView
                 android:id="@+id/vid_player_view"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="match_parent"
                 android:keepScreenOn="true"
                 android:scrollbarAlwaysDrawHorizontalTrack="true"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:buffered_color="#C1A5A5A5"
                 app:played_color="#009FE0"
                 app:resize_mode="fit"
                 app:show_buffering="when_playing"
                 app:show_shuffle_button="true"
                 app:unplayed_color="#C15A5A5A"
-                app:use_controller="true"
-                tools:layout_editor_absoluteY="803dp">
+                app:use_controller="true">
 
             </com.google.android.exoplayer2.ui.StyledPlayerView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/textView3"
@@ -62,7 +60,8 @@
         <ListView
             android:id="@+id/file_listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:choiceMode="singleChoice"
             android:listSelector="@drawable/listitem_selector"
             tools:listitem="@layout/filelist_item" />

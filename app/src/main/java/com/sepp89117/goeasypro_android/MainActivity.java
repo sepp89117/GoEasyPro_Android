@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     private View mLayout;
     private OkHttpClient client = new OkHttpClient();
     private boolean wifi_granted = false;
-    JSONObject settingsValues = null;
     private int lastCamClickedIndex = -1;
 
     private static final int BT_PERMISSIONS_CODE = 87;
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.dev_info:
                 String sb = "Device name: " + goProDevice.name + "\n" +
-                        "Display name" + goProDevice.displayName + "\n" +
+                        "Display name: " + goProDevice.displayName + "\n" +
                         "Model name: " + goProDevice.modelName + "\n" +
                         "Model ID: " + goProDevice.modelID + "\n" + "\n" +
                         "Board type: " + goProDevice.boardType + "\n" +
@@ -260,10 +260,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.browse:
                 // Browse storage
+                WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+                if (wifi != null && !wifi.isWifiEnabled()){
+                    if(!wifi.setWifiEnabled(true)) {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please enable WiFi!", Toast.LENGTH_SHORT).show());
+                        return true;
+                    }
+                }
+
                 if (goProDevice.isBusy) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
-                    });
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show());
                     return true;
                 }
 
@@ -271,12 +277,13 @@ public class MainActivity extends AppCompatActivity {
                     if (hasWifiPermissions()) {
                         if (Objects.equals(goProDevice.startStream_query, "")) {
                             Log.e("goProDevices", "ModelID unknown!");
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Unknown cam model!", Toast.LENGTH_SHORT).show());
                             return true;
                         }
 
                         AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Connecting")
-                                .setMessage("Please wait while the WiFi connection is established!")
+                                .setTitle("Connecting to " + goProDevice.wifiSsid)
+                                .setMessage("Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!")
                                 .setCancelable(true)
                                 .create();
 
@@ -297,15 +304,11 @@ public class MainActivity extends AppCompatActivity {
                                         JSONObject mainObject = new JSONObject(resp_Str);
                                         parseMediaList(mainObject, goProDevice);
                                     } else if (response.code() == 404) {
-                                        runOnUiThread(() -> {
-                                            Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show();
-                                        });
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
                                     }
                                 } catch (Exception ex) {
                                     Log.e("HTTP GET error", ex.toString());
-                                    runOnUiThread(() -> {
-                                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                                    });
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show());
                                 }
                             }
                         });
@@ -316,10 +319,16 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.preview:
+                WifiManager wifi2 = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+                if (wifi2 != null && !wifi2.isWifiEnabled()){
+                    if(!wifi2.setWifiEnabled(true)) {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please enable WiFi!", Toast.LENGTH_SHORT).show());
+                        return true;
+                    }
+                }
+
                 if (goProDevice.isBusy) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show();
-                    });
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "The camera is currently busy.\nPlease try again later!", Toast.LENGTH_SHORT).show());
                     return true;
                 }
 
@@ -328,12 +337,13 @@ public class MainActivity extends AppCompatActivity {
                     if (hasWifiPermissions()) {
                         if (Objects.equals(goProDevice.startStream_query, "")) {
                             Log.e("goProDevices", "ModelID unknown!");
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Unknown cam model!", Toast.LENGTH_SHORT).show());
                             return true;
                         }
 
                         AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Connecting")
-                                .setMessage("Please wait while the WiFi connection is established!")
+                                .setTitle("Connecting to " + goProDevice.wifiSsid)
+                                .setMessage("Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!")
                                 .setCancelable(true)
                                 .create();
 
@@ -342,35 +352,30 @@ public class MainActivity extends AppCompatActivity {
                         goProDevice.connectWifi(() -> {
                             alert.dismiss();
                             //onWifiConnected
-                            Request request = new Request.Builder()
-                                    .url(goProDevice.stopStream_query)
-                                    .build();
-                            Log.d("HTTP GET", goProDevice.stopStream_query);
-                            try (Response response = client.newCall(request).execute()) {
-                                if (response.isSuccessful()) {
-                                    String resp_Str = "" + response.body().string();
-                                    Log.d("HTTP GET response", resp_Str);
-                                    // preview stream available
-                                    runOnUiThread(() -> {
-                                        Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
-                                        startActivity(previewActivityIntent);
-                                    });
-                                } else if (response.code() == 404) {
-                                    runOnUiThread(() -> {
-                                        Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show();
-                                    });
-                                } else {
-                                    runOnUiThread(() -> {
-                                        Toast.makeText(getApplicationContext(), "The preview stream is currently unavailable", Toast.LENGTH_SHORT).show();
-                                    });
+                            if(goProDevice.isWifiConnected) {
+                                Request request = new Request.Builder()
+                                        .url(goProDevice.stopStream_query)
+                                        .build();
+                                Log.d("HTTP GET", goProDevice.stopStream_query);
+                                try (Response response = client.newCall(request).execute()) {
+                                    if (response.isSuccessful()) {
+                                        String resp_Str = "" + response.body().string();
+                                        Log.d("HTTP GET response", resp_Str);
+                                        // preview stream available
+                                        runOnUiThread(() -> {
+                                            Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
+                                            startActivity(previewActivityIntent);
+                                        });
+                                    } else if (response.code() == 404) {
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
+                                    } else {
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "The preview stream is currently unavailable", Toast.LENGTH_SHORT).show());
+                                    }
+                                } catch (Exception ex) {
+                                    Log.e("HTTP GET error", ex.toString());
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show());
                                 }
-                            } catch (Exception ex) {
-                                Log.e("HTTP GET error", ex.toString());
-                                runOnUiThread(() -> {
-                                    Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
-                                });
                             }
-
                         });
                     } else {
                         requestWifiPermissions();
@@ -419,31 +424,12 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i1 = 0; i1 < medias.length(); i1++) {
                 JSONObject media = medias.getJSONObject(i1);
-                String dir_name = media.getString("d");
-                JSONArray files = media.getJSONArray("fs");
+                String directory = media.getString("d");
+                JSONArray filesDataJson = media.getJSONArray("fs");
 
-                for (int i2 = 0; i2 < files.length(); i2++) {
-                    GoMediaFile goMediaFile = new GoMediaFile();
-                    JSONObject file = files.getJSONObject(i2);
-
-                    if (file.has("g")) {
-                        goMediaFile.isGroup = true;
-                        if (file.has("b") && file.has("l")) {
-                            goMediaFile.groupBegin = file.getString("b");
-                            goMediaFile.groupLast = file.getString("l");
-                        }
-                    }
-
-                    goMediaFile.fileName = file.getString("n");
-                    goMediaFile.extension = goMediaFile.fileName.substring(goMediaFile.fileName.lastIndexOf('.')).toLowerCase();
-                    goMediaFile.url = "http://10.5.5.9:8080/videos/DCIM/" + dir_name + "/" + goMediaFile.fileName;
-                    goMediaFile.thumbNail_path = goProDevice.getThumbNail_query + dir_name + "/" + goMediaFile.fileName;
-
-                    long lastModifiedS = Long.parseLong(file.getString("mod"));
-                    long lastModifiedMs = lastModifiedS * 1000;
-                    goMediaFile.lastModified = new Date(lastModifiedMs);
-
-                    goMediaFile.fileByteSize = Long.parseLong(file.getString("s"));
+                for (int i2 = 0; i2 < filesDataJson.length(); i2++) {
+                    JSONObject fileDataJson = filesDataJson.getJSONObject(i2);
+                    GoMediaFile goMediaFile = new GoMediaFile(fileDataJson, directory, goProDevice);
 
                     goMediaFiles.add(goMediaFile);
                 }
@@ -531,8 +517,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startApp() {
-        loadSettingsValuesFromRes();
-
         btn_pair.setEnabled(true);
         @SuppressLint("MissingPermission") Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
@@ -551,12 +535,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), deviceName);
+                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), this.getApplication(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
                         goProDevice.btMacAddr = deviceHardwareAddress;
-                        goProDevice.settingsValues = settingsValues;
                         if (MyApplication.checkBtDevConnected(device)) {
                             goProDevice.disconnectBt();
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
@@ -566,41 +549,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        }
-    }
-
-    private void loadSettingsValuesFromRes() {
-        InputStream is = getResources().openRawResource(R.raw.go_settings);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-        } catch (Exception ignored) {
-
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String jsonString = writer.toString();
-        try {
-            settingsValues = new JSONObject(jsonString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (settingsValues == null) {
-            runOnUiThread(() -> {
-                Toast.makeText(this, "An error happened. Please restart the app!", Toast.LENGTH_SHORT).show();
-                finish();
-            });
         }
     }
 

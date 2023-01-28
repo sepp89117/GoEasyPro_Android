@@ -21,13 +21,11 @@ public class GoSetting {
     private String _settingName = "unknown setting";
     private String _currentOptionName = "unknown option";
     private boolean _isValid = false;
-    private ArrayList<Pair<Integer, Integer>> _availableSettingsOptions = null;
 
     public GoSetting(int settingID, int settingValue, JSONObject settingsValues, ArrayList<Pair<Integer, Integer>> availableSettingsOptions) {
         _settingsValues = settingsValues;
         _settingID = settingID;
         _currentOptionId = settingValue;
-        _availableSettingsOptions = availableSettingsOptions;
 
         try {
             JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
@@ -39,9 +37,9 @@ public class GoSetting {
                 int _optionId = Integer.parseInt(keys.next());
                 String _optionValue = _allOptions.getString(String.valueOf(_optionId));
 
-                if(_availableSettingsOptions != null && _availableSettingsOptions.size() > 0) {
+                if(availableSettingsOptions != null && availableSettingsOptions.size() > 0) {
                     //Test if the option is supported by the current GoPro model
-                    for (Pair<Integer, Integer> settingOption : _availableSettingsOptions) {
+                    for (Pair<Integer, Integer> settingOption : availableSettingsOptions) {
                         int settingId = settingOption.first;
                         int optionId = settingOption.second;
 

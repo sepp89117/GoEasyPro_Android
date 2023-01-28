@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/thumbNail_view"
-            android:layout_width="176dp"
-            android:layout_height="132dp"
+            android:layout_width="160dp"
+            android:layout_height="120dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -31,6 +31,7 @@
                 android:id="@+id/file_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
+                android:layout_marginBottom="10dp"
                 android:text="FILENAME"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
@@ -68,7 +69,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:text="Multishot size:"
+                    android:text="Group size:"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/white"
                     android:textSize="14sp"

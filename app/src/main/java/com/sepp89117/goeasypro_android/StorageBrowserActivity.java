@@ -59,9 +59,13 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private StyledPlayerView playerView;
     private ImageView imagePlayer;
     private ExoPlayer player;
-    private OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
     private FileListAdapter fileListAdapter;
     private GoMediaFile clickedFile = null;
+
+    private int minBufferMs = 12500;
+    private int bufferForPlaybackMs = 10000;
+    private int bufferForPlaybackAfterRebufferMs = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         getThumbNailsAsync();
 
         TextView selFile_textView = findViewById(R.id.textView3);
-        selFile_textView.setText("Select a file from " + focusedDevice.displayName);
+        selFile_textView.setText("Select a file from '" + focusedDevice.displayName + "'");
 
         playerView = findViewById(R.id.vid_player_view);
         imagePlayer = findViewById(R.id.imagePlayer);
@@ -89,16 +93,27 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
             clickedFile = goMediaFiles.get(position);
 
-            if (Objects.equals(clickedFile.extension, ".mp4")) {
-                playerView.setVisibility(View.VISIBLE);
-                imagePlayer.setVisibility(View.INVISIBLE);
-                player.setPlayWhenReady(true);
-                player.prepare();
+            destroyPlayer();
 
-                MediaSource mediaSource = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getApplicationContext())).createMediaSource(MediaItem.fromUri(Uri.parse(clickedFile.url)));
+            if (Objects.equals(clickedFile.extension, ".mp4")) {
+                String videoUrl;
+                if(clickedFile.hasLrv) {
+                    videoUrl = clickedFile.lrvUrl;
+                    minBufferMs = 2500;
+                    bufferForPlaybackMs = 1000;
+                    bufferForPlaybackAfterRebufferMs = 1000;
+                } else {
+                    videoUrl = clickedFile.url;
+                    minBufferMs = 12500;
+                    bufferForPlaybackMs = 10000;
+                    bufferForPlaybackAfterRebufferMs = 10000;
+                }
+
+                createPlayer();
+
+                MediaSource mediaSource = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getApplicationContext())).createMediaSource(MediaItem.fromUri(Uri.parse(videoUrl)));
                 player.setMediaSource(mediaSource);
             } else if (Objects.equals(clickedFile.extension, ".jpg")) {
-                player.stop();
                 playerView.setVisibility(View.INVISIBLE);
                 imagePlayer.setImageResource(R.drawable.ic_baseline_photo_camera_24);
                 imagePlayer.setVisibility(View.VISIBLE);
@@ -137,8 +152,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
         });
 
         fileListView.setAdapter(fileListAdapter);
+    }
 
-        createPlayer();
+    private void destroyPlayer() {
+        if (player != null) {
+            player.stop();
+            player.release();
+            player = null;
+        }
     }
 
     private void getThumbNailsAsync() {
@@ -329,7 +350,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             String fileName = file.getName();
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                String mimeType = getMimeType(file);
+                                String mimeType = goMediaFile.mimeType;
 
                                 if (mimeType == null) {
                                     Log.e("dlFile", "Mime type for file '" + fileName + "' unknown!");
@@ -344,8 +365,22 @@ public class StorageBrowserActivity extends AppCompatActivity {
                                 values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
                                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM + "/GoEasyPro");
 
-                                Uri imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                outputStream = contentResolver.openOutputStream(imageUri);
+                                Uri fileUri = null;
+
+                                if(mimeType.contains("image")) {
+                                    fileUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                } else if(mimeType.contains("video")) {
+                                    fileUri = contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+                                }
+
+                                if (fileUri == null) {
+                                    Log.e("dlFile", "File uri for file '" + fileName + "' unknown!");
+                                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "File uri for file '" + fileName + "' unknown!", Toast.LENGTH_SHORT).show());
+                                    dlAlert.dismiss();
+                                    return;
+                                }
+
+                                outputStream = contentResolver.openOutputStream(fileUri);
                             } else {
                                 outputStream = new FileOutputStream(file);
                             }
@@ -381,24 +416,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    private String getMimeType(File file) {
-        String fileName = file.getName();
-        final String ext = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
-        String mimeType = null;
-
-        //TODO Does GoPro deliver any other file formats?
-        switch (ext) {
-            case ".mp4":
-                mimeType = "video/mp4";
-                break;
-            case ".jpg":
-                mimeType = "image/jpg";
-                break;
-        }
-
-        return mimeType;
     }
 
     private void deleteFile(int pos) {
@@ -490,7 +507,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private void createPlayer() {
         DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
                 .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(12500, 30000, 10000, 10000)
+                .setBufferDurationsMs(minBufferMs, 30000, bufferForPlaybackMs, bufferForPlaybackAfterRebufferMs)
                 .build();
 
         TrackSelector trackSelector = new DefaultTrackSelector(this);
@@ -505,9 +522,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
         player.setPlayWhenReady(true);
         player.prepare();
 
-        playerView.requestFocus();
+        imagePlayer.setVisibility(View.INVISIBLE);
+        playerView.setVisibility(View.VISIBLE);
 
-        Log.i("createPlayer", "Player created");
+        playerView.requestFocus();
     }
 
     private final Player.Listener playerListener = new Player.Listener() {
@@ -536,7 +554,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
             Log.e("onPlayerError", error.getMessage() + "\n" + error.getCause());
         }
     };
-
 
     private boolean hasExtStoragePermissions() {
         if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.Q || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
@@ -578,10 +595,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if (player != null) {
-            player.stop();
-            player.release();
-        }
-        player = null;
+        destroyPlayer();
     }
 }

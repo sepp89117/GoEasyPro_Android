@@ -1,6 +1,7 @@
 package com.sepp89117.goeasypro_android;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -209,6 +210,7 @@ public class GoProDevice {
     private final byte[] statusIDs = {8, 43, 54, 69, 70, 97}; // https://gopro.github.io/OpenGoPro/ble_2_0#status-ids
     public JSONObject settingsValues = null;
     public boolean providesAvailableOptions = true;
+    private Application _application;
 
     //Wifi
     public static final String goProIp = "10.5.5.9";
@@ -226,7 +228,9 @@ public class GoProDevice {
     public String myClientIP;
     private BroadcastReceiver pairingReceiver;
 
-    public GoProDevice(Context context, String deviceName) {
+    public GoProDevice(Context context, Application application, String deviceName) {
+        _application = application;
+        settingsValues = ((MyApplication) _application).getSettingsValues();
         _context = context;
         name = deviceName;
         sharedPreferences = _context.getSharedPreferences("GoProDevices", Context.MODE_PRIVATE);
@@ -1843,6 +1847,9 @@ public class GoProDevice {
             public void run() {
                 if (btConnectionStage < BT_CONNECTED)
                     return;
+
+                if(settingsValues == null)
+                    settingsValues = ((MyApplication) _application).getSettingsValues();
 
                 long now = new Date().getTime();
 

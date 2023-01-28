@@ -83,8 +83,7 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
         mViewHolder.size.setText(readableFileSize(goMediaFile.fileByteSize));
 
         if(goMediaFile.isGroup) {
-            String mSize = String.valueOf(Integer.parseInt(goMediaFile.groupLast) - Integer.parseInt(goMediaFile.groupBegin) + 1);
-            mViewHolder.multishot_size.setText(mSize);
+            mViewHolder.multishot_size.setText(String.valueOf(goMediaFile.groupLength));
             mViewHolder.multishot_layout.setVisibility(View.VISIBLE);
         } else {
             mViewHolder.multishot_layout.setVisibility(View.INVISIBLE);
