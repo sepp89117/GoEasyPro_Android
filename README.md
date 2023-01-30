@@ -5,7 +5,7 @@ Easily control multiple GoPros with your android device with bluetooth<br><br>
 <br><br>
 <img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/GoEasyPro%20Android_v1.5.jpg?raw=true" width="400px">
 
-# Usage information
+## Usage information
 <ul>
   <li>Compile the project with Android Studio and launch the app from there or install a release APK directly on the Android device.</li>
   <li>Open the app and grant the permission requests</li>
@@ -33,29 +33,58 @@ Easily control multiple GoPros with your android device with bluetooth<br><br>
     <li>The Bluetooth symbol shows the connection of the app to the camera in color. The value below is the signal strength in dBm.</li>
 </ul>
 
-# Hardware and software requirements
+## Hardware and software requirements
 - Supported Android versions: 8.1 (O_MR1; API Level 27) to 13 (TIRAMISU; API Level 33) (currently not all tested)
 - Android device with Bluetooth support
 - Android device with WiFi support; only needed for preview stream and media browsing
 
-# Credits and Acknowledgments
+## Credits and Acknowledgments
 - Thanks to [KonradIT](https://github.com/KonradIT) for his support, testing the app with various camera models and also for the helpful information contained in his repositories like [goprowifihack](https://github.com/KonradIT/goprowifihack) and [gopro-py-api](https://github.com/KonradIT/gopro-py-api)!
 - Thanks to the open source library creators listed below
 - Thanks to GoPro for the information in [OpenGoPro](https://gopro.github.io/OpenGoPro)
 
-# Libraries used in this app
+## Libraries used in this app
 - [CascadePopupMenu](https://github.com/saket/cascade) with [Apache-2.0 license](https://github.com/saket/cascade/blob/trunk/LICENSE.txt) by [saket](https://github.com/saket)
 - [ffmpeg-kit-min](https://github.com/arthenica/ffmpeg-kit) with [LGPL-3.0 license](https://github.com/arthenica/ffmpeg-kit/blob/main/LICENSE) by [arthenica](https://github.com/arthenica)
 - [OkHttp](https://github.com/square/okhttp) with [Apache-2.0 license](https://github.com/square/okhttp/blob/master/LICENSE.txt) by [square](https://github.com/square)
 - [ExoPlayer](https://github.com/google/ExoPlayer) with [Apache-2.0 license](https://github.com/google/ExoPlayer/blob/release-v2/LICENSE) by [google](https://github.com/google)
 
-# Debugging on
+## Debugging on
 - Samsung Galaxy S10 (Android 12)
 - Xiaomi Redmi Note 11s (Android 11)
 - Samsung Tab S4 (Android 10)
 - with Hero5 Black, Hero8 Black and Hero10 Black only!<br>
-
-If you have trouble with other Android devices or other camera models, please open a detailed issue.
-
+<br><br>
 I hope you can help to get the app running safely on other smartphones too!
 Feel free to create an issue!
+
+## Overview of features and compatible GoPro models
+| Feature                                   | HERO11/Mini | HERO10 | HERO9 | MAX | HERO8 | HERO7 | HERO6 | HERO5 |
+|-------------------------------------------|-------------|--------|-------|-----|-------|-------|-------|-------|
+| Full Bluetooth pairing                    |             | yes    |       |     | yes   |       |       | yes   |
+| Connect Bluetooth                         |             | yes    |       |     | yes   |       |       | yes   |
+| Get status values                         |             | yes    |       |     | yes   |       |       | yes   |
+| Get current values of settings            |             | yes    |       |     | yes   |       |       | yes   |
+| Get available options for settings        |             | yes    |       |     | no    |       |       | yes   |
+| Set settings                              |             | yes    |       |     | yes   |       |       | yes   |
+| Device controls                           |             | yes    |       |     | yes   |       |       | yes   |
+| Live preview                              |             | yes    |       |     | yes   |       |       | yes   |
+| Browse storage                            |             | yes    |       |     | yes   |       |       | yes   |
+| Download files                            |             | yes    |       |     | yes   |       |       | yes   |
+| Delete files                              |             | yes    |       |     | yes   |       |       | yes   |
+| Rename camera in app                      |             | yes    |       |     | yes   |       |       | yes   |
+| Device information                        |             | yes    |       |     | yes   |       |       | yes   |
+
+<b>A camera firmware update may be necessary for some functions</b>
+
+## Report issues
+If you have trouble with anything, please open a detailed issue.
+- Manufacturer and model of the Android device
+- Android version of the device
+- Camera model
+- Firmware version of the camera
+- Short description of the problem
+- What steps triggered the problem?
+- Are there any error messages?
+- Do you have an extract from the android log?
+
