@@ -1,36 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.MainActivity" >
 
-    <item android:id="@+id/control" android:title="Control" >
+    <item
+        android:id="@+id/control"
+        android:icon="@drawable/control_symbol"
+        android:title="Device control">
         <menu>
-            <item android:id="@+id/locate_on" android:title="Locate: on" />
-            <item android:id="@+id/locate_off" android:title="Locate: off" />
-            <item android:id="@+id/shutter_on" android:title="Shutter: on" />
-            <item android:id="@+id/shutter_off" android:title="Shutter: off" />
-            <item android:id="@+id/set_date_time" android:title="Set Date/Time" />
+            <item
+                android:id="@+id/locate_on"
+                android:icon="@drawable/radar_symbol"
+                android:title="Enable localization" />
+            <item
+                android:id="@+id/locate_off"
+                android:icon="@drawable/radar_off_symbol"
+                android:title="Disable localization" />
+            <item
+                android:id="@+id/shutter_on"
+                android:icon="@drawable/shutter2_symbol"
+                android:title="Enable Shutter" />
+            <item
+                android:id="@+id/shutter_off"
+                android:icon="@drawable/shutter2_off_symbol"
+                android:title="Disable Shutter" />
+            <item
+                android:id="@+id/set_date_time"
+                android:icon="@drawable/clock_symbol"
+                android:title="Set Date/Time" />
+            <item
+                android:id="@+id/put_sleep"
+                android:icon="@drawable/sleep_symbol"
+                android:title="Put to sleep" />
         </menu>
     </item>
 
-    <item android:id="@+id/connection" android:title="Connection" >
+    <item
+        android:id="@+id/connection"
+        android:icon="@drawable/connect_symbol"
+        android:title="Connection">
         <menu>
-            <item android:id="@+id/ap_on" android:title="WiFi AP: on" />
-            <item android:id="@+id/ap_off" android:title="WiFi AP: off" />
-            <item android:id="@+id/put_sleep" android:title="Put to sleep" />
-            <item android:id="@+id/disconnect" android:title="Disconnect" />
-            <item android:id="@+id/del_device" android:title="Delete device" />
+            <item
+                android:id="@+id/ap_on"
+                android:icon="@drawable/wifi_on_symbol"
+                android:title="Enable WiFi AP" />
+            <item
+                android:id="@+id/ap_off"
+                android:icon="@drawable/wifi_off_symbol"
+                android:title="Disable WiFi AP" />
+            <item
+                android:id="@+id/disconnect"
+                android:icon="@drawable/disconnect_symbol"
+                android:title="Disconnect" />
+            <item
+                android:id="@+id/del_device"
+                android:icon="@drawable/delete_symbol"
+                android:title="Delete device" />
         </menu>
     </item>
 
-    <item android:id="@+id/media" android:title="Media" >
+    <item
+        android:id="@+id/media"
+        android:icon="@drawable/collections_symbol"
+        android:title="Media">
         <menu>
-            <item android:id="@+id/preview" android:title="Live preview" />
-            <item android:id="@+id/browse" android:title="Browse storage" />
+            <item
+                android:id="@+id/preview"
+                android:icon="@drawable/preview_symbol"
+                android:title="Start live preview" />
+            <item
+                android:id="@+id/browse"
+                android:icon="@drawable/sd_card_symbol"
+                android:title="Browse storage" />
         </menu>
     </item>
 
-    <item android:id="@+id/dev_settings" android:title="Settings" />
+    <item
+        android:id="@+id/dev_settings"
+        android:icon="@drawable/settings_symbol"
+        android:title="Device settings" />
 
-    <item android:id="@+id/dev_rename" android:title="Rename" />
+    <item
+        android:id="@+id/dev_rename"
+        android:icon="@drawable/rename_symbol"
+        android:title="Rename device" />
 
-    <item android:id="@+id/dev_info" android:title="Device info" />
+    <item
+        android:id="@+id/dev_info"
+        android:icon="@drawable/info_symbol"
+        android:title="Device information" />
 </menu>

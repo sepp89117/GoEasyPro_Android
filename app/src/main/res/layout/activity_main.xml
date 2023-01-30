@@ -5,8 +5,8 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1c1c1c"
     android:minHeight="20dp"
+    android:background="@color/darkgray"
     tools:context=".MainActivity">
 
     <LinearLayout

@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.arthenica.ffmpegkit.FFmpegKit;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -51,6 +52,11 @@ public class PreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_preview);
 
         init();

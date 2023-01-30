@@ -17,6 +17,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MyApplication extends Application {
@@ -56,6 +57,12 @@ public class MyApplication extends Application {
 
     }
 
+    public static String getReadableFileSize(long size) {
+        if(size <= 0) return "0";
+        final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
+        int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
 
     private GoProDevice _focusedDevice = null;
 
@@ -106,12 +113,5 @@ public class MyApplication extends Application {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        /*if (settingsValues == null) {
-            runOnUiThread(() -> {
-                Toast.makeText(this, "An error happened. Please restart the app!", Toast.LENGTH_SHORT).show();
-                finish();
-            });
-        }*/
     }
 }

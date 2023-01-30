@@ -1,10 +1,8 @@
 package com.sepp89117.goeasypro_android;
 
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_CONNECTED;
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_NOT_CONNECTED;
+import static com.sepp89117.goeasypro_android.MyApplication.getReadableFileSize;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +78,7 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
 
         mViewHolder.name.setText(goMediaFile.fileName);
         mViewHolder.date.setText(f.format(goMediaFile.lastModified));
-        mViewHolder.size.setText(readableFileSize(goMediaFile.fileByteSize));
+        mViewHolder.size.setText(getReadableFileSize(goMediaFile.fileByteSize));
 
         if(goMediaFile.isGroup) {
             mViewHolder.multishot_size.setText(String.valueOf(goMediaFile.groupLength));
@@ -93,12 +91,5 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
             mViewHolder.tn.setImageBitmap(goMediaFile.thumbNail);
 
         return convertView;
-    }
-
-    public static String readableFileSize(long size) {
-        if(size <= 0) return "0";
-        final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
-        int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 }

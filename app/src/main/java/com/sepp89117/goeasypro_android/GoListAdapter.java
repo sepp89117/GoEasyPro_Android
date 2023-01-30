@@ -61,6 +61,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         ImageView sd_symbol = rowView.findViewById(R.id.sd_symbol);
         ImageView bt_symbol = rowView.findViewById(R.id.bt_symbol);
         ImageView batt_symbol = rowView.findViewById(R.id.batt_symbol);
+        ImageView shutter_symbol = rowView.findViewById(R.id.shutter_symbol);
         //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
 
         name.setText(goProDevice.displayName);
@@ -94,11 +95,18 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             sd_symbol.setColorFilter(Color.RED); // AP not available
         }
 
+        if(goProDevice.isRecording) {
+            shutter_symbol.setVisibility(View.VISIBLE);
+        } else {
+            shutter_symbol.setVisibility(View.INVISIBLE);
+        }
+
+        model.setText(goProDevice.modelName);
+
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
             name.setTextColor(LIGHTBLUE);
             rssi.setText(String.valueOf(goProDevice.btRssi));
             battery.setText(String.format("%d%%", goProDevice.remainingBatteryPercent));
-            model.setText(goProDevice.modelName);
             preset.setText(goProDevice.Preset);
             memory.setText(goProDevice.remainingMemory);
 
@@ -121,16 +129,17 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         } else {
             rssi.setText("NC");
             battery.setText("NC");
-            model.setText(goProDevice.modelName);
             preset.setText("NC");
             memory.setText("NC");
 
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {
                 name.setTextColor(Color.RED);
                 bt_symbol.setColorFilter(Color.RED);
-            } else {
+                batt_symbol.setColorFilter(Color.RED);
+            } else { // BT_CONNECTING || BT_FETCHING_DATA
                 name.setTextColor(ORANGE);
                 bt_symbol.setColorFilter(ORANGE);
+                batt_symbol.setColorFilter(ORANGE);
             }
         }
 

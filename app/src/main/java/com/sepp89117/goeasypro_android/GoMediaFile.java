@@ -30,6 +30,7 @@ public class GoMediaFile {
     public String thumbNail_path = "";
     public Bitmap thumbNail = null;
     public boolean hasLrv = false;
+    private String _directory = "";
 
     // multishot
     public boolean isGroup = false;
@@ -39,6 +40,7 @@ public class GoMediaFile {
     private final OkHttpClient httpClient = new OkHttpClient();
 
     public GoMediaFile(JSONObject fileDataJson, String directory, GoProDevice goProDevice) throws JSONException {
+        _directory = directory;
         if (fileDataJson.has("g")) {
             if (fileDataJson.has("b") && fileDataJson.has("l")) {
                 this.groupBegin = fileDataJson.getString("b");
@@ -66,11 +68,11 @@ public class GoMediaFile {
         if (Objects.equals(this.extension, ".mp4")) {
             String lrvFileName = this.fileName.charAt(0) + "L" + this.fileName.substring(2, extIndex) + ".LRV";
             this.lrvUrl = "http://10.5.5.9:8080/videos/DCIM/" + directory + "/" + lrvFileName;
-            checkLrvUrl();
+            checkLrvUrl(true);
         }
     }
 
-    private void checkLrvUrl() {
+    private void checkLrvUrl(boolean first) {
         new Thread(() -> {
             Log.d("HTTP HEAD", lrvUrl);
             final Request testLrvExists = new Request.Builder()
@@ -88,8 +90,16 @@ public class GoMediaFile {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) {
-                        Log.e("checkLrvUrl", "Request head response = not success");
-                        lrvUrl = url;
+                        if(first) {
+                            Log.e("checkLrvUrl", "First request head response = not success");
+                            int extIndex = fileName.lastIndexOf('.');
+                            String lrvFileName = fileName.substring(0, extIndex) + ".LRV";
+                            lrvUrl = "http://10.5.5.9:8080/videos/DCIM/" + _directory + "/" + lrvFileName;
+                            checkLrvUrl(false);
+                        } else {
+                            Log.e("checkLrvUrl", "Second request head response = not success");
+                            lrvUrl = url;
+                        }
                     } else {
                         hasLrv = true;
                     }

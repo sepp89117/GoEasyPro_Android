@@ -14,6 +14,7 @@
         android:padding="10dp">
 
         <FrameLayout
+            android:id="@+id/main_media_frame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -49,12 +50,13 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:text="Select a file"
-            android:textColor="@color/ligth_blue"
+            android:textColor="@color/light_blue"
             android:textStyle="bold" />
 
         <ListView

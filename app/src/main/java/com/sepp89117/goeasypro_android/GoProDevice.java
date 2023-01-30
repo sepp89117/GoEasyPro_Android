@@ -1,5 +1,7 @@
 package com.sepp89117.goeasypro_android;
 
+import static com.sepp89117.goeasypro_android.MyApplication.getReadableFileSize;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;
@@ -206,8 +208,8 @@ public class GoProDevice {
     private static final int btActionDelay = 125;
     private boolean communicationInitiated = false;
     public boolean isBusy = false;
+    public boolean isRecording = false;
     private boolean freshPaired = false;
-    private final byte[] statusIDs = {8, 43, 54, 69, 70, 97}; // https://gopro.github.io/OpenGoPro/ble_2_0#status-ids
     public JSONObject settingsValues = null;
     public boolean providesAvailableOptions = true;
     private Application _application;
@@ -237,7 +239,7 @@ public class GoProDevice {
         displayName = sharedPreferences.getString("display_name_" + name, name);
         modelName = sharedPreferences.getString("model_name_" + name, modelName);
     }
-    
+
     public void saveNewDisplayName(String newName) {
         displayName = newName;
         sharedPreferences.edit().putString("display_name_" + name, displayName).apply();
@@ -249,6 +251,7 @@ public class GoProDevice {
         public void onConnectionStateChange(BluetoothGatt _gatt, int status, int newState) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    requestHighPriorityConnection();
                     btConnectionStage = BT_FETCHING_DATA;
 
                     if (dataChangedCallback != null)
@@ -418,7 +421,7 @@ public class GoProDevice {
             readWifiApPw();
             startSrcNotification();
             startQrcNotification();
-            registerForStatusValueUpdates();
+            registerForAllStatusValueUpdates();
         }
     }
 
@@ -433,6 +436,7 @@ public class GoProDevice {
                         packBuffer.put(vlaueBytes, 1, msgLen);
                     } catch (Exception e) {
                         Log.e("parseBtData", "Error: " + e);
+                        return;
                     }
 
                     if (packBuffer.remaining() <= 0) {
@@ -481,8 +485,8 @@ public class GoProDevice {
                                         buffer.put(vlaueBytes, 5, len1);
                                         buffer.flip();
                                         long memBytes = buffer.getLong();
-
-                                        remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                                        //remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                                        remainingMemory = getReadableFileSize(memBytes * 1024);
                                     } else if (commandId == (byte) 0x13 && id1 == 70 /*&& len1 == 1*/) { // Battery level
                                         remainingBatteryPercent = vlaueBytes[5];
                                     } else if (commandId == (byte) 0x13 && id1 == 43 && len1 == 1) { // Active preset
@@ -575,16 +579,18 @@ public class GoProDevice {
 
     @SuppressLint("MissingPermission")
     private void sendBtPairComplete() {
-        btActionBuffer.add(() -> {
-            //send to GP-0091: {msg_len, 0x03, 0x01, 0x08, 0x00, 0x12, dev_name_len, dev_name}
-            byte[] msg = {0x0f, 0x03, 0x01, 0x08, 0x00, 0x12, 0x09, 'G', 'o', 'E', 'a', 's', 'y', 'P', 'r', 'o'};
-            if (nwManCmdCharacteristic != null && nwManCmdCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(nwManCmdCharacteristic)) {
-                freshPaired = false;
-            } else {
-                Log.e("sendBtPairComplete", "not sent");
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                //send to GP-0091: {msg_len, 0x03, 0x01, 0x08, 0x00, 0x12, dev_name_len, dev_name}
+                byte[] msg = {0x0f, 0x03, 0x01, 0x08, 0x00, 0x12, 0x09, 'G', 'o', 'E', 'a', 's', 'y', 'P', 'r', 'o'};
+                if (nwManCmdCharacteristic != null && nwManCmdCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(nwManCmdCharacteristic)) {
+                    freshPaired = false;
+                } else {
+                    Log.e("sendBtPairComplete", "not sent");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     private void handleModelId() {
@@ -624,7 +630,7 @@ public class GoProDevice {
         int nextStart = 2;
 
         if (error == 0) { // success
-            if (commandId == 83) { // response for registerForStatusValueUpdates()
+            if (commandId == 83) { // response for registerForAllStatusValueUpdates()
                 autoValueUpdatesRegistered = true;
                 int nextLen = 0;
 
@@ -792,6 +798,18 @@ public class GoProDevice {
             case 8: // Is the camera busy?
                 isBusy = buffer.get(0) != 0;
                 break;
+            case 13: // Video progress counter
+                lastVideoProgressReceived = new Date();
+                buffer.flip();
+                int videoProgress = buffer.getInt();
+
+                boolean wasRecording = isRecording;
+                isRecording = videoProgress != 0;
+
+                if (isRecording && !wasRecording) {
+                    initShutterWatchdog();
+                }
+                break;
             case 43:
                 int presetId = buffer.get(0);
                 Preset = modes.getOrDefault(presetId, "unk. mode " + presetId);
@@ -799,7 +817,8 @@ public class GoProDevice {
             case 54: // Remaining space on the sdcard in Kilobytes as integer
                 buffer.flip();
                 long memBytes = buffer.getLong();
-                remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                //remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
+                remainingMemory = getReadableFileSize(memBytes * 1024);
                 break;
             case 69: // AP state as boolean
                 wifiApState = (int) buffer.get(0);
@@ -832,6 +851,11 @@ public class GoProDevice {
         if (btConnectionStage != BT_CONNECTED && modelID > 0 && !Objects.equals(wifiPw, "") && !Objects.equals(wifiSsid, "")) {
             btConnectionStage = BT_CONNECTED;
 
+            if (checkConnected != null) {
+                checkConnected.cancel();
+                checkConnected.purge();
+            }
+
             //start timed actions
             initTimedActions();
             initExecWatchdog();
@@ -844,6 +868,16 @@ public class GoProDevice {
     }
 
     //region BT Communication tools
+    private void requestHighPriorityConnection() {
+        if (bluetoothGatt != null) {
+            try {
+                bluetoothGatt.getClass().getMethod("requestConnectionPriority", new Class[]{Integer.TYPE}).invoke(bluetoothGatt, new Object[]{1});
+            } catch (Exception e) {
+                Log.e("requestHighPriorityConnection", "Failed!");
+            }
+        }
+    }
+    
     @SuppressLint("MissingPermission")
     public void disconnectBt() {
         Log.e("disconnectBt", "Disconnect forced");
@@ -876,7 +910,13 @@ public class GoProDevice {
         setDisconnected();
     }
 
+    @SuppressLint("MissingPermission")
     private void setDisconnected() {
+        if (bluetoothGatt != null) {
+            bluetoothGatt.close();
+            bluetoothGatt = null;
+        }
+
         try {
             if (execBtActionLoop != null)
                 execBtActionLoop.interrupt();
@@ -895,6 +935,10 @@ public class GoProDevice {
         execWatchdogTimer.purge();
 
         btActionBuffer.clear();
+        if (packBuffer != null) {
+            packBuffer.clear();
+            packBuffer = null;
+        }
 
         btConnectionStage = BT_NOT_CONNECTED;
         autoValueUpdatesRegistered = false;
@@ -911,116 +955,126 @@ public class GoProDevice {
 
     @SuppressLint("MissingPermission")
     private void startCrcNotification() {
-        btActionBuffer.add(() -> {
-            if (commandRespCharacteristic == null || bluetoothGatt == null) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (commandRespCharacteristic == null || bluetoothGatt == null) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            if (bluetoothGatt.setCharacteristicNotification(commandRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = commandRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startCrcNotification", "Error 3");
-                        showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                        disconnectBt();
+                if (bluetoothGatt.setCharacteristicNotification(commandRespCharacteristic, true)) {
+                    BluetoothGattDescriptor descriptor = commandRespCharacteristic.getDescriptors().get(0);
+                    if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
+                        if (!bluetoothGatt.writeDescriptor(descriptor)) {
+                            Log.e("startCrcNotification", "Error 3");
+                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
+                            disconnectBt();
+                            gattInProgress = false;
+                        }
+                    } else {
+                        Log.e("startCrcNotification", "Error 2");
                         gattInProgress = false;
                     }
                 } else {
-                    Log.e("startCrcNotification", "Error 2");
+                    Log.e("startCrcNotification", "Error 1");
                     gattInProgress = false;
                 }
-            } else {
-                Log.e("startCrcNotification", "Error 1");
-                gattInProgress = false;
-            }
-        });
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
     private void startSrcNotification() {
-        btActionBuffer.add(() -> {
-            if (settingsRespCharacteristic == null || bluetoothGatt == null) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (settingsRespCharacteristic == null || bluetoothGatt == null) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            if (bluetoothGatt.setCharacteristicNotification(settingsRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = settingsRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startSrcNotification", "Error 3");
-                        showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                        disconnectBt();
+                if (bluetoothGatt.setCharacteristicNotification(settingsRespCharacteristic, true)) {
+                    BluetoothGattDescriptor descriptor = settingsRespCharacteristic.getDescriptors().get(0);
+                    if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
+                        if (!bluetoothGatt.writeDescriptor(descriptor)) {
+                            Log.e("startSrcNotification", "Error 3");
+                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
+                            disconnectBt();
+                            gattInProgress = false;
+                        }
+                    } else {
+                        Log.e("startSrcNotification", "Error 2");
                         gattInProgress = false;
                     }
                 } else {
-                    Log.e("startSrcNotification", "Error 2");
+                    Log.e("startSrcNotification", "Error 1");
                     gattInProgress = false;
                 }
-            } else {
-                Log.e("startSrcNotification", "Error 1");
-                gattInProgress = false;
-            }
-        });
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
     private void startQrcNotification() {
-        btActionBuffer.add(() -> {
-            if (queryRespCharacteristic == null || bluetoothGatt == null) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (queryRespCharacteristic == null || bluetoothGatt == null) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            if (bluetoothGatt.setCharacteristicNotification(queryRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = queryRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startQrcNotification", "Error 3");
-                        showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                        disconnectBt();
+                if (bluetoothGatt.setCharacteristicNotification(queryRespCharacteristic, true)) {
+                    BluetoothGattDescriptor descriptor = queryRespCharacteristic.getDescriptors().get(0);
+                    if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
+                        if (!bluetoothGatt.writeDescriptor(descriptor)) {
+                            Log.e("startQrcNotification", "Error 3");
+                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
+                            disconnectBt();
+                            gattInProgress = false;
+                        }
+                    } else {
+                        Log.e("startQrcNotification", "Error 2");
                         gattInProgress = false;
                     }
                 } else {
-                    Log.e("startQrcNotification", "Error 2");
+                    Log.e("startQrcNotification", "Error 1");
                     gattInProgress = false;
                 }
-            } else {
-                Log.e("startQrcNotification", "Error 1");
-                gattInProgress = false;
-            }
-        });
+            });
+        }
     }
     //endregion
 
     //region BT Readings
     @SuppressLint("MissingPermission")
     private void readWifiApSsid() {
-        btActionBuffer.add(() -> {
-            if (bluetoothGatt == null || wifiSsidCharacteristic == null || btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiSsidCharacteristic)) {
-                Log.e("readWifiApSsid", "failed action");
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (bluetoothGatt == null || wifiSsidCharacteristic == null || btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+                if (!bluetoothGatt.readCharacteristic(wifiSsidCharacteristic)) {
+                    Log.e("readWifiApSsid", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
     private void readWifiApPw() {
-        btActionBuffer.add(() -> {
-            if (bluetoothGatt == null || wifiPwCharacteristic == null || btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiPwCharacteristic)) {
-                Log.e("readWifiApPw", "failed action");
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (bluetoothGatt == null || wifiPwCharacteristic == null || btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+                if (!bluetoothGatt.readCharacteristic(wifiPwCharacteristic)) {
+                    Log.e("readWifiApPw", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1029,16 +1083,18 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (bluetoothGatt == null || wifiStateCharacteristic == null || btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiStateCharacteristic)) {
-                Log.e("readWifiApState", "failed action");
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (bluetoothGatt == null || wifiStateCharacteristic == null || btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+                if (!bluetoothGatt.readCharacteristic(wifiStateCharacteristic)) {
+                    Log.e("readWifiApState", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     private void readBtRssi() {
@@ -1046,7 +1102,9 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(readBtRssi);
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(readBtRssi);
+        }
     }
 
     private final Runnable readBtRssi = new Runnable() {
@@ -1071,7 +1129,9 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(keepAlive);
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(keepAlive);
+        }
     }
 
     private final Runnable keepAlive = new Runnable() {
@@ -1104,22 +1164,23 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            Date now = new Date();
-            byte yyH = (byte) (now.getYear() & 0xFF);
-            byte yyL = (byte) ((now.getYear() >> 8) & 0xFF);
-            // Set date/time to 2022-01-02 03:04:05 	Command: 09: 0D: 07: 07:E6: 01: 02: 03: 04: 05
-            byte[] msg = {0x09, 0x0d, 0x07, yyL, yyH, (byte) (now.getMonth() + 1), (byte) now.getDate(), (byte) now.getHours(), (byte) now.getMinutes(), (byte) now.getSeconds()};
-            if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
-                gattInProgress = false;
-            }
-        });
-
+                Date now = new Date();
+                byte yyH = (byte) (now.getYear() & 0xFF);
+                byte yyL = (byte) ((now.getYear() >> 8) & 0xFF);
+                // Set date/time to 2022-01-02 03:04:05 	Command: 09: 0D: 07: 07:E6: 01: 02: 03: 04: 05
+                byte[] msg = {0x09, 0x0d, 0x07, yyL, yyH, (byte) (now.getMonth() + 1), (byte) now.getDate(), (byte) now.getHours(), (byte) now.getMinutes(), (byte) now.getSeconds()};
+                if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1128,18 +1189,19 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x03, (byte) settingId, 0x01, (byte) optionId};
-            if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
-                gattInProgress = false;
-            }
-        });
-
+                byte[] msg = {0x03, (byte) settingId, 0x01, (byte) optionId};
+                if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
     //endregion
 
@@ -1150,19 +1212,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x01, 0x3C};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] msg = {0x01, 0x3C};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1171,19 +1235,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] shutterOn = {0x03, 0x01, 0x01, 0x01};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] shutterOn = {0x03, 0x01, 0x01, 0x01};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1192,19 +1258,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] shutterOff = {0x03, 0x01, 0x01, 0x00};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] shutterOff = {0x03, 0x01, 0x01, 0x00};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1213,22 +1281,24 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] camSleep = {0x01, 0x05};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(camSleep) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                connectBtCallback = null;
-                bluetoothGatt.disconnect();
-                wifiApState = -1;
-                isWifiConnected = false;
-            } else {
-                gattInProgress = false;
-            }
-        });
+                byte[] camSleep = {0x01, 0x05};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(camSleep) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                    connectBtCallback = null;
+                    bluetoothGatt.disconnect();
+                    wifiApState = -1;
+                    isWifiConnected = false;
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1237,19 +1307,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
-            byte[] wifiApOn = {0x03, 0x17, 0x01, 0x01};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (!autoValueUpdatesRegistered)
-                    readWifiApState();
-            } else {
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+                byte[] wifiApOn = {0x03, 0x17, 0x01, 0x01};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                    if (!autoValueUpdatesRegistered)
+                        readWifiApState();
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1258,19 +1330,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
-            byte[] wifiApOff = {0x03, 0x17, 0x01, 0x00};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (!autoValueUpdatesRegistered)
-                    readWifiApState();
-            } else {
-                gattInProgress = false;
-            }
-        });
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+                byte[] wifiApOff = {0x03, 0x17, 0x01, 0x00};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                    if (!autoValueUpdatesRegistered)
+                        readWifiApState();
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1279,19 +1353,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x03, 0x16, 0x01, 0x01};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] msg = {0x03, 0x16, 0x01, 0x01};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1300,19 +1376,21 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x03, 0x16, 0x01, 0x00};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] msg = {0x03, 0x16, 0x01, 0x00};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1321,48 +1399,43 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] highlight = {0x01, 0x18};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(highlight) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                byte[] highlight = {0x01, 0x18};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(highlight) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
 
-            } else {
-                gattInProgress = false;
-            }
-        });
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
     }
     //endregion
 
     //region BT Queries (0x0076)
     @SuppressLint("MissingPermission")
-    private void registerForStatusValueUpdates() {
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+    private void registerForAllStatusValueUpdates() {
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = new byte[2 + statusIDs.length];
-            msg[0] = (byte) (statusIDs.length + 1);
-            msg[1] = 0x53;
-            System.arraycopy(statusIDs, 0, msg, 2, statusIDs.length);
+                byte[] msg = {0x01, 0x53};
 
-            if (msg.length > 20) {
-                Log.e("registerForStatusValueUpdates", "BT message length (max 20 bytes) overflow with " + (msg.length - 20) + " bytes!");
-                gattInProgress = false;
-                return;
-            }
-
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-            } else {
-                Log.e("registerForStatusValueUpdates", "failed action");
-                gattInProgress = false;
-            }
-        });
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                } else {
+                    Log.e("registerForAllStatusValueUpdates", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1371,21 +1444,23 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x01, 0x13};
+                byte[] msg = {0x01, 0x13};
 
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                lastMemoryQuery = new Date();
-            } else {
-                Log.e("getAllStatusValues", "failed action");
-                gattInProgress = false;
-            }
-        });
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastMemoryQuery = new Date();
+                } else {
+                    Log.e("getAllStatusValues", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1394,21 +1469,23 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x01, 0x32};
+                byte[] msg = {0x01, 0x32};
 
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                lastSettingUpdate = new Date();
-            } else {
-                Log.e("getAllSettings", "failed action");
-                gattInProgress = false;
-            }
-        });
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastSettingUpdate = new Date();
+                } else {
+                    Log.e("getAllSettings", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1417,21 +1494,23 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x01, 0x12};
+                byte[] msg = {0x01, 0x12};
 
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                lastSettingUpdate = new Date();
-            } else {
-                Log.e("getAllSettings", "failed action");
-                gattInProgress = false;
-            }
-        });
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastSettingUpdate = new Date();
+                } else {
+                    Log.e("getAllSettings", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1440,20 +1519,22 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x02, 0x13, 0x36};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                lastMemoryQuery = new Date();
-            } else {
-                Log.e("getMemory", "failed action");
-                gattInProgress = false;
-            }
-        });
+                byte[] msg = {0x02, 0x13, 0x36};
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastMemoryQuery = new Date();
+                } else {
+                    Log.e("getMemory", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1462,20 +1543,22 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            byte[] msg = {0x02, 0x13, 0x46};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                lastMemoryQuery = new Date();
-            } else {
-                Log.e("getBatteryLevel", "failed action");
-                gattInProgress = false;
-            }
-        });
+                byte[] msg = {0x02, 0x13, 0x46};
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastMemoryQuery = new Date();
+                } else {
+                    Log.e("getBatteryLevel", "failed action");
+                    gattInProgress = false;
+                }
+            });
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1484,30 +1567,32 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        btActionBuffer.add(() -> {
-            if (btConnectionStage < 2) {
-                gattInProgress = false;
-                return;
-            }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
 
-            if (modelID >= HERO8_BLACK) {
-                byte[] msg = {0x02, 0x13, 0x61};
-                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                    lastOtherQueries = new Date();
+                if (modelID >= HERO8_BLACK) {
+                    byte[] msg = {0x02, 0x13, 0x61};
+                    if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                        lastOtherQueries = new Date();
+                    } else {
+                        Log.e("getPreset", "failed action");
+                        gattInProgress = false;
+                    }
                 } else {
-                    Log.e("getPreset", "failed action");
-                    gattInProgress = false;
+                    byte[] msg = {0x02, 0x13, 43};
+                    if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                        lastOtherQueries = new Date();
+                    } else {
+                        Log.e("getPreset", "failed action");
+                        gattInProgress = false;
+                    }
                 }
-            } else {
-                byte[] msg = {0x02, 0x13, 43};
-                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                    lastOtherQueries = new Date();
-                } else {
-                    Log.e("getPreset", "failed action");
-                    gattInProgress = false;
-                }
-            }
-        });
+            });
+        }
     }
     //endregion
 
@@ -1569,6 +1654,7 @@ public class GoProDevice {
     }
 
     private ConnectBtCallbackInterface connectBtCallback;
+    private Timer checkConnected = null;
 
     @SuppressLint("MissingPermission")
     public void connectBt(ConnectBtCallbackInterface _connectBtCallback) {
@@ -1581,7 +1667,7 @@ public class GoProDevice {
                 dataChangedCallback.onDataChanged();
 
             // Timeout connecting
-            Timer checkConnected = new Timer();
+            checkConnected = new Timer();
             checkConnected.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -1832,6 +1918,27 @@ public class GoProDevice {
         execWatchdogTimer.schedule(timedExecWatchdog, 0, 1000);
     }
 
+    private Timer shutterWatchdogTimer = new Timer();
+    private Date lastVideoProgressReceived = new Date();
+
+    private void initShutterWatchdog() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                long now = new Date().getTime();
+
+                if (now - lastVideoProgressReceived.getTime() > 1500) {
+                    isRecording = false;
+                    shutterWatchdogTimer.cancel();
+                    shutterWatchdogTimer.purge();
+                }
+            }
+        };
+
+        shutterWatchdogTimer = new Timer();
+        shutterWatchdogTimer.schedule(timerTask, 0, 500);
+    }
+
     private void initTimedActions() {
         actionTimer.cancel();
         actionTimer.purge();
@@ -1848,7 +1955,7 @@ public class GoProDevice {
                 if (btConnectionStage < BT_CONNECTED)
                     return;
 
-                if(settingsValues == null)
+                if (settingsValues == null)
                     settingsValues = ((MyApplication) _application).getSettingsValues();
 
                 long now = new Date().getTime();
@@ -1885,7 +1992,7 @@ public class GoProDevice {
 
                     if (!autoValueUpdatesRegistered && registerForAutoValueUpdatesCounter < 4) {
                         registerForAutoValueUpdatesCounter++;
-                        registerForStatusValueUpdates();
+                        registerForAllStatusValueUpdates();
                     } else if (!autoValueUpdatesRegistered) {
                         showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
 
@@ -1937,12 +2044,18 @@ public class GoProDevice {
                 }
 
                 // Get a non-null runnable
-                Runnable runnable = null;
                 try {
-                    while (runnable == null) {
+                    Runnable runnable = null;
+                    synchronized (btActionBuffer) {
                         runnable = btActionBuffer.get(0);
+
+                        if (runnable == null) {
+                            Log.e("execNextBtAction", "Runnable was 'null'");
+                            continue;
+                        } else {
+                            btActionBuffer.remove(0); // Remove the runnable from btActionBuffer
+                        }
                     }
-                    btActionBuffer.remove(0); // Remove the runnable from btActionBuffer
 
                     gattInProgress = true; // Set gattInProgress flag
                     gattProgressStart = new Date(); // Store time since Gatt is in progress for the watchdog

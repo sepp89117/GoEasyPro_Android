@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/try_connect" android:title="Try to connect" />
-    <item android:id="@+id/dev_rename" android:title="Rename" />
-    <item android:id="@+id/del_device" android:title="Delete device" />
+    <item android:id="@+id/try_connect"
+        android:icon="@drawable/connect_symbol"
+        android:title="Try to connect" />
+    <item android:id="@+id/dev_rename"
+        android:icon="@drawable/rename_symbol"
+        android:title="Rename" />
+    <item android:id="@+id/del_device"
+        android:icon="@drawable/delete_symbol"
+        android:title="Delete device" />
 </menu>
