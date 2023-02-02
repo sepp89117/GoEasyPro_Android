@@ -27,6 +27,7 @@
                 android:id="@+id/imagePlayer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onImgClick"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/ic_baseline_no_photography_24" />
 
@@ -40,7 +41,7 @@
                 app:buffered_color="#C1A5A5A5"
                 app:played_color="#009FE0"
                 app:resize_mode="fit"
-                app:show_buffering="when_playing"
+                app:show_buffering="always"
                 app:show_shuffle_button="true"
                 app:unplayed_color="#C15A5A5A"
                 app:use_controller="true">

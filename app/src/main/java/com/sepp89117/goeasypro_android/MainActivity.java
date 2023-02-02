@@ -277,7 +277,6 @@ public class MainActivity extends AppCompatActivity {
                             alert.show();
 
                             goProDevice.connectWifi(() -> {
-                                alert.dismiss();
                                 //onWifiConnected
                                 if(goProDevice.isWifiConnected) {
                                     Request request = new Request.Builder()
@@ -286,17 +285,23 @@ public class MainActivity extends AppCompatActivity {
                                     Log.d("HTTP GET", goProDevice.getMediaList_query);
                                     try (Response response = client.newCall(request).execute()) {
                                         if (response.isSuccessful()) {
-                                            Log.d("HTTP GET", "successful");
                                             String resp_Str = response.body().string();
                                             JSONObject mainObject = new JSONObject(resp_Str);
                                             parseMediaList(mainObject, goProDevice);
                                         } else if (response.code() == 404) {
                                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
+                                        } else {
+                                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Something went wrong! HTTP status code: " + response.code(), Toast.LENGTH_SHORT).show());
+                                            Log.e("HTTP GET", "Not successful. Status code: " + response.code());
                                         }
+                                        alert.dismiss();
                                     } catch (Exception ex) {
                                         Log.e("HTTP GET error", ex.toString());
                                         runOnUiThread(() -> Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show());
+                                        alert.dismiss();
                                     }
+                                } else {
+                                    alert.dismiss();
                                 }
                             });
                         } else {
@@ -337,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
                             alert.show();
 
                             goProDevice.connectWifi(() -> {
-                                alert.dismiss();
                                 //onWifiConnected
                                 if(goProDevice.isWifiConnected) {
                                     Request request = new Request.Builder()
@@ -357,11 +361,16 @@ public class MainActivity extends AppCompatActivity {
                                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
                                         } else {
                                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "The preview stream is currently unavailable", Toast.LENGTH_SHORT).show());
+                                            Log.e("HTTP GET", "Not successful. Status code: " + response.code());
                                         }
+                                        alert.dismiss();
                                     } catch (Exception ex) {
                                         Log.e("HTTP GET error", ex.toString());
                                         runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show());
+                                        alert.dismiss();
                                     }
+                                } else {
+                                    alert.dismiss();
                                 }
                             });
                         } else {

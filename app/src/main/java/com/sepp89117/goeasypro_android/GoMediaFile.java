@@ -72,7 +72,7 @@ public class GoMediaFile {
         }
     }
 
-    private void checkLrvUrl(boolean first) {
+    private void checkLrvUrl(boolean isFirstTry) {
         new Thread(() -> {
             Log.d("HTTP HEAD", lrvUrl);
             final Request testLrvExists = new Request.Builder()
@@ -90,7 +90,7 @@ public class GoMediaFile {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) {
-                        if(first) {
+                        if(isFirstTry) {
                             Log.e("checkLrvUrl", "First request head response = not success");
                             int extIndex = fileName.lastIndexOf('.');
                             String lrvFileName = fileName.substring(0, extIndex) + ".LRV";
