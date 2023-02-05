@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main_menu_add_cam"
+        android:icon="@drawable/add_cam_symbol"
+        android:title="Add cam" />
+    <item
+        android:id="@+id/main_menu_sleep"
+        android:icon="@drawable/sleep_symbol"
+        android:title="Put cams to sleep" />
+    <item
+        android:id="@+id/main_menu_settings"
+        android:icon="@drawable/settings_symbol"
+        android:title="App settings" />
+    <item
+        android:id="@+id/main_menu_about"
+        android:icon="@drawable/info_symbol"
+        android:title="About" />
+    <item
+        android:id="@+id/main_menu_issue"
+        android:icon="@drawable/warning_symbol"
+        android:title="Report an issue" />
+</menu>

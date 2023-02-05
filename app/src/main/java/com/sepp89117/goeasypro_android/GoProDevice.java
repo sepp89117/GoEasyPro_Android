@@ -3,6 +3,7 @@ package com.sepp89117.goeasypro_android;
 import static com.sepp89117.goeasypro_android.MyApplication.getReadableFileSize;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -13,6 +14,7 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -36,10 +38,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-//import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -52,6 +55,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.GZIPInputStream;
 
 public class GoProDevice {
     //region BT connection stats
@@ -66,55 +70,6 @@ public class GoProDevice {
     public static final int HERO9_BLACK = 55;
 
     private static final int MAX_FIFO_SIZE = 15;
-
-    private static final Map<Integer, String> presets = new HashMap<Integer, String>() {{
-        put(0x00000000, "Standard");
-        put(0x00000001, "Activity");
-        put(0x00000002, "Cinematic");
-        put(0x00000003, "Slo-Mo");
-        put(0x00000004, "Ultra Slo-Mo");
-        put(0x00000005, "Basic");
-        put(0x00000006, "Water");
-        put(0x00000007, "Indoor");
-        put(0x00010000, "Photo");
-        put(0x00010001, "Live Burst");
-        put(0x00010002, "Burst Photo");
-        put(0x00010003, "Night Photo");
-        put(0x00020000, "Time Warp");
-        put(0x00020001, "Time Lapse");
-        put(0x00020002, "Night Lapse");
-        put(0x00030000, "Max Video");
-        put(0x00040000, "Max Photo");
-        put(0x00050000, "Max Timewarp");
-    }};
-
-    private static final Map<Integer, String> modes = new HashMap<Integer, String>() {{
-        put(0, "Video");
-        put(1, "Photo");
-        put(2, "Multishot");
-        put(3, "Broadcast");
-        put(4, "Playback");
-        put(5, "Setup");
-        put(6, "FW Update");
-        put(7, "USB MTP");
-        put(8, "SOS");
-        put(9, "MEdit");
-        put(10, "Calibration");
-        put(11, "Direct Offload");
-        put(12, "Video");
-        put(13, "Time Lapse Video");
-        put(14, "Video + Photo");
-        put(15, "Looping");
-        put(16, "Single Photo");
-        put(17, "Photo");
-        put(18, "Night Photo");
-        put(19, "Burst Photo");
-        put(20, "Time Lapse Photo");
-        put(21, "Night Lapse Photo");
-        put(22, "Broadcast Record");
-        put(23, "Broadcast");
-        put(24, "Time Warp Video");
-    }};
 
     //region model depending strings
     private final static String streamStart_query_v1 = "http://10.5.5.9/gp/gpControl/execute?p1=gpStream&a1=proto_v2&c1=restart"; // -Hero 7 TODO ?
@@ -133,6 +88,8 @@ public class GoProDevice {
     private final static String keepAlive_v1 = "_GPHD_:0:0:2:0.000000\n"; // -Hero 7 TODO ?
     private final static String keepAlive_v2 = "_GPHD_:1:0:2:0.000000\n"; // Hero 8+
     //endregion
+
+    //TODO check if firmware update available "https://api.gopro.com/firmware/v2/catalog"
 
     //region BT UUIDs
     // Custom GoPro services
@@ -180,7 +137,11 @@ public class GoProDevice {
     public String boardType = "";
     public String firmware = "";
     public String serialNumber = "";
-    public String Preset = "NC";
+    //public String Preset = "NC";
+
+    public GoPreset preset = new GoPreset();
+    public GoMode mode = new GoMode();
+
     public int remainingBatteryPercent = 0;
     public String remainingMemory = "NC";
     private boolean autoValueUpdatesRegistered = false;
@@ -202,17 +163,23 @@ public class GoProDevice {
     private BluetoothGattCharacteristic queryRespCharacteristic = null;
     private BluetoothGattCharacteristic modelNoCharacteristic = null;
     private BluetoothGattCharacteristic nwManCmdCharacteristic = null;
-    private BluetoothGattCharacteristic nwManRespCharacteristic = null;
+    //private BluetoothGattCharacteristic nwManRespCharacteristic = null;
     private int registerForAutoValueUpdatesCounter = 0;
     private ByteBuffer packBuffer;
     private static final int btActionDelay = 125;
     private boolean communicationInitiated = false;
     public boolean isBusy = false;
     public boolean isRecording = false;
+    public boolean isHot = false;
+    public boolean isCold = false;
     private boolean freshPaired = false;
     public JSONObject settingsValues = null;
     public boolean providesAvailableOptions = true;
-    private Application _application;
+    private final Application _application;
+    public ArrayList<GoSetting> goSettings = new ArrayList<>();
+    private ArrayList<Pair<Integer, Integer>> availableSettingsOptions = null;
+    private boolean autoOffDisableAsked = false;
+
 
     //Wifi
     public static final String goProIp = "10.5.5.9";
@@ -425,15 +392,18 @@ public class GoProDevice {
         }
     }
 
-    private void parseBtData(String characteristicUuid, byte[] vlaueBytes, boolean isCustomUuid) {
+    private void parseBtData(String characteristicUuid, byte[] valueBytes, boolean isCustomUuid) {
         if (isCustomUuid) { // onCharacteristicChanged
-            boolean isContPack = (vlaueBytes[0] & 128) > 0;
+            boolean isContPack = (valueBytes[0] & 128) > 0;
 
             if (isContPack) {
-                int msgLen = vlaueBytes.length - 1;
+                int msgLen = valueBytes.length - 1;
                 if (packBuffer != null) {
                     try {
-                        packBuffer.put(vlaueBytes, 1, msgLen);
+                        int putLen = Math.min(packBuffer.remaining(), msgLen);
+                        if (putLen != msgLen)
+                            Log.e("parseBtData", "Message length is " + (msgLen - putLen) + " larger than the buffer");
+                        packBuffer.put(valueBytes, 1, putLen);
                     } catch (Exception e) {
                         Log.e("parseBtData", "Error: " + e);
                         return;
@@ -448,24 +418,27 @@ public class GoProDevice {
                     gattInProgress = false;
                 }
             } else {
-                GoHeader header = new GoHeader();
-                header.parse(vlaueBytes);
+                GoHeader header = new GoHeader(valueBytes);
 
                 int headerLength = header.getHeaderLength();
                 int msgLen = header.getMsgLength();
-                int commandId = vlaueBytes[headerLength];
-                int error = vlaueBytes[headerLength + 1];
+                int commandId = valueBytes[headerLength];
+                int error = valueBytes[headerLength + 1];
 
                 packBuffer = ByteBuffer.allocate(msgLen);
-                packBuffer.put(vlaueBytes, headerLength, vlaueBytes.length - headerLength);
+                packBuffer.put(valueBytes, headerLength, valueBytes.length - headerLength);
 
                 if (packBuffer.remaining() <= 0) { //all datas received
+                    //all datas received
+                    parseBtResponsePack();
+                    gattInProgress = false;
+
                     if (error == 0) {
                         switch (characteristicUuid) {
                             case commandRespUUID:
                                 break;
                             case settingsRespUUID:
-                                if (vlaueBytes.length >= 4 && vlaueBytes[3] == 91) {
+                                if (valueBytes.length >= 4 && valueBytes[3] == 91) {
                                     // keepAlive response
                                 } else {
                                     // A setting was changed. Get an update of the current settings
@@ -476,50 +449,16 @@ public class GoProDevice {
                                 }
                                 break;
                             case queryRespUUID:
-                                if (vlaueBytes.length >= 5) {
-                                    int id1 = vlaueBytes[3];
-                                    int len1 = vlaueBytes[4];
-
-                                    if (commandId == (byte) 0x13 && id1 == 54 && len1 == 8) { // Remaining space
-                                        ByteBuffer buffer = ByteBuffer.allocate(len1);
-                                        buffer.put(vlaueBytes, 5, len1);
-                                        buffer.flip();
-                                        long memBytes = buffer.getLong();
-                                        //remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
-                                        remainingMemory = getReadableFileSize(memBytes * 1024);
-                                    } else if (commandId == (byte) 0x13 && id1 == 70 /*&& len1 == 1*/) { // Battery level
-                                        remainingBatteryPercent = vlaueBytes[5];
-                                    } else if (commandId == (byte) 0x13 && id1 == 43 && len1 == 1) { // Active preset
-                                        Preset = modes.getOrDefault((int) vlaueBytes[5], "unknown mode ID " + (int) vlaueBytes[5]);
-                                    } else if (commandId == (byte) 0x13 && id1 == 97 && len1 == 4) { // Active preset
-                                        ByteBuffer buffer = ByteBuffer.allocate(len1);
-                                        buffer.put(vlaueBytes, 5, len1);
-                                        buffer.flip();
-                                        int presetID = buffer.getInt();
-
-                                        Preset = presets.getOrDefault(presetID, "unk. preset " + presetID);
-                                    } else if (commandId == (byte) 0x53) { // response for registerForAutoValueUpdates()
-                                        autoValueUpdatesRegistered = true;
-                                    } else if (commandId == (byte) 0x93) { // Multi-Value query response
-                                        ByteBuffer buffer = ByteBuffer.allocate(len1);
-                                        buffer.put(vlaueBytes, 5, len1);
-
-                                        handleStatusData(id1, buffer);
-
-                                        if (vlaueBytes[0] > 5 + len1) {
-                                            int offset1 = 5 + len1;
-                                            //multi value response
-                                            int id2 = vlaueBytes[offset1];
-                                            int len2 = vlaueBytes[offset1 + 1];
-                                            if (id2 == 54 || id2 == 69 || id2 == 70 || id2 == 97) {
-                                                Log.e("NOTIFIED", "Unhandled multi-value response in automatic update with command ID=" + id2 + ", length=" + len2);
-                                            }
-                                        }
-                                    }
-                                } else if (commandId == 50 && vlaueBytes.length == 3 && vlaueBytes[2] == 0) {
+                                if (valueBytes.length >= 5) {
+                                    handleQueryResponse(valueBytes);
+                                } else if (commandId == 50 && valueBytes.length == 3 && valueBytes[2] == 0) {
                                     // GoPro does not provide available setting options
                                     providesAvailableOptions = false;
                                     Log.i("GoProDevice", "'" + name + "', model '" + modelName + "' does not provide the available setting options!");
+                                    /*
+                                    //"GET_SETTINGS_JSON = 0x3B" command
+                                    getSettingsJson();
+                                    */
                                 }
                                 break;
                         }
@@ -537,30 +476,30 @@ public class GoProDevice {
                         Log.e("GoProDevice", name + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
                     }
 
-                    gattInProgress = false;
+                    //gattInProgress = false;
                 }
             }
         } else { // onCharacteristicRead
             switch (characteristicUuid) {
                 case modelNoUUID:
                     ByteBuffer byteBuffer = ByteBuffer.allocate(8);
-                    byteBuffer.put(vlaueBytes);
+                    byteBuffer.put(valueBytes);
                     String decoded = new String(byteBuffer.array(), StandardCharsets.UTF_8);
                     modelID = Integer.parseInt(decoded, 16);
                     handleModelId();
                     break;
                 case wifiSsidUUID:
                     ByteBuffer byteBuffer2 = ByteBuffer.allocate(33);
-                    byteBuffer2.put(vlaueBytes);
+                    byteBuffer2.put(valueBytes);
                     wifiSsid = new String(byteBuffer2.array(), StandardCharsets.UTF_8).trim();
                     break;
                 case wifiPwUUID:
                     ByteBuffer byteBuffer3 = ByteBuffer.allocate(64);
-                    byteBuffer3.put(vlaueBytes);
+                    byteBuffer3.put(valueBytes);
                     wifiPw = new String(byteBuffer3.array(), StandardCharsets.UTF_8).trim();
                     break;
                 case wifiStateUUID:
-                    wifiApState = (int) vlaueBytes[0];
+                    wifiApState = (int) valueBytes[0];
                     break;
                 //endregion
             }
@@ -574,6 +513,55 @@ public class GoProDevice {
 
         if (modelID > UNK_MODEL && freshPaired) {
             sendBtPairComplete();
+        }
+    }
+
+    private void handleQueryResponse(byte[] valueBytes) {
+        GoHeader header = new GoHeader(valueBytes);
+
+        int headerLength = header.getHeaderLength();
+        int commandId = valueBytes[headerLength];
+
+        int id1 = valueBytes[3];
+        int len1 = valueBytes[4];
+
+        if (commandId == (byte) 0x13 && id1 == 54 && len1 == 8) { // Remaining space
+            ByteBuffer buffer = ByteBuffer.allocate(len1);
+            buffer.put(valueBytes, 5, len1);
+            buffer.flip();
+            long memBytes = buffer.getLong();
+            remainingMemory = getReadableFileSize(memBytes * 1024);
+        } else if (commandId == (byte) 0x13 && id1 == 70 /*&& len1 == 1*/) { // Battery level
+            remainingBatteryPercent = valueBytes[5];
+        } else if (commandId == (byte) 0x13 && id1 == 43 && len1 == 1) { // Active preset
+            mode = new GoMode((int) valueBytes[5]);
+        } else if (commandId == (byte) 0x13 && id1 == 97 && len1 == 4) { // Active preset
+            ByteBuffer buffer = ByteBuffer.allocate(len1);
+            buffer.put(valueBytes, 5, len1);
+            buffer.flip();
+            int presetID = buffer.getInt();
+
+            preset = new GoPreset(presetID);
+        } else if (commandId == (byte) 0x53) { // response for registerForAutoValueUpdates()
+            autoValueUpdatesRegistered = true;
+        } else if (commandId == (byte) 0x93) { // Multi-Value query response
+            int nextLen = 0;
+
+            for (int index = headerLength; index < valueBytes.length; ) {
+                int statusID = valueBytes[index] & 0xff; // to uint8
+                if (valueBytes.length > index + 1)
+                    nextLen = valueBytes[index + 1];
+                else
+                    break;
+
+                if (nextLen > 0) {
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(nextLen);
+                    byteBuffer.put(valueBytes, index + 2, nextLen);
+                    handleStatusData(statusID, byteBuffer);
+                }
+
+                index += nextLen + 2;
+            }
         }
     }
 
@@ -615,6 +603,7 @@ public class GoProDevice {
             stopStream_query = streamStop_query_v1; //TODO test
             getMediaList_query = mediaList_query_v1;
             getThumbNail_query = thumNail_query_v1;
+            preset = new GoPreset(-2);
         }
 
         getAllStatusValues();
@@ -778,6 +767,14 @@ public class GoProDevice {
                 if (settingsChangedCallback != null)
                     settingsChangedCallback.onSettingsChanged();
             }
+            /*else if (commandId == 59 *//* 0x3B *//*) { // Settings JSON gzip
+                ByteBuffer byteBuffer = ByteBuffer.allocate(byteArray.length - 2);
+                byteBuffer.put(byteArray, 2, byteArray.length - 2);
+                byteBuffer.flip();
+
+                String jsonRsp = decompress(byteBuffer.array());
+                Log.e("JSON", jsonRsp);
+            }*/
         } else {
             switch (error) {
                 case 1:
@@ -793,8 +790,35 @@ public class GoProDevice {
         }
     }
 
+    /*
+    public static String decompress(byte[] compressed) {
+        final int BUFFER_SIZE = 32;
+        ByteArrayInputStream is = new ByteArrayInputStream(compressed);
+        StringBuilder string = new StringBuilder();
+        try {
+            GZIPInputStream gis = new GZIPInputStream(is, BUFFER_SIZE);
+            byte[] data = new byte[BUFFER_SIZE];
+            int bytesRead;
+            while ((bytesRead = gis.read(data)) != -1) {
+                string.append(new String(data, 0, bytesRead));
+            }
+            gis.close();
+            is.close();
+        } catch (Exception ignore) {
+
+        }
+        return string.toString();
+    }
+    */
+
     private void handleStatusData(int statusID, ByteBuffer buffer) {
         switch (statusID) {
+            case 6:
+                isHot = buffer.get(0) != 0;
+                break;
+            case 85:
+                isCold = buffer.get(0) != 0;
+                break;
             case 8: // Is the camera busy?
                 isBusy = buffer.get(0) != 0;
                 break;
@@ -803,21 +827,21 @@ public class GoProDevice {
                 buffer.flip();
                 int videoProgress = buffer.getInt();
 
-                boolean wasRecording = isRecording;
+                boolean wasRecording2 = isRecording;
                 isRecording = videoProgress != 0;
 
-                if (isRecording && !wasRecording) {
+                if (isRecording && !wasRecording2) {
                     initShutterWatchdog();
                 }
                 break;
             case 43:
-                int presetId = buffer.get(0);
-                Preset = modes.getOrDefault(presetId, "unk. mode " + presetId);
+            case 89:
+                int modeId = buffer.get(0);
+                mode = new GoMode(modeId);
                 break;
             case 54: // Remaining space on the sdcard in Kilobytes as integer
                 buffer.flip();
                 long memBytes = buffer.getLong();
-                //remainingMemory = String.format("%.2f", ((memBytes / 1024.00) / 1024.00)) + " GB";
                 remainingMemory = getReadableFileSize(memBytes * 1024);
                 break;
             case 69: // AP state as boolean
@@ -828,24 +852,41 @@ public class GoProDevice {
                 break;
             case 97: // Current Preset ID as integer
                 buffer.flip();
-                int presetID = buffer.getInt();
-                Preset = presets.getOrDefault(presetID, "unk. preset " + presetID);
+                int presetId = buffer.getInt();
+                preset = new GoPreset(presetId);
                 break;
         }
     }
-
-    public ArrayList<GoSetting> goSettings = new ArrayList<>();
 
     private void handleSettingData(int settingID, ByteBuffer buffer) {
         GoSetting goSetting = new GoSetting(settingID, buffer.get(0), settingsValues, availableSettingsOptions);
 
         if (goSetting.isValid()) {
             goSettings.add(goSetting);
+
+            if (goSetting.getSettingId() == 59 /* Auto Off */ && goSetting.getCurrentOptionId() != 0 /* NEVER */ && !autoOffDisableAsked && !((MyApplication) _application).isAutoOffToIgnore() && modelID < HERO9_BLACK) {
+                autoOffDisableAsked = true;
+                askAutoOffDisable(goSetting.getCurrentOptionName());
+            }
         }
     }
 
-    //private Map<Integer, Integer> availableSettingsOptions = null;
-    private ArrayList<Pair<Integer, Integer>> availableSettingsOptions = null;
+    private void askAutoOffDisable(String offTime) {
+        new Thread(() -> {
+            Looper.prepare();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                final AlertDialog alert = new AlertDialog.Builder(_context)
+                        .setTitle("'Auto Off' is enabled")
+                        .setMessage("Camera '" + displayName + "' has 'Auto Off' set to '" + offTime + "'. The camera will turn off after this time.\n\nShould 'Auto Off' be disabled?\n\nYou can turn off this notification in the app settings.")
+                        .setPositiveButton("Disable", (dialog, which) -> setSetting(59, 0))
+                        .setNegativeButton("Ignore", (dialog, which) -> dialog.dismiss())
+                        .create();
+
+                alert.show();
+            });
+            Looper.loop();
+        }).start();
+    }
 
     private void doIfBtConnected() {
         if (btConnectionStage != BT_CONNECTED && modelID > 0 && !Objects.equals(wifiPw, "") && !Objects.equals(wifiSsid, "")) {
@@ -877,7 +918,7 @@ public class GoProDevice {
             }
         }
     }
-    
+
     @SuppressLint("MissingPermission")
     public void disconnectBt() {
         Log.e("disconnectBt", "Disconnect forced");
@@ -946,6 +987,8 @@ public class GoProDevice {
 
         wifiApState = -1;
         isWifiConnected = false;
+        isHot = false;
+        isCold = false;
 
         gattInProgress = false;
 
@@ -1228,6 +1271,29 @@ public class GoProDevice {
             });
         }
     }
+
+    /*@SuppressLint("MissingPermission")
+    public void getSettingsJson() {
+        if (btActionBuffer.size() > MAX_FIFO_SIZE) {
+            gattInProgress = false;
+            return;
+        }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+
+                byte[] msg = {0x01, 0x3B};
+                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+
+                } else {
+                    gattInProgress = false;
+                }
+            });
+        }
+    }*/
 
     @SuppressLint("MissingPermission")
     public void shutterOn() {
@@ -1567,14 +1633,14 @@ public class GoProDevice {
             gattInProgress = false;
             return;
         }
-        synchronized (btActionBuffer) {
-            btActionBuffer.add(() -> {
-                if (btConnectionStage < 2) {
-                    gattInProgress = false;
-                    return;
-                }
+        if (modelID >= HERO8_BLACK) {
+            synchronized (btActionBuffer) {
+                btActionBuffer.add(() -> {
+                    if (btConnectionStage < 2) {
+                        gattInProgress = false;
+                        return;
+                    }
 
-                if (modelID >= HERO8_BLACK) {
                     byte[] msg = {0x02, 0x13, 0x61};
                     if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
                         lastOtherQueries = new Date();
@@ -1582,14 +1648,30 @@ public class GoProDevice {
                         Log.e("getPreset", "failed action");
                         gattInProgress = false;
                     }
+                });
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getMode() {
+        if (btActionBuffer.size() > MAX_FIFO_SIZE) {
+            gattInProgress = false;
+            return;
+        }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+
+                byte[] msg = {0x02, 0x13, 43};
+                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+                    lastOtherQueries = new Date();
                 } else {
-                    byte[] msg = {0x02, 0x13, 43};
-                    if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                        lastOtherQueries = new Date();
-                    } else {
-                        Log.e("getPreset", "failed action");
-                        gattInProgress = false;
-                    }
+                    Log.e("getPreset", "failed action");
+                    gattInProgress = false;
                 }
             });
         }
@@ -1982,8 +2064,9 @@ public class GoProDevice {
 
                 // Some other queries
                 if (now - lastOtherQueries.getTime() > 3000) {
-                    if (!autoValueUpdatesRegistered || Objects.equals(Preset, "NC")) {
+                    if (!autoValueUpdatesRegistered || Objects.equals(preset.getTitle(), "NC")) {
                         getPreset();
+                        getMode();
                     }
 
                     if (Objects.equals(wifiPw, "")) {

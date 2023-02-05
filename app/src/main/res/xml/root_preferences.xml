@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Connection">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_connect"
+            android:title="Automatically connect to all available cameras on app launch"
+            app:summary="After the app starts, an attempt is made to connect to all cameras. Sleeping cameras may turn on during this process." />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Cameras">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ignore_auto_off"
+            android:title="Ignore the cameras 'Auto Off' setting"
+            app:summary="Models older than Hero9 cannot be kept alive through the app. If the &quot;Auto Off&quot; setting is not set to &quot;NEVER&quot;, you will get a notification if it should not be ignored." />
+    </PreferenceCategory>
+
+</PreferenceScreen>

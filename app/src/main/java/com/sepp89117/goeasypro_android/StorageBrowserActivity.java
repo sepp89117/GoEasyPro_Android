@@ -784,7 +784,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
             Player.Listener.super.onPlaybackStateChanged(playbackState);
             switch (playbackState) {
                 case Player.STATE_IDLE:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_IDLE -> finish PreviewActivity");
                     break;
                 case Player.STATE_BUFFERING:
                     if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE && !isFullscreen) {
@@ -792,13 +791,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT && isFullscreen) {
                         disableFullscreen();
                     }
-                    Log.i("onPlaybackStateChanged", "Player.STATE_BUFFERING");
                     break;
                 case Player.STATE_READY:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_READY");
                     break;
                 case Player.STATE_ENDED:
-                    Log.i("onPlaybackStateChanged", "Player.STATE_ENDED -> finish PreviewActivity");
                     if (isFullscreen)
                         disableFullscreen();
                     break;

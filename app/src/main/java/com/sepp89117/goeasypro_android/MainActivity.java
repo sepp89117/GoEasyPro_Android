@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -21,8 +22,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,7 +58,6 @@ import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button btn_pair;
     private BluetoothAdapter bluetoothAdapter;
     private final ArrayList<GoProDevice> goProDevices = new ArrayList<>();
     private GoListAdapter goListAdapter;
@@ -91,10 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);setContentView(R.layout.activity_main);
-
-        btn_pair = findViewById(R.id.btn_pair);
-        btn_pair.setEnabled(false);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         mLayout = findViewById(R.id.main_layout);
 
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             lastCamClickedIndex = position;
 
             CascadePopupMenu popupMenu = new CascadePopupMenu(MainActivity.this, view, Gravity.BOTTOM);
-            popupMenu.setOnMenuItemClickListener(menuItemClickListener);
+            popupMenu.setOnMenuItemClickListener(camMenuItemClickListener);
 
             if (goProDevices.get(lastCamClickedIndex).btConnectionStage == BT_CONNECTED) {
                 popupMenu.inflate(R.menu.connected_dev_menu);
@@ -145,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
         setOnDataChanged();
     }
 
-    private final PopupMenu.OnMenuItemClickListener menuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
+    private final PopupMenu.OnMenuItemClickListener camMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            if(item.hasSubMenu())
+            if (item.hasSubMenu())
                 return true;
 
             int position = lastCamClickedIndex;
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                     AlertDialog devRenameAlert = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Rename " + goProDevice.displayName)
-                            .setMessage("Enter a new name!\nMin. 1 and max. 10 characters!")
+                            .setTitle("Rename '" + goProDevice.displayName + "'")
+                            .setMessage("Enter a new name for device '" + goProDevice.name + "'\n\nMin. 1 and max. 10 characters\n")
                             .setView(name_input)
                             .setPositiveButton("OK", (dialog, which) -> {
                                 inputMethodManager.hideSoftInputFromWindow(name_input.getWindowToken(), 0);
@@ -247,9 +247,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.browse:
                     // Browse storage
-                    WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-                    if (wifi != null && !wifi.isWifiEnabled()){
-                        if(!wifi.setWifiEnabled(true)) {
+                    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                    if (wifi != null && !wifi.isWifiEnabled()) {
+                        if (!wifi.setWifiEnabled(true)) {
                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please enable WiFi!", Toast.LENGTH_SHORT).show());
                             return true;
                         }
@@ -268,17 +268,20 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             }
 
+                            final boolean[] browsingCanceled = {false};
+
                             AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("Connecting to " + goProDevice.wifiSsid)
                                     .setMessage("Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!")
-                                    .setCancelable(true)
+                                    .setCancelable(false)
+                                    .setNegativeButton("Cancel", (dialog, which) -> browsingCanceled[0] = true)
                                     .create();
 
                             alert.show();
 
                             goProDevice.connectWifi(() -> {
                                 //onWifiConnected
-                                if(goProDevice.isWifiConnected) {
+                                if (goProDevice.isWifiConnected && !browsingCanceled[0]) {
                                     Request request = new Request.Builder()
                                             .url(goProDevice.getMediaList_query)
                                             .build();
@@ -287,7 +290,8 @@ public class MainActivity extends AppCompatActivity {
                                         if (response.isSuccessful()) {
                                             String resp_Str = response.body().string();
                                             JSONObject mainObject = new JSONObject(resp_Str);
-                                            parseMediaList(mainObject, goProDevice);
+                                            if (!browsingCanceled[0])
+                                                parseMediaList(mainObject, goProDevice);
                                         } else if (response.code() == 404) {
                                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
                                         } else {
@@ -311,9 +315,9 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.preview:
-                    WifiManager wifi2 = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-                    if (wifi2 != null && !wifi2.isWifiEnabled()){
-                        if(!wifi2.setWifiEnabled(true)) {
+                    WifiManager wifi2 = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                    if (wifi2 != null && !wifi2.isWifiEnabled()) {
+                        if (!wifi2.setWifiEnabled(true)) {
                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please enable WiFi!", Toast.LENGTH_SHORT).show());
                             return true;
                         }
@@ -333,17 +337,25 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             }
 
+                            final boolean[] streamCanceled = {false};
+
                             AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("Connecting to " + goProDevice.wifiSsid)
                                     .setMessage("Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!")
-                                    .setCancelable(true)
+                                    .setCancelable(false)
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            streamCanceled[0] = true;
+                                        }
+                                    })
                                     .create();
 
                             alert.show();
 
                             goProDevice.connectWifi(() -> {
                                 //onWifiConnected
-                                if(goProDevice.isWifiConnected) {
+                                if (goProDevice.isWifiConnected && !streamCanceled[0]) {
                                     Request request = new Request.Builder()
                                             .url(goProDevice.stopStream_query)
                                             .build();
@@ -353,10 +365,12 @@ public class MainActivity extends AppCompatActivity {
                                             String resp_Str = "" + response.body().string();
                                             Log.d("HTTP GET response", resp_Str);
                                             // preview stream available
-                                            runOnUiThread(() -> {
-                                                Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
-                                                startActivity(previewActivityIntent);
-                                            });
+                                            if (!streamCanceled[0]) {
+                                                runOnUiThread(() -> {
+                                                    Intent previewActivityIntent = new Intent(MainActivity.this, PreviewActivity.class);
+                                                    startActivity(previewActivityIntent);
+                                                });
+                                            }
                                         } else if (response.code() == 404) {
                                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Doesn't work! Is the GoPro firmware up to date?", Toast.LENGTH_SHORT).show());
                                         } else {
@@ -460,10 +474,63 @@ public class MainActivity extends AppCompatActivity {
         setOnDataChanged();
     }
 
-    public void onClickPair(View v) {
-        Intent i = new Intent(getApplicationContext(), PairActivity.class);
-        startActivity(i);
+    public void onMenuClick(View v) {
+        CascadePopupMenu popupMenu = new CascadePopupMenu(MainActivity.this, v, Gravity.BOTTOM);
+        popupMenu.setOnMenuItemClickListener(mainMenuItemClickListener);
+        popupMenu.inflate(R.menu.main_menu);
+        popupMenu.show();
     }
+
+    private final PopupMenu.OnMenuItemClickListener mainMenuItemClickListener = item -> {
+        if (item.hasSubMenu())
+            return true;
+
+        switch (item.getItemId()) {
+            case R.id.main_menu_add_cam:
+                Intent pairIntent = new Intent(getApplicationContext(), PairActivity.class);
+                startActivity(pairIntent);
+                break;
+            case R.id.main_menu_about:
+                String sb = "App name:\t\t\tGoEasyPro Android\n" +
+                        "Author:\t\t\t\t\t\t\tSebastian Balzer\n" +
+                        "Github user:\t\tsepp89117\n" +
+                        "Version:\t\t\t\t\t\tv" + BuildConfig.VERSION_NAME + "\n";
+
+                AlertDialog appInfoAlert = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("App Info")
+                        .setPositiveButton("Check latest release", (dialog, which) -> {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sepp89117/GoEasyPro_Android/releases/latest"));
+                            startActivity(browserIntent);
+                        })
+                        .setMessage(sb)
+                        .setCancelable(true)
+                        .create();
+
+                appInfoAlert.show();
+                break;
+            case R.id.main_menu_settings:
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.main_menu_sleep:
+                for (int c = 0; c < goProDevices.size(); c++) {
+                    if(goProDevices.get(c).btConnectionStage == BT_CONNECTED)
+                        goProDevices.get(c).sleep();
+                }
+                break;
+            case R.id.main_menu_issue:
+                String body = "App version: " + BuildConfig.VERSION_NAME + "%0A" +
+                        "Device manufacturer: " + Build.MANUFACTURER + "%0A" +
+                        "Device model: " + Build.MODEL + "%0A" +
+                        "Android API: " + Build.VERSION.SDK_INT + " (Android " + Build.VERSION.RELEASE + ")%0A";
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sepp89117/GoEasyPro_Android/issues/new?body=" + body));
+                startActivity(browserIntent);
+                break;
+        }
+
+        return true;
+    };
 
     @SuppressLint("MissingPermission")
     public void onClickShutterOn(View v) {
@@ -473,7 +540,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).shutterOn();
+            if (goProDevices.get(i).btConnectionStage == BT_CONNECTED)
+                goProDevices.get(i).shutterOn();
         }
     }
 
@@ -485,7 +553,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).shutterOff();
+            if (goProDevices.get(i).btConnectionStage == BT_CONNECTED)
+                goProDevices.get(i).shutterOff();
         }
     }
 
@@ -497,7 +566,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).sleep();
+            if (goProDevices.get(i).btConnectionStage == BT_CONNECTED)
+                goProDevices.get(i).sleep();
         }
     }
 
@@ -509,12 +579,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < goProDevices.size(); i++) {
-            goProDevices.get(i).highlight();
+            if (goProDevices.get(i).btConnectionStage == BT_CONNECTED)
+                goProDevices.get(i).highlight();
         }
     }
 
     private void startApp() {
-        btn_pair.setEnabled(true);
         @SuppressLint("MissingPermission") Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             // There are paired devices. Get the name and address of each paired device.
@@ -532,7 +602,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), this.getApplication(), deviceName);
+                        GoProDevice goProDevice = new GoProDevice(MainActivity.this, this.getApplication(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
@@ -542,6 +612,9 @@ public class MainActivity extends AppCompatActivity {
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
                         }
                         goProDevices.add(goProDevice);
+                        if (((MyApplication) getApplication()).shouldAutoConnect()) {
+                            goProDevice.connectBt(connected -> runOnUiThread(() -> goListView.setAdapter(goListAdapter)));
+                        }
                         goListView.setAdapter(goListAdapter);
                     }
                 }

@@ -53,6 +53,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
 
         TextView name = rowView.findViewById(R.id.name);
         TextView model = rowView.findViewById(R.id.model);
+        TextView mode = rowView.findViewById(R.id.flat_mode);
         TextView preset = rowView.findViewById(R.id.preset);
         TextView memory = rowView.findViewById(R.id.memory);
         TextView battery = rowView.findViewById(R.id.battery);
@@ -62,6 +63,8 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         ImageView bt_symbol = rowView.findViewById(R.id.bt_symbol);
         ImageView batt_symbol = rowView.findViewById(R.id.batt_symbol);
         ImageView shutter_symbol = rowView.findViewById(R.id.shutter_symbol);
+        ImageView hot_view = rowView.findViewById(R.id.hot_view);
+        ImageView cold_view = rowView.findViewById(R.id.cold_view);
         //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
 
         name.setText(goProDevice.displayName);
@@ -101,13 +104,26 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             shutter_symbol.setVisibility(View.INVISIBLE);
         }
 
+        if(goProDevice.isCold) {
+            cold_view.setVisibility(View.VISIBLE);
+        } else {
+            cold_view.setVisibility(View.INVISIBLE);
+        }
+
+        if(goProDevice.isHot) {
+            hot_view.setVisibility(View.VISIBLE);
+        } else {
+            hot_view.setVisibility(View.INVISIBLE);
+        }
+
         model.setText(goProDevice.modelName);
 
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
             name.setTextColor(LIGHTBLUE);
             rssi.setText(String.valueOf(goProDevice.btRssi));
             battery.setText(String.format("%d%%", goProDevice.remainingBatteryPercent));
-            preset.setText(goProDevice.Preset);
+            preset.setText(goProDevice.preset.getTitle());
+            mode.setText(goProDevice.mode.getTitle());
             memory.setText(goProDevice.remainingMemory);
 
 
@@ -129,7 +145,8 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         } else {
             rssi.setText("NC");
             battery.setText("NC");
-            preset.setText("NC");
+            preset.setText("Preset");
+            mode.setText("Mode");
             memory.setText("NC");
 
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {

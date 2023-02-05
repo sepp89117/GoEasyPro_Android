@@ -1,0 +1,4 @@
+<vector android:height="24dp" android:viewportHeight="263"
+    android:viewportWidth="263" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#ca0000" android:name="Ellipse 1" android:pathData="m130.5 36.75c52.88 0 95.75 42.87 95.75 95.75c0 52.88 -42.87 95.75 -95.75 95.75c-52.88 0 -95.75 -42.87 -95.75 -95.75c0 -52.88 42.87 -95.75 95.75 -95.75zm0 -22.75c-65.45 0 -118.5 53.05 -118.5 118.5c0 65.45 53.05 118.5 118.5 118.5c65.45 0 118.5 -53.05 118.5 -118.5c0 -65.45 -53.05 -118.5 -118.5 -118.5z"/>
+</vector>

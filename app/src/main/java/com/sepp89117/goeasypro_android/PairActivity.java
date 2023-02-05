@@ -63,7 +63,6 @@ public class PairActivity extends AppCompatActivity {
             } else {
                 mDeviceStrList.add(i, goProDevice.name + " (disconnected)\n" + goProDevice.btMacAddr); //red
             }
-
         }
 
         listView = (ListView) findViewById(R.id.file_listView);
@@ -77,7 +76,6 @@ public class PairActivity extends AppCompatActivity {
                         .create();
                 alert.show();
 
-                //Toast.makeText(getApplicationContext(), "Pairing device...", Toast.LENGTH_SHORT).show();
                 mDeviceStrList.set(position, goProDevice.name + " (pairing...)\n" + goProDevice.btMacAddr); //yellow
                 goProDevice.pair(paired -> {
                     if (paired) {
@@ -166,7 +164,7 @@ public class PairActivity extends AppCompatActivity {
                     }
 
                     if (!inList) {
-                        GoProDevice goProDevice = new GoProDevice(getApplicationContext(), this.getApplication(), deviceName);
+                        GoProDevice goProDevice = new GoProDevice(PairActivity.this, this.getApplication(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
                         goProDevice.name = deviceName;
@@ -272,7 +270,7 @@ public class PairActivity extends AppCompatActivity {
 
                 //is not a paired device
                 if (deviceName != null && deviceName.contains("GoPro ")) {
-                    GoProDevice goProDevice = new GoProDevice(getApplicationContext(), PairActivity.this.getApplication(), deviceName);
+                    GoProDevice goProDevice = new GoProDevice(PairActivity.this, PairActivity.this.getApplication(), deviceName);
                     goProDevice.bluetoothDevice = device;
                     goProDevice.name = deviceName;
                     goProDevice.btMacAddr = deviceHardwareAddress;

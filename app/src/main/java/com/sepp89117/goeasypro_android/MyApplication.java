@@ -3,7 +3,10 @@ package com.sepp89117.goeasypro_android;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.SharedPreferences;
 import android.widget.Toast;
+
+import androidx.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +28,22 @@ public class MyApplication extends Application {
     public void onCreate () {
         super.onCreate();
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        ignoreAutoOff = sharedPref.getBoolean("ignore_auto_off", false);
+        autoConnect = sharedPref.getBoolean("auto_connect", false);
+
         loadSettingsValuesFromRes();
+    }
+
+    private boolean ignoreAutoOff = false;
+    private boolean autoConnect = false;
+
+    public boolean isAutoOffToIgnore() {
+        return ignoreAutoOff;
+    }
+
+    public boolean shouldAutoConnect() {
+        return autoConnect;
     }
 
 

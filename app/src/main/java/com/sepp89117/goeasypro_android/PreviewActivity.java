@@ -186,25 +186,16 @@ public class PreviewActivity extends AppCompatActivity {
             Player.Listener.super.onPlaybackStateChanged(playbackState);
             switch (playbackState) {
                 case Player.STATE_IDLE:
-                    Log.d("onPlaybackStateChanged", "Player.STATE_IDLE -> finish PreviewActivity");
+                case Player.STATE_ENDED:
                     PreviewActivity.this.finish();
                     break;
                 case Player.STATE_BUFFERING:
                     if (!streamStarted) {
                         streamStarted = true;
                         requestStream();
-                        /*if (keepStreamAliveTimer == null) {
-                            initRequestTimer();
-                        }*/
                     }
-                    Log.d("onPlaybackStateChanged", "Player.STATE_BUFFERING");
                     break;
                 case Player.STATE_READY:
-                    Log.d("onPlaybackStateChanged", "Player.STATE_READY");
-                    break;
-                case Player.STATE_ENDED:
-                    Log.d("onPlaybackStateChanged", "Player.STATE_ENDED -> finish PreviewActivity");
-                    PreviewActivity.this.finish();
                     break;
             }
         }
