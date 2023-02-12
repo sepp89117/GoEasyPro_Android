@@ -3,13 +3,18 @@ Easily control multiple GoPros with your android device with bluetooth<br><br>
 <b>Live preview, media browsing and much more is supported!</b><br><br>
 [Download latest release](https://github.com/sepp89117/GoEasyPro_Android/releases/latest)
 <br><br>
-<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/GoEasyPro%20Android_v1.5.jpg?raw=true" width="400px">
+## Screenshot
+<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/main_v1.5.4.jpg?raw=true" width="400px"><br>
+## Main Menu
+<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/menu_v1.5.4.jpg?raw=true" width="200px"><br>
+## Device Menu
+<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/dev_menu_v1.5.4.jpg?raw=true" width="200px"><br>
 
 ## Usage information
 <ul>
   <li>Compile the project with Android Studio and launch the app from there or install a release APK directly on the Android device.</li>
   <li>Open the app and grant the permission requests</li>
-  <li>To pair new cameras, put the GoPro in pairing mode to pair with 'GoPro App' or 'Quick App' and click the "Add cam" button</li>
+  <li>To pair new cameras, put the GoPro in pairing mode to pair with 'GoPro App' or 'Quick App' and click "Add cam" in main menu</li>
   <ul>
     <li>If your camera is already showing as paired, it doesn't need to be paired again.</li>
     <li>If the camera does not appear after the scan is complete, click "Scan again"</li>
