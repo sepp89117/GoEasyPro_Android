@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -44,13 +43,13 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
         return position;
     }
 
-    static class ViewHolder {
-        private TextView name;
-        private TextView date;
-        private TextView size;
-        private TextView multishot_size;
-        private ImageView tn;
-        private LinearLayout multishot_layout;
+    private static class ViewHolder {
+        TextView name;
+        TextView date;
+        TextView size;
+        TextView multishot_size;
+        ImageView tn;
+        LinearLayout multishot_layout;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
 
         if (convertView == null) {
             mViewHolder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.filelist_item, null, true);
+            convertView = inflater.inflate(R.layout.filelist_item, parent, false);
 
             mViewHolder.name = convertView.findViewById(R.id.file_name_text);
             mViewHolder.date = convertView.findViewById(R.id.file_date_text);

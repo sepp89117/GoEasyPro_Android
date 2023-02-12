@@ -1,12 +1,19 @@
 package com.sepp89117.goeasypro_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.arthenica.ffmpegkit.FFmpegKit;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -29,6 +36,7 @@ import java.net.URI;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import me.saket.cascade.CascadePopupMenu;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -44,10 +52,14 @@ public class PreviewActivity extends AppCompatActivity {
     private String stream_input_uri;
     private Timer keepStreamAliveTimer = null;
     private StyledPlayerView playerView;
+    private TextView textView_mode_preset;
+    private ImageView rec_icon;
     private boolean streamStarted = false;
     private byte[] keepStreamAliveData;
     private InetAddress inetAddress;
     private DatagramSocket udpSocket = null;
+    private GoProDevice streamingDevice;
+    private Animation fadeAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +74,23 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     private void init() {
-        GoProDevice streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
+        fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.tween);
+        streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
+        textView_mode_preset = findViewById(R.id.textView_mode_preset);
+        rec_icon = findViewById(R.id.rec_icon);
+        String mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
+        textView_mode_preset.setText(mode_preset);
+        streamingDevice.getDataChanges(() -> runOnUiThread(() -> {
+            String _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
+            textView_mode_preset.setText(_mode_preset);
+            if (streamingDevice.isRecording && rec_icon.getVisibility() == View.INVISIBLE) {
+                rec_icon.setVisibility(View.VISIBLE);
+                rec_icon.startAnimation(fadeAnimation);
+            } else if (!streamingDevice.isRecording && rec_icon.getVisibility() == View.VISIBLE) {
+                rec_icon.clearAnimation();
+                rec_icon.setVisibility(View.INVISIBLE);
+            }
+        }));
         stream_input_uri = "udp://:8554"; // maybe different depending on gopro modelID?
         ffmpeg_output_uri = "udp://@localhost:8555";
         playerView = findViewById(R.id.player_view);
@@ -70,7 +98,7 @@ public class PreviewActivity extends AppCompatActivity {
         startStream_query = ((MyApplication) this.getApplication()).getFocusedDevice().startStream_query;
         keepStreamAliveData = keepAlive_str.getBytes();
         try {
-            inetAddress = InetAddress.getByName(streamingDevice.goProIp);
+            inetAddress = InetAddress.getByName(GoProDevice.goProIp);
             udpSocket = new DatagramSocket();
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +134,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 if (!response.isSuccessful()) {
                     Log.e("requestStream", "Request response = not success");
                 } else {
@@ -204,6 +232,64 @@ public class PreviewActivity extends AppCompatActivity {
         public void onPlayerError(PlaybackException error) {
             Player.Listener.super.onPlayerError(error);
             Log.e("onPlayerError", error.getMessage() + "\n" + error.getCause());
+        }
+    };
+
+    public void onShutterClick(View v) {
+        if (streamingDevice.isRecording)
+            streamingDevice.shutterOff();
+        else
+            streamingDevice.shutterOn();
+    }
+
+    public void onHighlightClick(View v) {
+        streamingDevice.highlight();
+    }
+
+    public void onSettingsClick(View v) {
+        Intent goSettingsActivityIntent = new Intent(PreviewActivity.this, GoSettingsActivity.class);
+        startActivity(goSettingsActivityIntent);
+    }
+
+    public void onModeClick(View v) {
+        CascadePopupMenu popupMenu = new CascadePopupMenu(PreviewActivity.this, v);
+        popupMenu.setOnMenuItemClickListener(modeMenuItemClickListener);
+        popupMenu.inflate(R.menu.mode_menu);
+        popupMenu.show();
+    }
+
+    private final PopupMenu.OnMenuItemClickListener modeMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
+        @SuppressLint("NonConstantResourceId")
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (item.hasSubMenu())
+                return true;
+
+            switch (item.getItemId()) {
+                case R.id.mode_video_single:
+                    streamingDevice.setSubMode(0, 0);
+                    break;
+                case R.id.mode_video_timelapse:
+                    streamingDevice.setSubMode(0, 1);
+                    break;
+                case R.id.mode_photo_single:
+                    streamingDevice.setSubMode(1, 1);
+                    break;
+                case R.id.mode_photo_night:
+                    streamingDevice.setSubMode(1, 2);
+                    break;
+                case R.id.mode_multishot_burst:
+                    streamingDevice.setSubMode(2, 0);
+                    break;
+                case R.id.mode_multishot_timelapse:
+                    streamingDevice.setSubMode(2, 1);
+                    break;
+                case R.id.mode_multishot_nightlapse:
+                    streamingDevice.setSubMode(2, 2);
+                    break;
+            }
+
+            return true;
         }
     };
 

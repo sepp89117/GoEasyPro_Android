@@ -1,49 +1,66 @@
 package com.sepp89117.goeasypro_android;
 
+import android.content.Context;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class GoMode {
-    private int id = -1;
-    private String title = "NC";
+    private final Context context;
+    
+    private final int id;
+    private final String title;
+    private static final Map<Integer, String> modes = new HashMap<>();
 
-    private static final Map<Integer, String> modes = new HashMap<Integer, String>() {{
-        put(-1, "NC");
-        put(0, "Video");
-        put(1, "Photo");
-        put(2, "Multishot");
-        put(3, "Broadcast");
-        put(4, "Playback");
-        put(5, "Setup");
-        put(6, "FW Update");
-        put(7, "USB MTP");
-        put(8, "SOS");
-        put(9, "MEdit");
-        put(10, "Calibration");
-        put(11, "Direct Offload");
-        put(12, "Video");
-        put(13, "Time Lapse Video");
-        put(14, "Video + Photo");
-        put(15, "Looping");
-        put(16, "Single Photo");
-        put(17, "Photo");
-        put(18, "Night Photo");
-        put(19, "Burst Photo");
-        put(20, "Time Lapse Photo");
-        put(21, "Night Lapse Photo");
-        put(22, "Broadcast Record");
-        put(23, "Webcam");
-        put(24, "Time Warp Video");
-        put(25, "Live Burst");
-        put(26, "Night Lapse Video");
-        put(27, "Slo-Mo");
-    }};
+    public GoMode(Context context){
+        this.context = context;
 
-    public GoMode(){};
+        id = -1;
+        title = getStr(R.string.str_NC);
+    }
 
-    public GoMode(int id) {
+    public GoMode(Context context, int id) {
+        this.context = context;
+        
         this.id = id;
-        this.title = modes.getOrDefault(this.id, "UNK " + this.id);
+        putValuesToMap();
+        this.title = modes.getOrDefault(this.id, getStr(R.string.str_UNK) + " " + this.id);
+    }
+
+    private void putValuesToMap(){
+        modes.put(-1, getStr(R.string.str_NC));
+        modes.put(0, getStr(R.string.str_Video));
+        modes.put(1, getStr(R.string.str_Photo));
+        modes.put(2, getStr(R.string.str_Multishot));
+        modes.put(3, getStr(R.string.str_Broadcast));
+        modes.put(4, getStr(R.string.str_Playback));
+        modes.put(5, getStr(R.string.str_Setup));
+        modes.put(6, getStr(R.string.str_FW_Update));
+        modes.put(7, getStr(R.string.str_USB_MTP));
+        modes.put(8, getStr(R.string.str_SOS));
+        modes.put(9, getStr(R.string.str_MEdit));
+        modes.put(10, getStr(R.string.str_Calibration));
+        modes.put(11, getStr(R.string.str_Direct_Offload));
+        modes.put(12, getStr(R.string.str_Video));
+        modes.put(13, getStr(R.string.str_Time_Lapse_Video));
+        modes.put(14, getStr(R.string.str_Video_Photo));
+        modes.put(15, getStr(R.string.str_Looping));
+        modes.put(16, getStr(R.string.str_Single_Photo));
+        modes.put(17, getStr(R.string.str_Photo));
+        modes.put(18, getStr(R.string.str_Night_Photo));
+        modes.put(19, getStr(R.string.str_Burst_Photo));
+        modes.put(20, getStr(R.string.str_Time_Lapse_Photo));
+        modes.put(21, getStr(R.string.str_Night_Lapse_Photo));
+        modes.put(22, getStr(R.string.str_Broadcast_Record));
+        modes.put(23, getStr(R.string.str_Webcam));
+        modes.put(24, getStr(R.string.str_Time_Warp_Video));
+        modes.put(25, getStr(R.string.str_Live_Burst));
+        modes.put(26, getStr(R.string.str_Night_Lapse_Video));
+        modes.put(27, getStr(R.string.str_Slo_Mo));
+    }
+
+    private String getStr(int resId) {
+        return context.getResources().getString(resId);
     }
 
     public int getId() {

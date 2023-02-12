@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class GoSettingsActivity extends AppCompatActivity {
     private GoProDevice focusedDevice;
-    private ListView listView;
     private GoSettingListAdapter listAdapter;
     ArrayList<GoSetting> goSettings = new ArrayList<>();
     private int clickedSettingIndex = -1;
@@ -30,15 +29,15 @@ public class GoSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_go_settings);
 
         newSetAlert = new AlertDialog.Builder(GoSettingsActivity.this)
-                .setTitle("Set new setting")
-                .setMessage("Please wait until the new setting has been made!")
+                .setTitle(getResources().getString(R.string.str_set_setting))
+                .setMessage(getResources().getString(R.string.str_wait_setting_set))
                 .setCancelable(true)
                 .create();
 
         focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
 
-        if(!focusedDevice.providesAvailableOptions)
-            Toast.makeText(this, "This camera does not provide the available options for the settings.", Toast.LENGTH_LONG).show();
+        if (!focusedDevice.providesAvailableOptions)
+            Toast.makeText(this, getResources().getString(R.string.str_no_available_options), Toast.LENGTH_LONG).show();
 
         TextView devName = findViewById(R.id.gopro_name);
         devName.setText(focusedDevice.displayName);
@@ -47,12 +46,10 @@ public class GoSettingsActivity extends AppCompatActivity {
 
         listAdapter = new GoSettingListAdapter(goSettings, this);
 
-        listView = findViewById(R.id.settings_list);
+        ListView listView = findViewById(R.id.settings_list);
         listView.setAdapter(listAdapter);
         registerForContextMenu(listView);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            view.showContextMenu();
-        });
+        listView.setOnItemClickListener((parent, view, position, id) -> view.showContextMenu());
 
         focusedDevice.getSettingsChanges(() -> {
             goSettings = focusedDevice.goSettings;
@@ -87,7 +84,7 @@ public class GoSettingsActivity extends AppCompatActivity {
         int settingId = item.getGroupId();
         int selectedOptionId = item.getItemId();
 
-        if(goSettings.get(clickedSettingIndex).getCurrentOptionId() != selectedOptionId) {
+        if (goSettings.get(clickedSettingIndex).getCurrentOptionId() != selectedOptionId) {
             focusedDevice.setSetting(settingId, selectedOptionId);
 
             newSetAlert.show();
@@ -96,7 +93,7 @@ public class GoSettingsActivity extends AppCompatActivity {
     }
 
     private void updateList() {
-        runOnUiThread(()->{
+        runOnUiThread(() -> {
             ArrayList<GoSetting> _goSettings = new ArrayList<>(goSettings);
             listAdapter.setNotifyOnChange(false);
             listAdapter.clear();

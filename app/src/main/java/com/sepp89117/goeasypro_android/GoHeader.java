@@ -1,8 +1,8 @@
 package com.sepp89117.goeasypro_android;
 
 public class GoHeader {
-    private int headerLength = 1;
-    private int msgLength = 0;
+    private final int headerLength;
+    private final int msgLength;
 
     public GoHeader(byte[] payload) {
         int byte0 = payload[0] & 0xff;

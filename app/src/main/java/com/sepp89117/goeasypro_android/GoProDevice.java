@@ -3,7 +3,6 @@ package com.sepp89117.goeasypro_android;
 import static com.sepp89117.goeasypro_android.MyApplication.getReadableFileSize;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -14,18 +13,21 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Build;
@@ -42,20 +44,16 @@ import androidx.appcompat.app.AlertDialog;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.zip.GZIPInputStream;
 
 public class GoProDevice {
     //region BT connection stats
@@ -82,8 +80,8 @@ public class GoProDevice {
     private final static String mediaList_query_v1 = "http://10.5.5.9/gp/gpMediaList"; // -Hero 8 TODO and Max ?
     private final static String mediaList_query_v2 = "http://10.5.5.9:8080/gopro/media/list"; // TODO Hero 9+ ? //On Hero 10 - Firmware 1.20 it doesn't work -> updated to 1.50 and it works
 
-    private final static String thumNail_query_v1 = "http://10.5.5.9/gp/gpMediaMetadata?p="; // -Hero 8 TODO and Max ?
-    private final static String thumNail_query_v2 = "http://10.5.5.9:8080/gopro/media/thumbnail?path="; // TODO Hero 9+ ?
+    private final static String thumbNail_query_v1 = "http://10.5.5.9/gp/gpMediaMetadata?p="; // -Hero 8 TODO and Max ?
+    private final static String thumbNail_query_v2 = "http://10.5.5.9:8080/gopro/media/thumbnail?path="; // TODO Hero 9+ ?
 
     private final static String keepAlive_v1 = "_GPHD_:0:0:2:0.000000\n"; // -Hero 7 TODO ?
     private final static String keepAlive_v2 = "_GPHD_:1:0:2:0.000000\n"; // Hero 8+
@@ -114,9 +112,10 @@ public class GoProDevice {
     private final static String modelNoUUID = "00002a24-0000-1000-8000-00805f9b34fb";   // Model number
     //endregion
 
-    private Context _context;
+    private final Context _context;
+    private final Resources res;
 
-    private SharedPreferences sharedPreferences = null;
+    private final SharedPreferences sharedPreferences;
 
     private Timer actionTimer = new Timer();
     private Timer execWatchdogTimer = new Timer();
@@ -129,21 +128,20 @@ public class GoProDevice {
     private BluetoothGatt bluetoothGatt;
     public boolean btPaired = false;
     public int btConnectionStage = BT_NOT_CONNECTED;
-    public String name = "";
-    public String displayName = "";
-    public String btMacAddr = "";
-    public String modelName = "NC";
+    public String name;
+    public String displayName;
+    public String btMacAddress = "";
+    public String modelName;
     public int modelID = UNK_MODEL;
     public String boardType = "";
     public String firmware = "";
     public String serialNumber = "";
-    //public String Preset = "NC";
 
-    public GoPreset preset = new GoPreset();
-    public GoMode mode = new GoMode();
+    public GoPreset preset;
+    public GoMode mode;
 
     public int remainingBatteryPercent = 0;
-    public String remainingMemory = "NC";
+    public String remainingMemory;
     private boolean autoValueUpdatesRegistered = false;
     public int btRssi = 0;
     private String LE = "None"; // last error
@@ -163,31 +161,31 @@ public class GoProDevice {
     private BluetoothGattCharacteristic queryRespCharacteristic = null;
     private BluetoothGattCharacteristic modelNoCharacteristic = null;
     private BluetoothGattCharacteristic nwManCmdCharacteristic = null;
-    //private BluetoothGattCharacteristic nwManRespCharacteristic = null;
     private int registerForAutoValueUpdatesCounter = 0;
     private ByteBuffer packBuffer;
     private static final int btActionDelay = 125;
     private boolean communicationInitiated = false;
+    public boolean btIsAvailable = false;
     public boolean isBusy = false;
     public boolean isRecording = false;
+    public boolean isCharging = false;
     public boolean isHot = false;
     public boolean isCold = false;
     private boolean freshPaired = false;
-    public JSONObject settingsValues = null;
+    public JSONObject settingsValues;
     public boolean providesAvailableOptions = true;
     private final Application _application;
     public ArrayList<GoSetting> goSettings = new ArrayList<>();
     private ArrayList<Pair<Integer, Integer>> availableSettingsOptions = null;
     private boolean autoOffDisableAsked = false;
 
-
     //Wifi
     public static final String goProIp = "10.5.5.9";
     public Integer wifiApState = -1;
     public boolean isWifiConnected = false;
-    public String wifiSsid = "";
-    public String wifiPw = "";
-    public String wifiMacAddr = "";
+    public String wifiSSID = "";
+    public String wifiPSK = "";
+    public String wifiBSSID = "";
     private ConnectivityManager connectivityManager = null;
     public String startStream_query = "";
     public String stopStream_query = "";
@@ -201,10 +199,15 @@ public class GoProDevice {
         _application = application;
         settingsValues = ((MyApplication) _application).getSettingsValues();
         _context = context;
+        res = _context.getResources();
         name = deviceName;
         sharedPreferences = _context.getSharedPreferences("GoProDevices", Context.MODE_PRIVATE);
         displayName = sharedPreferences.getString("display_name_" + name, name);
+        modelName = res.getString(R.string.str_NC);
+        remainingMemory = res.getString(R.string.str_NC);
         modelName = sharedPreferences.getString("model_name_" + name, modelName);
+        preset = new GoPreset(_context);
+        mode = new GoMode(_context);
     }
 
     public void saveNewDisplayName(String newName) {
@@ -231,7 +234,7 @@ public class GoProDevice {
                 }
             } else {
                 Log.e("onConnectionStateChange", "Gatt connect unsuccessful with status " + status);
-                showToast("There was a problem connecting the BLE gatt.", Toast.LENGTH_SHORT);
+                showToast(res.getString(R.string.str_gatt_connect_problem), Toast.LENGTH_SHORT);
                 setDisconnected();
             }
         }
@@ -299,7 +302,7 @@ public class GoProDevice {
                     initCommunication();
             } else {
                 Log.e("onServicesDiscovered", "onServicesDiscovered unsuccessful with status " + status);
-                showToast("There was a problem getting BLE services.", Toast.LENGTH_SHORT);
+                showToast(res.getString(R.string.str_get_ble_services_problem), Toast.LENGTH_SHORT);
             }
         }
 
@@ -410,7 +413,7 @@ public class GoProDevice {
                     }
 
                     if (packBuffer.remaining() <= 0) {
-                        //all datas received
+                        //all data received
                         parseBtResponsePack();
                         gattInProgress = false;
                     }
@@ -428,18 +431,20 @@ public class GoProDevice {
                 packBuffer = ByteBuffer.allocate(msgLen);
                 packBuffer.put(valueBytes, headerLength, valueBytes.length - headerLength);
 
-                if (packBuffer.remaining() <= 0) { //all datas received
-                    //all datas received
+                if (packBuffer.remaining() <= 0) {
+                    //all data received
                     parseBtResponsePack();
                     gattInProgress = false;
 
                     if (error == 0) {
                         switch (characteristicUuid) {
                             case commandRespUUID:
+                                if (commandId == 0x0d)
+                                    showToast(_context.getResources().getString(R.string.str_set_dt_success), Toast.LENGTH_SHORT);
                                 break;
                             case settingsRespUUID:
                                 if (valueBytes.length >= 4 && valueBytes[3] == 91) {
-                                    // keepAlive response
+                                    // ignore keepAlive response
                                 } else {
                                     // A setting was changed. Get an update of the current settings
                                     if (providesAvailableOptions)
@@ -455,14 +460,14 @@ public class GoProDevice {
                                     // GoPro does not provide available setting options
                                     providesAvailableOptions = false;
                                     Log.i("GoProDevice", "'" + name + "', model '" + modelName + "' does not provide the available setting options!");
-                                    /*
-                                    //"GET_SETTINGS_JSON = 0x3B" command
-                                    getSettingsJson();
-                                    */
+                                    /* getSettingsJson(); */
                                 }
                                 break;
                         }
                     } else {
+                        if (Objects.equals(characteristicUuid, commandRespUUID) && commandId == 0x0d)
+                            showToast(_context.getResources().getString(R.string.str_set_dt_not_success), Toast.LENGTH_SHORT);
+
                         switch (error) {
                             case 1:
                                 LE = "Error";
@@ -475,8 +480,6 @@ public class GoProDevice {
                         }
                         Log.e("GoProDevice", name + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
                     }
-
-                    //gattInProgress = false;
                 }
             }
         } else { // onCharacteristicRead
@@ -491,12 +494,12 @@ public class GoProDevice {
                 case wifiSsidUUID:
                     ByteBuffer byteBuffer2 = ByteBuffer.allocate(33);
                     byteBuffer2.put(valueBytes);
-                    wifiSsid = new String(byteBuffer2.array(), StandardCharsets.UTF_8).trim();
+                    wifiSSID = new String(byteBuffer2.array(), StandardCharsets.UTF_8).trim();
                     break;
                 case wifiPwUUID:
                     ByteBuffer byteBuffer3 = ByteBuffer.allocate(64);
                     byteBuffer3.put(valueBytes);
-                    wifiPw = new String(byteBuffer3.array(), StandardCharsets.UTF_8).trim();
+                    wifiPSK = new String(byteBuffer3.array(), StandardCharsets.UTF_8).trim();
                     break;
                 case wifiStateUUID:
                     wifiApState = (int) valueBytes[0];
@@ -530,25 +533,28 @@ public class GoProDevice {
             buffer.put(valueBytes, 5, len1);
             buffer.flip();
             long memBytes = buffer.getLong();
-            remainingMemory = getReadableFileSize(memBytes * 1024);
+            if (memBytes != 0)
+                remainingMemory = getReadableFileSize(memBytes * 1024);
+            else
+                remainingMemory = res.getString(R.string.str_NA);
         } else if (commandId == (byte) 0x13 && id1 == 70 /*&& len1 == 1*/) { // Battery level
             remainingBatteryPercent = valueBytes[5];
         } else if (commandId == (byte) 0x13 && id1 == 43 && len1 == 1) { // Active preset
-            mode = new GoMode((int) valueBytes[5]);
+            mode = new GoMode(_context, valueBytes[5]);
         } else if (commandId == (byte) 0x13 && id1 == 97 && len1 == 4) { // Active preset
             ByteBuffer buffer = ByteBuffer.allocate(len1);
             buffer.put(valueBytes, 5, len1);
             buffer.flip();
             int presetID = buffer.getInt();
 
-            preset = new GoPreset(presetID);
+            preset = new GoPreset(_context, presetID);
         } else if (commandId == (byte) 0x53) { // response for registerForAutoValueUpdates()
             autoValueUpdatesRegistered = true;
         } else if (commandId == (byte) 0x93) { // Multi-Value query response
-            int nextLen = 0;
+            int nextLen;
 
             for (int index = headerLength; index < valueBytes.length; ) {
-                int statusID = valueBytes[index] & 0xff; // to uint8
+                int statusID = valueBytes[index] & 0xff;
                 if (valueBytes.length > index + 1)
                     nextLen = valueBytes[index + 1];
                 else
@@ -588,25 +594,25 @@ public class GoProDevice {
             startStream_query = streamStart_query_v3;
             stopStream_query = streamStop_query_v2; //TODO test
             getMediaList_query = mediaList_query_v2; //TODO test
-            getThumbNail_query = thumNail_query_v2;
+            getThumbNail_query = thumbNail_query_v2;
         } else if (modelID >= HERO8_BLACK) {
             // Hero 8 TODO and Max ?
             keepAlive_msg = keepAlive_v2;
             startStream_query = streamStart_query_v2;
             stopStream_query = streamStop_query_v1;
             getMediaList_query = mediaList_query_v1;
-            getThumbNail_query = thumNail_query_v1;
+            getThumbNail_query = thumbNail_query_v1;
         } else {
             // -Hero 7
             keepAlive_msg = keepAlive_v1; //TODO test
             startStream_query = streamStart_query_v1; //TODO test
             stopStream_query = streamStop_query_v1; //TODO test
             getMediaList_query = mediaList_query_v1;
-            getThumbNail_query = thumNail_query_v1;
-            preset = new GoPreset(-2);
+            getThumbNail_query = thumbNail_query_v1;
+            preset = new GoPreset(_context, -2);
         }
 
-        getAllStatusValues();
+        queryAllStatusValues();
         getAvailableOptions();
     }
 
@@ -621,10 +627,10 @@ public class GoProDevice {
         if (error == 0) { // success
             if (commandId == 83) { // response for registerForAllStatusValueUpdates()
                 autoValueUpdatesRegistered = true;
-                int nextLen = 0;
+                int nextLen;
 
                 for (int index = nextStart; index < byteArray.length; ) {
-                    int statusID = byteArray[index] & 0xff; // to uint8
+                    int statusID = byteArray[index] & 0xff;
                     if (byteArray.length > index + 1)
                         nextLen = byteArray[index + 1];
                     else
@@ -687,7 +693,7 @@ public class GoProDevice {
                 // AP SSID
                 byteBuffer = ByteBuffer.allocate(nextLen);
                 byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                wifiSsid = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+                wifiSSID = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
 
                 nextStart = nextStart + 1 + nextLen;
                 nextLen = byteArray[nextStart];
@@ -701,12 +707,12 @@ public class GoProDevice {
                 sb.insert(8, ':');
                 sb.insert(11, ':');
                 sb.insert(14, ':');
-                wifiMacAddr = sb.toString().toUpperCase();
+                wifiBSSID = sb.toString().toUpperCase();
             } else if (commandId == 19) { // All status values
-                int nextLen = 0;
+                int nextLen;
 
                 for (int index = nextStart; index < byteArray.length; ) {
-                    int statusID = byteArray[index] & 0xff; // to uint8
+                    int statusID = byteArray[index] & 0xff;
                     if (byteArray.length > index + 1)
                         nextLen = byteArray[index + 1];
                     else
@@ -721,11 +727,11 @@ public class GoProDevice {
                     index += nextLen + 2;
                 }
             } else if (commandId == 50) { // Available option IDs for all settings
-                int nextLen = 0;
+                int nextLen;
                 availableSettingsOptions = new ArrayList<>();
 
                 for (int index = nextStart; index < byteArray.length; ) {
-                    int settingId = byteArray[index] & 0xff; // to uint8
+                    int settingId = byteArray[index] & 0xff;
                     if (byteArray.length > index + 1)
                         nextLen = byteArray[index + 1];
                     else
@@ -743,11 +749,10 @@ public class GoProDevice {
                 getAllSettings();
             } else if (commandId == 18) { // All settings
                 goSettings = new ArrayList<>();
-
-                int nextLen = 0;
+                int nextLen;
 
                 for (int index = nextStart; index < byteArray.length; ) {
-                    int settingID = byteArray[index] & 0xff; // to uint8
+                    int settingID = byteArray[index] & 0xff;
                     if (byteArray.length > index + 1)
                         nextLen = byteArray[index + 1];
                     else
@@ -813,6 +818,8 @@ public class GoProDevice {
 
     private void handleStatusData(int statusID, ByteBuffer buffer) {
         switch (statusID) {
+            case 2:
+                isCharging = buffer.get(0) == 4;
             case 6:
                 isHot = buffer.get(0) != 0;
                 break;
@@ -827,22 +834,25 @@ public class GoProDevice {
                 buffer.flip();
                 int videoProgress = buffer.getInt();
 
-                boolean wasRecording2 = isRecording;
+                boolean wasRecording = isRecording;
                 isRecording = videoProgress != 0;
 
-                if (isRecording && !wasRecording2) {
+                if (isRecording && !wasRecording) {
                     initShutterWatchdog();
                 }
                 break;
             case 43:
             case 89:
                 int modeId = buffer.get(0);
-                mode = new GoMode(modeId);
+                mode = new GoMode(_context, modeId);
                 break;
             case 54: // Remaining space on the sdcard in Kilobytes as integer
                 buffer.flip();
                 long memBytes = buffer.getLong();
-                remainingMemory = getReadableFileSize(memBytes * 1024);
+                if (memBytes != 0)
+                    remainingMemory = getReadableFileSize(memBytes * 1024);
+                else
+                    remainingMemory = res.getString(R.string.str_NA);
                 break;
             case 69: // AP state as boolean
                 wifiApState = (int) buffer.get(0);
@@ -853,7 +863,7 @@ public class GoProDevice {
             case 97: // Current Preset ID as integer
                 buffer.flip();
                 int presetId = buffer.getInt();
-                preset = new GoPreset(presetId);
+                preset = new GoPreset(_context, presetId);
                 break;
         }
     }
@@ -876,10 +886,10 @@ public class GoProDevice {
             Looper.prepare();
             new Handler(Looper.getMainLooper()).post(() -> {
                 final AlertDialog alert = new AlertDialog.Builder(_context)
-                        .setTitle("'Auto Off' is enabled")
-                        .setMessage("Camera '" + displayName + "' has 'Auto Off' set to '" + offTime + "'. The camera will turn off after this time.\n\nShould 'Auto Off' be disabled?\n\nYou can turn off this notification in the app settings.")
-                        .setPositiveButton("Disable", (dialog, which) -> setSetting(59, 0))
-                        .setNegativeButton("Ignore", (dialog, which) -> dialog.dismiss())
+                        .setTitle(res.getString(R.string.str_enabled_auto_off_title))
+                        .setMessage(String.format(res.getString(R.string.str_enabled_auto_off_msg), displayName, offTime))
+                        .setPositiveButton(res.getString(R.string.str_Disable), (dialog, which) -> setSetting(59, 0))
+                        .setNegativeButton(res.getString(R.string.str_Ignore), (dialog, which) -> dialog.dismiss())
                         .create();
 
                 alert.show();
@@ -889,7 +899,7 @@ public class GoProDevice {
     }
 
     private void doIfBtConnected() {
-        if (btConnectionStage != BT_CONNECTED && modelID > 0 && !Objects.equals(wifiPw, "") && !Objects.equals(wifiSsid, "")) {
+        if (btConnectionStage != BT_CONNECTED && modelID > 0 && !Objects.equals(wifiPSK, "") && !Objects.equals(wifiSSID, "")) {
             btConnectionStage = BT_CONNECTED;
 
             if (checkConnected != null) {
@@ -920,8 +930,11 @@ public class GoProDevice {
     }
 
     @SuppressLint("MissingPermission")
-    public void disconnectBt() {
-        Log.e("disconnectBt", "Disconnect forced");
+    public void disconnectGoProDevice() {
+        Log.d("disconnectBt", "Disconnect forced");
+        if (isWifiConnected)
+            disconnectWifi();
+
         if (bluetoothGatt != null) {
             if (commandRespCharacteristic != null)
                 bluetoothGatt.setCharacteristicNotification(commandRespCharacteristic, false);
@@ -949,6 +962,12 @@ public class GoProDevice {
         communicationInitiated = false;
 
         setDisconnected();
+
+        try {
+            _context.unregisterReceiver(mConnectionReceiver);
+        } catch (Exception ignored) {
+
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -1010,8 +1029,8 @@ public class GoProDevice {
                     if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
                         if (!bluetoothGatt.writeDescriptor(descriptor)) {
                             Log.e("startCrcNotification", "Error 3");
-                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                            disconnectBt();
+                            showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+                            disconnectGoProDevice();
                             gattInProgress = false;
                         }
                     } else {
@@ -1040,8 +1059,8 @@ public class GoProDevice {
                     if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
                         if (!bluetoothGatt.writeDescriptor(descriptor)) {
                             Log.e("startSrcNotification", "Error 3");
-                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                            disconnectBt();
+                            showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+                            disconnectGoProDevice();
                             gattInProgress = false;
                         }
                     } else {
@@ -1070,8 +1089,8 @@ public class GoProDevice {
                     if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
                         if (!bluetoothGatt.writeDescriptor(descriptor)) {
                             Log.e("startQrcNotification", "Error 3");
-                            showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
-                            disconnectBt();
+                            showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+                            disconnectGoProDevice();
                             gattInProgress = false;
                         }
                     } else {
@@ -1215,11 +1234,12 @@ public class GoProDevice {
                 }
 
                 Date now = new Date();
-                byte yyH = (byte) (now.getYear() & 0xFF);
-                byte yyL = (byte) ((now.getYear() >> 8) & 0xFF);
-                // Set date/time to 2022-01-02 03:04:05 	Command: 09: 0D: 07: 07:E6: 01: 02: 03: 04: 05
-                byte[] msg = {0x09, 0x0d, 0x07, yyL, yyH, (byte) (now.getMonth() + 1), (byte) now.getDate(), (byte) now.getHours(), (byte) now.getMinutes(), (byte) now.getSeconds()};
-                if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
+                int year = now.getYear() + 1900;
+                int month = now.getMonth() + 1;
+                byte yyH = (byte) ((year >> 8) & 0xFF);
+                byte yyL = (byte) (year & 0xFF);
+                byte[] msg = {0x09, 0x0d, 0x07, yyH, yyL, (byte) month, (byte) now.getDate(), (byte) now.getHours(), (byte) now.getMinutes(), (byte) now.getSeconds()};
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1263,9 +1283,30 @@ public class GoProDevice {
                 }
 
                 byte[] msg = {0x01, 0x3C};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+                    gattInProgress = false;
+                }
+            });
+        }
+    }
 
-                } else {
+    // TODO get and parse Date/Time; byte[] msg = {0x01, 0x0E}; https://gopro.github.io/OpenGoPro/ble_2_0#get-datetime
+
+    @SuppressLint("MissingPermission")
+    public void setSubMode(int mode, int subMode) {
+        if (btActionBuffer.size() > MAX_FIFO_SIZE) {
+            gattInProgress = false;
+            return;
+        }
+        synchronized (btActionBuffer) {
+            btActionBuffer.add(() -> {
+                if (btConnectionStage < 2) {
+                    gattInProgress = false;
+                    return;
+                }
+
+                byte[] msg = {0x05, 0x03, 0x01, (byte) mode, 0x01, (byte) subMode};
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1309,9 +1350,7 @@ public class GoProDevice {
                 }
 
                 byte[] shutterOn = {0x03, 0x01, 0x01, 0x01};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-
-                } else {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(shutterOn) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1332,9 +1371,7 @@ public class GoProDevice {
                 }
 
                 byte[] shutterOff = {0x03, 0x01, 0x01, 0x00};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(shutterOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-
-                } else {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(shutterOff) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1357,9 +1394,10 @@ public class GoProDevice {
                 byte[] camSleep = {0x01, 0x05};
                 if (commandCharacteristic != null && commandCharacteristic.setValue(camSleep) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     connectBtCallback = null;
-                    bluetoothGatt.disconnect();
-                    wifiApState = -1;
-                    isWifiConnected = false;
+                    //bluetoothGatt.disconnect();
+                    //wifiApState = -1;
+                    //isWifiConnected = false;
+                    disconnectGoProDevice();
                 } else {
                     gattInProgress = false;
                 }
@@ -1427,9 +1465,7 @@ public class GoProDevice {
                 }
 
                 byte[] msg = {0x03, 0x16, 0x01, 0x01};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-
-                } else {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1450,9 +1486,7 @@ public class GoProDevice {
                 }
 
                 byte[] msg = {0x03, 0x16, 0x01, 0x00};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-
-                } else {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1473,9 +1507,7 @@ public class GoProDevice {
                 }
 
                 byte[] highlight = {0x01, 0x18};
-                if (commandCharacteristic != null && commandCharacteristic.setValue(highlight) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-
-                } else {
+                if (commandCharacteristic == null || !commandCharacteristic.setValue(highlight) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
                     gattInProgress = false;
                 }
             });
@@ -1493,10 +1525,9 @@ public class GoProDevice {
                     return;
                 }
 
-                byte[] msg = {0x01, 0x53};
+                byte[] msg = {0x01, 0x53 /* 83 */};
 
-                if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                } else {
+                if (queryCharacteristic == null || !queryCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
                     Log.e("registerForAllStatusValueUpdates", "failed action");
                     gattInProgress = false;
                 }
@@ -1505,7 +1536,7 @@ public class GoProDevice {
     }
 
     @SuppressLint("MissingPermission")
-    private void getAllStatusValues() {
+    public void queryAllStatusValues() {
         if (btActionBuffer.size() > MAX_FIFO_SIZE) {
             gattInProgress = false;
             return;
@@ -1723,7 +1754,7 @@ public class GoProDevice {
                 };
                 _context.registerReceiver(pairingReceiver, filter);
             } else {
-                showToast("Pairing with " + name + " failed!", Toast.LENGTH_SHORT);
+                showToast(String.format(res.getString(R.string.str_pairing_failed), displayName), Toast.LENGTH_SHORT);
             }
         } catch (Exception e) {
             if (pairCallback != null)
@@ -1755,12 +1786,12 @@ public class GoProDevice {
                 public void run() {
                     if (btConnectionStage != BT_CONNECTED) {
                         Log.e("connectBt", "BT connection timeout");
-                        disconnectBt();
+                        disconnectGoProDevice();
                         if (connectBtCallback != null)
                             connectBtCallback.onBtConnectionStateChange(false);
                     }
                 }
-            }, 30000);
+            }, 35000);
         } else {
             btConnectionStage = BT_NOT_CONNECTED;
 
@@ -1816,56 +1847,54 @@ public class GoProDevice {
     private void connectWifi() {
         // Check if bt connected and SSID and PSK are known
         if (btConnectionStage < 2) {
-            showToast("Not connected! Please connect first!", Toast.LENGTH_SHORT);
+            showToast(String.format(res.getString(R.string.str_connect_first), displayName), Toast.LENGTH_SHORT);
             return;
-        } else if (Objects.equals(wifiSsid, "")) {
+        } else if (Objects.equals(wifiSSID, "")) {
             readWifiApSsid();
-            showToast("SSID is unknown. I retrieve it... Please try again!", Toast.LENGTH_SHORT);
+            showToast(String.format(res.getString(R.string.str_ssid_unk), displayName), Toast.LENGTH_SHORT);
             return;
-        } else if (Objects.equals(wifiPw, "")) {
+        } else if (Objects.equals(wifiPSK, "")) {
             readWifiApPw();
-            showToast("PSK is unknown. I retrieve it... Please try again!", Toast.LENGTH_SHORT);
+            showToast(String.format(res.getString(R.string.str_psk_unk), displayName), Toast.LENGTH_SHORT);
             return;
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            connectWifiAndroidQup();
+            connectWifiAndroidQUp();
         } else {
-            new Thread(() -> {
-                if (!connectWifiAndroidPdown())
-                    showToast("Something went wrong!", Toast.LENGTH_SHORT);
-                else {
-                    if (wifiConnectedCallback != null)
-                        wifiConnectedCallback.onWifiConnected();
-                }
-            }).start();
+            new Thread(this::connectWifiAndroidPDown).start();
         }
 
     }
 
+    private BroadcastReceiver mConnectionReceiver;
+
     @SuppressLint("MissingPermission")
-    private boolean connectWifiAndroidPdown() {
+    private void connectWifiAndroidPDown() {
         WifiManager wifiManager = (WifiManager) _context.getSystemService(Context.WIFI_SERVICE);
         boolean mustConnect = false;
+        int netId = -1;
         // Check if this network is already known
         WifiConfiguration wifiConfiguration = null;
         List<WifiConfiguration> list = wifiManager.getConfiguredNetworks(); // deprecated in API level 29 (Android 10/Q)
         for (WifiConfiguration _wifiConfiguration : list) {
-            if (_wifiConfiguration.SSID != null && _wifiConfiguration.SSID.equals('"' + wifiSsid + '"')) {
+            if (_wifiConfiguration.SSID != null && _wifiConfiguration.SSID.equals('"' + wifiSSID + '"')) {
                 wifiConfiguration = _wifiConfiguration;
                 break;
             }
         }
 
+        boolean otherWifiIsConnected = false;
+
         if (wifiConfiguration == null) {
             // create WifiConfiguration instance
             WifiConfiguration newWifiConfiguration = new WifiConfiguration(); // deprecated in API level 29 (Android 10/Q)
-            newWifiConfiguration.SSID = '"' + wifiSsid + '"';
-            newWifiConfiguration.preSharedKey = '"' + wifiPw + '"';
+            newWifiConfiguration.SSID = String.format("\"%s\"", wifiSSID);//'"' + wifiSSID + '"';
+            //newWifiConfiguration.BSSID = '"' + wifiBSSID + '"';
+            newWifiConfiguration.preSharedKey = String.format("\"%s\"", wifiPSK);//'"' + wifiPSK + '"';
 
             //Add it to Android wifi manager settings
-            wifiManager.addNetwork(newWifiConfiguration);
-
+            netId = wifiManager.addNetwork(newWifiConfiguration);
             mustConnect = true;
         } else {
             // Check if already connected
@@ -1873,21 +1902,101 @@ public class GoProDevice {
 
             // If not already connected, connect it
             if (connectedId != wifiConfiguration.networkId) {
+                otherWifiIsConnected = connectedId != -1;
                 mustConnect = true;
+                netId = wifiConfiguration.networkId;
+                //wifiConfiguration.BSSID = '"' + wifiBSSID + '"';
+                wifiConfiguration.preSharedKey = String.format("\"%s\"", wifiPSK);//;
             }
         }
+
         if (mustConnect) {
             // Connect to it
-            wifiManager.disconnect();
-            wifiManager.enableNetwork(wifiConfiguration.networkId, true);
-            return wifiManager.reconnect();
+            if (otherWifiIsConnected)
+                wifiManager.disconnect();
+
+            mConnectionReceiver = new WifiConnectionMonitor();
+            IntentFilter aFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            aFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            _context.registerReceiver(mConnectionReceiver, aFilter);
+
+            if (wifiManager.enableNetwork(netId, true)) {
+                wifiManager.reconnect();
+            } else {
+                isWifiConnected = false;
+
+                if (wifiConnectedCallback != null)
+                    wifiConnectedCallback.onWifiConnected();
+            }
         } else {
-            return true;
+            isWifiConnected = true;
+
+            if (wifiConnectedCallback != null)
+                wifiConnectedCallback.onWifiConnected();
+        }
+    }
+
+    private final class WifiConnectionMonitor extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent in) {
+            String action = in.getAction();
+            if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                NetworkInfo networkInfo = in.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+
+                if (networkInfo == null)
+                    return;
+
+                String eventSSID = networkInfo.getExtraInfo();
+                String goproSSID = String.format("\"%s\"", wifiSSID);
+
+                if (!Objects.equals(eventSSID, goproSSID))
+                    return;
+
+                String reason = networkInfo.getReason();
+
+                if (reason != null) {
+                    Log.e("WiFi-Connect", "Error reason: " + reason + "; State: " + networkInfo.getState().name());
+
+                    showToast(res.getString(R.string.str_something_wrong) + "\n" + reason, Toast.LENGTH_SHORT);
+
+                    isWifiConnected = false;
+
+                    if (wifiConnectedCallback != null)
+                        wifiConnectedCallback.onWifiConnected();
+
+                    try {
+                        _context.unregisterReceiver(mConnectionReceiver);
+                    } catch (Exception ignored) {
+
+                    }
+                } else if (networkInfo.isConnected()) {
+                    WifiManager wifiManager = (WifiManager) _context.getSystemService(Context.WIFI_SERVICE);
+                    WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+                    if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+                        isWifiConnected = true;
+
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException ignored) {
+                        }
+
+                        if (wifiConnectedCallback != null)
+                            wifiConnectedCallback.onWifiConnected();
+
+                        try {
+                            _context.unregisterReceiver(mConnectionReceiver);
+                        } catch (Exception ignored) {
+
+                        }
+                    }
+                }
+            }
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private void connectWifiAndroidQup() {
+    private void connectWifiAndroidQUp() {
         if (isWifiConnected) {
             if (wifiConnectedCallback != null)
                 new Thread(() -> wifiConnectedCallback.onWifiConnected()).start();
@@ -1897,60 +2006,20 @@ public class GoProDevice {
         if (connectivityManager == null)
             connectivityManager = (ConnectivityManager) _context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (connectivityManager == null || Objects.equals(wifiMacAddr, ""))
+        if (connectivityManager == null || Objects.equals(wifiBSSID, ""))
             return;
 
         final WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
-                .setSsid(wifiSsid)
-                .setBssid(MacAddress.fromString(wifiMacAddr))
-                .setWpa2Passphrase(wifiPw)
+                .setSsid(wifiSSID)
+                .setBssid(MacAddress.fromString(wifiBSSID))
+                .setWpa2Passphrase(wifiPSK)
                 .build();
 
         final NetworkRequest networkRequest = new NetworkRequest.Builder()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                /*.removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)*/
                 .setNetworkSpecifier(wifiNetworkSpecifier)
                 .build();
-
-        final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull Network network) {
-                super.onAvailable(network);
-                LinkProperties prop = connectivityManager.getLinkProperties(network);
-                List<LinkAddress> linkAddresses = prop.getLinkAddresses();
-                if (linkAddresses.size() > 1) {
-                    myClientIP = linkAddresses.get(1).getAddress().toString().substring(1);
-                } else {
-                    myClientIP = linkAddresses.get(0).getAddress().toString().substring(1);
-                }
-                connectivityManager.bindProcessToNetwork(network);
-                isWifiConnected = true;
-                if (wifiConnectedCallback != null)
-                    wifiConnectedCallback.onWifiConnected();
-            }
-
-            @Override
-            public void onUnavailable() {
-                super.onUnavailable();
-                isWifiConnected = false;
-                if (wifiConnectedCallback != null)
-                    wifiConnectedCallback.onWifiConnected();
-                showToast("The cameras AP is not available!", Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void onLost(@NonNull Network network) {
-                super.onLost(network);
-                isWifiConnected = false;
-                if (wifiConnectedCallback != null)
-                    wifiConnectedCallback.onWifiConnected();
-                showToast("WiFi-AP connection lost!", Toast.LENGTH_SHORT);
-            }
-        };
 
         HandlerThread handlerThread = new HandlerThread("WiFi Manager Network Update Handler");
         handlerThread.start();
@@ -1960,11 +2029,59 @@ public class GoProDevice {
         connectivityManager.requestNetwork(networkRequest, networkCallback, handler);
     }
 
+    private final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(@NonNull Network network) {
+            super.onAvailable(network);
+            LinkProperties prop = connectivityManager.getLinkProperties(network);
+            List<LinkAddress> linkAddresses = prop.getLinkAddresses();
+            if (linkAddresses.size() > 1) {
+                myClientIP = linkAddresses.get(1).getAddress().toString().substring(1);
+            } else {
+                myClientIP = linkAddresses.get(0).getAddress().toString().substring(1);
+            }
+            connectivityManager.bindProcessToNetwork(network);
+            isWifiConnected = true;
+            if (wifiConnectedCallback != null)
+                wifiConnectedCallback.onWifiConnected();
+        }
+
+        @Override
+        public void onUnavailable() {
+            super.onUnavailable();
+            isWifiConnected = false;
+            if (wifiConnectedCallback != null)
+                wifiConnectedCallback.onWifiConnected();
+            showToast(String.format(res.getString(R.string.str_ap_na), displayName), Toast.LENGTH_SHORT);
+        }
+
+        @Override
+        public void onLost(@NonNull Network network) {
+            super.onLost(network);
+            isWifiConnected = false;
+            if (wifiConnectedCallback != null)
+                wifiConnectedCallback.onWifiConnected();
+            showToast(String.format(res.getString(R.string.str_wifi_lost), displayName), Toast.LENGTH_SHORT);
+        }
+    };
+
+    private void disconnectWifi() {
+        if (!isWifiConnected)
+            return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && connectivityManager != null) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            WifiManager wifiManager = (WifiManager) _context.getSystemService(Context.WIFI_SERVICE);
+            wifiManager.disconnect();
+        }
+    }
+
     public boolean removeBtBond() {
-        disconnectBt();
+        disconnectGoProDevice();
 
         try {
-            Method m = null;
+            Method m;
             m = bluetoothDevice.getClass().getMethod("removeBond", (Class[]) null);
             if ((boolean) m.invoke(bluetoothDevice, (Object[]) null)) {
                 btPaired = false;
@@ -2069,7 +2186,7 @@ public class GoProDevice {
                         getMode();
                     }
 
-                    if (Objects.equals(wifiPw, "")) {
+                    if (Objects.equals(wifiPSK, "")) {
                         readWifiApPw();
                     }
 
@@ -2077,10 +2194,10 @@ public class GoProDevice {
                         registerForAutoValueUpdatesCounter++;
                         registerForAllStatusValueUpdates();
                     } else if (!autoValueUpdatesRegistered) {
-                        showToast("There is a problem connecting to the camera " + name + ". Please try again.", Toast.LENGTH_SHORT);
+                        showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
 
                         Log.e("registerForAutoValueUpdates", "max tries reached");
-                        disconnectBt();
+                        disconnectGoProDevice();
                     }
 
                     readBtRssi();
@@ -2128,7 +2245,7 @@ public class GoProDevice {
 
                 // Get a non-null runnable
                 try {
-                    Runnable runnable = null;
+                    Runnable runnable;
                     synchronized (btActionBuffer) {
                         runnable = btActionBuffer.get(0);
 
@@ -2144,8 +2261,8 @@ public class GoProDevice {
                     gattProgressStart = new Date(); // Store time since Gatt is in progress for the watchdog
                     runnable.run(); // Run the runnable
                     Thread.sleep(btActionDelay);
-                } catch (Exception e) {
-                    Log.e("execNextBtAction", "Exception caught: " + e);
+                } catch (Exception ignore) {
+                    //Log.e("execNextBtAction", "Exception caught: " + e);
                 }
             }
         });

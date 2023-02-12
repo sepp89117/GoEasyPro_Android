@@ -9,7 +9,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -72,7 +71,6 @@ import okio.Okio;
 import okio.Source;
 
 public class StorageBrowserActivity extends AppCompatActivity {
-    private GoProDevice focusedDevice;
     private ArrayList<GoMediaFile> goMediaFiles;
     private ListView fileListView;
     private StyledPlayerView playerView = null;
@@ -111,7 +109,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_storage_browser);
 
-        focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
+        GoProDevice focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         goMediaFiles = ((MyApplication) this.getApplication()).getGoMediaFiles();
 
         client = new OkHttpClient.Builder()
@@ -126,7 +124,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         getThumbNailsAsync();
 
         TextView selFile_textView = findViewById(R.id.textView3);
-        selFile_textView.setText("Select a file from '" + focusedDevice.displayName + "'");
+        selFile_textView.setText(String.format(getResources().getString(R.string.str_Select_file), focusedDevice.displayName));
 
         mediaFrame = findViewById(R.id.main_media_frame);
         playerView = findViewById(R.id.vid_player_view);
@@ -181,7 +179,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(Call call, Response response) {
                         if (!response.isSuccessful()) {
                             Log.e("getImage", "Request response = not success");
                             imagePlayer.setImageResource(R.drawable.ic_baseline_no_photography_24);
@@ -207,7 +205,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         // fullscreen
         fullscreenPlayerView = new StyledPlayerView(this);
         fullscreenImagePlayer = new ImageView(this);
-        fullscreenImagePlayer.setOnClickListener(v -> onImgClick(v));
+        fullscreenImagePlayer.setOnClickListener(this::onImgClick);
         fullScreenDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         fullscreenImagePlayer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         currentOrientation = this.getResources().getConfiguration().orientation;
@@ -301,10 +299,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         int pos = info.position;
 
-        menu.setHeaderTitle("File options");
+        menu.setHeaderTitle(getResources().getString(R.string.str_File_options));
         // add menu items
-        menu.add(pos, 1, 0, "Download");
-        menu.add(pos, 0, 0, "Delete");
+        menu.add(pos, 1, 0, getResources().getString(R.string.str_Download));
+        menu.add(pos, 0, 0, getResources().getString(R.string.str_Delete));
     }
 
     @Override
@@ -315,11 +313,9 @@ public class StorageBrowserActivity extends AppCompatActivity {
             case 0:
                 // delete file
                 AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this)
-                        .setTitle("Delete device")
-                        .setMessage("Are you sure you want to delete " + goMediaFiles.get(pos).fileName + "?")
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            deleteFile(pos);
-                        })
+                        .setTitle(getResources().getString(R.string.str_Delete_file))
+                        .setMessage(String.format(getResources().getString(R.string.str_sure_delete), goMediaFiles.get(pos).fileName))
+                        .setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> deleteFile(pos))
                         .create();
                 alert.show();
                 break;
@@ -355,13 +351,12 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(Call call, Response response) {
                         gotResponse[0] = true;
                         if (!response.isSuccessful()) {
                             Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' unsuccessful!");
                         } else {
-                            Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
-                            file.thumbNail = bmp;
+                            file.thumbNail = BitmapFactory.decodeStream(response.body().byteStream());
                         }
                         response.close();
                     }
@@ -375,7 +370,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     private void downloadFile(int pos) {
         if (!hasExtStoragePermissions()) {
-            Toast.makeText(StorageBrowserActivity.this, "Need permissions first!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_need_permissions), Toast.LENGTH_SHORT).show();
             requestIOPermissions();
             return;
         }
@@ -391,10 +386,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
         progressBar.setPadding(pxFromDp, 0, pxFromDp, 0);
 
         dlAlert = new AlertDialog.Builder(StorageBrowserActivity.this)
-                .setTitle("Downloading...")
-                .setMessage("Please wait until the download is complete!")
+                .setTitle(getResources().getString(R.string.str_Downloading))
+                .setMessage(getResources().getString(R.string.str_wait_dl_complete))
                 .setView(progressBar)
-                .setNegativeButton("Cancel", (dialog, which) -> cancelDownload())
+                .setNegativeButton(getResources().getString(R.string.str_Cancel), (dialog, which) -> cancelDownload())
                 .setCancelable(false)
                 .create();
 
@@ -462,7 +457,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 public void onFailure(Call call, IOException e) {
                     Log.e("downloadFile", "GET '" + call.request().url() + "' failed!");
                     dlAlert.dismiss();
-                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Something went wrong. Please try again!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     e.printStackTrace();
                     synchronized (currentCalls) {
                         currentCalls.remove(currentCall);
@@ -470,11 +465,11 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response) {
                     if (!response.isSuccessful()) {
                         Log.e("downloadFile", "GET '" + call.request().url() + "' unsuccessful!");
                         dlAlert.dismiss();
-                        runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Download may not have been successful. Maybe try again!", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_dl_may_not_success), Toast.LENGTH_SHORT).show());
                     } else {
                         try {
                             InputStream inputStream = response.body().byteStream();
@@ -557,7 +552,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                                 if (finalI == fileDlCmds.size() - 1) {
                                     progressBar.setProgress(0);
                                     dlAlert.dismiss();
-                                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Download completed!", Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_dl_completed), Toast.LENGTH_SHORT).show());
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -567,7 +562,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e("dlFile", "File '" + goMediaFile.fileName + "' download error!");
-                            runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "File '" + goMediaFile.fileName + "' download error!", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, String.format(getResources().getString(R.string.str_dl_error), goMediaFile.fileName), Toast.LENGTH_SHORT).show());
                             dlAlert.dismiss();
                         }
                     }
@@ -606,7 +601,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 }
             } else if (dlTotalCount >= 1) {
                 if (dlCompleteCount >= 1) {
-                    int percentDone = (int) ((100 * dlCompleteCount) / dlTotalCount);
+                    int percentDone = ((100 * dlCompleteCount) / dlTotalCount);
                     progressBar.setProgress(percentDone);
                 }else {
                     progressBar.setProgress(0);
@@ -632,7 +627,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 return;
             }
 
-            String lastFileName = "";
+            String lastFileName;
 
             fileDelCmds.add(delCmdI);
 
@@ -662,22 +657,21 @@ public class StorageBrowserActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(fileDelCmd)
                     .build();
-            Log.d("HTTP GET", fileDelCmd);
 
             int finalI = i;
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e("deleteFile", "GET '" + call.request().url() + "' failed!");
-                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Something went wrong. Please try again!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     e.printStackTrace();
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response) {
                     if (!response.isSuccessful()) {
                         Log.e("deleteFile", "GET '" + call.request().url() + "' unsuccessful!");
-                        runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Something went wrong. Please try again!", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     } else {
                         if (finalI == 0) {
                             goMediaFiles.remove(pos);
@@ -739,7 +733,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 @Override
                 public long read(Buffer sink, long byteCount) throws IOException {
                     long bytesRead = super.read(sink, byteCount);
-                    // read() returns the number of bytes read, or -1 if this source is exhausted.
                     totalBytesRead += bytesRead != -1 ? bytesRead : 0;
                     progressListener.update(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
                     return bytesRead;
@@ -784,6 +777,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
             Player.Listener.super.onPlaybackStateChanged(playbackState);
             switch (playbackState) {
                 case Player.STATE_IDLE:
+                case Player.STATE_READY:
                     break;
                 case Player.STATE_BUFFERING:
                     if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE && !isFullscreen) {
@@ -791,8 +785,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT && isFullscreen) {
                         disableFullscreen();
                     }
-                    break;
-                case Player.STATE_READY:
                     break;
                 case Player.STATE_ENDED:
                     if (isFullscreen)
@@ -819,11 +811,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Permissions
     private boolean hasExtStoragePermissions() {
-        if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.Q || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestIOPermissions() {

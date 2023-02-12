@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mode_video"
+        android:title="@string/str_video" >
+        <menu>
+            <item
+                android:id="@+id/mode_video_single"
+                android:title="@string/str_single" />
+            <item
+                android:id="@+id/mode_video_timelapse"
+                android:title="@string/str_time_lapse" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/mode_photo"
+        android:title="@string/str_photo" >
+        <menu>
+            <item
+                android:id="@+id/mode_photo_single"
+                android:title="@string/str_single" />
+            <item
+                android:id="@+id/mode_photo_night"
+                android:title="@string/str_night" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/mode_multishot"
+        android:title="@string/str_multishot" >
+        <menu>
+            <item
+                android:id="@+id/mode_multishot_burst"
+                android:title="@string/str_burst" />
+            <item
+                android:id="@+id/mode_multishot_timelapse"
+                android:title="@string/str_time_lapse" />
+            <item
+                android:id="@+id/mode_multishot_nightlapse"
+                android:title="@string/str_night_lapse" />
+        </menu>
+    </item>
+</menu>

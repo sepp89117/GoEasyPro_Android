@@ -8,11 +8,15 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
 public class GoListAdapter extends ArrayAdapter<GoProDevice> {
     Context context;
@@ -20,7 +24,8 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
     private static LayoutInflater inflater = null;
 
     private static final int ORANGE = Color.argb(255, 255, 128, 0);
-    private static final int LIGHTBLUE = Color.argb(255, 0, 0x9F, 0xe0);
+    private static final int LIGHT_BLUE = Color.argb(255, 0, 0x9F, 0xe0);
+    private final Animation fadeAnimation;
 
     public GoListAdapter(ArrayList<GoProDevice> goProDevices, Context context) {
         super(context, R.layout.golist_item, goProDevices);
@@ -28,6 +33,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         this.context = context;
         this.goProDevices = goProDevices;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        fadeAnimation = AnimationUtils.loadAnimation(context, R.anim.tween);
     }
 
     @Override
@@ -45,121 +51,138 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         return position;
     }
 
+    private static class ViewHolder {
+        TextView name;
+        TextView model;
+        TextView mode;
+        TextView preset;
+        TextView memory;
+        TextView battery;
+        TextView rssi;
+
+        ImageView sd_symbol;
+        ImageView bt_symbol;
+        ImageView batt_symbol;
+        ImageView shutter_symbol;
+        ImageView hot_view;
+        ImageView cold_view;
+    }
+
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        View rowView = inflater.inflate(R.layout.golist_item, null, true);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder mViewHolder;
+
+        if (convertView == null) {
+            mViewHolder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.golist_item, parent, false);
+
+            mViewHolder.name = convertView.findViewById(R.id.name);
+            mViewHolder.model = convertView.findViewById(R.id.model);
+            mViewHolder.mode = convertView.findViewById(R.id.flat_mode);
+            mViewHolder.preset = convertView.findViewById(R.id.preset);
+            mViewHolder.memory = convertView.findViewById(R.id.memory);
+            mViewHolder.battery = convertView.findViewById(R.id.battery);
+            mViewHolder.rssi = convertView.findViewById(R.id.rssi);
+
+            mViewHolder.sd_symbol = convertView.findViewById(R.id.sd_symbol);
+            mViewHolder.bt_symbol = convertView.findViewById(R.id.bt_symbol);
+            mViewHolder.batt_symbol = convertView.findViewById(R.id.batt_symbol);
+            mViewHolder.shutter_symbol = convertView.findViewById(R.id.shutter_symbol);
+            mViewHolder.hot_view = convertView.findViewById(R.id.hot_view);
+            mViewHolder.cold_view = convertView.findViewById(R.id.cold_view);
+
+            convertView.setTag(mViewHolder);
+        } else {
+            mViewHolder = (ViewHolder) convertView.getTag();
+        }
 
         GoProDevice goProDevice = goProDevices.get(position);
 
-        TextView name = rowView.findViewById(R.id.name);
-        TextView model = rowView.findViewById(R.id.model);
-        TextView mode = rowView.findViewById(R.id.flat_mode);
-        TextView preset = rowView.findViewById(R.id.preset);
-        TextView memory = rowView.findViewById(R.id.memory);
-        TextView battery = rowView.findViewById(R.id.battery);
-        TextView rssi = rowView.findViewById(R.id.rssi);
-
-        ImageView sd_symbol = rowView.findViewById(R.id.sd_symbol);
-        ImageView bt_symbol = rowView.findViewById(R.id.bt_symbol);
-        ImageView batt_symbol = rowView.findViewById(R.id.batt_symbol);
-        ImageView shutter_symbol = rowView.findViewById(R.id.shutter_symbol);
-        ImageView hot_view = rowView.findViewById(R.id.hot_view);
-        ImageView cold_view = rowView.findViewById(R.id.cold_view);
-        //ImageView mode_imageView = rowView.findViewById(R.id.mode_imageView);
-
-        name.setText(goProDevice.displayName);
-
-        //Mode icon select
-        /*switch (goProDevice.Mode) {
-            case "Video": // Video
-                mode_imageView.setImageResource(R.drawable.video_mode_ico);
-                break;
-            case "Photo": // Photo
-                mode_imageView.setImageResource(R.drawable.photo_mode_ico);
-                break;
-            case "Burst": // Burst
-                mode_imageView.setImageResource(R.drawable.burst_mode_ico);
-                break;
-            case "Time lapse": // Time lapse
-                mode_imageView.setImageResource(R.drawable.video_timelapse_mode_ico);
-                break;
-            case "?": // ?
-                mode_imageView.setImageResource(R.drawable.photo_timelapse_mode_ico);
-                break;
-
-        }*/
+        mViewHolder.name.setText(goProDevice.displayName);
 
         if (goProDevice.wifiApState > 0) {
             if (goProDevice.isWifiConnected)
-                sd_symbol.setColorFilter(Color.GREEN); // AP connected
+                mViewHolder.sd_symbol.setColorFilter(Color.GREEN); // AP connected
             else
-                sd_symbol.setColorFilter(Color.YELLOW); // AP available but not connected
+                mViewHolder.sd_symbol.setColorFilter(Color.YELLOW); // AP available but not connected
         } else {
-            sd_symbol.setColorFilter(Color.RED); // AP not available
+            mViewHolder.sd_symbol.setColorFilter(Color.RED); // AP not available
         }
 
-        if(goProDevice.isRecording) {
-            shutter_symbol.setVisibility(View.VISIBLE);
+        if (goProDevice.isRecording) {
+            mViewHolder.shutter_symbol.startAnimation(fadeAnimation);
+            mViewHolder.shutter_symbol.setVisibility(View.VISIBLE);
         } else {
-            shutter_symbol.setVisibility(View.INVISIBLE);
+            mViewHolder.shutter_symbol.clearAnimation();
+            mViewHolder.shutter_symbol.setVisibility(View.INVISIBLE);
         }
 
-        if(goProDevice.isCold) {
-            cold_view.setVisibility(View.VISIBLE);
+        if (goProDevice.isCold) {
+            mViewHolder.cold_view.setVisibility(View.VISIBLE);
         } else {
-            cold_view.setVisibility(View.INVISIBLE);
+            mViewHolder.cold_view.setVisibility(View.INVISIBLE);
         }
 
-        if(goProDevice.isHot) {
-            hot_view.setVisibility(View.VISIBLE);
+        if (goProDevice.isHot) {
+            mViewHolder.hot_view.setVisibility(View.VISIBLE);
         } else {
-            hot_view.setVisibility(View.INVISIBLE);
+            mViewHolder.hot_view.setVisibility(View.INVISIBLE);
         }
 
-        model.setText(goProDevice.modelName);
+        if (goProDevice.isCharging) {
+            mViewHolder.batt_symbol.setImageResource(R.drawable.battery_charging_symbol);
+        } else {
+            mViewHolder.batt_symbol.setImageResource(R.drawable.battery_std_symbol);
+        }
+
+        mViewHolder.model.setText(goProDevice.modelName);
 
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
-            name.setTextColor(LIGHTBLUE);
-            rssi.setText(String.valueOf(goProDevice.btRssi));
-            battery.setText(String.format("%d%%", goProDevice.remainingBatteryPercent));
-            preset.setText(goProDevice.preset.getTitle());
-            mode.setText(goProDevice.mode.getTitle());
-            memory.setText(goProDevice.remainingMemory);
-
+            mViewHolder.name.setTextColor(LIGHT_BLUE);
+            mViewHolder.rssi.setText(String.valueOf(goProDevice.btRssi));
+            Locale locale = context.getResources().getConfiguration().getLocales().get(0);
+            mViewHolder.battery.setText(String.format(locale, "%d%%", goProDevice.remainingBatteryPercent));
+            mViewHolder.preset.setText(goProDevice.preset.getTitle());
+            mViewHolder.mode.setText(goProDevice.mode.getTitle());
+            mViewHolder.memory.setText(goProDevice.remainingMemory);
 
             if (goProDevice.remainingBatteryPercent > 30) {
-                batt_symbol.setColorFilter(Color.GREEN);
+                mViewHolder.batt_symbol.setColorFilter(Color.GREEN);
             } else if (goProDevice.remainingBatteryPercent > 5) {
-                batt_symbol.setColorFilter(ORANGE);
+                mViewHolder.batt_symbol.setColorFilter(ORANGE);
             } else {
-                batt_symbol.setColorFilter(Color.RED);
+                mViewHolder.batt_symbol.setColorFilter(Color.RED);
             }
 
             if (goProDevice.btRssi <= -80) {
-                bt_symbol.setColorFilter(ORANGE); // pour connection (RSSI <= -80)
+                mViewHolder.bt_symbol.setColorFilter(ORANGE); // pour connection (RSSI <= -80)
             } else if (goProDevice.btRssi <= -70) {
-                bt_symbol.setColorFilter(Color.YELLOW); // normal connection (RSSI <= -70)
+                mViewHolder.bt_symbol.setColorFilter(Color.YELLOW); // normal connection (RSSI <= -70)
             } else {
-                bt_symbol.setColorFilter(Color.GREEN); // good connection (RSSI > -70)
+                mViewHolder.bt_symbol.setColorFilter(Color.GREEN); // good connection (RSSI > -70)
             }
         } else {
-            rssi.setText("NC");
-            battery.setText("NC");
-            preset.setText("Preset");
-            mode.setText("Mode");
-            memory.setText("NC");
+            mViewHolder.rssi.setText(R.string.str_NC);
+            mViewHolder.battery.setText(R.string.str_NC);
+            mViewHolder.preset.setText(R.string.str_Preset);
+            mViewHolder.mode.setText(R.string.str_Mode);
+            mViewHolder.memory.setText(R.string.str_NC);
 
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {
-                name.setTextColor(Color.RED);
-                bt_symbol.setColorFilter(Color.RED);
-                batt_symbol.setColorFilter(Color.RED);
+                mViewHolder.name.setTextColor(Color.RED);
+                mViewHolder.batt_symbol.setColorFilter(Color.RED);
+                if (goProDevice.btIsAvailable) {
+                    mViewHolder.bt_symbol.setColorFilter(Color.YELLOW);
+                } else {
+                    mViewHolder.bt_symbol.setColorFilter(Color.RED);
+                }
             } else { // BT_CONNECTING || BT_FETCHING_DATA
-                name.setTextColor(ORANGE);
-                bt_symbol.setColorFilter(ORANGE);
-                batt_symbol.setColorFilter(ORANGE);
+                mViewHolder.name.setTextColor(ORANGE);
+                mViewHolder.bt_symbol.setColorFilter(ORANGE);
+                mViewHolder.batt_symbol.setColorFilter(ORANGE);
             }
         }
 
-        return rowView;
+        return convertView;
     }
 }

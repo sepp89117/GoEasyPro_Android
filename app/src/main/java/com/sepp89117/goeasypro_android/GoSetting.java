@@ -6,29 +6,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class GoSetting {
-    private JSONObject _settingsValues = null;
     private JSONObject _allOptions = null;
-    private Map<Integer, String> _availableOptionsMap = new HashMap<>();
-    private int _settingID = -1;
-    private int _currentOptionId = -1;
+    private final Map<Integer, String> _availableOptionsMap = new HashMap<>();
+    private final int _settingID;
+    private int _currentOptionId;
     private String _settingName = "unknown setting";
     private String _currentOptionName = "unknown option";
     private boolean _isValid = false;
 
     public GoSetting(int settingID, int settingValue, JSONObject settingsValues, ArrayList<Pair<Integer, Integer>> availableSettingsOptions) {
-        _settingsValues = settingsValues;
         _settingID = settingID;
         _currentOptionId = settingValue;
 
         try {
-            JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
+            JSONObject setting = settingsValues.getJSONObject(String.valueOf(_settingID));
             _settingName = setting.getString("display_name");
             _allOptions = setting.getJSONObject("options");
 

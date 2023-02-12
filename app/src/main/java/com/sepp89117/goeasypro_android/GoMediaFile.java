@@ -6,7 +6,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
@@ -21,16 +20,16 @@ import okhttp3.Response;
 
 public class GoMediaFile {
     public String lrvUrl;
-    public String extension = "";
-    public String url = "";
-    public String fileName = "";
+    public String extension;
+    public String url;
+    public String fileName;
     public Date lastModified;
     public long fileByteSize;
     public String mimeType;
-    public String thumbNail_path = "";
+    public String thumbNail_path;
     public Bitmap thumbNail = null;
     public boolean hasLrv = false;
-    private String _directory = "";
+    private final String _directory;
 
     // multishot
     public boolean isGroup = false;
@@ -88,7 +87,7 @@ public class GoMediaFile {
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response) {
                     if (!response.isSuccessful()) {
                         if(isFirstTry) {
                             Log.e("checkLrvUrl", "First request head response = not success");

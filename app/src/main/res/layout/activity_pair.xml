@@ -37,7 +37,7 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bluetooth device list"
+                    android:text="@string/str_BT_dev_list"
                     android:textColor="#fff"
                     android:textSize="20sp" />
 
@@ -45,7 +45,7 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Click on a device to connect/pair"
+                    android:text="@string/str_click_dev_to_pair"
                     android:textColor="#fff"
                     android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:onClick="onClickScan"
-                android:text="Scan again"
+                android:text="@string/str_Scan_again"
                 android:textAllCaps="false" />
 
         </LinearLayout>

@@ -63,7 +63,7 @@
                 android:layout_height="24dp"
                 android:ellipsize="end"
                 android:gravity="bottom"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:paddingBottom="2dp"
                 android:text="Mode"
                 android:textColor="#fff"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:text="Preset"
                 android:textColor="#fff"
                 android:textSize="14sp" />
@@ -166,7 +166,7 @@
                 android:layout_height="24dp"
                 android:contentDescription="Battery"
                 android:rotation="270"
-                android:src="@drawable/ic_baseline_battery_std_24" />
+                android:src="@drawable/battery_std_symbol" />
 
             <TextView
                 android:id="@+id/battery"

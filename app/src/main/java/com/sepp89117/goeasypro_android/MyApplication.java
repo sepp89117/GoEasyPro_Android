@@ -4,7 +4,6 @@ import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import androidx.preference.PreferenceManager;
 
@@ -20,6 +19,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -45,7 +45,6 @@ public class MyApplication extends Application {
     public boolean shouldAutoConnect() {
         return autoConnect;
     }
-
 
     private BluetoothAdapter _bluetoothAdapter;
     public BluetoothAdapter getBluetoothAdapter() {
@@ -110,7 +109,7 @@ public class MyApplication extends Application {
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             int n;
             while ((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);

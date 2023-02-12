@@ -6,87 +6,134 @@
     <item
         android:id="@+id/control"
         android:icon="@drawable/control_symbol"
-        android:title="Device control">
+        android:title="@string/str_device_control">
         <menu>
-            <item
-                android:id="@+id/locate_on"
-                android:icon="@drawable/radar_symbol"
-                android:title="Enable localization" />
-            <item
-                android:id="@+id/locate_off"
-                android:icon="@drawable/radar_off_symbol"
-                android:title="Disable localization" />
             <item
                 android:id="@+id/shutter_on"
                 android:icon="@drawable/shutter2_symbol"
-                android:title="Enable Shutter" />
+                android:title="@string/str_enable_shutter" />
             <item
                 android:id="@+id/shutter_off"
                 android:icon="@drawable/shutter2_off_symbol"
-                android:title="Disable Shutter" />
+                android:title="@string/str_disable_shutter" />
+            <item android:id="@+id/mode_select"
+                android:icon="@drawable/mode_select_symbol"
+                android:title="@string/str_camera_mode">
+                <menu>
+                    <item
+                        android:id="@+id/mode_video"
+                        android:title="@string/str_video" >
+                        <menu>
+                            <item
+                                android:id="@+id/mode_video_single"
+                                android:title="@string/str_single" />
+                            <item
+                                android:id="@+id/mode_video_timelapse"
+                                android:title="@string/str_time_lapse" />
+                        </menu>
+                    </item>
+
+                    <item
+                        android:id="@+id/mode_photo"
+                        android:title="@string/str_photo" >
+                        <menu>
+                            <item
+                                android:id="@+id/mode_photo_single"
+                                android:title="@string/str_single" />
+                            <item
+                                android:id="@+id/mode_photo_night"
+                                android:title="@string/str_night" />
+                        </menu>
+                    </item>
+
+                    <item
+                        android:id="@+id/mode_multishot"
+                        android:title="@string/str_multishot" >
+                        <menu>
+                            <item
+                                android:id="@+id/mode_multishot_burst"
+                                android:title="@string/str_burst" />
+                            <item
+                                android:id="@+id/mode_multishot_timelapse"
+                                android:title="@string/str_time_lapse" />
+                            <item
+                                android:id="@+id/mode_multishot_nightlapse"
+                                android:title="@string/str_night_lapse" />
+                        </menu>
+                    </item>
+                </menu>
+            </item>
+            <item
+                android:id="@+id/locate_on"
+                android:icon="@drawable/radar_symbol"
+                android:title="@string/str_enable_localization" />
+            <item
+                android:id="@+id/locate_off"
+                android:icon="@drawable/radar_off_symbol"
+                android:title="@string/str_disable_localization" />
             <item
                 android:id="@+id/set_date_time"
                 android:icon="@drawable/clock_symbol"
-                android:title="Set Date/Time" />
+                android:title="@string/str_set_date_time" />
             <item
                 android:id="@+id/put_sleep"
                 android:icon="@drawable/sleep_symbol"
-                android:title="Put to sleep" />
+                android:title="@string/str_put_to_sleep" />
         </menu>
     </item>
 
     <item
         android:id="@+id/connection"
         android:icon="@drawable/connect_symbol"
-        android:title="Connection">
+        android:title="@string/str_connection">
         <menu>
             <item
                 android:id="@+id/ap_on"
                 android:icon="@drawable/wifi_on_symbol"
-                android:title="Enable WiFi AP" />
+                android:title="@string/str_enable_wifi_ap" />
             <item
                 android:id="@+id/ap_off"
                 android:icon="@drawable/wifi_off_symbol"
-                android:title="Disable WiFi AP" />
+                android:title="@string/str_disable_wifi_ap" />
             <item
                 android:id="@+id/disconnect"
                 android:icon="@drawable/disconnect_symbol"
-                android:title="Disconnect" />
+                android:title="@string/str_disconnect" />
             <item
                 android:id="@+id/del_device"
                 android:icon="@drawable/delete_symbol"
-                android:title="Delete device" />
+                android:title="@string/str_delete_device" />
         </menu>
     </item>
 
     <item
         android:id="@+id/media"
         android:icon="@drawable/collections_symbol"
-        android:title="Media">
+        android:title="@string/str_media">
         <menu>
             <item
                 android:id="@+id/preview"
                 android:icon="@drawable/preview_symbol"
-                android:title="Start live preview" />
+                android:title="@string/str_start_live_preview" />
             <item
                 android:id="@+id/browse"
                 android:icon="@drawable/sd_card_symbol"
-                android:title="Browse storage" />
+                android:title="@string/str_browse_storage" />
         </menu>
     </item>
 
     <item
         android:id="@+id/dev_settings"
         android:icon="@drawable/settings_symbol"
-        android:title="Device settings" />
+        android:title="@string/str_device_settings" />
 
     <item
         android:id="@+id/dev_rename"
         android:icon="@drawable/rename_symbol"
-        android:title="Rename device" />
+        android:title="@string/str_rename_device" />
 
     <item
         android:id="@+id/dev_info"
         android:icon="@drawable/info_symbol"
-        android:title="Device information" />
+        android:title="@string/str_device_information" />
 </menu>

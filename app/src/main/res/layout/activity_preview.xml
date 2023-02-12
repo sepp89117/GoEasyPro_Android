@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
     android:background="@color/darkgray"
+    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
     tools:context=".PreviewActivity">
 
 
@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
+        android:background="@color/darkgray"
+        android:backgroundTint="@color/darkgray"
         android:keepScreenOn="true"
         android:visibility="visible"
         app:resize_mode="fit"
@@ -21,5 +23,71 @@
         app:show_shuffle_button="true"
         app:use_controller="false"
         tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="5dp">
+
+    </com.google.android.exoplayer2.ui.StyledPlayerView>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/btn_round_tp"
+        android:onClick="onShutterClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/blank_icon" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/btn_round_tp"
+        android:onClick="onHighlightClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:srcCompat="@drawable/highlight_symbol" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/btn_round_tp"
+        android:onClick="onSettingsClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/settings_symbol" />
+
+    <ImageView
+        android:id="@+id/rec_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onShutterClick"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/imageButton"
+        app:srcCompat="@drawable/shutter_symbol" />
+
+    <TextView
+        android:id="@+id/textView_mode_preset"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_round_tp"
+        android:onClick="onModeClick"
+        android:paddingStart="15dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="15dp"
+        android:text="Mode\nPreset"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

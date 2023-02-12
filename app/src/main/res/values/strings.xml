@@ -2,18 +2,160 @@
     <string name="app_name">GoEasyPro Android</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="str_NC">NC</string><!-- not connected -->
+    <string name="str_NA">NA</string><!-- not available -->
+    <string name="str_UNK">UNK</string><!-- unknown -->
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="str_Preset">Preset</string>
+    <string name="str_Mode">Mode</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- views -->
+    <string name="str_Select_file">Select a file from \'%1$s\'</string>
+    <string name="str_Settings">Settings</string>
+    <string name="str_mcc">Multi Cam Control</string>
+    <string name="str_cams">Cams</string>
+    <string name="str_Shutter_on">Shutter on</string>
+    <string name="str_Shutter_off">Shutter off</string>
+    <string name="str_Sleep">Sleep</string>
+    <string name="str_Highlight">Highlight</string>
+    <string name="str_BT_dev_list">Bluetooth device list</string>
+    <string name="str_click_dev_to_pair">Click on a device to connect/pair</string>
+    <string name="str_Scan_again">Scan again</string>
+    <string name="str_Group_size">Group size:</string>
+
+    <!-- presets and modes -->
+    <string name="str_Standard">Standard</string>
+    <string name="str_Activity">Activity</string>
+    <string name="str_Cinematic">Cinematic</string>
+    <string name="str_Slo_Mo">Slo-Mo</string>
+    <string name="str_Ultra_Slo_Mo">Ultra Slo-Mo</string>
+    <string name="str_Basic">Basic</string>
+    <string name="str_Water">Water</string>
+    <string name="str_Indoor">Indoor</string>
+    <string name="str_Video">Video</string>
+    <string name="str_Photo">Photo</string>
+    <string name="str_Live_Burst">Live Burst</string>
+    <string name="str_Burst_Photo">Burst Photo</string>
+    <string name="str_Night_Photo">Night Photo</string>
+    <string name="str_Time_Warp">Time Warp</string>
+    <string name="str_Time_Warp_Video">Time Warp Video</string>
+    <string name="str_Time_Lapse">Time Lapse</string>
+    <string name="str_Time_Lapse_Video">Time Lapse Video</string>
+    <string name="str_Time_Lapse_Photo">Time Lapse Photo</string>
+    <string name="str_Night_Lapse">Night Lapse</string>
+    <string name="str_Night_Lapse_Video">Night Lapse Video</string>
+    <string name="str_Night_Lapse_Photo">Night Lapse Photo</string>
+    <string name="str_Max_Video">Max Video</string>
+    <string name="str_Max_Photo">Max Photo</string>
+    <string name="str_Max_Time_Warp">Max Time Warp</string>
+    <string name="str_Multishot">Multishot</string>
+    <string name="str_Broadcast">Broadcast</string>
+    <string name="str_Playback">Playback</string>
+    <string name="str_Setup">Setup</string>
+    <string name="str_FW_Update">FW Update</string>
+    <string name="str_USB_MTP">USB MTP</string>
+    <string name="str_SOS">SOS</string>
+    <string name="str_MEdit">MEdit</string>
+    <string name="str_Calibration">Calibration</string>
+    <string name="str_Direct_Offload">Direct Offload</string>
+    <string name="str_Video_Photo">Video + Photo</string>
+    <string name="str_Looping">Looping</string>
+    <string name="str_Single_Photo">Single Photo</string>
+    <string name="str_Broadcast_Record">Broadcast Record</string>
+    <string name="str_Webcam">Webcam</string>
+
+    <!-- Toasts -->
+    <string name="str_gatt_connect_problem">There was a problem connecting the BLE gatt.</string>
+    <string name="str_get_ble_services_problem">There was a problem getting BLE services.</string>
+    <string name="str_connect_cam_problem">There is a problem connecting to the camera %1$s! Please try again.</string>
+    <string name="str_pairing_failed">Pairing with %1$s failed!</string>
+    <string name="str_connect_first">Please connect with %1$s first!</string>
+    <string name="str_ssid_unk">SSID from %1$s is unknown. I retrieve it. Please try again!</string>
+    <string name="str_psk_unk">PSK from %1$s is unknown. I retrieve it. Please try again!</string>
+    <string name="str_something_wrong">Something went wrong!</string>
+    <string name="str_ap_na">AP from %1$s is not available!</string>
+    <string name="str_wifi_lost">WiFi connection to %1$s lost!</string>
+    <string name="str_no_media">There is no media on the storage!</string>
+    <string name="str_no_bt">Bluetooth is not supported! Please use other device!</string>
+    <string name="str_wait_bt_con">Please wait until the connection has been established!</string>
+    <string name="str_enable_wifi">Please enable WiFi!</string>
+    <string name="str_cam_busy">The camera is currently busy.\nPlease try again later!</string>
+    <string name="str_cam_unk">Unknown camera model!</string>
+    <string name="str_to_pair_dev">Please connect/pair devices!</string>
+    <string name="str_Localization_required">Localization is required. Please turn localization on and try again!</string>
+    <string name="str_Wifi_permission_required">Wifi permission is required to connect GoPros!</string>
+    <string name="str_BT_permission_required">Bluetooth permission is required to connect GoPros!</string>
+    <string name="str_powered_on">Something went wrong. Is %1$s powered on?</string>
+    <string name="str_stream_unavailable">The preview stream is currently unavailable!</string>
+    <string name="str_firmware_uptodate">Doesn\'t work! Is a SD-Card inserted and the GoPro firmware up to date?</string>
+    <string name="str_dl_completed">Download completed!</string>
+    <string name="str_dl_error">File %1$s download error!</string>
+    <string name="str_dl_may_not_success">Download may not have been successful. Maybe try again!</string>
+    <string name="str_need_permissions">Need permissions first!</string>
+    <string name="str_no_available_options">This camera does not provide the available options for the settings.</string>
+    <string name="str_set_dt_success">Date/Time has been set successfully</string>
+    <string name="str_set_dt_not_success">Date/Time has not been set!</string>
+
+    <!-- Alerts -->
+    <string name="str_enabled_auto_off_title">\'Auto Off\' is enabled!</string>
+    <string name="str_enabled_auto_off_msg">%1$s has \'Auto Off\' set to %2$s. The camera will turn off after this time.\n\nShould \'Auto Off\' be disabled?\n\nYou can turn off this notification in the app settings.</string>
+    <string name="str_Disable">Disable</string>
+    <string name="str_Ignore">Ignore</string>
+    <string name="str_OK">OK</string>
+    <string name="str_Yes">Yes</string>
+    <string name="str_Cancel">Cancel</string>
+    <string name="str_about">App name:\t\t\tGoEasyPro Android\nAuthor:\t\t\t\t\t\t\tSebastian Balzer\nGithub user:\t\tsepp89117\nVersion:\t\t\t\t\t\tv%1$s\n</string>
+    <string name="str_App_info">App Info</string>
+    <string name="str_Dev_info">Device Info</string>
+    <string name="str_check_release">Check latest release</string>
+    <string name="str_Delete_device">Delete device</string>
+    <string name="str_Delete">Delete</string>
+    <string name="str_File_options">File options</string>
+    <string name="str_Download">Download</string>
+    <string name="str_Delete_file">Delete file</string>
+    <string name="str_sure_delete">Are you sure you want to delete %1$s?</string>
+    <string name="str_connecting_to">Connecting to %1$s</string>
+    <string name="str_wait_wifi_con">Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!</string>
+    <string name="str_Rename">Rename \'%1$s\'</string>
+    <string name="str_enter_new_name">Enter a new name for device \'%1$s\'\n\nMin. 1 and max. 10 characters\n</string>
+    <string name="str_Downloading">Downloading…</string>
+    <string name="str_wait_dl_complete">Please wait until the download is complete!</string>
+    <string name="str_wait_setting_set">Please wait until the new setting has been made!</string>
+    <string name="str_set_setting">Set new setting</string>
+
+    <!-- Menus -->
+    <string name="str_device_control">Device control</string>
+    <string name="str_enable_shutter">Enable Shutter</string>
+    <string name="str_disable_shutter">Disable Shutter</string>
+    <string name="str_camera_mode">Camera mode</string>
+    <string name="str_video">Video</string>
+    <string name="str_single">Single</string>
+    <string name="str_time_lapse">Time Lapse</string>
+    <string name="str_photo">Photo</string>
+    <string name="str_night">Night</string>
+    <string name="str_multishot">Multishot</string>
+    <string name="str_burst">Burst</string>
+    <string name="str_night_lapse">Night Lapse</string>
+    <string name="str_enable_localization">Enable localization</string>
+    <string name="str_disable_localization">Disable localization</string>
+    <string name="str_set_date_time">Set Date/Time</string>
+    <string name="str_put_to_sleep">Put to sleep</string>
+    <string name="str_connection">Connection</string>
+    <string name="str_enable_wifi_ap">Enable WiFi AP</string>
+    <string name="str_disable_wifi_ap">Disable WiFi AP</string>
+    <string name="str_disconnect">Disconnect</string>
+    <string name="str_delete_device">Delete device</string>
+    <string name="str_media">Media</string>
+    <string name="str_start_live_preview">Start live preview</string>
+    <string name="str_browse_storage">Browse storage</string>
+    <string name="str_device_settings">Device settings</string>
+    <string name="str_rename_device">Rename device</string>
+    <string name="str_device_information">Device information</string>
+    <string name="str_add_cam">Add cam</string>
+    <string name="str_put_cams_to_sleep">Put cams to sleep</string>
+    <string name="str_app_settings">App settings</string>
+    <string name="str_m_about">About</string>
+    <string name="str_report_an_issue">Report an issue</string>
+    <string name="str_try_to_connect">Try to connect</string>
+
 </resources>
