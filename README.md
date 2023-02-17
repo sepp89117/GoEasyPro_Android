@@ -55,9 +55,11 @@ Easily control multiple GoPros with your android device with bluetooth<br><br>
 - [ExoPlayer](https://github.com/google/ExoPlayer) with [Apache-2.0 license](https://github.com/google/ExoPlayer/blob/release-v2/LICENSE) by [google](https://github.com/google)
 
 ## Debugging on
+- Samsung Galaxy S23 (Android 13)
 - Samsung Galaxy S10 (Android 12)
 - Xiaomi Redmi Note 11s (Android 11)
 - Samsung Tab S4 (Android 10)
+- Gigaset GS270 plus (Android 8.1)
 - with Hero5 Black, Hero8 Black and Hero10 Black only!<br>
 <br><br>
 I hope you can help to get the app running safely on other smartphones too!
@@ -72,6 +74,7 @@ Feel free to create an issue!
 | Get current values of settings            |             | yes    |       |     | yes   |       |       | yes   |
 | Get available options for settings        |             | yes    |       |     | no    |       |       | yes   |
 | Set settings                              |             | yes    |       |     | yes   |       |       | yes   |
+| Set modes                                 |             | yes    |       |     | yes   |       |       | yes   |
 | Device controls                           |             | yes    |       |     | yes   |       |       | yes   |
 | Live preview                              |             | yes    |       |     | yes   |       |       | yes   |
 | Browse storage                            |             | yes    |       |     | yes   |       |       | yes   |
@@ -84,12 +87,11 @@ Feel free to create an issue!
 
 ## Report issues
 If you have trouble with anything, please open a detailed issue.
-- Manufacturer and model of the Android device
-- Android version of the device
-- Camera model
-- Firmware version of the camera
 - Short description of the problem
 - What steps triggered the problem?
 - Are there any error messages?
 - Do you have an extract from the android log?
-
+- Manufacturer and model of the Android device
+- Android version of the device
+- Camera model
+- Firmware version of the camera
