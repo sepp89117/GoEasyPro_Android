@@ -112,6 +112,7 @@
     <string name="str_Delete">Delete</string>
     <string name="str_File_options">File options</string>
     <string name="str_Download">Download</string>
+    <string name="str_Download_LRV">Downl. low res. vid. (LRV)</string>
     <string name="str_Delete_file">Delete file</string>
     <string name="str_sure_delete">Are you sure you want to delete %1$s?</string>
     <string name="str_connecting_to">Connecting to %1$s</string>

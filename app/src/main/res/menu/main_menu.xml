@@ -4,21 +4,21 @@
     <item
         android:id="@+id/main_menu_add_cam"
         android:icon="@drawable/add_cam_symbol"
-        android:title="Add cam" />
+        android:title="@string/str_add_cam" />
     <item
         android:id="@+id/main_menu_sleep"
         android:icon="@drawable/sleep_symbol"
-        android:title="Put cams to sleep" />
+        android:title="@string/str_put_cams_to_sleep" />
     <item
         android:id="@+id/main_menu_settings"
         android:icon="@drawable/settings_symbol"
-        android:title="App settings" />
+        android:title="@string/str_app_settings" />
     <item
         android:id="@+id/main_menu_about"
         android:icon="@drawable/info_symbol"
-        android:title="About" />
+        android:title="@string/str_m_about" />
     <item
         android:id="@+id/main_menu_issue"
         android:icon="@drawable/warning_symbol"
-        android:title="Report an issue" />
+        android:title="@string/str_report_an_issue" />
 </menu>

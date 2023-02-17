@@ -165,6 +165,12 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 imagePlayer.setImageResource(R.drawable.ic_baseline_photo_camera_24);
                 imagePlayer.setVisibility(View.VISIBLE);
 
+                // Set thumbnail as image resource until full image is loaded
+                if (clickedFile.thumbNail != null) {
+                    currentBitmap = clickedFile.thumbNail;
+                    runOnUiThread(() -> imagePlayer.setImageBitmap(currentBitmap));
+                }
+
                 Request request = new Request.Builder()
                         .url(clickedFile.url)
                         .build();
@@ -172,14 +178,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.e("getImage", "fail");
                         imagePlayer.setImageResource(R.drawable.ic_baseline_no_photography_24);
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) {
+                    public void onResponse(@NonNull Call call, @NonNull Response response) {
                         if (!response.isSuccessful()) {
                             Log.e("getImage", "Request response = not success");
                             imagePlayer.setImageResource(R.drawable.ic_baseline_no_photography_24);
@@ -230,7 +236,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Fullscreen implementation
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         currentOrientation = newConfig.orientation;
         handleOrientation();
@@ -302,6 +308,9 @@ public class StorageBrowserActivity extends AppCompatActivity {
         menu.setHeaderTitle(getResources().getString(R.string.str_File_options));
         // add menu items
         menu.add(pos, 1, 0, getResources().getString(R.string.str_Download));
+        if(goMediaFiles.get(pos).hasLrv) {
+            menu.add(pos, 2, 0, getResources().getString(R.string.str_Download_LRV));
+        }
         menu.add(pos, 0, 0, getResources().getString(R.string.str_Delete));
     }
 
@@ -321,7 +330,11 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 break;
             case 1:
                 // download file
-                downloadFile(pos);
+                downloadFile(pos, false);
+                break;
+            case 2:
+                // download LRV
+                downloadFile(pos, true);
                 break;
         }
 
@@ -344,14 +357,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         gotResponse[0] = true;
                         Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' failed!");
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) {
+                    public void onResponse(@NonNull Call call, @NonNull Response response) {
                         gotResponse[0] = true;
                         if (!response.isSuccessful()) {
                             Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' unsuccessful!");
@@ -368,7 +381,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void downloadFile(int pos) {
+    private void downloadFile(int pos, boolean lrv) {
         if (!hasExtStoragePermissions()) {
             Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_need_permissions), Toast.LENGTH_SHORT).show();
             requestIOPermissions();
@@ -399,9 +412,15 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         ArrayList<String> fileDlCmds = new ArrayList<>();
 
+        String dlUrl;
+        if(lrv)
+            dlUrl = goMediaFile.lrvUrl;
+        else
+            dlUrl = goMediaFile.url;
+
         if (goMediaFile.isGroup) {
             String fileName = goMediaFile.fileName;
-            String dlCmdI = goMediaFile.url;
+            String dlCmdI = dlUrl;
 
             int start = Integer.parseInt(goMediaFile.groupBegin);
             int end = Integer.parseInt(goMediaFile.groupLast);
@@ -411,7 +430,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 return;
             }
 
-            String lastFileName = "";
+            String lastFileName;
 
             fileDlCmds.add(dlCmdI);
 
@@ -432,7 +451,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 fileDlCmds.add(dlCmdI);
             }
         } else {
-            fileDlCmds.add(goMediaFile.url);
+            fileDlCmds.add(dlUrl);
         }
 
         dlTotalCount = fileDlCmds.size();
@@ -454,7 +473,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
             }
             currentCall.enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e("downloadFile", "GET '" + call.request().url() + "' failed!");
                     dlAlert.dismiss();
                     runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
@@ -465,7 +484,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) {
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
                     if (!response.isSuccessful()) {
                         Log.e("downloadFile", "GET '" + call.request().url() + "' unsuccessful!");
                         dlAlert.dismiss();
@@ -661,14 +680,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
             int finalI = i;
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     Log.e("deleteFile", "GET '" + call.request().url() + "' failed!");
                     runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     e.printStackTrace();
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) {
+                public void onResponse(@NonNull Call call, @NonNull Response response) {
                     if (!response.isSuccessful()) {
                         Log.e("deleteFile", "GET '" + call.request().url() + "' unsuccessful!");
                         runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
@@ -718,6 +737,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
             return responseBody.contentLength();
         }
 
+        @NonNull
         @Override
         public BufferedSource source() {
             if (bufferedSource == null) {
@@ -731,7 +751,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 long totalBytesRead = 0L;
 
                 @Override
-                public long read(Buffer sink, long byteCount) throws IOException {
+                public long read(@NonNull Buffer sink, long byteCount) throws IOException {
                     long bytesRead = super.read(sink, byteCount);
                     totalBytesRead += bytesRead != -1 ? bytesRead : 0;
                     progressListener.update(totalBytesRead, responseBody.contentLength(), bytesRead == -1);
@@ -794,7 +814,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onPlayerError(PlaybackException error) {
+        public void onPlayerError(@NonNull PlaybackException error) {
             Player.Listener.super.onPlayerError(error);
             Log.e("onPlayerError", error.getMessage() + "\n" + error.getCause());
         }
@@ -811,7 +831,13 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Permissions
     private boolean hasExtStoragePermissions() {
-        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2)
+            return true;
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.Q)
+            return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
