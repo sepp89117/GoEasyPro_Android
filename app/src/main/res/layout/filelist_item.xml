@@ -22,21 +22,23 @@
             app:srcCompat="@drawable/ic_baseline_no_photography_24" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
+            <CheckedTextView
                 android:id="@+id/file_name_text"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="24dp"
                 android:layout_marginBottom="10dp"
                 android:text="FILENAME"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:checked="false"
+                android:checkMark="@drawable/unchecked" />
 
             <TextView
                 android:id="@+id/file_date_text"

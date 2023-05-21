@@ -110,6 +110,8 @@
     <string name="str_check_release">Check latest release</string>
     <string name="str_Delete_device">Delete device</string>
     <string name="str_Delete">Delete</string>
+    <string name="str_dl_selection">Download selected</string>
+    <string name="str_dl_selection_lrv">Downl. sel. low res. vid. (LRV)</string>
     <string name="str_File_options">File options</string>
     <string name="str_Download">Download</string>
     <string name="str_Download_LRV">Downl. low res. vid. (LRV)</string>
@@ -119,7 +121,7 @@
     <string name="str_wait_wifi_con">Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!</string>
     <string name="str_Rename">Rename \'%1$s\'</string>
     <string name="str_enter_new_name">Enter a new name for device \'%1$s\'\n\nMin. 1 and max. 10 characters\n</string>
-    <string name="str_Downloading">Downloading…</string>
+    <string name="str_Downloading">Downloading...</string>
     <string name="str_wait_dl_complete">Please wait until the download is complete!</string>
     <string name="str_wait_setting_set">Please wait until the new setting has been made!</string>
     <string name="str_set_setting">Set new setting</string>
@@ -150,6 +152,8 @@
     <string name="str_start_live_preview">Start live preview</string>
     <string name="str_browse_storage">Browse storage</string>
     <string name="str_device_settings">Device settings</string>
+    <string name="str_device_settings_setup">Setup</string>
+    <string name="str_sync_settings">Sync other cams</string>
     <string name="str_rename_device">Rename device</string>
     <string name="str_device_information">Device information</string>
     <string name="str_add_cam">Add cam</string>

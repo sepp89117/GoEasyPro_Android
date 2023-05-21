@@ -123,9 +123,21 @@
     </item>
 
     <item
-        android:id="@+id/dev_settings"
+        android:id="@+id/none"
         android:icon="@drawable/settings_symbol"
-        android:title="@string/str_device_settings" />
+        android:title="@string/str_device_settings" >
+
+        <menu>
+            <item
+                android:id="@+id/dev_settings"
+                android:icon="@drawable/settings_symbol"
+                android:title="@string/str_device_settings_setup" />
+            <item
+                android:id="@+id/sync_settings"
+                android:icon="@drawable/sync_symbol"
+                android:title="@string/str_sync_settings" />
+        </menu>
+    </item>
 
     <item
         android:id="@+id/dev_rename"

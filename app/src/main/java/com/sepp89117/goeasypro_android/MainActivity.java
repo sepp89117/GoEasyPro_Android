@@ -162,6 +162,34 @@ public class MainActivity extends AppCompatActivity {
                     Intent goSettingsActivityIntent = new Intent(MainActivity.this, GoSettingsActivity.class);
                     startActivity(goSettingsActivityIntent);
                     break;
+                case R.id.sync_settings:
+                    if(goProDevices.size() > 1) {
+                        final AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Sync to " + goProDevice.displayName)
+                                .setMessage("Please wait until all cameras have been synchronized!")
+                                .setCancelable(false)
+                                .create();
+
+                        alert.show();
+
+                        ArrayList<GoSetting> goSettings = goProDevice.goSettings;
+                        for (GoSetting goSetting : goSettings) {
+                            int devIndex = goProDevices.indexOf(goProDevice);
+                            int settingId = goSetting.getSettingId();
+                            int currentOptionId = goSetting.getCurrentOptionId();
+
+                            for (int i = 0; i < goProDevices.size(); i++) {
+                                if (i == devIndex)
+                                    continue;
+
+                                GoProDevice dev = goProDevices.get(i);
+                                dev.setSetting(settingId, currentOptionId);
+                            }
+                        }
+
+                        alert.dismiss();
+                    }
+                    break;
                 case R.id.dev_rename:
                     final EditText name_input = new EditText(MainActivity.this);
                     name_input.setText(goProDevice.displayName);

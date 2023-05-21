@@ -308,8 +308,12 @@ public class StorageBrowserActivity extends AppCompatActivity {
         menu.setHeaderTitle(getResources().getString(R.string.str_File_options));
         // add menu items
         menu.add(pos, 1, 0, getResources().getString(R.string.str_Download));
-        if(goMediaFiles.get(pos).hasLrv) {
+        if (goMediaFiles.get(pos).hasLrv) {
             menu.add(pos, 2, 0, getResources().getString(R.string.str_Download_LRV));
+        }
+        if (fileListAdapter.getSelectedItems().size() > 0) {
+            menu.add(pos, 3, 0, getResources().getString(R.string.str_dl_selection));
+            menu.add(pos, 4, 0, getResources().getString(R.string.str_dl_selection_lrv));
         }
         menu.add(pos, 0, 0, getResources().getString(R.string.str_Delete));
     }
@@ -330,11 +334,23 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 break;
             case 1:
                 // download file
-                downloadFile(pos, false);
+                downloadFile(pos, false, false);
                 break;
             case 2:
                 // download LRV
-                downloadFile(pos, true);
+                downloadFile(pos, true, false);
+                break;
+            case 3:
+                // download selected
+                downloadFile(-1, false, true);
+                break;
+
+            case 4:
+                // download selected LRV
+                ArrayList<GoMediaFile> selectedLrvFiles = fileListAdapter.getSelectedItems();
+                for (GoMediaFile file : selectedLrvFiles) {
+                    downloadFile(-1, true, true);
+                }
                 break;
         }
 
@@ -381,7 +397,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void downloadFile(int pos, boolean lrv) {
+    private void downloadFile(int pos, boolean lrv, boolean multiple) {
         if (!hasExtStoragePermissions()) {
             Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_need_permissions), Toast.LENGTH_SHORT).show();
             requestIOPermissions();
@@ -408,50 +424,109 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         dlAlert.show();
 
-        GoMediaFile goMediaFile = goMediaFiles.get(pos);
-
-        ArrayList<String> fileDlCmds = new ArrayList<>();
-
         String dlUrl;
-        if(lrv)
-            dlUrl = goMediaFile.lrvUrl;
-        else
-            dlUrl = goMediaFile.url;
+        ArrayList<String> fileDlCmds = new ArrayList<>();
+        ArrayList<String> fileNames = new ArrayList<>();
+        ArrayList<String> fileMimes = new ArrayList<>();
 
-        if (goMediaFile.isGroup) {
-            String fileName = goMediaFile.fileName;
-            String dlCmdI = dlUrl;
+        if (pos >= 0) {
+            GoMediaFile goMediaFile = goMediaFiles.get(pos);
 
-            int start = Integer.parseInt(goMediaFile.groupBegin);
-            int end = Integer.parseInt(goMediaFile.groupLast);
+            if (lrv)
+                dlUrl = goMediaFile.lrvUrl;
+            else
+                dlUrl = goMediaFile.url;
 
-            if (!fileName.contains(String.valueOf(start))) {
-                Log.e("downloadFile", "File name '" + fileName + "' doesn't contains '" + start + "'");
-                return;
-            }
+            if (goMediaFile.isGroup) {
+                String fileName = goMediaFile.fileName;
+                String dlCmdI = dlUrl;
 
-            String lastFileName;
+                int start = Integer.parseInt(goMediaFile.groupBegin);
+                int end = Integer.parseInt(goMediaFile.groupLast);
 
-            fileDlCmds.add(dlCmdI);
-
-            for (int i = start + 1; i < end + 1; i++) {
-                String lastInt = String.valueOf(i - 1);
-                String nextInt = String.valueOf(i);
-                lastFileName = fileName;
-
-                fileName = fileName.replace(lastInt, nextInt);
-                if (lastInt.length() != nextInt.length()) {
-                    int delta = Math.abs(nextInt.length() - lastInt.length());
-                    int intIndex = fileName.indexOf(nextInt);
-                    String fileNameEnding = fileName.substring(intIndex);
-                    fileName = fileName.substring(0, intIndex - delta) + fileNameEnding;
+                if (!fileName.contains(String.valueOf(start))) {
+                    Log.e("downloadFile", "File name '" + fileName + "' doesn't contains '" + start + "'");
+                    return;
                 }
-                dlCmdI = dlCmdI.replace(lastFileName, fileName);
+
+                String lastFileName;
 
                 fileDlCmds.add(dlCmdI);
+                fileNames.add(goMediaFile.fileName);
+                fileMimes.add(goMediaFile.mimeType);
+
+                for (int i = start + 1; i < end + 1; i++) {
+                    String lastInt = String.valueOf(i - 1);
+                    String nextInt = String.valueOf(i);
+                    lastFileName = fileName;
+
+                    fileName = fileName.replace(lastInt, nextInt);
+                    if (lastInt.length() != nextInt.length()) {
+                        int delta = Math.abs(nextInt.length() - lastInt.length());
+                        int intIndex = fileName.indexOf(nextInt);
+                        String fileNameEnding = fileName.substring(intIndex);
+                        fileName = fileName.substring(0, intIndex - delta) + fileNameEnding;
+                    }
+                    dlCmdI = dlCmdI.replace(lastFileName, fileName);
+
+                    fileDlCmds.add(dlCmdI);
+                }
+            } else {
+                fileDlCmds.add(dlUrl);
+                fileNames.add(goMediaFile.fileName);
+                fileMimes.add(goMediaFile.mimeType);
+            }
+        } else if (multiple) {
+            ArrayList<GoMediaFile> selectedFiles = fileListAdapter.getSelectedItems();
+
+            for (GoMediaFile file : selectedFiles) {
+                if (lrv)
+                    dlUrl = file.lrvUrl;
+                else
+                    dlUrl = file.url;
+
+                if (file.isGroup) {
+                    String fileName = file.fileName;
+                    String dlCmdI = dlUrl;
+
+                    int start = Integer.parseInt(file.groupBegin);
+                    int end = Integer.parseInt(file.groupLast);
+
+                    if (!fileName.contains(String.valueOf(start))) {
+                        Log.e("downloadFile", "File name '" + fileName + "' doesn't contains '" + start + "'");
+                        return;
+                    }
+
+                    String lastFileName;
+
+                    fileDlCmds.add(dlCmdI);
+                    fileNames.add(file.fileName);
+                    fileMimes.add(file.mimeType);
+
+                    for (int i = start + 1; i < end + 1; i++) {
+                        String lastInt = String.valueOf(i - 1);
+                        String nextInt = String.valueOf(i);
+                        lastFileName = fileName;
+
+                        fileName = fileName.replace(lastInt, nextInt);
+                        if (lastInt.length() != nextInt.length()) {
+                            int delta = Math.abs(nextInt.length() - lastInt.length());
+                            int intIndex = fileName.indexOf(nextInt);
+                            String fileNameEnding = fileName.substring(intIndex);
+                            fileName = fileName.substring(0, intIndex - delta) + fileNameEnding;
+                        }
+                        dlCmdI = dlCmdI.replace(lastFileName, fileName);
+
+                        fileDlCmds.add(dlCmdI);
+                    }
+                } else {
+                    fileDlCmds.add(dlUrl);
+                    fileNames.add(file.fileName);
+                    fileMimes.add(file.mimeType);
+                }
             }
         } else {
-            fileDlCmds.add(dlUrl);
+            return; // impossible
         }
 
         dlTotalCount = fileDlCmds.size();
@@ -460,6 +535,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         for (int i = 0; i < fileDlCmds.size(); i++) {
             String fileDelCmd = fileDlCmds.get(i);
+            String fileName = fileNames.get(i);
+            String fileMimeType = fileMimes.get(i);
 
             Request request = new Request.Builder()
                     .url(fileDelCmd)
@@ -471,6 +548,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
             synchronized (currentCalls) {
                 currentCalls.add(currentCall);
             }
+
             currentCall.enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -505,7 +583,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             }
 
                             int fileIndex = 1;
-                            File file = new File(dir, goMediaFile.fileName);
+                            File file = new File(dir, fileName);
                             while (file.exists()) {
                                 if (fileIndex >= 10000) {
                                     Log.e("dlFile", "There are more then 10000 files withe the same name in the directory '" + dir.getPath() + "'!");
@@ -513,7 +591,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                                     dlAlert.dismiss();
                                     return;
                                 }
-                                file = new File(dir, goMediaFile.fileName.substring(0, goMediaFile.fileName.length() - 4) + "(" + fileIndex + ")" + goMediaFile.fileName.substring(goMediaFile.fileName.length() - 4));
+                                file = new File(dir, fileName.substring(0, fileName.length() - 4) + "(" + fileIndex + ")" + fileName.substring(fileName.length() - 4));
                                 fileIndex++;
                             }
 
@@ -521,9 +599,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             String fileName = file.getName();
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                String mimeType = goMediaFile.mimeType;
 
-                                if (mimeType == null) {
+                                if (fileMimeType == null) {
                                     Log.e("dlFile", "Mime type for file '" + fileName + "' unknown!");
                                     runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, "Mime type for file '" + fileName + "' unknown!", Toast.LENGTH_SHORT).show());
                                     dlAlert.dismiss();
@@ -533,14 +610,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
                                 ContentResolver contentResolver = StorageBrowserActivity.this.getContentResolver();
                                 ContentValues values = new ContentValues();
                                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-                                values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
+                                values.put(MediaStore.MediaColumns.MIME_TYPE, fileMimeType);
                                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM + "/GoEasyPro");
 
                                 Uri fileUri = null;
 
-                                if (mimeType.contains("image")) {
+                                if (fileMimeType.contains("image")) {
                                     fileUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                } else if (mimeType.contains("video")) {
+                                } else if (fileMimeType.contains("video")) {
                                     fileUri = contentResolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
                                 }
 
@@ -580,8 +657,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Log.e("dlFile", "File '" + goMediaFile.fileName + "' download error!");
-                            runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, String.format(getResources().getString(R.string.str_dl_error), goMediaFile.fileName), Toast.LENGTH_SHORT).show());
+                            Log.e("dlFile", "File '" + fileName + "' download error!");
+                            runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, String.format(getResources().getString(R.string.str_dl_error), fileName), Toast.LENGTH_SHORT).show());
                             dlAlert.dismiss();
                         }
                     }
@@ -614,7 +691,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
             if (dlTotalCount == 1) {
                 if (done) {
                     progressBar.setProgress(0);
-                }else if (contentLength != -1) {
+                } else if (contentLength != -1) {
                     int percentDone = (int) ((100 * bytesRead) / contentLength);
                     progressBar.setProgress(percentDone);
                 }
@@ -622,7 +699,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 if (dlCompleteCount >= 1) {
                     int percentDone = ((100 * dlCompleteCount) / dlTotalCount);
                     progressBar.setProgress(percentDone);
-                }else {
+                } else {
                     progressBar.setProgress(0);
                 }
             }
@@ -831,10 +908,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Permissions
     private boolean hasExtStoragePermissions() {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2)
             return true;
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.Q)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q)
             return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
         return (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
