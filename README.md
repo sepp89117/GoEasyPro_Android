@@ -6,7 +6,7 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 <b>Live preview, media browsing and download incl. LRV download and much more is supported!</b><br><br>
 [Download latest release](https://github.com/sepp89117/GoEasyPro_Android/releases/latest)<br><br>
 ## Screenshot
-<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/main_v1.5.4.jpg?raw=true" width="400px"><br>
+<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/main_v1.6.0.jpg?raw=true" width="400px"><br>
 ## Main Menu
 <img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/menu_v1.5.4.jpg?raw=true" width="200px"><br>
 ## Device Menu
