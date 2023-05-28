@@ -159,6 +159,32 @@
                             app:icon="@drawable/highlight_symbol" />
                     </TableRow>
 
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal">
+
+                        <Button
+                            android:id="@+id/button6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:onClick="onClickSetMode"
+                            android:text="Set Mode"
+                            android:textAllCaps="false"
+                            app:icon="@drawable/mode_select_symbol" />
+
+                        <Button
+                            android:id="@+id/button7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:onClick="onClickSetPreset"
+                            android:text="Set Preset"
+                            android:textAllCaps="false"
+                            app:icon="@drawable/preset_symbol" />
+                    </TableRow>
+
                 </TableLayout>
 
             </RelativeLayout>

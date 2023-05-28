@@ -12,7 +12,7 @@ public class GoPreset {
     private final String title;
     private final Map<Integer, String> presets = new HashMap<>();
 
-    public GoPreset(Context context){
+    public GoPreset(Context context) {
         this.context = context;
 
         this.id = -1;
@@ -27,7 +27,7 @@ public class GoPreset {
         this.title = presets.getOrDefault(this.id, getStr(R.string.str_UNK) + " " + this.id);
     }
 
-    private void putValuesToMap(){
+    private void putValuesToMap() {
         presets.put(-2, getStr(R.string.str_NA));
         presets.put(-1, getStr(R.string.str_NC));
         presets.put(0x00000000, getStr(R.string.str_Standard));
@@ -49,7 +49,7 @@ public class GoPreset {
         presets.put(0x00040000, getStr(R.string.str_Max_Photo));
         presets.put(0x00050000, getStr(R.string.str_Max_Time_Warp));
     }
-    
+
     private String getStr(int resId) {
         return context.getResources().getString(resId);
     }

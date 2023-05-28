@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.MainActivity" >
+    <item
+        android:id="@+id/preset_standard"
+        android:title="Standard">
+    </item>
+    <item
+        android:id="@+id/preset_activity"
+        android:title="Activity">
+    </item>
+    <item
+        android:id="@+id/preset_cinematic"
+        android:title="Cinematic">
+    </item>
+    <item
+        android:id="@+id/preset_photo"
+        android:title="Photo">
+    </item>
+    <item
+        android:id="@+id/preset_liveBurst"
+        android:title="Live Burst">
+    </item>
+    <item
+        android:id="@+id/preset_burstPhoto"
+        android:title="Burst Photo">
+    </item>
+    <item
+        android:id="@+id/preset_nightPhoto"
+        android:title="Night Photo">
+    </item>
+    <item
+        android:id="@+id/preset_timeWarp"
+        android:title="Time Warp">
+    </item>
+    <item
+        android:id="@+id/preset_timeLapse"
+        android:title="Time Lapse">
+    </item>
+    <item
+        android:id="@+id/preset_nightLapse"
+        android:title="Night Lapse">
+    </item>
+</menu>
