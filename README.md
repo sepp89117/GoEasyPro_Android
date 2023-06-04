@@ -11,6 +11,8 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 <img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/menu_v1.5.4.jpg?raw=true" width="200px"><br>
 ## Device Menu
 <img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/dev_menu_v1.5.4.jpg?raw=true" width="200px"><br>
+## Storage Browser
+<img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/browser_v1.6.1.jpg?raw=true" width="400px"><br>
 
 ## Usage information
 <ul>
