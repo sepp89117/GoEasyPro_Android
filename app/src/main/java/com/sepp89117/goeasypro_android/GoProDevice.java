@@ -805,6 +805,7 @@ public class GoProDevice {
         switch (statusID) {
             case 2:
                 isCharging = buffer.get(0) == 4;
+                break;
             case 6:
                 isHot = buffer.get(0) != 0;
                 break;

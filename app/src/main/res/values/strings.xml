@@ -10,10 +10,11 @@
     <string name="str_Mode">Mode</string>
 
     <!-- views -->
-    <string name="str_Select_file">Select a file from \'%1$s\'</string>
+    <string name="str_Content_from">Content from \'%1$s\'</string>
     <string name="str_Settings">Settings</string>
     <string name="str_mcc">Multi Cam Control</string>
     <string name="str_cams">Cams</string>
+    <string name="_files">" Files"</string>
     <string name="str_Shutter_on">Shutter on</string>
     <string name="str_Shutter_off">Shutter off</string>
     <string name="str_Sleep">Sleep</string>
@@ -22,6 +23,7 @@
     <string name="str_click_dev_to_pair">Click on a device to connect/pair</string>
     <string name="str_Scan_again">Scan again</string>
     <string name="str_Group_size">Group size:</string>
+    <string name="str_Content">Content</string>
 
     <!-- presets and modes -->
     <string name="str_Standard">Standard</string>
@@ -162,5 +164,7 @@
     <string name="str_m_about">About</string>
     <string name="str_report_an_issue">Report an issue</string>
     <string name="str_try_to_connect">Try to connect</string>
+    <string name="str_Download_original">Download original</string>
+    <string name="str_Download_lrv">Download LRV</string>
 
 </resources>
