@@ -1,14 +1,9 @@
 package com.sepp89117.goeasypro_android;
 
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_CONNECTED;
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_CONNECTING;
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_FETCHING_DATA;
-import static com.sepp89117.goeasypro_android.GoProDevice.BT_NOT_CONNECTED;
-
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTED;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTING;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_FETCHING_DATA;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -30,9 +25,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
+
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
 
 public class PairActivity extends AppCompatActivity {
     private ListView listView;
@@ -138,6 +139,13 @@ public class PairActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ((MyApplication) this.getApplication()).resetIsAppPaused();
+    }
+
     public void onClickScan(View v) {
         if (isBtEnabled()) {
             findBtDevices();
@@ -179,7 +187,7 @@ public class PairActivity extends AppCompatActivity {
                         GoProDevice goProDevice = new GoProDevice(PairActivity.this, this.getApplication(), deviceName);
                         goProDevice.bluetoothDevice = device;
                         goProDevice.btPaired = true;
-                        goProDevice.name = deviceName;
+                        //goProDevice.name = deviceName;
                         goProDevice.btMacAddress = deviceHardwareAddress;
 
                         if (MyApplication.checkBtDevConnected(device)) {
@@ -268,9 +276,9 @@ public class PairActivity extends AppCompatActivity {
 
                 //iterate paired devices for equals
                 for (int i = 0; i < pairedGoProDevices.size(); i++) {
-                    String iAddress = pairedGoProDevices.get(i).bluetoothDevice.getAddress();
+                    String iAddress = pairedGoProDevices.get(i).btMacAddress;
                     if (Objects.equals(iAddress, deviceHardwareAddress)) {
-                        pairedGoProDevices.get(i).btIsAvailable = true;
+                        pairedGoProDevices.get(i).camBtAvailable = true;
 
                         //gopro is paired & found
                         /*if (pairedGoProDevices.get(i).btConnectionStage != BT_CONNECTED) {
@@ -283,11 +291,9 @@ public class PairActivity extends AppCompatActivity {
 
                 //is not a paired device
                 if (deviceName != null && deviceName.contains("GoPro ")) {
-                    GoProDevice goProDevice = new GoProDevice(PairActivity.this, PairActivity.this.getApplication(), deviceName);
-                    goProDevice.bluetoothDevice = device;
-                    goProDevice.name = deviceName;
+                    GoProDevice goProDevice = new GoProDevice(PairActivity.this, PairActivity.this.getApplication(), device);
                     goProDevice.btMacAddress = deviceHardwareAddress;
-                    goProDevice.btIsAvailable = true;
+                    goProDevice.camBtAvailable = true;
                     newGoProDevices.add(goProDevice);
                     mDeviceStrList.add(deviceName + " (found but not paired)\n" + deviceHardwareAddress); //red
                     setListAdapter();

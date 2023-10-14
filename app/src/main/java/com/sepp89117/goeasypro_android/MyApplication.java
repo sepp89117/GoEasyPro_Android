@@ -3,9 +3,13 @@ package com.sepp89117.goeasypro_android;
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.ComponentCallbacks2;
 import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
+
+import com.sepp89117.goeasypro_android.gopro.GoMediaFile;
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,12 +35,40 @@ public class MyApplication extends Application {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         ignoreAutoOff = sharedPref.getBoolean("ignore_auto_off", false);
         autoConnect = sharedPref.getBoolean("auto_connect", false);
+        checkFirmware = sharedPref.getBoolean("check_firmware", true);
+        checkAppUpdate = sharedPref.getBoolean("check_app_update", true);
+        keepAliveWhenPaused = sharedPref.getBoolean("keep_alive_when_paused", true);
 
         loadSettingsValuesFromRes();
     }
 
     private boolean ignoreAutoOff = false;
     private boolean autoConnect = false;
+    private boolean checkFirmware = true;
+    private boolean checkAppUpdate = true;
+    private boolean keepAliveWhenPaused = true;
+    private boolean appIsPaused = false;
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+            appIsPaused = true;
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    public boolean isAppPaused() {
+        return appIsPaused;
+    }
+
+    public void resetIsAppPaused() {
+        appIsPaused = false;
+    }
 
     public boolean isAutoOffToIgnore() {
         return ignoreAutoOff;
@@ -44,6 +76,18 @@ public class MyApplication extends Application {
 
     public boolean shouldAutoConnect() {
         return autoConnect;
+    }
+
+    public boolean shouldCheckFirmware() {
+        return checkFirmware;
+    }
+
+    public boolean shouldCheckAppUpdate() {
+        return checkAppUpdate;
+    }
+
+    public boolean shouldKeptAliveWhenPaused() {
+        return keepAliveWhenPaused;
     }
 
     private BluetoothAdapter _bluetoothAdapter;

@@ -1,7 +1,6 @@
 package com.sepp89117.goeasypro_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,6 +14,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+
 import com.arthenica.ffmpegkit.FFmpegKit;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -22,11 +24,12 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackException;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -73,23 +76,25 @@ public class PreviewActivity extends AppCompatActivity {
         createPlayer();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ((MyApplication) this.getApplication()).resetIsAppPaused();
+    }
+
     private void init() {
         fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.tween);
         streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         textView_mode_preset = findViewById(R.id.textView_mode_preset);
         rec_icon = findViewById(R.id.rec_icon);
-        String mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
-        textView_mode_preset.setText(mode_preset);
+        setModePresetText();
         streamingDevice.getDataChanges(() -> runOnUiThread(() -> {
-            String _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
-            textView_mode_preset.setText(_mode_preset);
-            if (streamingDevice.isRecording && rec_icon.getVisibility() == View.INVISIBLE) {
-                rec_icon.setVisibility(View.VISIBLE);
-                rec_icon.startAnimation(fadeAnimation);
-            } else if (!streamingDevice.isRecording && rec_icon.getVisibility() == View.VISIBLE) {
-                rec_icon.clearAnimation();
-                rec_icon.setVisibility(View.INVISIBLE);
+            if (streamingDevice.btConnectionStage == BT_NOT_CONNECTED) {
+                finish();
+                return;
             }
+            setModePresetText();
         }));
         stream_input_uri = "udp://:8554"; // maybe different depending on gopro modelID?
         ffmpeg_output_uri = "udp://@localhost:8555";
@@ -107,6 +112,18 @@ public class PreviewActivity extends AppCompatActivity {
         httpClient = new OkHttpClient();
 
         Log.i("PreviewActivity", "init done");
+    }
+
+    private void setModePresetText() {
+        String _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
+        textView_mode_preset.setText(_mode_preset);
+        if (streamingDevice.isRecording && rec_icon.getVisibility() == View.INVISIBLE) {
+            rec_icon.setVisibility(View.VISIBLE);
+            rec_icon.startAnimation(fadeAnimation);
+        } else if (!streamingDevice.isRecording && rec_icon.getVisibility() == View.VISIBLE) {
+            rec_icon.clearAnimation();
+            rec_icon.setVisibility(View.INVISIBLE);
+        }
     }
 
     private final Thread ffmpegThread = new Thread(() -> {

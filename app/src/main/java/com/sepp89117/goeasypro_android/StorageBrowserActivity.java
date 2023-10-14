@@ -1,10 +1,6 @@
 package com.sepp89117.goeasypro_android;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.core.app.ActivityCompat;
+import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -39,6 +35,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -50,6 +52,9 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
+import com.sepp89117.goeasypro_android.adapters.FileListAdapter;
+import com.sepp89117.goeasypro_android.gopro.GoMediaFile;
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +85,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private static final int LIGHT_BLUE = Color.argb(255, 0, 0x9F, 0xe0);
     private static final int GREY = Color.argb(255, 0x50, 0x50, 0x50);
 
+    private GoProDevice focusedDevice = null;
     private ArrayList<GoMediaFile> goMediaFiles;
     private ListView fileListView;
     private StyledPlayerView playerView = null;
@@ -115,22 +121,28 @@ public class StorageBrowserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_storage_browser);
 
-        GoProDevice focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
+        focusedDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         goMediaFiles = ((MyApplication) this.getApplication()).getGoMediaFiles();
 
-        client = new OkHttpClient.Builder()
-                .addNetworkInterceptor(chain -> {
-                    Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                            .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                            .build();
-                })
-                .build();
+        focusedDevice.getDataChanges(() -> runOnUiThread(() -> {
+            if (focusedDevice.btConnectionStage == BT_NOT_CONNECTED) finish();
+        }));
+
+        for (GoMediaFile file : goMediaFiles) {
+            String fileName = file.fileName;
+            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/GoEasyPro");
+            File testFile = new File(dir, fileName);
+            file.alreadyDownloaded = dir.exists() && testFile.exists();
+        }
+
+        client = new OkHttpClient.Builder().addNetworkInterceptor(chain -> {
+            Response originalResponse = chain.proceed(chain.request());
+            return originalResponse.newBuilder().body(new ProgressResponseBody(originalResponse.body(), progressListener)).build();
+        }).build();
 
         getThumbNailsAsync();
 
@@ -161,8 +173,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         fileListView = findViewById(R.id.file_listView);
         registerForContextMenu(fileListView);
         fileListView.setOnItemClickListener((parent, view, position, id) -> {
-            if (clickedFile == goMediaFiles.get(position))
-                return;
+            if (clickedFile == goMediaFiles.get(position)) return;
 
             clickedFile = goMediaFiles.get(position);
 
@@ -197,9 +208,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     runOnUiThread(() -> imagePlayer.setImageBitmap(currentBitmap));
                 }
 
-                Request request = new Request.Builder()
-                        .url(clickedFile.url)
-                        .build();
+                Request request = new Request.Builder().url(clickedFile.url).build();
                 Log.d("HTTP GET", clickedFile.url);
 
                 client.newCall(request).enqueue(new Callback() {
@@ -244,6 +253,13 @@ public class StorageBrowserActivity extends AppCompatActivity {
         handleOrientation();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ((MyApplication) this.getApplication()).resetIsAppPaused();
+    }
+
     public void onDlMenuClick(View v) {
         CascadePopupMenu popupMenu = new CascadePopupMenu(StorageBrowserActivity.this, v, Gravity.BOTTOM | Gravity.START);
         popupMenu.setOnMenuItemClickListener(dlMenuItemClickListener);
@@ -258,16 +274,11 @@ public class StorageBrowserActivity extends AppCompatActivity {
             posList.add(goMediaFiles.indexOf(file));
         }
 
-        AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this)
-                .setTitle(getResources().getString(R.string.str_Delete_file))
-                .setMessage(String.format(getResources().getString(R.string.str_sure_delete), selectedFiles.size() + getResources().getString(R.string._files)))
-                .setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> {
-                    for (Integer pos : posList) {
-                        deleteFile(pos);
-                    }
-                })
-                .setNegativeButton(getResources().getString(R.string.str_Cancel), null)
-                .create();
+        AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this).setTitle(getResources().getString(R.string.str_Delete_file)).setMessage(String.format(getResources().getString(R.string.str_sure_delete), selectedFiles.size() + getResources().getString(R.string._files))).setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> {
+            for (Integer pos : posList) {
+                deleteFile(pos);
+            }
+        }).setNegativeButton(getResources().getString(R.string.str_Cancel), null).create();
         alert.show();
     }
 
@@ -277,8 +288,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.dl_menu_dl:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download selected files
                 isLrvDownload = false;
@@ -287,8 +297,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 downloadFiles(false, selectedFiles);
                 break;
             case R.id.dl_menu_dl_lrv:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download selected LRV files
                 isLrvDownload = true;
@@ -307,8 +316,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
         destroyPlayer();
 
-        if (fullScreenDialog != null)
-            fullScreenDialog.dismiss();
+        if (fullScreenDialog != null) fullScreenDialog.dismiss();
     }
 
     @Override
@@ -368,10 +376,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
     public void onImgClick(View v) {
         Date now = new Date();
         if ((now.getTime() - lastImgClick.getTime()) < 200) {
-            if (!isFullscreen)
-                enableFullscreen();
-            else
-                disableFullscreen();
+            if (!isFullscreen) enableFullscreen();
+            else disableFullscreen();
         }
         lastImgClick = new Date();
     }
@@ -408,16 +414,11 @@ public class StorageBrowserActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case 0:
                 // delete file
-                AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this)
-                        .setTitle(getResources().getString(R.string.str_Delete_file))
-                        .setMessage(String.format(getResources().getString(R.string.str_sure_delete), goMediaFiles.get(pos).fileName))
-                        .setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> deleteFile(pos))
-                        .create();
+                AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this).setTitle(getResources().getString(R.string.str_Delete_file)).setMessage(String.format(getResources().getString(R.string.str_sure_delete), goMediaFiles.get(pos).fileName)).setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> deleteFile(pos)).create();
                 alert.show();
                 break;
             case 1:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download file
                 isLrvDownload = false;
@@ -426,8 +427,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 downloadFiles(false, files);
                 break;
             case 2:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download LRV
                 isLrvDownload = true;
@@ -436,8 +436,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 downloadFiles(true, lrvFiles);
                 break;
             case 3:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download selected files
                 isLrvDownload = false;
@@ -446,8 +445,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 downloadFiles(false, selectedFiles);
                 break;
             case 4:
-                if (isPlaying())
-                    player.stop();
+                if (player != null && isPlaying()) player.stop();
 
                 // download selected LRV files
                 isLrvDownload = true;
@@ -469,9 +467,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 String tn_url = file.thumbNail_path;
                 final boolean[] gotResponse = {false};
 
-                Request request = new Request.Builder()
-                        .url(tn_url)
-                        .build();
+                Request request = new Request.Builder().url(tn_url).build();
                 Log.d("HTTP GET", tn_url);
 
                 client.newCall(request).enqueue(new Callback() {
@@ -502,20 +498,12 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     private AlertDialog buildDownloadDialog() {
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         progressBar.setLayoutParams(lp);
         int pxFromDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
         progressBar.setPadding(pxFromDp, 0, pxFromDp, 0);
 
-        return new AlertDialog.Builder(StorageBrowserActivity.this)
-                .setTitle(getResources().getString(R.string.str_Downloading))
-                .setMessage(getResources().getString(R.string.str_wait_dl_complete))
-                .setView(progressBar)
-                .setNegativeButton(getResources().getString(R.string.str_Cancel), (dialog, which) -> cancelDownload())
-                .setCancelable(false)
-                .create();
+        return new AlertDialog.Builder(StorageBrowserActivity.this).setTitle(getResources().getString(R.string.str_Downloading)).setMessage(getResources().getString(R.string.str_wait_dl_complete)).setView(progressBar).setNegativeButton(getResources().getString(R.string.str_Cancel), (dialog, which) -> cancelDownload()).setCancelable(false).create();
     }
 
     private static final class DlInfo {
@@ -543,6 +531,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
             return;
         }
 
+        focusedDevice.requestSetTurboActive(true);
+
         ArrayList<DlInfo> dlInfos = files.stream().flatMap(file -> getFileDlInfo(lrv, file).stream()).collect(Collectors.toCollection(ArrayList::new));
         dlTotalCount = dlInfos.size();
         multiDlSize = lrv ? dlTotalCount : dlInfos.stream().mapToLong(dlInfo -> dlInfo.FileSize).sum();
@@ -555,9 +545,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         new Thread(() -> {
             calls = new ArrayList<>();
             for (DlInfo dlInfo : dlInfos) {
-                Request request = new Request.Builder()
-                        .url(dlInfo.Url)
-                        .build();
+                Request request = new Request.Builder().url(dlInfo.Url).build();
                 Log.d("HTTP GET", dlInfo.Url);
                 final Call currentCall = client.newCall(request);
                 synchronized (calls) {
@@ -583,8 +571,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
             DlInfo dlInfo = dlInfos.get(i);
 
             if (currentCall != null) {
-                Call finalCurrentCall = currentCall;
-
                 try {
                     Response response = currentCall.execute();
 
@@ -617,7 +603,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
                         String fileName = file.getName();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
                             if (dlInfo.MimeType == null) {
                                 Log.e("dlFile", "Mime type for file '" + fileName + "' unknown!");
                                 continue;
@@ -651,9 +636,8 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             byte[] buffer = new byte[8 * 1024];
                             int read;
 
-                            while ((read = inputStream.read(buffer)) != -1) {
+                            while ((read = inputStream.read(buffer)) != -1)
                                 outputStream.write(buffer, 0, read);
-                            }
 
                             outputStream.flush();
                             outputStream.close();
@@ -667,9 +651,13 @@ public class StorageBrowserActivity extends AppCompatActivity {
                                 progressBar.setProgress(0);
                                 dlDialog.dismiss();
                                 runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_dl_completed), Toast.LENGTH_SHORT).show());
+                                updateList();
+                                focusedDevice.requestSetTurboActive(false);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                            if (file.delete())
+                                runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, String.format(getResources().getString(R.string.str_incompletely_file_deleted), fileName), Toast.LENGTH_SHORT).show());
                         } finally {
                             inputStream.close();
                         }
@@ -680,7 +668,6 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     Log.e("dlFile", "File '" + dlInfo.FileName + "' download error!");
                 }
             }
-
         }
     }
 
@@ -727,15 +714,16 @@ public class StorageBrowserActivity extends AppCompatActivity {
         synchronized (calls) {
             for (Iterator<Call> iterator = calls.iterator(); iterator.hasNext(); ) {
                 Call call = iterator.next();
-                if (call != null)
-                    call.cancel();
+                if (call != null) call.cancel();
 
                 iterator.remove();
             }
         }
 
-        if (dlDialog != null)
-            dlDialog.dismiss();
+        if (dlDialog != null) dlDialog.dismiss();
+
+        updateList();
+        focusedDevice.requestSetTurboActive(false);
     }
 
     final ProgressListener progressListener = (bytesRead, contentLength, done) -> {
@@ -746,8 +734,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
     };
 
     private void deleteFile(int pos) {
-        if (isPlaying())
-            player.stop();
+        if (isPlaying()) player.stop();
 
         GoMediaFile goMediaFile = goMediaFiles.get(pos);
 
@@ -792,9 +779,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
         for (int i = 0; i < fileDelCmds.size(); i++) {
             String fileDelCmd = fileDelCmds.get(i);
 
-            Request request = new Request.Builder()
-                    .url(fileDelCmd)
-                    .build();
+            Request request = new Request.Builder().url(fileDelCmd).build();
 
             int finalI = i;
             client.newCall(request).enqueue(new Callback() {
@@ -825,6 +810,14 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private void updateList() {
         runOnUiThread(() -> {
             ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>(goMediaFiles);
+
+            for (GoMediaFile file : _goMediaFiles) {
+                String fileName = file.fileName;
+                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/GoEasyPro");
+                File testFile = new File(dir, fileName);
+                file.alreadyDownloaded = dir.exists() && testFile.exists();
+            }
+
             fileListAdapter.setNotifyOnChange(false);
             fileListAdapter.clear();
             fileListAdapter.addAll(_goMediaFiles);
@@ -887,17 +880,11 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Player
     private void createPlayer() {
-        DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
-                .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(minBufferMs, 30000, bufferForPlaybackMs, bufferForPlaybackAfterRebufferMs)
-                .build();
+        DefaultLoadControl loadControl = new DefaultLoadControl.Builder().setPrioritizeTimeOverSizeThresholds(true).setBufferDurationsMs(minBufferMs, 30000, bufferForPlaybackMs, bufferForPlaybackAfterRebufferMs).build();
 
         TrackSelector trackSelector = new DefaultTrackSelector(this);
 
-        player = new ExoPlayer.Builder(this)
-                .setTrackSelector(trackSelector)
-                .setLoadControl(loadControl)
-                .build();
+        player = new ExoPlayer.Builder(this).setTrackSelector(trackSelector).setLoadControl(loadControl).build();
 
         playerView.setPlayer(player);
         player.addListener(playerListener);
@@ -926,8 +913,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     }
                     break;
                 case Player.STATE_ENDED:
-                    if (isFullscreen)
-                        disableFullscreen();
+                    if (isFullscreen) disableFullscreen();
                     break;
             }
         }
@@ -950,14 +936,12 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Permissions
     private boolean hasExtStoragePermissions() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2)
-            return true;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) return true;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q)
             return ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
-        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestIOPermissions() {

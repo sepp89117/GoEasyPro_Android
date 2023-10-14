@@ -1,8 +1,5 @@
 package com.sepp89117.goeasypro_android;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -11,6 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.sepp89117.goeasypro_android.adapters.GoSettingListAdapter;
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
+import com.sepp89117.goeasypro_android.gopro.GoSetting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,6 +60,13 @@ public class GoSettingsActivity extends AppCompatActivity {
             updateList();
             newSetAlert.dismiss();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ((MyApplication) this.getApplication()).resetIsAppPaused();
     }
 
     @Override

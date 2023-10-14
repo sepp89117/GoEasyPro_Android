@@ -120,10 +120,6 @@
                 android:icon="@drawable/radar_off_symbol"
                 android:title="@string/str_disable_localization" />
             <item
-                android:id="@+id/set_date_time"
-                android:icon="@drawable/clock_symbol"
-                android:title="@string/str_set_date_time" />
-            <item
                 android:id="@+id/put_sleep"
                 android:icon="@drawable/sleep_symbol"
                 android:title="@string/str_put_to_sleep" />
@@ -176,6 +172,10 @@
         android:title="@string/str_device_settings" >
 
         <menu>
+            <item
+                android:id="@+id/set_date_time"
+                android:icon="@drawable/clock_symbol"
+                android:title="@string/str_set_date_time" />
             <item
                 android:id="@+id/dev_settings"
                 android:icon="@drawable/settings_symbol"

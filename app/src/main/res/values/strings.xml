@@ -33,7 +33,7 @@
     <string name="str_Ultra_Slo_Mo">Ultra Slo-Mo</string>
     <string name="str_Basic">Basic</string>
     <string name="str_Water">Water</string>
-    <string name="str_Indoor">Indoor</string>
+    <string name="str_Custom">Custom</string>
     <string name="str_Video">Video</string>
     <string name="str_Photo">Photo</string>
     <string name="str_Live_Burst">Live Burst</string>
@@ -50,6 +50,9 @@
     <string name="str_Max_Video">Max Video</string>
     <string name="str_Max_Photo">Max Photo</string>
     <string name="str_Max_Time_Warp">Max Time Warp</string>
+    <string name="str_HQ">Highest Quality</string>
+    <string name="str_SQ">Standard Quality</string>
+    <string name="str_BQ">Basic Quality</string>
     <string name="str_Multishot">Multishot</string>
     <string name="str_Broadcast">Broadcast</string>
     <string name="str_Playback">Playback</string>
@@ -67,6 +70,7 @@
     <string name="str_Webcam">Webcam</string>
 
     <!-- Toasts -->
+    <string name="str_cam_disconnected">Camera %1$s disconnected</string>
     <string name="str_gatt_connect_problem">There was a problem connecting the BLE gatt.</string>
     <string name="str_get_ble_services_problem">There was a problem getting BLE services.</string>
     <string name="str_connect_cam_problem">There is a problem connecting to the camera %1$s! Please try again.</string>
@@ -97,6 +101,9 @@
     <string name="str_no_available_options">This camera does not provide the available options for the settings.</string>
     <string name="str_set_dt_success">Date/Time has been set successfully</string>
     <string name="str_set_dt_not_success">Date/Time has not been set!</string>
+    <string name="str_new_fw_available">"New Firmware for %1$s available! Update with Quik-App"</string>
+    <string name="str_incompletely_file_deleted">"Incompletely downloaded file %1$s deleted."</string>
+    <string name="str_clock_is_wrong">"The clock in %1$s is incorrect and will be corrected!"</string>
 
     <!-- Alerts -->
     <string name="str_enabled_auto_off_title">\'Auto Off\' is enabled!</string>
