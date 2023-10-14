@@ -43,7 +43,7 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 </ul>
 
 ## Hardware and software requirements
-- Supported Android versions: 8.1 (O_MR1; API Level 27) to 13 (TIRAMISU; API Level 33) (currently not all tested)
+- Supported Android versions: 8.1 (O_MR1; API Level 27) to 14 (TIRAMISU; API Level 34) (currently not all tested)
 - Android device with Bluetooth support
 - Android device with WiFi support; only needed for preview stream and media browsing
 
@@ -64,7 +64,7 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 - Xiaomi Redmi Note 11s (Android 11)
 - Samsung Tab S4 (Android 10)
 - Gigaset GS270 plus (Android 8.1)
-- with Hero5 Black, Hero8 Black and Hero10 Black only!<br>
+- with Hero5 Black, Hero8 Black, Hero10 Black and Hero 12 only!<br>
 <br><br>
 I hope you can help to get the app running safely on other smartphones too!
 Feel free to create an issue!
