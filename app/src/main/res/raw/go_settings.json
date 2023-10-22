@@ -621,6 +621,7 @@
     "display_name": "Auto Off",
     "options": {
       "0": "NEVER",
+      "1": "1 Min",
       "4": "5 MIN",
       "6": "15 MIN",
       "7": "30 MIN"
@@ -1130,7 +1131,9 @@
     "display_name": "Aspect Ratio",
     "options": {
       "0": "4:3",
-      "1": "16:9"
+      "1": "16:9",
+      "3": "8:7",
+      "4": "9:16"
     }
   },
   "109": {
@@ -1192,6 +1195,7 @@
       "0": "GoPro",
       "1": "Flat",
       "2": "Natural",
+      "3": "Log",
       "100": "Vibrant"
     }
   },
@@ -1228,7 +1232,8 @@
       "7": "Max SuperView",
       "8": "Linear + Horizon Leveling",
       "9": "HyperView",
-      "10": "Linear + Horizon Lock"
+      "10": "Linear + Horizon Lock",
+      "11": "Max HyperView"
     }
   },
   "122": {
@@ -1336,6 +1341,8 @@
       "25": "Speed Ramp",
       "28": "10 Bit",
       "30": "Trails Length",
+      "31": "Interval",
+      "33": "Settings",
       "100": "Wind",
       "102": "Duration",
       "103": "Speed Ramp",
@@ -1343,7 +1350,8 @@
       "105": "HindSight",
       "106": "Media Mod",
       "107": "Horizon Lock",
-      "109": "Looping Interval"
+      "109": "Looping Interval",
+      "111": "Shutter"
     }
   },
   "130": {
@@ -1376,6 +1384,8 @@
       "25": "Speed Ramp",
       "28": "10 Bit",
       "30": "Trails Length",
+      "31": "Interval",
+      "33": "Settings",
       "100": "Wind",
       "102": "Duration",
       "103": "Speed Ramp",
@@ -1383,7 +1393,8 @@
       "105": "HindSight",
       "106": "Media Mod",
       "107": "Horizon Lock",
-      "109": "Looping Interval"
+      "109": "Looping Interval",
+      "111": "Shutter"
     }
   },
   "131": {
@@ -1416,6 +1427,8 @@
       "25": "Speed Ramp",
       "28": "10 Bit",
       "30": "Trails Length",
+      "31": "Interval",
+      "33": "Settings",
       "100": "Wind",
       "102": "Duration",
       "103": "Speed Ramp",
@@ -1423,7 +1436,8 @@
       "105": "HindSight",
       "106": "Media Mod",
       "107": "Horizon Lock",
-      "109": "Looping Interval"
+      "109": "Looping Interval",
+      "111": "Shutter"
     }
   },
   "132": {
@@ -1456,6 +1470,8 @@
       "25": "Speed Ramp",
       "28": "10 Bit",
       "30": "Trails Length",
+      "31": "Interval",
+      "33": "Settings",
       "100": "Wind",
       "102": "Duration",
       "103": "Speed Ramp",
@@ -1463,7 +1479,8 @@
       "105": "HindSight",
       "106": "Media Mod",
       "107": "Horizon Lock",
-      "109": "Looping Interval"
+      "109": "Looping Interval",
+      "111": "Shutter"
     }
   },
   "133": {
@@ -1563,7 +1580,10 @@
       "24": "Time Warp Video",
       "25": "Live Burst",
       "26": "Night Lapse Video",
-      "27": "Slo-Mo"
+      "27": "Slo-Mo",
+      "29": "Star Trail",
+      "30": "Light Painting",
+      "31": "Vehicle Lights"
     }
   },
   "145": {
@@ -1782,6 +1802,7 @@
     "options": {
       "1": "Front",
       "2": "Back",
+      "4": "Front + Back",
       "100": "Camera Mics"
     }
   },
@@ -1823,6 +1844,36 @@
       "5": "Line In"
     }
   },
+  "171": {
+    "display_name": "Interval",
+    "options": {
+      "0": "Off",
+      "2": "0.5s",
+      "3": "1s",
+      "4": "2s",
+      "5": "5s",
+      "6": "10s",
+      "7": "30s",
+      "8": "60s",
+      "9": "120s",
+      "10": "3s"
+    }
+  },
+  "172": {
+    "display_name": "Duration",
+    "options": {
+      "0": "Off",
+      "1": "15 Seconds",
+      "2": "30 Seconds",
+      "3": "1 Minute",
+      "4": "5 Minutes",
+      "5": "15 Minutes",
+      "6": "30 Minutes",
+      "7": "1 Hour",
+      "8": "2 Hours",
+      "9": "3 Hours"
+    }
+  },
   "173": {
     "display_name": "Video Performance Modes",
     "options": {
@@ -1861,7 +1912,37 @@
       "10": "1x Speed / Low Light",
       "11": "4x Super Slo-Mo",
       "12": "2x Slo-Mo",
-      "13": "1x Speed / Low Light"
+      "13": "1x Speed / Low Light",
+      "16": "8x Ultra Slo-Mo",
+      "17": "4x Super Slo-Mo",
+      "18": "2x Slo-Mo",
+      "19": "1x Speed / Low Light",
+      "20": "8x Ultra Slo-Mo",
+      "21": "4x Super Slo-Mo",
+      "22": "2x Slo-Mo",
+      "23": "1x Speed / Low Light",
+      "24": "2x Slo-Mo",
+      "26": "2x Slo-Mo",
+      "28": "1x Speed / Low Light",
+      "29": "1x Speed / Low Light",
+      "30": "2x Slo-Mo",
+      "31": "2x Slo-Mo",
+      "32": "1x Speed / Low Light",
+      "33": "1x Speed / Low Light",
+      "34": "2x Slo-Mo",
+      "35": "2x Slo-Mo",
+      "36": "1x Speed / Low Light",
+      "37": "1x Speed / Low Light",
+      "38": "1x Speed / Low Light",
+      "39": "1x Speed / Low Light",
+      "40": "2x Slo-Mo",
+      "41": "2x Slo-Mo",
+      "42": "2x Slo-Mo",
+      "43": "2x Slo-Mo",
+      "44": "1x Speed / Low Light",
+      "45": "1x Speed / Low Light",
+      "46": "1x Speed / Low Light",
+      "47": "1x Speed / Low Light"
     }
   },
   "177": {
@@ -1893,6 +1974,103 @@
     "options": {
       "0": "Highest Quality",
       "1": "Extended Battery"
+    }
+  },
+  "182": {
+    "display_name": "Bit Rate",
+    "options": {
+      "0": "Standard",
+      "1": "High"
+    }
+  },
+  "183": {
+    "display_name": "Bit Depth",
+    "options": {
+      "0": "8-Bit",
+      "2": "10-Bit"
+    }
+  },
+  "184": {
+    "display_name": "Profiles",
+    "options": {
+      "0": "Standard",
+      "1": "HDR",
+      "2": "Log"
+    }
+  },
+  "185": {
+    "display_name": "Aspect Ratio",
+    "options": {
+      "0": "Widescreen",
+      "1": "Mobile",
+      "2": "Universal"
+    }
+  },
+  "186": {
+    "display_name": "Video Mode",
+    "options": {
+      "0": "Highest Quality",
+      "1": "Standard Quality",
+      "2": "Basic Quality"
+    }
+  },
+  "187": {
+    "display_name": "Lapse Mode",
+    "options": {
+      "0": "TimeWarp",
+      "1": "Star Trails",
+      "2": "Light Painting",
+      "3": "Vehicle Lights",
+      "4": "Max TimeWarp",
+      "5": "Max Star Trails",
+      "6": "Max Light Painting",
+      "7": "Max Vehicle Lights"
+    }
+  },
+  "188": {
+    "display_name": "Aspect Ratio",
+    "options": {
+      "0": "Widescreen",
+      "1": "Mobile",
+      "2": "Universal"
+    }
+  },
+  "189": {
+    "display_name": "Max Lens Mod",
+    "options": {
+      "0": "None",
+      "1": "Max Lens 1.0",
+      "2": "Max Lens 2.0"
+    }
+  },
+  "190": {
+    "display_name": "Max Lens Mod Enable",
+    "options": {
+      "0": "Off",
+      "1": "On"
+    }
+  },
+  "191": {
+    "display_name": "Photo Mode",
+    "options": {
+      "0": "Super Photo",
+      "1": "Night Photo"
+    }
+  },
+  "192": {
+    "display_name": "Aspect Ratio",
+    "options": {
+      "0": "4:3",
+      "1": "16:9",
+      "3": "8:7"
+    }
+  },
+  "193": {
+    "display_name": "Framing",
+    "options": {
+      "0": "Widescreen",
+      "1": "Vertical",
+      "2": "Full Frame"
     }
   }
 }

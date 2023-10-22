@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sepp89117.goeasypro_android.adapters.GoSettingListAdapter;
+import com.sepp89117.goeasypro_android.adapters.GoSettingsExpandableListAdapter;
 import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 import com.sepp89117.goeasypro_android.gopro.GoSetting;
 
@@ -22,9 +21,9 @@ import java.util.Map;
 
 public class GoSettingsActivity extends AppCompatActivity {
     private GoProDevice focusedDevice;
-    private GoSettingListAdapter listAdapter;
-    ArrayList<GoSetting> goSettings = new ArrayList<>();
-    private int clickedSettingIndex = -1;
+    private GoSettingsExpandableListAdapter expListAdapter;
+    private ArrayList<GoSetting> goSettings = new ArrayList<>();
+    private GoSetting clickedSetting;
     private AlertDialog newSetAlert;
 
     @Override
@@ -47,13 +46,16 @@ public class GoSettingsActivity extends AppCompatActivity {
         devName.setText(focusedDevice.displayName);
 
         goSettings = focusedDevice.goSettings;
+        expListAdapter = new GoSettingsExpandableListAdapter(this, goSettings);
 
-        listAdapter = new GoSettingListAdapter(goSettings, this);
-
-        ListView listView = findViewById(R.id.settings_list);
-        listView.setAdapter(listAdapter);
+        ExpandableListView listView = findViewById(R.id.settings_list);
+        listView.setAdapter(expListAdapter);
         registerForContextMenu(listView);
-        listView.setOnItemClickListener((parent, view, position, id) -> view.showContextMenu());
+        listView.setOnChildClickListener((parent, view, groupPosition, childPosition, id) -> {
+            clickedSetting = (GoSetting) expListAdapter.getChild(groupPosition, childPosition);
+            view.showContextMenu();
+            return true;
+        });
 
         focusedDevice.getSettingsChanges(() -> {
             goSettings = focusedDevice.goSettings;
@@ -72,13 +74,13 @@ public class GoSettingsActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        GoSetting clickedSetting = goSettings.get(info.position);
+        if(clickedSetting == null)
+            return;
+
         int settingId = clickedSetting.getSettingId();
         String settingName = clickedSetting.getSettingName();
         Map<Integer, String> availableOptions = new HashMap<>(clickedSetting.getAvailableOptions());
-        clickedSettingIndex = info.position;
 
         menu.setHeaderTitle(settingName);
 
@@ -95,21 +97,21 @@ public class GoSettingsActivity extends AppCompatActivity {
         int settingId = item.getGroupId();
         int selectedOptionId = item.getItemId();
 
-        if (goSettings.get(clickedSettingIndex).getCurrentOptionId() != selectedOptionId) {
+        if (clickedSetting.getCurrentOptionId() != selectedOptionId) {
             focusedDevice.setSetting(settingId, selectedOptionId);
 
             newSetAlert.show();
         }
+        clickedSetting = null;
         return true;
     }
 
     private void updateList() {
         runOnUiThread(() -> {
             ArrayList<GoSetting> _goSettings = new ArrayList<>(goSettings);
-            listAdapter.setNotifyOnChange(false);
-            listAdapter.clear();
-            listAdapter.addAll(_goSettings);
-            listAdapter.notifyDataSetChanged();
+            expListAdapter.setGoSettings(_goSettings);
+            expListAdapter.notifyDataSetChanged();
+
             goSettings = new ArrayList<>(_goSettings);
         });
     }

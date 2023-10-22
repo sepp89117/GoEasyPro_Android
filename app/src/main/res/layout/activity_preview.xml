@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkgray"
+    android:background="@color/dark_gray"
     android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
     tools:context=".PreviewActivity">
 
@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:background="@color/darkgray"
-        android:backgroundTint="@color/darkgray"
+        android:background="@color/dark_gray"
+        android:backgroundTint="@color/dark_gray"
         android:keepScreenOn="true"
         android:visibility="visible"
         app:resize_mode="fit"

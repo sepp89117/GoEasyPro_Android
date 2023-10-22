@@ -10,8 +10,9 @@
 
     <color name="list_bg">#2f2f2f</color>
 
-    <color name="darkgray">#1c1c1c</color>
+    <color name="dark_gray">#1c1c1c</color>
     <color name="gray">#4d4d4d</color>
     <color name="blue">#005eab</color>
+    <color name="dark_blue">#002e54</color>
     <color name="light_blue">#009fe0</color>
 </resources>

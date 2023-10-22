@@ -25,11 +25,11 @@ public class GoPreset {
         this.context = context;
 
         this.id = id;
-        putValuesToMap();
+        putValuesToPresetsMap();
         this.title = presets.getOrDefault(this.id, getStr(R.string.str_Custom) + " " + this.id);
     }
 
-    private void putValuesToMap() {
+    private void putValuesToPresetsMap() {
         presets.put(-2, "");
         presets.put(-1, getStr(R.string.str_NC));
         presets.put(0x00000000, getStr(R.string.str_Standard));

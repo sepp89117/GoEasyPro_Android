@@ -59,6 +59,10 @@ public class GoMode {
         modes.put(25, getStr(R.string.str_Live_Burst));
         modes.put(26, getStr(R.string.str_Night_Lapse_Video));
         modes.put(27, getStr(R.string.str_Slo_Mo));
+        modes.put(28, getStr(R.string.str_Idle));
+        modes.put(29, getStr(R.string.str_Star_Trail));
+        modes.put(30, getStr(R.string.str_Light_Painting));
+        modes.put(31, getStr(R.string.str_Light_Trail));
     }
 
     private String getStr(int resId) {

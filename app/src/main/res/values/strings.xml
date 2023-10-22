@@ -6,8 +6,6 @@
     <string name="str_NA">NA</string><!-- not available -->
     <string name="str_UNK">UNK</string><!-- unknown -->
 
-    <string name="str_Preset">Preset</string>
-    <string name="str_Mode">Mode</string>
 
     <!-- views -->
     <string name="str_Content_from">Content from \'%1$s\'</string>
@@ -26,6 +24,9 @@
     <string name="str_Content">Content</string>
 
     <!-- presets and modes -->
+    <string name="str_not_connected">Not connected</string>
+    <string name="str_Preset">Preset</string>
+    <string name="str_Mode">Mode</string>
     <string name="str_Standard">Standard</string>
     <string name="str_Activity">Activity</string>
     <string name="str_Cinematic">Cinematic</string>
@@ -47,6 +48,10 @@
     <string name="str_Night_Lapse">Night Lapse</string>
     <string name="str_Night_Lapse_Video">Night Lapse Video</string>
     <string name="str_Night_Lapse_Photo">Night Lapse Photo</string>
+    <string name="str_Idle">Idle</string>
+    <string name="str_Star_Trail">Star Trail</string>
+    <string name="str_Light_Painting">Light Painting</string>
+    <string name="str_Light_Trail">Light Trail</string>
     <string name="str_Max_Video">Max Video</string>
     <string name="str_Max_Photo">Max Photo</string>
     <string name="str_Max_Time_Warp">Max Time Warp</string>
@@ -129,7 +134,7 @@
     <string name="str_connecting_to">Connecting to %1$s</string>
     <string name="str_wait_wifi_con">Please wait while the WiFi connection is established!\nIf the GoPro has just been started, this can take a while!</string>
     <string name="str_Rename">Rename \'%1$s\'</string>
-    <string name="str_enter_new_name">Enter a new name for device \'%1$s\'\n\nMin. 1 and max. 10 characters\n</string>
+    <string name="str_enter_new_name">Enter a new name for device \'%1$s\'\n\nMin. 1 and max. 14 characters\n</string>
     <string name="str_Downloading">Downloading...</string>
     <string name="str_wait_dl_complete">Please wait until the download is complete!</string>
     <string name="str_wait_setting_set">Please wait until the new setting has been made!</string>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkgray"
+    android:background="@color/dark_gray"
     tools:context=".GoSettingsActivity">
 
     <LinearLayout
@@ -38,9 +38,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <ListView
+        <ExpandableListView
             android:id="@+id/settings_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

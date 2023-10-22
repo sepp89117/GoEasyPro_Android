@@ -1,6 +1,9 @@
 package com.sepp89117.goeasypro_android.gopro;
 
+import android.app.Application;
 import android.util.Pair;
+
+import com.sepp89117.goeasypro_android.MyApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,20 +14,67 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class GoSetting {
+    private final Map<String, int[]> _settingGroups = new HashMap<>();
     private JSONObject _allOptions = null;
     private final Map<Integer, String> _availableOptionsMap = new HashMap<>();
     private final int _settingID;
-    private int _currentOptionId;
+    private final int _currentOptionId;
     private String _settingName = "unknown setting";
     private String _currentOptionName = "unknown option";
+    private String _groupName = "Others";
     private boolean _isValid = false;
 
-    public GoSetting(int settingID, int settingValue, JSONObject settingsValues, ArrayList<Pair<Integer, Integer>> availableSettingsOptions) {
+    private final Application _application;
+    private final JSONObject _settingsValues;
+
+    public GoSetting(int settingID, int settingValue, Application application) {
+        _application = application;
+        _settingsValues = ((MyApplication) _application).getSettingsValues();
+
+        putSettingsToGroups();
+
         _settingID = settingID;
         _currentOptionId = settingValue;
 
+        setGroupName();
+
         try {
-            JSONObject setting = settingsValues.getJSONObject(String.valueOf(_settingID));
+            JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
+            _settingName = setting.getString("display_name");
+            _allOptions = setting.getJSONObject("options");
+
+            Iterator<String> keys = _allOptions.keys();
+            while (keys.hasNext()) {
+                int _optionId = Integer.parseInt(keys.next());
+                String _optionValue = _allOptions.getString(String.valueOf(_optionId));
+                if (_currentOptionId == _optionId) {
+                    _availableOptionsMap.put(_optionId, _optionValue);
+                    break;
+                }
+            }
+
+            setCurrentOptionName();
+
+            if (_availableOptionsMap.size() > 0) {
+                _isValid = true;
+            }
+        } catch (JSONException ignored) {
+        }
+    }
+
+    public GoSetting(Application application, int settingID, int settingValue, ArrayList<Pair<Integer, Integer>> availableSettingsOptions) {
+        _application = application;
+        _settingsValues = ((MyApplication) _application).getSettingsValues();
+
+        putSettingsToGroups();
+
+        _settingID = settingID;
+        _currentOptionId = settingValue;
+
+        setGroupName();
+
+        try {
+            JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
             _settingName = setting.getString("display_name");
             _allOptions = setting.getJSONObject("options");
 
@@ -33,7 +83,7 @@ public class GoSetting {
                 int _optionId = Integer.parseInt(keys.next());
                 String _optionValue = _allOptions.getString(String.valueOf(_optionId));
 
-                if(availableSettingsOptions != null && availableSettingsOptions.size() > 0) {
+                if (availableSettingsOptions != null && availableSettingsOptions.size() > 0) {
                     //Test if the option is supported by the current GoPro model
                     for (Pair<Integer, Integer> settingOption : availableSettingsOptions) {
                         int settingId = settingOption.first;
@@ -49,13 +99,110 @@ public class GoSetting {
                 }
             }
 
-            _currentOptionName = _allOptions.getString(String.valueOf(_currentOptionId));
+            setCurrentOptionName();
 
-            if(_availableOptionsMap.size() > 0) {
+            if (_availableOptionsMap.size() > 0) {
                 _isValid = true;
             }
         } catch (JSONException ignored) {
         }
+    }
+
+    private void setGroupName() {
+        for (String group : _settingGroups.keySet()) {
+            int[] ids = _settingGroups.get(group);
+            for (int id : ids) {
+                if (id == _settingID) {
+                    _groupName = group;
+                    return;
+                }
+            }
+        }
+    }
+
+    private void putSettingsToGroups() {
+        _settingGroups.put("General Device", new int[]{
+                84 /* Language */,
+                175 /* Controls */,
+                87 /* Beeps */,
+                54 /* Quick Capture */,
+                161 /* Default Preset */,
+                59 /* Auto Off */,
+                91 /* LEDs */,
+                178 /* Wi-fi Band */,
+                103 /* Auto Lock */
+        });
+        _settingGroups.put("General Video", new int[]{
+                182 /* Bit Rate */,
+                183 /* Bit Depth */,
+                134 /* Anti-Flicker */
+        });
+        _settingGroups.put("Current Preset", new int[]{
+                2 /* Resolution */,
+                3 /* Frames Per Second */,
+                121 /* Lens */,
+                122 /* Lens */,
+                123 /* Lens */,
+                165 /* Horizon Lock */,
+                166 /* Horizon Lock */,
+                135 /* HyperSmooth */,
+                148 /* Max HyperSmooth */,
+                184 /* Profiles (HDR...) */,
+                185 /* Aspect Ratio */,
+                186 /* Video Mode */,
+                187 /* Lapse Mode */,
+                188 /* Aspect Ratio */,
+                189 /* Max Lens Mod */,
+                190 /* Max Lens Mod Enable */,
+                191 /* Photo Mode */,
+                192 /* Aspect Ratio */,
+                193 /* Framing */
+        });
+        _settingGroups.put("Voice Control", new int[]{86, 85});
+        _settingGroups.put("Displays", new int[]{
+                112 /* Orientation */,
+                159 /* Screen Saver Rear */,
+                158 /* Screen Saver Front */,
+                88 /* LCD Brightness */,
+                154 /* Front LCD Mode */
+        });
+        _settingGroups.put("Shortcuts", new int[]{129, 130, 131, 132});
+        _settingGroups.put("Capture", new int[]{
+                179 /* Trail Length */,
+                125 /* Output */,
+                126 /* Output */,
+                171 /* Interval */,
+                32 /* Interval */,
+                30 /* Interval */,
+                6 /* Interval */,
+                5 /* Interval */,
+                19 /* Shutter */,
+                31 /* Shutter */,
+                168 /* Scheduled Capture */,
+                172 /* Duration */,
+                157 /* Duration */,
+                156 /* Duration */,
+                167 /* HindSight */,
+                105 /* Timer */
+        });
+        _settingGroups.put("Protune", new int[]{
+                114 /* Protune on off */,
+                145 /* Shutter */,
+                146 /* Shutter */,
+                118 /* EV Comp */,
+                115 /* White Balance */,
+                102 /* ISO Min */,
+                76 /* ISO Min */,
+                75 /* ISO Min */,
+                37 /* ISO Max */,
+                24 /* ISO Max */,
+                13 /* ISO Max */,
+                117 /* Sharpness */,
+                116 /* Color */,
+                139 /* RAW Audio */,
+                149 /* Wind */,
+                164 /* Media Mod */,
+        });
     }
 
     public String getSettingName() {
@@ -74,13 +221,15 @@ public class GoSetting {
         return _currentOptionId;
     }
 
-    public void setCurrentOption(int optionId) {
-        _currentOptionId = optionId;
+    public String getGroupName() {
+        return _groupName;
+    }
+
+    private void setCurrentOptionName() {
         try {
             _currentOptionName = _allOptions.getString(String.valueOf(_currentOptionId));
         } catch (JSONException e) {
             _currentOptionName = "unknown option";
-            e.printStackTrace();
         }
     }
 

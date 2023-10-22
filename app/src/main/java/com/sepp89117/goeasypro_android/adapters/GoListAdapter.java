@@ -68,6 +68,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         ImageView shutter_symbol;
         ImageView hot_view;
         ImageView cold_view;
+        ImageView mode_symbol;
     }
 
     @Override
@@ -92,6 +93,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             mViewHolder.shutter_symbol = convertView.findViewById(R.id.shutter_symbol);
             mViewHolder.hot_view = convertView.findViewById(R.id.hot_view);
             mViewHolder.cold_view = convertView.findViewById(R.id.cold_view);
+            mViewHolder.mode_symbol = convertView.findViewById(R.id.mode_symbol);
 
             convertView.setTag(mViewHolder);
         } else {
@@ -144,8 +146,30 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             mViewHolder.rssi.setText(String.valueOf(goProDevice.btRssi));
             Locale locale = context.getResources().getConfiguration().getLocales().get(0);
             mViewHolder.battery.setText(String.format(locale, "%d%%", goProDevice.remainingBatteryPercent));
-            mViewHolder.preset.setText(goProDevice.preset.getTitle());
-            mViewHolder.mode.setText(goProDevice.mode.getTitle());
+
+            if(goProDevice.hasProtoPresets() && goProDevice.protoPreset != null) {
+                String modeTitle = goProDevice.protoPreset.getModeTitle();
+                mViewHolder.mode.setText(goProDevice.protoPreset.getPresetTitle());
+
+                mViewHolder.preset.setText(goProDevice.protoPreset.getSettingsString());
+
+                mViewHolder.mode_symbol.setVisibility(View.VISIBLE);
+                if(modeTitle.contains("Video")) {
+                    mViewHolder.mode_symbol.setImageResource(R.drawable.mode_video_symbol);
+                } else if(modeTitle.contains("Photo")) {
+                    mViewHolder.mode_symbol.setImageResource(R.drawable.mode_photo_symbol);
+                } else if(modeTitle.contains("Lapse")) {
+                    mViewHolder.mode_symbol.setImageResource(R.drawable.mode_timelapse_symbol);
+                } else {
+                    // Unknown Mode
+                    mViewHolder.mode_symbol.setVisibility(View.GONE);
+                }
+            } else {
+                mViewHolder.preset.setText(goProDevice.preset.getTitle());
+                mViewHolder.mode.setText(goProDevice.mode.getTitle());
+            }
+
+
             mViewHolder.memory.setText(goProDevice.remainingMemory);
 
             if (goProDevice.remainingBatteryPercent > 30) {
@@ -164,11 +188,11 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
                 mViewHolder.bt_symbol.setColorFilter(Color.GREEN); // good connection (RSSI > -70)
             }
         } else {
-            mViewHolder.rssi.setText(R.string.str_NC);
-            mViewHolder.battery.setText(R.string.str_NC);
-            mViewHolder.preset.setText(R.string.str_Preset);
-            mViewHolder.mode.setText(R.string.str_Mode);
+            mViewHolder.mode.setText(R.string.str_not_connected);
+            mViewHolder.preset.setText("");
             mViewHolder.memory.setText(R.string.str_NC);
+            mViewHolder.battery.setText(R.string.str_NC);
+            mViewHolder.rssi.setText(R.string.str_NC);
 
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {
                 mViewHolder.name.setTextColor(Color.RED);
