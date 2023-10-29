@@ -1,38 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <PreferenceCategory app:title="App Settings">
         <SwitchPreference
             android:defaultValue="true"
             android:key="check_app_update"
-            android:title="Check for available update"
-            app:summary="When you start the app, it checks whether a new version is available and, if necessary, asks whether you want to open the download page." />
+            android:title="@string/str_Check_update"
+            app:summary="@string/str_Check_update_desc" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="auto_connect"
-            android:title="Automatically connect to all available cameras"
-            app:summary="As soon as the app has been started, the availability of the listed cameras is continuously checked. If a camera becomes available, it will be connected automatically. Sleeping cameras may turn on during this process." />
+            android:title="@string/str_Automatically_connect"
+            app:summary="@string/str_Automatically_connect_desc" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Cameras">
         <SwitchPreference
             android:defaultValue="false"
             android:key="ignore_auto_off"
-            android:title="Ignore the cameras 'Auto Off' setting"
-            app:summary="Models older than Hero9 cannot be kept alive through the app. If the &quot;Auto Off&quot; setting is not set to &quot;NEVER&quot;, you will get a notification if it should not be ignored." />
+            android:title="@string/str_Ignore_auto_off"
+            app:summary="@string/str_Ignore_auto_off_desc" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="keep_alive_when_paused"
-            android:title="Keep camera alive even when app is paused"
-            app:summary="Keeps the camera alive even when the app is paused if the camera supports the keepAlive command. If disabled, the camera will turn off after the programmed Auto Off time." />
+            android:title="@string/str_keep_alive_at_pause"
+            app:summary="@string/str_keep_alive_at_pause_desc" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="check_firmware"
-            android:title="Check for firmware updates"
-            app:summary="Checks the camera's firmware once it is connected. If new firmware is available, a message will be displayed." />
+            android:title="@string/str_Check_firmware"
+            app:summary="@string/str_Check_firmware_desc" />
     </PreferenceCategory>
 
 </PreferenceScreen>

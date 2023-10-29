@@ -44,15 +44,15 @@ public class GoSettingsExpandableListAdapter extends BaseExpandableListAdapter {
 
         // List from GoSettings.putSettingsToGroups()
         ArrayList<String> desiredOrder = new ArrayList<String>();
-        desiredOrder.add("Current Preset");
-        desiredOrder.add("Capture");
+        desiredOrder.add(context.getResources().getString(R.string.str_Current_Preset));
+        desiredOrder.add(context.getResources().getString(R.string.str_Capture));
         desiredOrder.add("Protune");
-        desiredOrder.add("Shortcuts");
-        desiredOrder.add("General Device");
-        desiredOrder.add("General Video");
-        desiredOrder.add("Voice Control");
-        desiredOrder.add("Displays");
-        desiredOrder.add("Others");
+        desiredOrder.add(context.getResources().getString(R.string.str_Shortcuts));
+        desiredOrder.add(context.getResources().getString(R.string.str_general_device));
+        desiredOrder.add(context.getResources().getString(R.string.str_general_video));
+        desiredOrder.add(context.getResources().getString(R.string.str_voice_control));
+        desiredOrder.add(context.getResources().getString(R.string.str_Displays));
+        desiredOrder.add(context.getResources().getString(R.string.str_Others));
 
         for (String groupName : desiredOrder) {
             for (GoSetting goSetting : goSettings) {

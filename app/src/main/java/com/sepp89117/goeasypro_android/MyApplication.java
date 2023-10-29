@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class MyApplication extends Application {
     @Override
-    public void onCreate () {
+    public void onCreate() {
         super.onCreate();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -91,17 +91,21 @@ public class MyApplication extends Application {
     }
 
     private BluetoothAdapter _bluetoothAdapter;
+
     public BluetoothAdapter getBluetoothAdapter() {
         return _bluetoothAdapter;
     }
+
     public void setBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
         _bluetoothAdapter = bluetoothAdapter;
     }
 
     private ArrayList<GoProDevice> _goProDevices = new ArrayList<>();
+
     public ArrayList<GoProDevice> getGoProDevices() {
         return _goProDevices;
     }
+
     public void setGoProDevices(ArrayList<GoProDevice> goProDevices) {
         _goProDevices = goProDevices;
     }
@@ -119,10 +123,10 @@ public class MyApplication extends Application {
     }
 
     public static String getReadableFileSize(long size) {
-        if(size <= 0) return "0";
-        final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
-        int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+        if (size <= 0) return "0";
+        final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
     private GoProDevice _focusedDevice = null;
@@ -136,9 +140,11 @@ public class MyApplication extends Application {
     }
 
     private ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>();
+
     public ArrayList<GoMediaFile> getGoMediaFiles() {
         return _goMediaFiles;
     }
+
     public void setGoMediaFiles(ArrayList<GoMediaFile> goMediaFiles) {
         _goMediaFiles = goMediaFiles;
     }
@@ -146,6 +152,7 @@ public class MyApplication extends Application {
     public JSONObject getSettingsValues() {
         return settingsValues;
     }
+
     private JSONObject settingsValues = null;
 
     private void loadSettingsValuesFromRes() {

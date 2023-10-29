@@ -1,11 +1,21 @@
 <resources>
-    <string name="app_name">GoEasyPro Android</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="app_name" translatable="false">GoEasyPro Android</string>
 
-    <string name="str_NC">NC</string><!-- not connected -->
-    <string name="str_NA">NA</string><!-- not available -->
-    <string name="str_UNK">UNK</string><!-- unknown -->
+    <string name="str_NC" translatable="false">NC</string><!-- not connected -->
+    <string name="str_NA" translatable="false">NA</string><!-- not available -->
+    <string name="str_UNK" translatable="false">UNK</string><!-- unknown -->
 
+    <!-- app settings -->
+    <string name="str_Check_update">Check for available update</string>
+    <string name="str_Check_update_desc">When you start the app, it checks whether a new version is available and, if necessary, asks whether you want to open the download page.</string>
+    <string name="str_Automatically_connect">Automatically connect to all available cameras</string>
+    <string name="str_Automatically_connect_desc">As soon as the app has been started, the availability of the listed cameras is continuously checked. If a camera becomes available, it will be connected automatically. Sleeping cameras may turn on during this process.</string>
+    <string name="str_Ignore_auto_off">Ignore the cameras \'Auto Off\' setting</string>
+    <string name="str_Ignore_auto_off_desc">Models older than Hero9 cannot be kept alive through the app. If the &quot;Auto Off&quot; setting is not set to &quot;NEVER&quot;, you will get a notification if it should not be ignored.</string>
+    <string name="str_keep_alive_at_pause">Keep camera alive even when app is paused</string>
+    <string name="str_keep_alive_at_pause_desc">Keeps the camera alive even when the app is paused if the camera supports the keepAlive command. If disabled, the camera will turn off after the programmed Auto Off time.</string>
+    <string name="str_Check_firmware">Check for firmware updates</string>
+    <string name="str_Check_firmware_desc">Checks the camera\'s firmware once it is connected. If new firmware is available, a message will be displayed.</string>
 
     <!-- views -->
     <string name="str_Content_from">Content from \'%1$s\'</string>
@@ -17,6 +27,8 @@
     <string name="str_Shutter_off">Shutter off</string>
     <string name="str_Sleep">Sleep</string>
     <string name="str_Highlight">Highlight</string>
+    <string name="str_Set_mode">Set mode</string>
+    <string name="str_Set_Preset">Set preset</string>
     <string name="str_BT_dev_list">Bluetooth device list</string>
     <string name="str_click_dev_to_pair">Click on a device to connect/pair</string>
     <string name="str_Scan_again">Scan again</string>
@@ -25,6 +37,7 @@
 
     <!-- presets and modes -->
     <string name="str_not_connected">Not connected</string>
+    <string name="str_connecting">Connecting...</string>
     <string name="str_Preset">Preset</string>
     <string name="str_Mode">Mode</string>
     <string name="str_Standard">Standard</string>
@@ -63,9 +76,9 @@
     <string name="str_Playback">Playback</string>
     <string name="str_Setup">Setup</string>
     <string name="str_FW_Update">FW Update</string>
-    <string name="str_USB_MTP">USB MTP</string>
-    <string name="str_SOS">SOS</string>
-    <string name="str_MEdit">MEdit</string>
+    <string name="str_USB_MTP" translatable="false">USB MTP</string>
+    <string name="str_SOS" translatable="false">SOS</string>
+    <string name="str_MEdit" translatable="false">MEdit</string>
     <string name="str_Calibration">Calibration</string>
     <string name="str_Direct_Offload">Direct Offload</string>
     <string name="str_Video_Photo">Video + Photo</string>
@@ -178,5 +191,12 @@
     <string name="str_try_to_connect">Try to connect</string>
     <string name="str_Download_original">Download original</string>
     <string name="str_Download_lrv">Download LRV</string>
-
+    <string name="str_general_device">General Device</string>
+    <string name="str_general_video">General Video</string>
+    <string name="str_Current_Preset">Current Preset</string>
+    <string name="str_Displays">Displays</string>
+    <string name="str_Shortcuts">Shortcuts</string>
+    <string name="str_Capture">Capture</string>
+    <string name="str_Others">Others</string>
+    <string name="str_voice_control">Voice Control</string>
 </resources>

@@ -62,6 +62,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
@@ -273,9 +274,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
         for (GoMediaFile file : selectedFiles) {
             posList.add(goMediaFiles.indexOf(file));
         }
+        posList.sort(Collections.reverseOrder());
 
         AlertDialog alert = new AlertDialog.Builder(StorageBrowserActivity.this).setTitle(getResources().getString(R.string.str_Delete_file)).setMessage(String.format(getResources().getString(R.string.str_sure_delete), selectedFiles.size() + getResources().getString(R.string._files))).setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> {
-            for (Integer pos : posList) {
+            for (int pos : posList) {
                 deleteFile(pos);
             }
         }).setNegativeButton(getResources().getString(R.string.str_Cancel), null).create();
@@ -465,34 +467,36 @@ public class StorageBrowserActivity extends AppCompatActivity {
             for (int i = 0; i < goMediaFiles.size(); i++) {
                 GoMediaFile file = goMediaFiles.get(i);
                 String tn_url = file.thumbNail_path;
-                final boolean[] gotResponse = {false};
 
                 Request request = new Request.Builder().url(tn_url).build();
                 Log.d("HTTP GET", tn_url);
 
+                final int finalI = i;
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        gotResponse[0] = true;
                         Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' failed!");
                         e.printStackTrace();
+
+                        if (finalI == goMediaFiles.size() - 1)
+                            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
                     }
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) {
-                        gotResponse[0] = true;
                         if (!response.isSuccessful()) {
                             Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' unsuccessful!");
                         } else {
                             file.thumbNail = BitmapFactory.decodeStream(response.body().byteStream());
                         }
+
                         response.close();
+
+                        if (finalI == goMediaFiles.size() - 1)
+                            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
                     }
                 });
-
-                while (!gotResponse[0]) ;
             }
-            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
         }).start();
     }
 
@@ -736,7 +740,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private void deleteFile(int pos) {
         if (isPlaying()) player.stop();
 
-        GoMediaFile goMediaFile = goMediaFiles.get(pos);
+        final GoMediaFile goMediaFile = goMediaFiles.get(pos);
 
         ArrayList<String> fileDelCmds = new ArrayList<>();
 
@@ -781,7 +785,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
             Request request = new Request.Builder().url(fileDelCmd).build();
 
-            int finalI = i;
+            final int finalI = i;
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -797,7 +801,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                         runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     } else {
                         if (finalI == 0) {
-                            goMediaFiles.remove(pos);
+                            goMediaFiles.remove(goMediaFile);
                             updateList();
                         }
                     }

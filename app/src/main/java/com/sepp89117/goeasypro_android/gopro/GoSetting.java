@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Pair;
 
 import com.sepp89117.goeasypro_android.MyApplication;
+import com.sepp89117.goeasypro_android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,25 +122,31 @@ public class GoSetting {
     }
 
     private void putSettingsToGroups() {
-        _settingGroups.put("General Device", new int[]{
+        _settingGroups.put(_application.getResources().getString(R.string.str_general_device), new int[]{
                 84 /* Language */,
                 175 /* Controls */,
                 87 /* Beeps */,
                 54 /* Quick Capture */,
                 161 /* Default Preset */,
+                89 /* Default Mode */,
                 59 /* Auto Off */,
                 91 /* LEDs */,
                 178 /* Wi-fi Band */,
-                103 /* Auto Lock */
+                103 /* Auto Lock */,
+                83 /* GPS */
         });
-        _settingGroups.put("General Video", new int[]{
+        _settingGroups.put(_application.getResources().getString(R.string.str_general_video), new int[]{
                 182 /* Bit Rate */,
                 183 /* Bit Depth */,
-                134 /* Anti-Flicker */
+                134 /* Anti-Flicker */,
+                57 /* Video Format (PAL, NTSC) */
         });
-        _settingGroups.put("Current Preset", new int[]{
+        _settingGroups.put(_application.getResources().getString(R.string.str_Current_Preset), new int[]{
                 2 /* Resolution */,
                 3 /* Frames Per Second */,
+                4 /* Field of View */,
+                8 /* Low Light*/,
+                28 /* Resolution & FOV */,
                 121 /* Lens */,
                 122 /* Lens */,
                 123 /* Lens */,
@@ -158,22 +165,27 @@ public class GoSetting {
                 192 /* Aspect Ratio */,
                 193 /* Framing */
         });
-        _settingGroups.put("Voice Control", new int[]{86, 85});
-        _settingGroups.put("Displays", new int[]{
+        _settingGroups.put(_application.getResources().getString(R.string.str_voice_control), new int[]{86, 85});
+        _settingGroups.put(_application.getResources().getString(R.string.str_Displays), new int[]{
+                52 /* Orientation */,
                 112 /* Orientation */,
+                51 /* Screen Saver Rear */,
                 159 /* Screen Saver Rear */,
                 158 /* Screen Saver Front */,
+                72 /* LCD Display on/off*/,
                 88 /* LCD Brightness */,
+                50 /* LCD Lock */,
                 154 /* Front LCD Mode */
         });
-        _settingGroups.put("Shortcuts", new int[]{129, 130, 131, 132});
-        _settingGroups.put("Capture", new int[]{
+        _settingGroups.put(_application.getResources().getString(R.string.str_Shortcuts), new int[]{129, 130, 131, 132});
+        _settingGroups.put(_application.getResources().getString(R.string.str_Capture), new int[]{
                 179 /* Trail Length */,
                 125 /* Output */,
                 126 /* Output */,
                 171 /* Interval */,
                 32 /* Interval */,
                 30 /* Interval */,
+                7 /* Interval */,
                 6 /* Interval */,
                 5 /* Interval */,
                 19 /* Shutter */,
@@ -186,6 +198,9 @@ public class GoSetting {
                 105 /* Timer */
         });
         _settingGroups.put("Protune", new int[]{
+                10 /* Protune on off */,
+                21 /* Protune on off */,
+                34 /* Protune on off */,
                 114 /* Protune on off */,
                 145 /* Shutter */,
                 146 /* Shutter */,
@@ -197,7 +212,13 @@ public class GoSetting {
                 37 /* ISO Max */,
                 24 /* ISO Max */,
                 13 /* ISO Max */,
+                14 /* Sharpness */,
+                25 /* Sharpness */,
+                38 /* Sharpness */,
                 117 /* Sharpness */,
+                12 /* Color */,
+                23 /* Color */,
+                36 /* Color */,
                 116 /* Color */,
                 139 /* RAW Audio */,
                 149 /* Wind */,

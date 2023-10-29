@@ -294,6 +294,14 @@ public class PairActivity extends AppCompatActivity {
                     GoProDevice goProDevice = new GoProDevice(PairActivity.this, PairActivity.this.getApplication(), device);
                     goProDevice.btMacAddress = deviceHardwareAddress;
                     goProDevice.camBtAvailable = true;
+
+                    for (int i = 0; i < newGoProDevices.size(); i++) {
+                        String iAddress = newGoProDevices.get(i).btMacAddress;
+                        if (Objects.equals(iAddress, deviceHardwareAddress)) {
+                            return;
+                        }
+                    }
+
                     newGoProDevices.add(goProDevice);
                     mDeviceStrList.add(deviceName + " (found but not paired)\n" + deviceHardwareAddress); //red
                     setListAdapter();

@@ -115,8 +115,15 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     private void setModePresetText() {
-        String _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
+        String _mode_preset;
+        if(streamingDevice.hasProtoPresets() && streamingDevice.protoPreset != null) {
+            _mode_preset =  streamingDevice.protoPreset.getSettingsString();
+        } else {
+            _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
+        }
+
         textView_mode_preset.setText(_mode_preset);
+
         if (streamingDevice.isRecording && rec_icon.getVisibility() == View.INVISIBLE) {
             rec_icon.setVisibility(View.VISIBLE);
             rec_icon.startAnimation(fadeAnimation);

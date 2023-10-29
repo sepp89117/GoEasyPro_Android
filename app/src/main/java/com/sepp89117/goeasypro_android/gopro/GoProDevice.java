@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -239,6 +240,48 @@ public class GoProDevice {
         sharedPreferences.edit().putString("display_name_" + name, displayName).apply();
     }
 
+    public String getCurrentSettingsString() {
+        if (hasProtoPresets() && protoPreset != null) {
+            return protoPreset.getSettingsString();
+        } else {
+            String modeTitle = mode.getTitle();
+
+            final String[] currentOptions = new String[3];
+            goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 3).findFirst().ifPresent(goSetting -> currentOptions[1] = goSetting.getCurrentOptionName());
+            goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 4).findFirst().ifPresent(goSetting -> currentOptions[2] = goSetting.getCurrentOptionName());
+
+            if(modeTitle.contains("Video")) {
+                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 2).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if(modeTitle.contains("Photo")) {
+                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if(modeTitle.contains("Lapse")) {
+                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if(modeTitle.contains("Multi")) {
+                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 29).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                if (currentOptions[0] == null || currentOptions[0].isEmpty())
+                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 30).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                if (currentOptions[0] == null || currentOptions[0].isEmpty())
+                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 31).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                if (currentOptions[0] == null || currentOptions[0].isEmpty())
+                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 32).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                if (currentOptions[0] == null || currentOptions[0].isEmpty())
+                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 28).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            }
+
+            final StringBuilder presetTitle = new StringBuilder();
+            for (String option : currentOptions) {
+                if (option != null && !option.isEmpty()) {
+                    if (presetTitle.length() > 0)
+                        presetTitle.append(" | ");
+
+                    presetTitle.append(option);
+                }
+            }
+
+            return presetTitle.toString();
+        }
+    }
+    
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt _gatt, int status, int newState) {
@@ -592,10 +635,6 @@ public class GoProDevice {
         doIfBtConnected();
 
         if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
-
-        if (modelID > UNK_MODEL && freshPaired) {
-            sendBtPairComplete();
-        }
     }
 
     private boolean isProtobuf(byte[] response) {
@@ -720,6 +759,10 @@ public class GoProDevice {
             preset = new GoPreset(_context, -2);
         }
 
+        if (modelID > UNK_MODEL && freshPaired) {
+            sendBtPairComplete();
+        }
+
         // getSettingsJson(); // Comment line out -> Only used to get Settings-JSON from new Models
         queryAllStatusValues();
         getAvailableOptions();
@@ -797,7 +840,7 @@ public class GoProDevice {
                     break;
             }
         } else {
-            int commandId = byteArray[0];
+            int commandId = byteArray[0] & 0xFF;
             int error = byteArray[1];
             int nextStart = 2;
 
@@ -890,6 +933,7 @@ public class GoProDevice {
                         sb.insert(14, ':');
                         wifiBSSID = sb.toString().toUpperCase();
                         break;
+                    case 147: // Why does Hero12 send 147 instead of 19?
                     case 19:
                         // All status values
                         for (int index = nextStart; index < byteArray.length; ) {
@@ -906,6 +950,7 @@ public class GoProDevice {
                             index += nextLen + 2;
                         }
                         break;
+                    case 162:
                     case 50:
                         // Available option IDs for all settings
                         availableSettingsOptions = new ArrayList<>();
@@ -926,6 +971,7 @@ public class GoProDevice {
 
                         getAllSettings();
                         break;
+                    case 146:
                     case 18:
                         // All settings
                         goSettings = new ArrayList<>();
@@ -2208,7 +2254,6 @@ public class GoProDevice {
             } catch (Exception e) {
                 e.printStackTrace();
                 showToast("Error connectWifi!", Toast.LENGTH_SHORT);
-                return;
             }
         }).start();
     }

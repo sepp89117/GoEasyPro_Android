@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:onClick="onClickSetMode"
-                            android:text="Set Mode"
+                            android:text="@string/str_Set_mode"
                             android:textAllCaps="false"
                             app:icon="@drawable/mode_select_symbol" />
 
@@ -180,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:onClick="onClickSetPreset"
-                            android:text="Set Preset"
+                            android:text="@string/str_Set_Preset"
                             android:textAllCaps="false"
                             app:icon="@drawable/preset_symbol" />
                     </TableRow>

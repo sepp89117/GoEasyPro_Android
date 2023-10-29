@@ -72,7 +72,7 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings">
+            android:label="SettingsActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

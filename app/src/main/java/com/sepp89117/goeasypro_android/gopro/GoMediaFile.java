@@ -76,7 +76,7 @@ public class GoMediaFile {
         new Thread(() -> {
             Log.d("HTTP HEAD", lrvUrl);
             final Request testLrvExists = new Request.Builder()
-                    .url(HttpUrl.get(URI.create(lrvUrl)))
+                    .url(Objects.requireNonNull(HttpUrl.get(URI.create(lrvUrl))))
                     .build();
 
             httpClient.newCall(testLrvExists).enqueue(new Callback() {
@@ -114,10 +114,6 @@ public class GoMediaFile {
             case ".jpg":
             case ".thm": // thumbnail
                 mimeType = "image/jpeg";
-                break;
-            case ".lrv": // low resolution video
-            case ".mp4":
-                mimeType = "video/mp4";
                 break;
             case ".oga":
                 mimeType = "audio/ogg";
@@ -275,7 +271,7 @@ public class GoMediaFile {
             case ".m4v":
                 mimeType = "video/x-m4v";
                 break;
-            default:
+            default: // .lrv & .mp4
                 mimeType = "video/mp4";
         }
     }
