@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.IpConfiguration;
+import android.net.LinkProperties;
 import android.net.MacAddress;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.StaticIpConfiguration;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -94,7 +97,7 @@ public class WiFiHelper {
             if (_bssid == null || Objects.equals(_bssid, ""))
                 throw new Exception("BSSID can't be null or empty");
 
-            connectWifiAndroidQUp();
+            new Thread(this::connectWifiAndroidQUp).start();
         } else {
             new Thread(this::connectWifiAndroidPDown).start();
         }
@@ -103,15 +106,23 @@ public class WiFiHelper {
     public void disconnectWifi() {
         if (_wifiConnectionState == WIFI_DISCONNECTED) return;
 
+        disconnect();
+    }
+
+    private void disconnect() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             _connectivityManager.unregisterNetworkCallback(networkCallback);
+            _connectivityManager.bindProcessToNetwork(null);
         } else {
-            _wifiManager.disconnect();
-        }
-
-        try {
-            _context.unregisterReceiver(_mConnectionReceiver);
-        } catch (Exception ignored) {
+            try {
+                _context.unregisterReceiver(_mConnectionReceiver);
+            } catch (Exception ignored) {
+            }
+            try {
+                _wifiManager.disconnect();
+            } catch (Exception e) {
+                Log.e(TAG, "An exception occurred while attempting to disconnect build version < Q.", e);
+            }
         }
 
         setState(WIFI_DISCONNECTED);
@@ -230,13 +241,22 @@ public class WiFiHelper {
     private void connectWifiAndroidQUp() {
         if (_wifiConnectionState == WIFI_CONNECTED) {
             if (_wifiConnectionChangedInterface != null)
-                new Thread(() -> _wifiConnectionChangedInterface.onWifiConnectionChanged()).start();
+                _wifiConnectionChangedInterface.onWifiConnectionChanged();
             return;
         }
+        final WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
+                .setSsid(_ssid)
+                .setBssid(MacAddress.fromString(_bssid))
+                .setWpa2Passphrase(_psk)
+                .build();
 
-        final WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder().setSsid(_ssid).setBssid(MacAddress.fromString(_bssid)).setWpa2Passphrase(_psk).build();
-
-        final NetworkRequest networkRequest = new NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).setNetworkSpecifier(wifiNetworkSpecifier).build();
+        final NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                .setNetworkSpecifier(wifiNetworkSpecifier)
+                .build();
 
         HandlerThread handlerThread = new HandlerThread("WiFi Manager Network Update Handler");
         handlerThread.start();
@@ -254,15 +274,15 @@ public class WiFiHelper {
         }
 
         @Override
-        public void onUnavailable() {
-            super.onUnavailable();
-            setState(WIFI_DISCONNECTED);
+        public void onLost(@NonNull Network network) {
+            super.onLost(network);
+            disconnect();
         }
 
         @Override
-        public void onLost(@NonNull Network network) {
-            super.onLost(network);
-            setState(WIFI_DISCONNECTED);
+        public void onUnavailable() {
+            super.onUnavailable();
+            disconnect();
         }
     };
 

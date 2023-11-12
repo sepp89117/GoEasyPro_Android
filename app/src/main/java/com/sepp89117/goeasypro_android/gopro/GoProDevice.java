@@ -21,7 +21,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.Pair;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,6 +29,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.sepp89117.goeasypro_android.MyApplication;
 import com.sepp89117.goeasypro_android.R;
 import com.sepp89117.goeasypro_android.helpers.BtActionHelper;
+import com.sepp89117.goeasypro_android.helpers.ShutterLog;
 import com.sepp89117.goeasypro_android.helpers.WiFiHelper;
 
 import java.io.ByteArrayInputStream;
@@ -58,7 +58,11 @@ public class GoProDevice {
     //endregion
 
     public static final int UNK_MODEL = 0;
+    public static final int FUSION = 23;
+    public static final int HERO6_BLACK = 24;
+    public static final int HERO2018 = 34;
     public static final int HERO8_BLACK = 50;
+    public static final int HERO_MAX = 51;
     public static final int HERO9_BLACK = 55;
     public static final int HERO11_BLACK = 58;
     public static final int HERO12_BLACK = 62;
@@ -136,7 +140,7 @@ public class GoProDevice {
     private BluetoothGatt bluetoothGatt;
     public boolean btPaired = false;
     public int btConnectionStage = BT_NOT_CONNECTED;
-    public String name;
+    public String btDeviceName;
     public String displayName;
     public String btMacAddress = "";
     public String modelName;
@@ -160,11 +164,11 @@ public class GoProDevice {
     private Date lastMemoryQuery = new Date();
     private Date lastBatteryRead = new Date();
     private Date lastSettingUpdate = new Date();
-    private BluetoothGattCharacteristic wifiSsidCharacteristic = null;
-    private BluetoothGattCharacteristic wifiPwCharacteristic = null;
+    private BluetoothGattCharacteristic wifiSsidCharacteristic = null; // 0x0022
+    private BluetoothGattCharacteristic wifiPwCharacteristic = null; // 0x0024
     private BluetoothGattCharacteristic wifiStateCharacteristic = null;
-    private BluetoothGattCharacteristic commandCharacteristic = null;
-    private BluetoothGattCharacteristic commandRespCharacteristic = null;
+    private BluetoothGattCharacteristic commandCharacteristic = null; // 0x002e
+    private BluetoothGattCharacteristic commandRespCharacteristic = null; // 0x0030
     private BluetoothGattCharacteristic settingsCharacteristic = null;
     private BluetoothGattCharacteristic settingsRespCharacteristic = null;
     private BluetoothGattCharacteristic queryCharacteristic = null;
@@ -214,12 +218,12 @@ public class GoProDevice {
         res = _context.getResources();
         bluetoothDevice = device;
         btMacAddress = bluetoothDevice.getAddress();
-        name = bluetoothDevice.getName();
+        btDeviceName = bluetoothDevice.getName();
         sharedPreferences = _context.getSharedPreferences("GoProDevices", Context.MODE_PRIVATE);
-        displayName = sharedPreferences.getString("display_name_" + name, name);
+        displayName = sharedPreferences.getString("display_name_" + btDeviceName, btDeviceName);
         modelName = res.getString(R.string.str_NC);
         remainingMemory = res.getString(R.string.str_NC);
-        modelName = sharedPreferences.getString("model_name_" + name, modelName);
+        modelName = sharedPreferences.getString("model_name_" + btDeviceName, modelName);
         preset = new GoPreset(_context);
         mode = new GoMode(_context);
 
@@ -235,9 +239,9 @@ public class GoProDevice {
         presetCmds.put("nightLapse", new byte[]{0x06, 0x40, 0x04, 0x00, 0x02, 0x00, 0x02});
     }
 
-    public void saveNewDisplayName(String newName) {
+    private void saveNewDisplayName(String newName) {
         displayName = newName;
-        sharedPreferences.edit().putString("display_name_" + name, displayName).apply();
+        sharedPreferences.edit().putString("display_name_" + btDeviceName, displayName).apply();
     }
 
     public String getCurrentSettingsString() {
@@ -247,25 +251,25 @@ public class GoProDevice {
             String modeTitle = mode.getTitle();
 
             final String[] currentOptions = new String[3];
-            goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 3).findFirst().ifPresent(goSetting -> currentOptions[1] = goSetting.getCurrentOptionName());
-            goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 4).findFirst().ifPresent(goSetting -> currentOptions[2] = goSetting.getCurrentOptionName());
+            goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 3).findFirst().ifPresent(goSetting -> currentOptions[1] = goSetting.getCurrentOptionName());
+            goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 4).findFirst().ifPresent(goSetting -> currentOptions[2] = goSetting.getCurrentOptionName());
 
-            if(modeTitle.contains("Video")) {
-                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 2).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
-            } else if(modeTitle.contains("Photo")) {
-                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
-            } else if(modeTitle.contains("Lapse")) {
-                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
-            } else if(modeTitle.contains("Multi")) {
-                goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 29).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            if (modeTitle.contains("Video")) {
+                goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 2).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if (modeTitle.contains("Photo")) {
+                goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if (modeTitle.contains("Lapse")) {
+                goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 17).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+            } else if (modeTitle.contains("Multi")) {
+                goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 29).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
                 if (currentOptions[0] == null || currentOptions[0].isEmpty())
-                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 30).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                    goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 30).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
                 if (currentOptions[0] == null || currentOptions[0].isEmpty())
-                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 31).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                    goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 31).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
                 if (currentOptions[0] == null || currentOptions[0].isEmpty())
-                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 32).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                    goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 32).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
                 if (currentOptions[0] == null || currentOptions[0].isEmpty())
-                    goSettings.stream().filter(goSetting ->  goSetting.getSettingId() == 28).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
+                    goSettings.stream().filter(goSetting -> goSetting.getSettingId() == 28).findFirst().ifPresent(goSetting -> currentOptions[0] = goSetting.getCurrentOptionName());
             }
 
             final StringBuilder presetTitle = new StringBuilder();
@@ -281,7 +285,7 @@ public class GoProDevice {
             return presetTitle.toString();
         }
     }
-    
+
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt _gatt, int status, int newState) {
@@ -292,7 +296,7 @@ public class GoProDevice {
                     if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
                     bluetoothGatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED && !btRetryConnect) {
-                    Log.i("onConnectionStateChange", "Camera " + name + " disconnected");
+                    Log.i("onConnectionStateChange", "Camera " + btDeviceName + " disconnected");
                     showToast(String.format(res.getString(R.string.str_cam_disconnected), displayName), Toast.LENGTH_SHORT);
                     setDisconnected();
                 }
@@ -404,7 +408,12 @@ public class GoProDevice {
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            // nothing to do here!
+            if (characteristic == wifiSsidCharacteristic && btActionHelper != null) {
+                btActionHelper.resetGattInProgress();
+            } else if (characteristic == wifiPwCharacteristic && status == BluetoothGatt.GATT_SUCCESS) {
+                readWifiApSsid();
+                wifiApOn();
+            }
         }
 
         @Override
@@ -583,7 +592,7 @@ public class GoProDevice {
                                     if (valueBytes.length == 3 && valueBytes[2] == 0) {
                                         // GoPro does not provide available setting options
                                         providesAvailableOptions = false;
-                                        Log.i("GoProDevice", "'" + name + "', model '" + modelName + "' does not provide the available setting options!");
+                                        Log.i("GoProDevice", "'" + btDeviceName + "', model '" + modelName + "' does not provide the available setting options!");
                                     }
                                 }
                                 break;
@@ -602,7 +611,7 @@ public class GoProDevice {
                             default:
                                 LE = "Unknown error";
                         }
-                        Log.e("GoProDevice", name + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
+                        Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
                     }
                 }
             }
@@ -619,6 +628,7 @@ public class GoProDevice {
                     ByteBuffer byteBuffer2 = ByteBuffer.allocate(33);
                     byteBuffer2.put(valueBytes);
                     wifiSSID = new String(byteBuffer2.array(), StandardCharsets.UTF_8).trim();
+                    saveNewDisplayName(wifiSSID);
                     break;
                 case wifiPwUUID:
                     ByteBuffer byteBuffer3 = ByteBuffer.allocate(64);
@@ -885,7 +895,7 @@ public class GoProDevice {
                         byteBuffer = ByteBuffer.allocate(nextLen);
                         byteBuffer.put(byteArray, nextStart + 1, nextLen);
                         modelName = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-                        sharedPreferences.edit().putString("model_name_" + name, modelName).apply();
+                        sharedPreferences.edit().putString("model_name_" + btDeviceName, modelName).apply();
 
                         nextStart = nextStart + 1 + nextLen;
                         nextLen = byteArray[nextStart];
@@ -918,6 +928,7 @@ public class GoProDevice {
                         byteBuffer = ByteBuffer.allocate(nextLen);
                         byteBuffer.put(byteArray, nextStart + 1, nextLen);
                         wifiSSID = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+                        saveNewDisplayName(wifiSSID);
 
                         nextStart = nextStart + 1 + nextLen;
                         nextLen = byteArray[nextStart];
@@ -997,8 +1008,8 @@ public class GoProDevice {
                             index += nextLen + 2;
                         }
 
-                        goSettings.sort(Comparator.comparingInt(GoSetting::getSettingId));
                         goSettings.sort(Comparator.comparing(GoSetting::getGroupName));
+                        goSettings.sort(Comparator.comparingInt(GoSetting::getSettingId));
 
                         if (settingsChangedCallback != null)
                             settingsChangedCallback.onSettingsChanged();
@@ -1024,7 +1035,7 @@ public class GoProDevice {
                     default:
                         LE = "Unknown error";
                 }
-                Log.e("GoProDevice", name + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
+                Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
             }
         }
     }
@@ -1118,7 +1129,10 @@ public class GoProDevice {
                 isRecording = videoProgress != 0;
 
                 if (isRecording && !wasRecording) {
+                    ShutterLog.logShutter(_context, displayName, "started");
                     initShutterWatchdog();
+                } else if (!isRecording && wasRecording) {
+                    ShutterLog.logShutter(_context, displayName, "stopped");
                 }
                 break;
             case 43:
@@ -1389,6 +1403,40 @@ public class GoProDevice {
                 }
             } else {
                 Log.e("startQrcNotification", "Error 1");
+                if (btActionHelper != null) {
+                    btActionHelper.resetGattInProgress();
+                }
+            }
+        });
+    }
+
+    public void setNewCamName(String newName) {
+        if (wiFiHelper != null) {
+            wiFiHelper.disconnectWifi();
+        }
+        wifiApOff();
+
+        if (btActionHelper != null) btActionHelper.queueAction(() -> {
+            byte[] msg = newName.getBytes(StandardCharsets.UTF_8);
+
+            if (wifiSsidCharacteristic != null && wifiSsidCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiSsidCharacteristic)) {
+                // wait for onWrite
+            } else {
+                Log.e("setCamName", "not sent");
+                if (btActionHelper != null) {
+                    btActionHelper.resetGattInProgress();
+                }
+            }
+        });
+
+        // The password must then also be written so that the camera accepts the new SSID
+        if (btActionHelper != null) btActionHelper.queueAction(() -> {
+            byte[] msg = wifiPSK.getBytes(StandardCharsets.UTF_8);
+
+            if (wifiPwCharacteristic != null && wifiPwCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiPwCharacteristic)) {
+                // wait for onWrite
+            } else {
+                Log.e("setCamName", "not sent");
                 if (btActionHelper != null) {
                     btActionHelper.resetGattInProgress();
                 }

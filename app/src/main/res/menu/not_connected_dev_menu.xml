@@ -3,9 +3,6 @@
     <item android:id="@+id/try_connect"
         android:icon="@drawable/connect_symbol"
         android:title="@string/str_try_to_connect" />
-    <item android:id="@+id/dev_rename"
-        android:icon="@drawable/rename_symbol"
-        android:title="@string/str_rename_device" />
     <item android:id="@+id/del_device"
         android:icon="@drawable/delete_symbol"
         android:title="@string/str_delete_device" />

@@ -137,9 +137,9 @@
     <string name="str_Delete_file">Excluir arquivo</string>
     <string name="str_sure_delete">Você tem certeza de que deseja excluir %1$s?</string>
     <string name="str_connecting_to">Conectando a %1$s</string>
-    <string name="str_wait_wifi_con">Aguarde até que a conexão Wi-Fi seja estabelecida!\nSe a GoPro foi ligada recentemente, isso pode levar algum tempo!</string>
+    <string name="str_wait_wifi_con">Aguarde até que a conexão Wi-Fi seja estabelecida!\nSe a GoPro foi ligada recentemente, isso pode levar algum tempo! Se você tiver problemas de conexão repetidos, tente alterar a banda Wi-fi da câmera de 5 GHz para 2,4 GHz.</string>
     <string name="str_Rename">Renomear \'%1$s\'</string>
-    <string name="str_enter_new_name">Digite um novo nome para \'%1$s\'\n\nMínimo de 1 e no máximo de 14 caracteres\n</string>
+    <string name="str_enter_new_name">Digite um novo nome para \'%1$s\'\n\nMínimo de 8 e no máximo de 32 caracteres\n</string>
     <string name="str_Downloading">Baixando...</string>
     <string name="str_wait_dl_complete">Aguarde até que o download seja concluído!</string>
     <string name="str_wait_setting_set">Aguarde até que a nova configuração seja aplicada!</string>

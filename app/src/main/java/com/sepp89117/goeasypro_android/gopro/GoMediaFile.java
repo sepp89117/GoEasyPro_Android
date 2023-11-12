@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -20,9 +22,12 @@ import okhttp3.Response;
 
 public class GoMediaFile {
     public String lrvUrl;
-    public String extension;
+    public String extension; // Extension with dot
     public String url;
-    public String fileName;
+    public String fileName; // Filename with extension
+    public String name; // Filename without extension
+    public int fileNumber;
+    public int videoChapter;
     public Date lastModified;
     public long fileByteSize;
     public String mimeType;
@@ -54,8 +59,9 @@ public class GoMediaFile {
         }
 
         this.fileName = fileDataJson.getString("n");
-        int extIndex = this.fileName.lastIndexOf('.');
-        this.extension = this.fileName.substring(extIndex).toLowerCase();
+        this.fileNumber = getFileNumber(this.fileName);
+        this.name = getName(this.fileName);
+        this.extension = getExtension(this.fileName);
         this.url = "http://10.5.5.9:8080/videos/DCIM/" + directory + "/" + this.fileName;
         this.thumbNail_path = goProDevice.getThumbNail_query + directory + "/" + this.fileName;
         long lastModifiedS = Long.parseLong(fileDataJson.getString("mod"));
@@ -65,10 +71,71 @@ public class GoMediaFile {
 
         parseMimeType();
 
-        if (Objects.equals(this.extension, ".mp4")) {
-            String lrvFileName = this.fileName.charAt(0) + "L" + this.fileName.substring(2, extIndex) + ".LRV";
+        if (Objects.equals(mimeType, "video/mp4")) {
+            String chapterPart = this.fileName.substring(2, 3);
+
+            if (isNumeric(chapterPart)) this.videoChapter = Integer.parseInt(chapterPart);
+            else this.videoChapter = 0;
+
+            String lrvFileName = "";
+
+            if (goProDevice.modelID <= GoProDevice.FUSION || goProDevice.modelID == GoProDevice.HERO2018 || goProDevice.modelID == GoProDevice.HERO_MAX) {
+                // HD HERO2, HERO3, HERO3+, HERO (2014), HERO Session, HERO4, HERO5 Black, HERO5 Session, HERO (2018), FUSION, MAX
+                lrvFileName = this.name + ".LRV";
+            } else {
+                // Since HERO6 Black
+                lrvFileName = "GL" + this.name.substring(2) + ".LRV";
+            }
+
             this.lrvUrl = "http://10.5.5.9:8080/videos/DCIM/" + directory + "/" + lrvFileName;
             checkLrvUrl(true);
+        }
+    }
+
+    private boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private int getFileNumber(String fileName) {
+        String regex = "(.{4})\\.[^.]*$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(fileName);
+
+        if (matcher.find()) {
+            String group1 = matcher.group(1);
+            return group1 != null && isNumeric(group1) ? Integer.parseInt(group1) : 0;
+        } else {
+            return 0;
+        }
+    }
+
+    private String getName(String fileName) {
+        String regex = "(.*)\\..*$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(fileName);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "";
+        }
+    }
+
+    private String getExtension(String fileName) {
+        String regex = ".*(\\..*)$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(fileName);
+
+        if (matcher.find()) {
+            return matcher.group(1).toLowerCase();
+        } else {
+            return "";
         }
     }
 
@@ -271,7 +338,7 @@ public class GoMediaFile {
             case ".m4v":
                 mimeType = "video/x-m4v";
                 break;
-            default: // .lrv & .mp4
+            default: // .lrv & .mp4 & .360
                 mimeType = "video/mp4";
         }
     }

@@ -111,7 +111,7 @@
     <string name="str_set_dt_success">Datum/Uhrzeit wurde erfolgreich eingestellt</string>
     <string name="str_set_dt_not_success">Datum/Uhrzeit wurde nicht eingestellt!</string>
     <string name="str_new_fw_available">Neue Firmware für %1$s verfügbar! Aktualisiere mit der Quik-App</string>
-    <string name="str_incompletely_file_deleted">Unvollständige heruntergeladene Datei %1$s gelöscht.</string>
+    <string name="str_incompletely_file_deleted">Unvollständig heruntergeladene Datei %1$s gelöscht.</string>
     <string name="str_clock_is_wrong">Die Uhrzeit in %1$s ist falsch und wird korrigiert!</string>
 
     <!-- Warnungen (Alerts) -->
@@ -136,9 +136,9 @@
     <string name="str_Delete_file">Datei löschen</string>
     <string name="str_sure_delete">Bist du sicher, dass du %1$s löschen möchtest?</string>
     <string name="str_connecting_to">Verbindung zu %1$s wird hergestellt</string>
-    <string name="str_wait_wifi_con">Bitte warte, bis die WLAN-Verbindung hergestellt ist!\nWenn die GoPro gerade eingeschaltet wurde, kann dies eine Weile dauern!</string>
+    <string name="str_wait_wifi_con">Bitte warte, bis die WLAN-Verbindung hergestellt ist!\nWenn die GoPro gerade eingeschaltet wurde, kann dies eine Weile dauern! Wenn Sie wiederholt Verbindungsprobleme haben, versuchen Sie, das WLAN-Band der Kamera von 5 GHz auf 2,4 GHz zu ändern.</string>
     <string name="str_Rename">\'%1$s\' umbenennen</string>
-    <string name="str_enter_new_name">Gib einen neuen Namen für \'%1$s\' ein\n\nMindestens 1 und maximal 14 Zeichen\n</string>
+    <string name="str_enter_new_name">Gib einen neuen Namen für \'%1$s\' ein\n\nMindestens 8 und maximal 32 Zeichen\n</string>
     <string name="str_Downloading">Wird heruntergeladen...</string>
     <string name="str_wait_dl_complete">Bitte warte, bis der Download abgeschlossen ist!</string>
     <string name="str_wait_setting_set">Bitte warte, bis die neue Einstellung vorgenommen wurde!</string>
@@ -179,7 +179,7 @@
     <string name="str_app_settings">App-Einstellungen</string>
     <string name="str_m_about">Über</string>
     <string name="str_report_an_issue">Problem melden</string>
-    <string name="str_try_to_connect">Verbindung herstellen</string>
+    <string name="str_try_to_connect">Verbinden</string>
     <string name="str_Download_original">Original herunterladen</string>
     <string name="str_Download_lrv">LRV herunterladen</string>
     <string name="str_general_device">Gerät allgemein</string>

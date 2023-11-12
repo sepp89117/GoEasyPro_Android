@@ -86,6 +86,9 @@ public class StorageBrowserActivity extends AppCompatActivity {
     private static final int LIGHT_BLUE = Color.argb(255, 0, 0x9F, 0xe0);
     private static final int GREY = Color.argb(255, 0x50, 0x50, 0x50);
 
+    private static final String MY_DIR = "/GoEasyPro";
+
+    private final File baseDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + MY_DIR);
     private GoProDevice focusedDevice = null;
     private ArrayList<GoMediaFile> goMediaFiles;
     private ListView fileListView;
@@ -134,10 +137,9 @@ public class StorageBrowserActivity extends AppCompatActivity {
         }));
 
         for (GoMediaFile file : goMediaFiles) {
-            String fileName = file.fileName;
-            File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/GoEasyPro");
-            File testFile = new File(dir, fileName);
-            file.alreadyDownloaded = dir.exists() && testFile.exists();
+            String fileName = focusedDevice.btDeviceName + "_" + file.fileName;
+            File testFile = new File(baseDir, fileName);
+            file.alreadyDownloaded = baseDir.exists() && testFile.exists();
         }
 
         client = new OkHttpClient.Builder().addNetworkInterceptor(chain -> {
@@ -160,12 +162,10 @@ public class StorageBrowserActivity extends AppCompatActivity {
         fileListAdapter.setOnItemCheckListener(checkedItems -> {
             if (checkedItems.size() > 0) {
                 // show download menu
-                //dlMenuBtn.setVisibility(View.VISIBLE);
                 dlMenuBtn.setColorFilter(LIGHT_BLUE);
                 delBtn.setColorFilter(LIGHT_BLUE);
             } else {
                 // hide download menu
-                //dlMenuBtn.setVisibility(View.INVISIBLE);
                 dlMenuBtn.setColorFilter(GREY);
                 delBtn.setColorFilter(GREY);
             }
@@ -582,24 +582,22 @@ public class StorageBrowserActivity extends AppCompatActivity {
                         Log.e("downloadFile", "GET '" + currentCall.request().url() + "' unsuccessful!");
                     } else {
                         InputStream inputStream = response.body().byteStream();
-                        File dir;
-
-                        dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/GoEasyPro");
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-                            if (!dir.exists() && !dir.mkdir()) {
-                                Log.e("dlFile", "Could not create directory '" + dir.getPath() + "'!");
+                            if (!baseDir.exists() && !baseDir.mkdir()) {
+                                Log.e("dlFile", "Could not create directory '" + baseDir.getPath() + "'!");
                                 continue;
                             }
                         }
 
                         int fileIndex = 1;
-                        File file = new File(dir, dlInfo.FileName);
+                        String localFilename = focusedDevice.btDeviceName + "_" + dlInfo.FileName;
+                        File file = new File(baseDir, localFilename);
                         while (file.exists()) {
                             if (fileIndex >= 10000) {
-                                Log.e("dlFile", "There are more then 10000 files withe the same name in the directory '" + dir.getPath() + "'!");
-                                continue;
+                                Log.e("dlFile", "There are more then 10000 files withe the same name in the directory '" + baseDir.getPath() + "'!");
+                                return;
                             }
-                            file = new File(dir, dlInfo.FileName.substring(0, dlInfo.FileName.length() - 4) + "(" + fileIndex + ")" + dlInfo.FileName.substring(dlInfo.FileName.length() - 4));
+                            file = new File(baseDir, focusedDevice.btDeviceName + "_" + dlInfo.FileName.substring(0, dlInfo.FileName.length() - 4) + "(" + fileIndex + ")" + dlInfo.FileName.substring(dlInfo.FileName.length() - 4));
                             fileIndex++;
                         }
 
@@ -616,7 +614,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                             ContentValues values = new ContentValues();
                             values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
                             values.put(MediaStore.MediaColumns.MIME_TYPE, dlInfo.MimeType);
-                            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM + "/GoEasyPro");
+                            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM + MY_DIR);
 
                             Uri fileUri = null;
 
@@ -816,10 +814,9 @@ public class StorageBrowserActivity extends AppCompatActivity {
             ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>(goMediaFiles);
 
             for (GoMediaFile file : _goMediaFiles) {
-                String fileName = file.fileName;
-                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + "/GoEasyPro");
-                File testFile = new File(dir, fileName);
-                file.alreadyDownloaded = dir.exists() && testFile.exists();
+                String fileName = focusedDevice.btDeviceName + "_" + file.fileName;
+                File testFile = new File(baseDir, fileName);
+                file.alreadyDownloaded = baseDir.exists() && testFile.exists();
             }
 
             fileListAdapter.setNotifyOnChange(false);

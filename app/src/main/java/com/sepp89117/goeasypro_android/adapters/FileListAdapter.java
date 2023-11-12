@@ -66,6 +66,12 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
         return position;
     }
 
+    @Override
+    public void clear(){
+        selectedItems.clear();
+        super.clear();
+    }
+
     private static class ViewHolder {
         CheckedTextView name;
         TextView date;

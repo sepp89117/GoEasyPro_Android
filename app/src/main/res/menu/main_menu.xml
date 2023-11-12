@@ -14,6 +14,10 @@
         android:icon="@drawable/settings_symbol"
         android:title="@string/str_app_settings" />
     <item
+        android:id="@+id/main_menu_shutter_log"
+        android:icon="@drawable/log_symbol"
+        android:title="Shutter Log" />
+    <item
         android:id="@+id/main_menu_about"
         android:icon="@drawable/info_symbol"
         android:title="@string/str_m_about" />
