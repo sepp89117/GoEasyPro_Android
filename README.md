@@ -3,7 +3,9 @@
 
 Easily control multiple GoPros with your android device with bluetooth<br>
 <br>
-<b>Live preview, media browsing and download incl. LRV download and much more is supported!</b><br><br>
+<b>Compatible with all Hero models that have WiFi!
+<br><br>
+Live preview, media browsing and download incl. LRV download and much more is supported!</b><br><br>
 [Download latest release](https://github.com/sepp89117/GoEasyPro_Android/releases/latest)<br><br>
 ## Screenshot
 <img src="https://github.com/sepp89117/GoEasyPro_Android/blob/master/main_v1.6.0.jpg?raw=true" width="400px"><br>
@@ -29,7 +31,7 @@ Easily control multiple GoPros with your android device with bluetooth<br>
     </ul>
     <li>After making the connections, go back to the main screen.</li>
   </ul>
-  <li>To connect a paired camera, click on one of the cameras in the list and choose 'Try to connect'.</li>
+  <li>To connect a paired camera, click on one of the cameras in the list and choose 'Try to connect' or activate auto connect in the app settings.</li>
   <li>The "Cams" list shows information about the paired cameras. If you click on a camera in the list, you will see a menu for controlling the individual cameras.</li>
   <li>In the "Control" field you can control all cameras at the same time.</li>
   
@@ -68,24 +70,6 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 <br><br>
 I hope you can help to get the app running safely on other smartphones too!
 Feel free to create an issue!
-
-## Overview of features and compatible GoPro models
-| Feature                                   | HERO11/Mini | HERO10 | HERO9 | MAX | HERO8 | HERO7 | HERO6 | HERO5 |
-|-------------------------------------------|-------------|--------|-------|-----|-------|-------|-------|-------|
-| Full Bluetooth pairing                    |             | yes    |       |     | yes   |       |       | yes   |
-| Connect Bluetooth                         |             | yes    |       |     | yes   |       |       | yes   |
-| Get status values                         |             | yes    |       |     | yes   |       |       | yes   |
-| Get current values of settings            |             | yes    |       |     | yes   |       |       | yes   |
-| Get available options for settings        |             | yes    |       |     | no    |       |       | yes   |
-| Set settings                              |             | yes    |       |     | yes   |       |       | yes   |
-| Set modes                                 |             | yes    |       |     | yes   |       |       | yes   |
-| Device controls                           |             | yes    |       |     | yes   |       |       | yes   |
-| Live preview                              |             | yes    |       |     | yes   |       |       | yes   |
-| Browse storage                            |             | yes    |       |     | yes   |       |       | yes   |
-| Download files                            |             | yes    |       |     | yes   |       |       | yes   |
-| Delete files                              |             | yes    |       |     | yes   |       |       | yes   |
-| Rename camera in app                      |             | yes    |       |     | yes   |       |       | yes   |
-| Device information                        |             | yes    |       |     | yes   |       |       | yes   |
 
 <b>A camera firmware update may be necessary for some functions</b>
 
