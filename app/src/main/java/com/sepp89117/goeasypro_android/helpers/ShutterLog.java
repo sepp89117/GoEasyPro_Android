@@ -27,6 +27,7 @@ public class ShutterLog {
         saveShutterLog(context, logEntries);
     }
 
+    @SuppressWarnings("unchecked")
     public static List<ShutterLogEntry> getShutterLog(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         String serializedLog = prefs.getString(LOG_KEY, "");
@@ -35,9 +36,15 @@ public class ShutterLog {
             if (!serializedLog.isEmpty()) {
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(Base64.decode(serializedLog, Base64.DEFAULT));
                 ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-                List<ShutterLogEntry> logEntries = (List<ShutterLogEntry>) objectInputStream.readObject();
+                Object object = objectInputStream.readObject();
                 objectInputStream.close();
-                return logEntries;
+
+                if (object instanceof List<?>) {
+                    List<?> tempList = (List<?>) object;
+                    if (!tempList.isEmpty() && tempList.get(0) instanceof ShutterLogEntry) {
+                        return (List<ShutterLogEntry>) tempList;
+                    }
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

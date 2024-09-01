@@ -100,8 +100,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
         <ListView
             android:id="@+id/file_listView"
             android:layout_width="match_parent"

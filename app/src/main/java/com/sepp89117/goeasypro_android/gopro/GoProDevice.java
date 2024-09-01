@@ -23,6 +23,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -59,7 +60,6 @@ public class GoProDevice {
 
     public static final int UNK_MODEL = 0;
     public static final int FUSION = 23;
-    public static final int HERO6_BLACK = 24;
     public static final int HERO2018 = 34;
     public static final int HERO8_BLACK = 50;
     public static final int HERO_MAX = 51;
@@ -142,7 +142,7 @@ public class GoProDevice {
     public int btConnectionStage = BT_NOT_CONNECTED;
     public String btDeviceName;
     public String displayName;
-    public String btMacAddress = "";
+    public String btMacAddress;
     public String modelName;
     public int modelID = UNK_MODEL;
     public String boardType = "";
@@ -391,7 +391,7 @@ public class GoProDevice {
         }
 
         @Override
-        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, int status) {
+        public void onCharacteristicRead(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 parseBtData(characteristic.getUuid().toString(), characteristic.getValue(), false);
             } else if (status == BluetoothGatt.GATT_FAILURE) {
@@ -577,12 +577,13 @@ public class GoProDevice {
                                 }
                                 break;
                             case settingsRespUUID:
-                                if ((valueBytes.length >= 4 && valueBytes[3] == 91) || (valueBytes.length >= 3 && valueBytes[1] == 91)) {
-                                    // ignore keepAlive response
-                                } else {
+                                if (!((valueBytes.length >= 4 && valueBytes[3] == 91) || (valueBytes.length >= 3 && valueBytes[1] == 91))) {
                                     // A setting was changed. Get an update of the current settings
-                                    if (providesAvailableOptions) getAvailableOptions();
-                                    else getAllSettings();
+                                    if (providesAvailableOptions) {
+                                        getAvailableOptions();
+                                    } else {
+                                        getAllSettings();
+                                    }
                                 }
                                 break;
                             case queryRespUUID:
@@ -1419,9 +1420,7 @@ public class GoProDevice {
         if (btActionHelper != null) btActionHelper.queueAction(() -> {
             byte[] msg = newName.getBytes(StandardCharsets.UTF_8);
 
-            if (wifiSsidCharacteristic != null && wifiSsidCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiSsidCharacteristic)) {
-                // wait for onWrite
-            } else {
+            if (!(wifiSsidCharacteristic != null && wifiSsidCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiSsidCharacteristic))) {
                 Log.e("setCamName", "not sent");
                 if (btActionHelper != null) {
                     btActionHelper.resetGattInProgress();
@@ -1433,9 +1432,7 @@ public class GoProDevice {
         if (btActionHelper != null) btActionHelper.queueAction(() -> {
             byte[] msg = wifiPSK.getBytes(StandardCharsets.UTF_8);
 
-            if (wifiPwCharacteristic != null && wifiPwCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiPwCharacteristic)) {
-                // wait for onWrite
-            } else {
+            if (!(wifiPwCharacteristic != null && wifiPwCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiPwCharacteristic))) {
                 Log.e("setCamName", "not sent");
                 if (btActionHelper != null) {
                     btActionHelper.resetGattInProgress();
@@ -1664,8 +1661,7 @@ public class GoProDevice {
         });
     }
 
-
-    public void getSettingsJson() {
+    /*public void getSettingsJson() {
         if (btActionHelper != null) btActionHelper.queueAction(() -> {
             if (btConnectionStage < 2) {
                 if (btActionHelper != null) {
@@ -1683,8 +1679,7 @@ public class GoProDevice {
                 }
             }
         });
-    }
-
+    }*/
 
     public void shutterOn() {
         if (btActionHelper != null) btActionHelper.queueAction(() -> {
@@ -2269,10 +2264,7 @@ public class GoProDevice {
         void onWifiConnectionChanged();
     }
 
-    private WifiConnectionChangedInterface wifiConnectionChangedCallback;
-
     public void connectWifi(WifiConnectionChangedInterface _wifiConnectionChangedCallback) {
-        wifiConnectionChangedCallback = _wifiConnectionChangedCallback;
         if (wifiApState != 1 && !isWifiConnected()) {
             wifiApOn();
             try {
@@ -2283,7 +2275,7 @@ public class GoProDevice {
         }
 
         try {
-            wiFiHelper = new WiFiHelper(_context, wifiConnectionChangedCallback);
+            wiFiHelper = new WiFiHelper(_context, _wifiConnectionChangedCallback);
         } catch (Exception e) {
             e.printStackTrace();
             showToast("WiFi error: " + e.getMessage(), Toast.LENGTH_SHORT);
@@ -2340,7 +2332,7 @@ public class GoProDevice {
                     return;
                 }
 
-                if (new Date().getTime() - btActionHelper.getLastExecStartDate() /*gattProgressStart.getTime()*/ >= 10000 && btActionHelper.isGattInProgress() /*gattInProgress*/) {
+                if (System.currentTimeMillis() - btActionHelper.getLastExecMillis() >= 10000 && btActionHelper.isGattInProgress()) {
                     Log.e("ExecWatchdog", "'Gatt in progress' timeout triggered!");
                     btActionHelper.resetGattInProgress();
                 }
@@ -2457,10 +2449,5 @@ public class GoProDevice {
         });
     }
 
-    public static String getMethodName() {
-        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-        StackTraceElement currentMethod = stackTrace[3];
-        return currentMethod.getMethodName();
-    }
     //endregion
 }

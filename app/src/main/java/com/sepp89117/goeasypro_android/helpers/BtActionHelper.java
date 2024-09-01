@@ -2,7 +2,6 @@ package com.sepp89117.goeasypro_android.helpers;
 
 import android.util.Log;
 
-import java.util.Date;
 import java.util.LinkedList;
 
 public class BtActionHelper {
@@ -13,29 +12,30 @@ public class BtActionHelper {
     private final LinkedList<Runnable> btActionList = new LinkedList<>();
     private boolean gattInProgress;
     private boolean execShouldStop;
-    private Date btActionStart;
+    private long btActionStart;
     private Thread executionThread;
 
     public BtActionHelper() {
         this.gattInProgress = false;
         this.execShouldStop = false;
-        this.btActionStart = new Date();
+        this.btActionStart = System.currentTimeMillis();
     }
 
-    public boolean queueAction(Runnable runnable) {
+    public void queueAction(Runnable runnable) {
         synchronized (this.btActionList) {
             if (this.btActionList.size() > MAX_FIFO_SIZE) {
-                return false;
+                return;
             }
             this.btActionList.add(runnable);
         }
 
-        return true;
     }
 
-    public boolean queueActionIfNotQueued(Runnable runnable) {
+    public void queueActionIfNotQueued(Runnable runnable) {
         synchronized (this.btActionList) {
-            return this.btActionList.contains(runnable) || queueAction(runnable);
+            if (!this.btActionList.contains(runnable)) {
+                queueAction(runnable);
+            }
         }
     }
 
@@ -59,8 +59,8 @@ public class BtActionHelper {
         return this.gattInProgress;
     }
 
-    public long getLastExecStartDate() {
-        return btActionStart.getTime();
+    public long getLastExecMillis() {
+        return btActionStart;
     }
 
     public boolean isExecutionAlive() {
@@ -92,7 +92,7 @@ public class BtActionHelper {
     private void executeNext() {
         Runnable toExec;
 
-        if (!this.gattInProgress) {
+        if (!this.gattInProgress && this.btActionList.size() > 0) {
             this.gattInProgress = true;
 
             synchronized (this.btActionList) {
@@ -102,17 +102,21 @@ public class BtActionHelper {
             if (toExec == null) {
                 this.gattInProgress = false;
             } else {
-                Date now = new Date();
-                while (now.getTime() - btActionStart.getTime() < BT_ACTION_DELAY) {
+                while (System.currentTimeMillis() - btActionStart < BT_ACTION_DELAY) {
                     try {
-                        Thread.sleep(BT_ACTION_DELAY - (now.getTime() - btActionStart.getTime()));
+                        Thread.sleep(BT_ACTION_DELAY - (System.currentTimeMillis() - btActionStart));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    now = new Date();
                 }
-                btActionStart = now;
+                btActionStart = System.currentTimeMillis();
                 toExec.run();
+            }
+        } else {
+            try {
+                Thread.sleep(BT_ACTION_DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
