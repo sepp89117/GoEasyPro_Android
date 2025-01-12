@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html>
+
+<head></head>
+
+<body>
+    <h1>Convert GoPro Camera Capabilities JSON to an Settings Object Array for <a href="https://github.com/sepp89117/GoEasyPro_Android/">GoEasyPro_Android</a>.</h1>
+
+    <h3>Select all GoPro-settings.json files you have and the merge and download will start automatically</h3>
+    <input id="file_select" type="file" accept=".json" onchange="checkFiles(event);" multiple><br><br>
+
+    <h3>Formatted Result View</h3>
+    <textarea id="map_output" style="width: 500px; height: 400px;"></textarea>
+    <br>
+    Current used version: <a href="https://github.com/sepp89117/GoEasyPro_Android/blob/master/app/src/main/res/raw/go_settings.json">go_settings.json</a>
+
+    <script>
+        function checkFiles(event) {
+            const input = document.getElementById("file_select");
+            const convert_button = document.getElementById("convert_button");
+            if (event.target.files.length > 0)
+                convertAll();
+        }
+
+        function convertAll() {
+            const files = document.getElementById("file_select").files;
+            const output = document.getElementById("map_output");
+            const extractedSettingsArray = [];
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsText(file, "UTF-8");
+
+                    reader.onload = function (evt) {
+                        let extractedSettings = extractSettings(evt.target.result);
+                        if (extractedSettings !== null)
+                            extractedSettingsArray.push(extractedSettings);
+                        else
+                            alert("File '" + file.name + "' couldn't by parsed!")
+
+                        if (extractedSettingsArray.length === files.length) {
+                            let outputStr = combine(extractedSettingsArray);
+                        }
+                    }
+
+                    reader.onerror = function (evt) {
+                        alert("File '" + file.name + "' couldn't by read!")
+                    }
+                }
+            }
+        }
+
+        function extractSettings(input) {
+            try {
+                var json_in = JSON.parse(input);
+            } catch (e) {
+                // Non JSON format
+                return null;
+            }
+            var array_out = {};
+
+            var settings_input_array = [];
+
+            if (typeof json_in["settings"] !== 'undefined') {
+                // schema_version >= 5
+                settings_input_array = [...json_in["settings"]];
+            } else if (typeof json_in["modes"] !== 'undefined' && typeof json_in["modes"][0]["settings"] !== 'undefined') {
+                // schema_version <= 2
+                json_in["modes"].forEach(mode => {
+                    settings_input_array = [...settings_input_array, ...mode["settings"]];
+                });
+            } else {
+                // Unsupported format
+                return null;
+            }
+
+            for (let i = 0; i < settings_input_array.length; i++) {
+                var _setting_display_name = settings_input_array[i]["display_name"];
+                var _setting_id = "" + settings_input_array[i]["id"];
+                var _options_array = settings_input_array[i]["options"];
+
+                var newOptions = {};
+                for (let o = 0; o < _options_array.length; o++) {
+                    var optionId = _options_array[o]["id"] ? _options_array[o]["id"] : _options_array[o]["value"];
+                    if (optionId === undefined)
+                        continue;
+                    newOptions[optionId] = _options_array[o]["display_name"];
+                }
+
+                var newValues = {};
+                newValues["display_name"] = _setting_display_name;
+                newValues["options"] = newOptions;
+
+                array_out[_setting_id] = newValues;
+            }
+
+            return array_out;
+        }
+
+        function combine(input) {
+            const output = document.getElementById("map_output");
+            var array_out = {};
+
+            for (let i = 0; i < input.length; i++) {
+                const settingsObject = input[i];
+                Object.entries(settingsObject).forEach((setting) => {
+                    const [key, value] = setting;
+                    var settings_array = settingsObject[key];
+
+                    var _setting_id = "" + key;
+                    var _setting_display_name = settings_array["display_name"];
+                    var _options_array = settings_array["options"];
+
+                    if (array_out[_setting_id] != null) {
+                        var _options_out_array = array_out[_setting_id]["options"];
+
+                        Object.entries(_options_array).forEach((option) => {
+                            const [key2, value2] = option;
+                            var optionId = key2;
+
+                            if (_options_out_array[optionId] === undefined) {
+                                _options_out_array[optionId] = value2;
+                            }
+                        });
+                    } else {
+                        var newOptions = {};
+                        Object.entries(_options_array).forEach((option) => {
+                            const [key2, value2] = option;
+                            var optionId = key2;
+
+                            newOptions[optionId] = value2;
+                        });
+
+                        var newValues = {};
+                        newValues["display_name"] = _setting_display_name;
+                        newValues["options"] = newOptions;
+
+                        array_out[_setting_id] = newValues;
+                    }
+                });
+            }
+
+            output.value = JSON.stringify(array_out, null, 2);
+            download("go_settings.json", JSON.stringify(array_out));
+        }
+
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+    </script>
+</body>
+
+</html>
