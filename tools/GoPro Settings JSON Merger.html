@@ -84,7 +84,7 @@
 
                 var newOptions = {};
                 for (let o = 0; o < _options_array.length; o++) {
-                    var optionId = _options_array[o]["id"] ? _options_array[o]["id"] : _options_array[o]["value"];
+                    var optionId = _options_array[o]["id"] !== undefined ? _options_array[o]["id"] : _options_array[o]["value"];
                     if (optionId === undefined)
                         continue;
                     newOptions[optionId] = _options_array[o]["display_name"];
