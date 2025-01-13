@@ -158,8 +158,8 @@
     <string name="str_multishot">Foto sequencial</string>
     <string name="str_burst">Rajada</string>
     <string name="str_night_lapse">Lapso noturno</string>
-    <string name="str_enable_localization">Ativar GPS</string>
-    <string name="str_disable_localization">Desativar GPS</string>
+    <string name="str_enable_localization">Ativar Bip</string>
+    <string name="str_disable_localization">Desativar Bip</string>
     <string name="str_set_date_time">Configurar data/hora</string>
     <string name="str_put_to_sleep">Desligar</string>
     <string name="str_connection">Conexão</string>

@@ -66,6 +66,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 import me.saket.cascade.CascadePopupMenu;
@@ -463,41 +464,61 @@ public class StorageBrowserActivity extends AppCompatActivity {
 
     //region Media functions
     private void getThumbNailsAsync() {
-        new Thread(() -> {
-            for (int i = 0; i < goMediaFiles.size(); i++) {
-                GoMediaFile file = goMediaFiles.get(i);
-                String tn_url = file.thumbNail_path;
+        // Semaphore mit maximal 5 "Permits"
+        Semaphore semaphore = new Semaphore(5);
 
-                Request request = new Request.Builder().url(tn_url).build();
-                Log.d("HTTP GET", tn_url);
+        for (int i = 0; i < goMediaFiles.size(); i++) {
+            GoMediaFile file = goMediaFiles.get(i);
+            String tn_url = file.thumbNail_path;
 
-                final int finalI = i;
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' failed!");
-                        e.printStackTrace();
+            Request request = new Request.Builder().url(tn_url).build();
+            Log.d("HTTP GET", tn_url);
 
-                        if (finalI == goMediaFiles.size() - 1)
-                            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
-                    }
+            final int finalI = i;
 
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) {
-                        if (!response.isSuccessful()) {
-                            Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' unsuccessful!");
-                        } else {
-                            file.thumbNail = BitmapFactory.decodeStream(response.body().byteStream());
+            // Task in separatem Thread starten
+            new Thread(() -> {
+                try {
+                    // Warten, bis ein Permit verfügbar ist
+                    semaphore.acquire();
+
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                            Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' failed!");
+                            e.printStackTrace();
+
+                            if (finalI == goMediaFiles.size() - 1)
+                                runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
+
+                            // Permit freigeben
+                            semaphore.release();
                         }
 
-                        response.close();
+                        @Override
+                        public void onResponse(@NonNull Call call, @NonNull Response response) {
+                            try {
+                                if (!response.isSuccessful()) {
+                                    Log.e("getThumbNailsAsync", "GET '" + call.request().url() + "' not successful! Response code: " + response.code());
+                                    file.thumbNail = null;
+                                } else {
+                                    file.thumbNail = BitmapFactory.decodeStream(response.body().byteStream());
+                                }
+                            } finally {
+                                response.close();
+                                if (finalI == goMediaFiles.size() - 1)
+                                    runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
 
-                        if (finalI == goMediaFiles.size() - 1)
-                            runOnUiThread(() -> fileListView.setAdapter(fileListAdapter));
-                    }
-                });
-            }
-        }).start();
+                                // Permit freigeben
+                                semaphore.release();
+                            }
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 
     private AlertDialog buildDownloadDialog() {
@@ -579,7 +600,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                     Response response = currentCall.execute();
 
                     if (!response.isSuccessful()) {
-                        Log.e("downloadFile", "GET '" + currentCall.request().url() + "' unsuccessful!");
+                        Log.e("downloadFile", "GET '" + currentCall.request().url() + "' not successful!");
                     } else {
                         InputStream inputStream = response.body().byteStream();
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
@@ -795,7 +816,7 @@ public class StorageBrowserActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) {
                     if (!response.isSuccessful()) {
-                        Log.e("deleteFile", "GET '" + call.request().url() + "' unsuccessful!");
+                        Log.e("deleteFile", "GET '" + call.request().url() + "' not successful!");
                         runOnUiThread(() -> Toast.makeText(StorageBrowserActivity.this, getResources().getString(R.string.str_something_wrong), Toast.LENGTH_SHORT).show());
                     } else {
                         if (finalI == 0) {

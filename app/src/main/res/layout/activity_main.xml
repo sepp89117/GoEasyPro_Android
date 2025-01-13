@@ -166,8 +166,9 @@
 
                         <Button
                             android:id="@+id/button6"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_margin="5dp"
                             android:onClick="onClickSetMode"
                             android:text="@string/str_Set_mode"
@@ -176,13 +177,25 @@
 
                         <Button
                             android:id="@+id/button7"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_margin="5dp"
                             android:onClick="onClickSetPreset"
                             android:text="@string/str_Set_Preset"
                             android:textAllCaps="false"
                             app:icon="@drawable/preset_symbol" />
+
+                        <Button
+                            android:id="@+id/btnSyncSettings"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="5dp"
+                            android:onClick="onClickSyncSettings"
+                            android:text="Sync"
+                            android:textAllCaps="false"
+                            app:icon="@drawable/settings_symbol" />
                     </TableRow>
 
                 </TableLayout>

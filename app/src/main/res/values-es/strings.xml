@@ -158,8 +158,8 @@
     <string name="str_multishot">Multifoto</string>
     <string name="str_burst">Ráfaga</string>
     <string name="str_night_lapse">Secuencia de lapso de tiempo nocturna</string>
-    <string name="str_enable_localization">Activar GPS</string>
-    <string name="str_disable_localization">Desactivar GPS</string>
+    <string name="str_enable_localization">Activar Bip</string>
+    <string name="str_disable_localization">Desactivar Bip</string>
     <string name="str_set_date_time">Configurar hora</string>
     <string name="str_put_to_sleep">Apagar</string>
     <string name="str_connection">Conexión</string>

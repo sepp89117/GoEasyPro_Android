@@ -13,15 +13,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 public class GoSetting {
+    private String _unknownOptionString = "unknown option";
     private final Map<String, int[]> _settingGroups = new HashMap<>();
-    private JSONObject _allOptions = null;
+    private JSONObject _optionsStore = null;
     private final Map<Integer, String> _availableOptionsMap = new HashMap<>();
     private final int _settingID;
     private final int _currentOptionId;
     private String _settingName = "unknown setting";
-    private String _currentOptionName = "unknown option";
+    private String _currentOptionName = _unknownOptionString;
     private String _groupName = "Others";
     private boolean _isValid = false;
 
@@ -42,12 +44,12 @@ public class GoSetting {
         try {
             JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
             _settingName = setting.getString("display_name");
-            _allOptions = setting.getJSONObject("options");
+            _optionsStore = setting.getJSONObject("options");
 
-            Iterator<String> keys = _allOptions.keys();
+            Iterator<String> keys = _optionsStore.keys();
             while (keys.hasNext()) {
                 int _optionId = Integer.parseInt(keys.next());
-                String _optionValue = _allOptions.getString(String.valueOf(_optionId));
+                String _optionValue = getOptionName(_optionId);
                 if (_currentOptionId == _optionId) {
                     _availableOptionsMap.put(_optionId, _optionValue);
                     break;
@@ -56,7 +58,7 @@ public class GoSetting {
 
             setCurrentOptionName();
 
-            if (_availableOptionsMap.size() > 0) {
+            if (!_availableOptionsMap.isEmpty()) {
                 _isValid = true;
             }
         } catch (JSONException ignored) {
@@ -77,14 +79,14 @@ public class GoSetting {
         try {
             JSONObject setting = _settingsValues.getJSONObject(String.valueOf(_settingID));
             _settingName = setting.getString("display_name");
-            _allOptions = setting.getJSONObject("options");
+            _optionsStore = setting.getJSONObject("options");
 
-            Iterator<String> keys = _allOptions.keys();
+            Iterator<String> keys = _optionsStore.keys();
             while (keys.hasNext()) {
                 int _optionId = Integer.parseInt(keys.next());
-                String _optionValue = _allOptions.getString(String.valueOf(_optionId));
+                String _optionValue = getOptionName(_optionId);
 
-                if (availableSettingsOptions != null && availableSettingsOptions.size() > 0) {
+                if (availableSettingsOptions != null && !availableSettingsOptions.isEmpty()) {
                     //Test if the option is supported by the current GoPro model
                     for (Pair<Integer, Integer> settingOption : availableSettingsOptions) {
                         int settingId = settingOption.first;
@@ -102,7 +104,7 @@ public class GoSetting {
 
             setCurrentOptionName();
 
-            if (_availableOptionsMap.size() > 0) {
+            if (!_availableOptionsMap.isEmpty()) {
                 _isValid = true;
             }
         } catch (JSONException ignored) {
@@ -247,11 +249,7 @@ public class GoSetting {
     }
 
     private void setCurrentOptionName() {
-        try {
-            _currentOptionName = _allOptions.getString(String.valueOf(_currentOptionId));
-        } catch (JSONException e) {
-            _currentOptionName = "unknown option";
-        }
+        _currentOptionName = getOptionName(_currentOptionId);
     }
 
     public Map<Integer, String> getAvailableOptions() {
@@ -260,5 +258,24 @@ public class GoSetting {
 
     public boolean isValid() {
         return _isValid;
+    }
+
+    public String getOptionName(int optionId) {
+        try {
+            return _optionsStore.getString(String.valueOf(optionId));
+        } catch (JSONException e) {
+            return _unknownOptionString;
+        }
+    }
+
+    public void setUnknownOptionString(String unknownOptionString) {
+        for (Map.Entry<Integer, String> entry : _availableOptionsMap.entrySet()) {
+            if (Objects.equals(entry.getValue(), this._unknownOptionString))
+                entry.setValue(unknownOptionString);
+        }
+        if (Objects.equals(this._currentOptionName, this._unknownOptionString))
+            this._currentOptionName = unknownOptionString;
+
+        this._unknownOptionString = unknownOptionString;
     }
 }

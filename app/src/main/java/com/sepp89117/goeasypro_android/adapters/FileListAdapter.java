@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.sepp89117.goeasypro_android.gopro.GoMediaFile;
 import com.sepp89117.goeasypro_android.R;
 
@@ -82,8 +84,9 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
         LinearLayout multishot_layout;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder mViewHolder;
 
         if (convertView == null) {
@@ -106,8 +109,6 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
         GoMediaFile goMediaFile = goMediaFiles.get(position);
         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault());
 
-        mViewHolder.name.setText(goMediaFile.fileName);
-        mViewHolder.name.setTextColor(WHITE);
         mViewHolder.date.setText(f.format(goMediaFile.lastModified));
         mViewHolder.size.setText(getReadableFileSize(goMediaFile.fileByteSize));
 
@@ -132,11 +133,16 @@ public class FileListAdapter extends ArrayAdapter<GoMediaFile> {
 
         if (goMediaFile.thumbNail != null) {
             mViewHolder.tn.setImageBitmap(goMediaFile.thumbNail);
+        } else {
+            mViewHolder.tn.setImageResource(R.drawable.ic_baseline_no_photography_24); // @drawable/ic_baseline_no_photography_24
         }
 
         if (goMediaFile.alreadyDownloaded) {
             mViewHolder.name.setText(goMediaFile.fileName + " ✓");
             mViewHolder.name.setTextColor(GREEN);
+        } else {
+            mViewHolder.name.setText(goMediaFile.fileName);
+            mViewHolder.name.setTextColor(WHITE);
         }
 
         mViewHolder.name.setOnClickListener(v -> {

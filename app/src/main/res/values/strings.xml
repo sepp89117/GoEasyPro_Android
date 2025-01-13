@@ -27,8 +27,8 @@
     <string name="str_Shutter_off">Shutter off</string>
     <string name="str_Sleep">Sleep</string>
     <string name="str_Highlight">Highlight</string>
-    <string name="str_Set_mode">Set mode</string>
-    <string name="str_Set_Preset">Set preset</string>
+    <string name="str_Set_mode">Mode</string>
+    <string name="str_Set_Preset">Preset</string>
     <string name="str_BT_dev_list">Bluetooth device list</string>
     <string name="str_click_dev_to_pair">Click on a device to connect/pair</string>
     <string name="str_Scan_again">Scan again</string>
@@ -166,8 +166,8 @@
     <string name="str_multishot">Multishot</string>
     <string name="str_burst">Burst</string>
     <string name="str_night_lapse">Night Lapse</string>
-    <string name="str_enable_localization">Enable localization</string>
-    <string name="str_disable_localization">Disable localization</string>
+    <string name="str_enable_localization">Enable Beep</string>
+    <string name="str_disable_localization">Disable Beep</string>
     <string name="str_set_date_time">Set Date/Time</string>
     <string name="str_put_to_sleep">Put to sleep</string>
     <string name="str_connection">Connection</string>

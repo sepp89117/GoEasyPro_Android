@@ -29,7 +29,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.sepp89117.goeasypro_android.MyApplication;
 import com.sepp89117.goeasypro_android.R;
-import com.sepp89117.goeasypro_android.helpers.BtActionHelper;
+import com.sepp89117.goeasypro_android.helpers.GattOperationQueue.GattHelper;
 import com.sepp89117.goeasypro_android.helpers.ShutterLog;
 import com.sepp89117.goeasypro_android.helpers.WiFiHelper;
 
@@ -111,19 +111,67 @@ public class GoProDevice {
     //endregion
 
     // region protobuf IDs
-    private static final int[] featureIDs = {0x02 /* NETWORK_MANAGEMENT */, 0xF1 /* COMMAND */, 0xF3 /* SETTING */, 0xF5 /* QUERY */};
-    // RELEASE_NETWORK_RSP = 0xF8
+    private static final int[] featureIDs = {
+            0x02 /* NETWORK_MANAGEMENT */,
+            0xF1 /* COMMAND */,
+            0xF3 /* SETTING */,
+            0xF5 /* QUERY */
+    };
     private static final int[][] actionIDs = {
             /* NETWORK_MANAGEMENT */
-            {0x02 /* SCAN_WIFI_NETWORKS */, 0x03 /* GET_AP_ENTRIES */, 0x04 /* REQUEST_WIFI_CONNECT */, 0x05 /* REQUEST_WIFI_CONNECT_NEW */, 0x0B /* NOTIF_START_SCAN */, 0x0C /* NOTIF_PROVIS_STATE */, 0x78 /* RELEASE_NETWORK */, 0x82 /* SCAN_WIFI_NETWORKS_RSP */, 0x83 /* GET_AP_ENTRIES_RSP */, 0x84 /* REQUEST_WIFI_CONNECT_RSP */, 0x85 /* REQUEST_WIFI_CONNECT_NEW_RSP */, 0xF8 /* RELEASE_NETWORK_RSP */},
+            {
+                    0x02 /* SCAN_WIFI_NETWORKS */,
+                    0x03 /* GET_AP_ENTRIES */,
+                    0x04 /* REQUEST_WIFI_CONNECT */,
+                    0x05 /* REQUEST_WIFI_CONNECT_NEW */,
+                    0x0B /* NOTIF_START_SCAN */,
+                    0x0C /* NOTIF_PROVIS_STATE */,
+                    0x65 /* REQUEST_COHN_SETTING */,
+                    0x66 /* REQUEST_CLEAR_COHN_CERT */,
+                    0x67 /* REQUEST_CREATE_COHN_CERT */,
+                    0x6E /* REQUEST_GET_COHN_CERT */,
+                    0x6F /* REQUEST_GET_COHN_STATUS */,
+                    0x78 /* RELEASE_NETWORK */,
+                    0x82 /* SCAN_WIFI_NETWORKS_RSP */,
+                    0x83 /* GET_AP_ENTRIES_RSP */,
+                    0x84 /* REQUEST_WIFI_CONNECT_RSP */,
+                    0x85 /* REQUEST_WIFI_CONNECT_NEW_RSP */,
+                    0xE5 /* RESPONSE_COHN_SETTING */,
+                    0xE6 /* RESPONSE_CLEAR_COHN_CERT */,
+                    0xE7 /* RESPONSE_CREATE_COHN_CERT */,
+                    0xEE /* RESPONSE_GET_COHN_CERT */,
+                    0xEF /* RESPONSE_GET_COHN_STATUS */,
+                    0xF8 /* RELEASE_NETWORK_RSP */
+            },
+
             /* COMMAND */
-            {0x69 /* SET_CAMERA_CONTROL */, 0x6B /* SET_TURBO_MODE */, 0x79 /* SET_LIVESTREAM_MODE */, 0xE9 /* SET_CAMERA_CONTROL_RSP */, 0xEB /* SET_TURBO_MODE_RSP */, 0xF9 /* SET_LIVESTREAM_MODE_RSP */},
+            {
+                    0x69 /* SET_CAMERA_CONTROL */,
+                    0x6B /* SET_TURBO_MODE */,
+                    0x79 /* SET_LIVESTREAM_MODE */,
+                    0xE9 /* SET_CAMERA_CONTROL_RSP */,
+                    0xEB /* SET_TURBO_MODE_RSP */,
+                    0xF9 /* SET_LIVESTREAM_MODE_RSP */
+            },
+
             /* SETTING */
             {
-
             },
+
             /* QUERY */
-            {0x72 /* GET_PRESET_STATUS */, 0x74 /* GET_LIVESTREAM_STATUS */, 0xF2 /* GET_PRESET_STATUS_RSP */, 0xF3 /* PRESET_MODIFIED_NOTIFICATION */, 0xF4 /* LIVESTREAM_STATUS_RSP */, 0xF5 /* LIVESTREAM_STATUS_NOTIF */}};
+            {
+                    0x64 /* REQUEST_PRESET_UPDATE_CUSTOM */,
+                    0x6D /* REQUEST_GET_LAST_MEDIA */,
+                    0x72 /* GET_PRESET_STATUS */,
+                    0x74 /* GET_LIVESTREAM_STATUS */,
+                    0xE4 /* RESPONSE_PRESET_UPDATE_CUSTOM */,
+                    0xED /* RESPONSE_GET_LAST_MEDIA */,
+                    0xF2 /* GET_PRESET_STATUS_RSP */,
+                    0xF3 /* PRESET_MODIFIED_NOTIFICATION */,
+                    0xF4 /* LIVESTREAM_STATUS_RSP */,
+                    0xF5 /* LIVESTREAM_STATUS_NOTIF */
+            }
+    };
     // endregion
 
     private final Context _context;
@@ -132,9 +180,9 @@ public class GoProDevice {
     private final SharedPreferences sharedPreferences;
 
     private Timer actionTimer = new Timer();
-    private Timer execWatchdogTimer = new Timer();
 
-    private BtActionHelper btActionHelper;
+    // Initialize GattHelper with 100 ms delay and 5-second timeout
+    private GattHelper gattHelper;
 
     private final BluetoothDevice bluetoothDevice;
     private BluetoothGatt bluetoothGatt;
@@ -303,7 +351,7 @@ public class GoProDevice {
 
                 btRetryConnect = false;
             } else {
-                Log.e("onConnectionStateChange", "Gatt connect unsuccessful with status " + status);
+                Log.e("onConnectionStateChange", "Gatt connect not successful with status " + status);
                 showToast(res.getString(R.string.str_gatt_connect_problem), Toast.LENGTH_SHORT);
                 setDisconnected();
             }
@@ -369,48 +417,34 @@ public class GoProDevice {
 
                 if (btPaired) initCommunication();
             } else {
-                Log.e("onServicesDiscovered", "onServicesDiscovered unsuccessful with status " + status);
+                Log.e("onServicesDiscovered", "onServicesDiscovered not successful with status " + status);
                 showToast(res.getString(R.string.str_get_ble_services_problem), Toast.LENGTH_SHORT);
             }
         }
 
+        // Deprecated
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                parseBtData(characteristic.getUuid().toString(), characteristic.getValue(), false);
-            } else if (status == BluetoothGatt.GATT_FAILURE) {
-                Log.e("BLE", "onCharacteristicRead status GATT_FAILURE");
-            } else if (status == BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION) {
-                Log.e("BLE", "onCharacteristicRead status INSUFFICIENT_ENCRYPTION");
-            } else {
-                Log.e("BLE", "onCharacteristicRead status " + status);
-            }
-            if (btActionHelper != null) {
-                btActionHelper.resetGattInProgress();
-            }
+            handleCharacteristicRead(characteristic, status);
         }
 
         @Override
         public void onCharacteristicRead(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                parseBtData(characteristic.getUuid().toString(), characteristic.getValue(), false);
-            } else if (status == BluetoothGatt.GATT_FAILURE) {
-                Log.e("BLE", "onCharacteristicRead status GATT_FAILURE");
-            } else if (status == BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION) {
-                Log.e("BLE", "onCharacteristicRead status INSUFFICIENT_ENCRYPTION");
-            } else {
-                Log.e("BLE", "onCharacteristicRead status " + status);
-            }
-            if (btActionHelper != null) {
-                btActionHelper.resetGattInProgress();
-            }
+            handleCharacteristicRead(characteristic, status);
         }
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            if (characteristic == wifiSsidCharacteristic && btActionHelper != null) {
-                btActionHelper.resetGattInProgress();
-            } else if (characteristic == wifiPwCharacteristic && status == BluetoothGatt.GATT_SUCCESS) {
+            if (characteristic != settingsCharacteristic &&
+                    characteristic != commandCharacteristic &&
+                    characteristic != queryCharacteristic &&
+                    gattHelper != null) {
+                // Writings on these characteristics are responded to. 'gattHelper.processNext()' is executed after parsing the response so as not to disturb the data reception.
+                // So we only call 'gattHelper.processNext()' if another characteristic has been written to.
+                gattHelper.processNext();
+            }
+
+            if (characteristic == wifiPwCharacteristic && status == BluetoothGatt.GATT_SUCCESS) {
                 readWifiApSsid();
                 wifiApOn();
             }
@@ -419,15 +453,25 @@ public class GoProDevice {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             parseBtData(characteristic.getUuid().toString(), characteristic.getValue(), true);
+            // 'gattHelper.processNext()' is executed after parsing the response so as not to disturb the data reception.
         }
 
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-            if (btActionHelper != null) {
-                btActionHelper.resetGattInProgress();
-            }
+            if (gattHelper != null)
+                gattHelper.processNext();
+
             if (status != BluetoothGatt.GATT_SUCCESS)
                 Log.e("BLE", "onDescriptorWrite status " + status);
+            else {
+                // Characteristic notifications have been subscribed
+                if (descriptor.getCharacteristic() == commandRespCharacteristic) {
+                    getHardwareInfo();
+                    getUTCDateTime();
+                } else if (descriptor.getCharacteristic() == queryRespCharacteristic) {
+                    registerForAllStatusValueUpdates();
+                }
+            }
         }
 
         @Override
@@ -439,28 +483,36 @@ public class GoProDevice {
             } else {
                 Log.e("BLE", "onReadRemoteRssi status " + status);
             }
-            if (btActionHelper != null) {
-                btActionHelper.resetGattInProgress();
-            }
+
+            if (gattHelper != null)
+                gattHelper.processNext();
         }
     };
 
+    private void handleCharacteristicRead(@NonNull BluetoothGattCharacteristic characteristic, int status) {
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            parseBtData(characteristic.getUuid().toString(), characteristic.getValue(), false);
+        } else if (status == BluetoothGatt.GATT_FAILURE) {
+            Log.e("BLE", "onCharacteristicRead status GATT_FAILURE");
+        } else if (status == BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION) {
+            Log.e("BLE", "onCharacteristicRead status INSUFFICIENT_ENCRYPTION");
+        } else {
+            Log.e("BLE", "onCharacteristicRead status " + status);
+        }
+
+        if (gattHelper != null)
+            gattHelper.processNext();
+    }
+
     private void initCommunication() {
         if (!communicationInitiated && commandCharacteristic != null && commandRespCharacteristic != null && settingsCharacteristic != null && settingsRespCharacteristic != null && queryCharacteristic != null && queryRespCharacteristic != null && modelNoCharacteristic != null && wifiSsidCharacteristic != null && wifiPwCharacteristic != null && wifiStateCharacteristic != null) {
-
             communicationInitiated = true;
-
-            btActionHelper = new BtActionHelper();
-            btActionHelper.startExecution();
 
             startCrcNotification();
             startSrcNotification();
             startQrcNotification();
 
-            getHardwareInfo();
             readWifiApPw();
-            registerForAllStatusValueUpdates();
-            getUTCDateTime();
         }
     }
 
@@ -493,7 +545,10 @@ public class GoProDevice {
                             packBuffer.put(valueBytes, 1, putLen);
                         } catch (Exception e) {
                             Log.e("parseBtData", "Error: " + e);
-                            if (btActionHelper != null) btActionHelper.resetGattInProgress();
+
+                            if (gattHelper != null)
+                                gattHelper.processNext();
+
                             return;
                         }
 
@@ -501,12 +556,12 @@ public class GoProDevice {
 
                         if (packBuffer.remaining() <= 0) {
                             //all data received
-                            parseBtResponsePack();
-                            if (btActionHelper != null) btActionHelper.resetGattInProgress();
+                            handlePackage(characteristicUuid);
                         }
                     } else {
                         //Log.e("parseBtData", "Cont pack buffer was null");
-                        if (btActionHelper != null) btActionHelper.resetGattInProgress();
+                        if (gattHelper != null)
+                            gattHelper.processNext();
                     }
                 } else if (packBuffer != null) {
                     Log.e("parseBtData", "Invalid ContPack pack number received! lastPackNo: " + lastPackNo + ", currPackNo: " + currPackNo + " for commandId: " + lastCommandId);
@@ -518,7 +573,7 @@ public class GoProDevice {
                 int headerLength = header.getHeaderLength();
                 int msgLen = header.getMsgLength();
                 int commandId = valueBytes[headerLength];
-                int error = valueBytes[headerLength + 1];
+                //int error = valueBytes[headerLength + 1];
                 int dataLen = valueBytes.length - headerLength;
 
                 if (packBuffer != null && packBuffer.remaining() > 0) {
@@ -537,83 +592,7 @@ public class GoProDevice {
                 // Log.e("GOPRO RESPONSE", "parseBtData() msgLen: " + msgLen + ", dataLen: " + dataLen + ", commandId: " + commandId + ", error: " + error + ", packBuffer.remaining: " + packBuffer.remaining());
 
                 if (packBuffer.remaining() <= 0) {
-                    //all data received
-                    parseBtResponsePack();
-
-                    if (btActionHelper != null) btActionHelper.resetGattInProgress();
-
-                    if (error == 0) {
-                        switch (characteristicUuid) {
-                            case commandRespUUID:
-                                if (commandId == 0x0d) {
-                                    showToast(_context.getResources().getString(R.string.str_set_dt_success), Toast.LENGTH_SHORT);
-                                    getUTCDateTime();
-                                } else if (commandId == 0x0E && valueBytes.length >= 11) {
-                                    // UTC DateTime received
-                                    int year = ((valueBytes[4] & 0xFF) << 8) | (valueBytes[5] & 0xFF);
-                                    int month = valueBytes[6];
-                                    int day = valueBytes[7];
-                                    int hour = valueBytes[8];
-                                    int minute = valueBytes[9];
-                                    int second = valueBytes[10];
-
-                                    deviceTime = Calendar.getInstance();
-                                    deviceTime.set(year, month - 1, day, hour, minute, second);
-
-                                    // Check whether the difference from the current time is 15 seconds or more
-                                    Calendar currentTime = Calendar.getInstance();
-                                    long timeDifference = Math.abs(currentTime.getTimeInMillis() - deviceTime.getTimeInMillis());
-                                    if (timeDifference >= 15000) {
-                                        setUTCDateTime();
-                                        showToast(String.format(_context.getResources().getString(R.string.str_clock_is_wrong), displayName), Toast.LENGTH_LONG);
-                                    }
-
-                                    // Update the device time continuously
-                                    deviceTimeUpdateHandler.removeCallbacksAndMessages(null);
-                                    deviceTimeUpdateHandler.post(timeUpdater);
-                                } else if (commandId == 0x17) {
-                                    // AP Setting written
-                                    queryAllStatusValues();
-                                }
-                                break;
-                            case settingsRespUUID:
-                                if (!((valueBytes.length >= 4 && valueBytes[3] == 91) || (valueBytes.length >= 3 && valueBytes[1] == 91))) {
-                                    // A setting was changed. Get an update of the current settings
-                                    if (providesAvailableOptions) {
-                                        getAvailableOptions();
-                                    } else {
-                                        getAllSettings();
-                                    }
-                                }
-                                break;
-                            case queryRespUUID:
-                                if (valueBytes.length >= 5) {
-                                    handleQueryResponse(valueBytes);
-                                } else if (commandId == 50) {
-                                    if (valueBytes.length == 3 && valueBytes[2] == 0) {
-                                        // GoPro does not provide available setting options
-                                        providesAvailableOptions = false;
-                                        Log.i("GoProDevice", "'" + btDeviceName + "', model '" + modelName + "' does not provide the available setting options!");
-                                    }
-                                }
-                                break;
-                        }
-                    } else {
-                        if (Objects.equals(characteristicUuid, commandRespUUID) && commandId == 0x0d)
-                            showToast(_context.getResources().getString(R.string.str_set_dt_not_success), Toast.LENGTH_SHORT);
-
-                        switch (error) {
-                            case 1:
-                                LE = "Error";
-                                break;
-                            case 2:
-                                LE = "Invalid Parameter";
-                                break;
-                            default:
-                                LE = "Unknown error";
-                        }
-                        Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
-                    }
+                    handlePackage(characteristicUuid);
                 }
             }
         } else { // onCharacteristicRead
@@ -644,8 +623,129 @@ public class GoProDevice {
         }
 
         doIfBtConnected();
+    }
+
+    private void handlePackage(String characteristicUuid) {
+        if (isProtobuf(packBuffer.array())) {
+            parseProtobuf();
+        } else {
+            int commandId = packBuffer.get(0) & 0xFF;
+            int error = packBuffer.get(1);
+
+            if (error == 0) {
+                if (Objects.equals(characteristicUuid, settingsRespUUID)) {
+                    if (commandId != 91 /* keep alive */) {
+                        // A setting was changed. Get an update of the current settings
+                        if (providesAvailableOptions) {
+                            getAvailableOptions();
+                        } else {
+                            getAllSettings();
+                        }
+                    }
+                } else {
+                    parseBtResponsePack();
+                }
+            } else {
+                logErrorResponse(error, commandId);
+            }
+        }
+
+        packBuffer.clear();
+        packBuffer = null;
+
+        if (gattHelper != null)
+            gattHelper.processNext();
 
         if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
+    }
+
+    private void parseProtobuf() {
+        /**
+         * Steps to compiling protocol buffers:
+         * 1. Download compiler from 'https://github.com/protocolbuffers/protobuf/releases/latest' and extract
+         * 2. Download needed protocol buffers from 'https://github.com/gopro/OpenGoPro/tree/main/protobuf'
+         * 3. Copy or move downloaded protocol buffers to path of protoc
+         * 3. run 'protoc -I=C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin --java_out=C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin\java C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin\your.proto'
+         */
+        // Remove FeatureID and ActionID from packBuffer to parse protobuf
+        byte[] byteArray = new byte[packBuffer.limit() - 2];
+        packBuffer.position(2);
+        packBuffer.get(byteArray);
+
+        int responseActionID = packBuffer.get(1) & 0xff;
+
+        Log.d("parseBtData", "Protobuf msg received with responseActionID: " + responseActionID);
+
+        switch (responseActionID) {
+            // Network Management Feature 0x02
+            case 11:
+                // Handle case 0x0B
+                // Async status update response
+                break;
+            case 12:
+                // Handle case 0x0C
+                // Async status update response
+                break;
+            case 130:
+                // Handle case 0x82
+                // Start scan response
+                break;
+            case 131:
+                // Handle case 0x83
+                // Get AP entries response
+                break;
+            case 132:
+                // Handle case 0x84
+                // Connect AP response
+                break;
+            case 133:
+                // Handle case 0x85
+                // Connect new AP response
+                break;
+            case 233:
+                // Handle case 0xE9
+                // Request set camera control status response
+                break;
+            case 235:
+                // Handle case 0xEB
+                // Request set turbo active response
+                break;
+            case 249:
+                // Handle case 0xF9
+                // Request set live stream response
+                break;
+            case 242: // Handle case 0xF2 (Synchronously via initial response to RequestGetPresetStatus)
+            case 243: // Handle case 0xF3 (Asynchronously when Preset change if registered in RequestGetPresetStatus)
+                handlePresetStatusNotification(byteArray);
+                break;
+            case 244:
+                // Handle case 0xF4
+                // Request get live stream status response
+                break;
+            case 245:
+                // Handle case 0xF5
+                // Async status update response
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void logErrorResponse(int error, int commandId) {
+        if (commandId == 91 /* keep alive */)
+            return;
+
+        switch (error) {
+            case 1:
+                LE = "Error";
+                break;
+            case 2:
+                LE = "Invalid Parameter";
+                break;
+            default:
+                LE = "Unknown error";
+        }
+        Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
     }
 
     private boolean isProtobuf(byte[] response) {
@@ -670,7 +770,7 @@ public class GoProDevice {
         return false;
     }
 
-    private void handleQueryResponse(byte[] valueBytes) {
+    /*private void handleQueryResponse(byte[] valueBytes) {
         GoHeader header = new GoHeader(valueBytes);
 
         int headerLength = header.getHeaderLength();
@@ -720,22 +820,7 @@ public class GoProDevice {
                 index += nextLen + 2;
             }
         }
-    }
-
-    private void sendBtPairComplete() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            //send to GP-0091: {msg_len, 0x03, 0x01, 0x08, 0x00, 0x12, dev_name_len, dev_name}
-            byte[] msg = {0x0f, 0x03, 0x01, 0x08, 0x00, 0x12, 0x09, 'G', 'o', 'E', 'a', 's', 'y', 'P', 'r', 'o'};
-            if (nwManCmdCharacteristic != null && nwManCmdCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(nwManCmdCharacteristic)) {
-                freshPaired = false;
-            } else {
-                Log.e("sendBtPairComplete", "not sent");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
-    }
+    }*/
 
     private void handleModelId() {
         if (modelID >= HERO11_BLACK) {
@@ -781,267 +866,213 @@ public class GoProDevice {
 
     private void parseBtResponsePack() {
         byte[] byteArray = packBuffer.array();
-        packBuffer.clear();
-        packBuffer = null;
 
-        if (isProtobuf(byteArray)) {
-            // TODO parse protobuf response
-            // int msgFeatureID = valueBytes[0] & 0xff;
-            int responseActionID = byteArray[1] & 0xff;
+        int commandId = byteArray[0] & 0xFF;
+        //int error = byteArray[1];
+        int nextStart = 2;
 
-            Log.d("parseBtData", "Protobuf msg received with responseActionID: " + responseActionID);
+        ByteBuffer byteBuffer;
+        int nextLen;
 
-            switch (responseActionID) {
-                // Network Management Feature 0x02
-                case 11:
-                    // Handle case 0x0B
-                    // Async status update response
-                    break;
-                case 12:
-                    // Handle case 0x0C
-                    // Async status update response
-                    break;
-                case 130:
-                    // Handle case 0x82
-                    // Start scan response
-                    break;
-                case 131:
-                    // Handle case 0x83
-                    // Get AP entries response
-                    break;
-                case 132:
-                    // Handle case 0x84
-                    // Connect AP response
-                    break;
-                case 133:
-                    // Handle case 0x85
-                    // Connect new AP response
-                    break;
+        switch (commandId) {
+            case 13:
+                // DateTime successfully set
+                showToast(_context.getResources().getString(R.string.str_set_dt_success), Toast.LENGTH_SHORT);
+                getUTCDateTime();
+                return;
+            case 14:
+                if (byteArray.length >= 11) {
+                    // UTC DateTime received
+                    int year = ((byteArray[3] & 0xFF) << 8) | (byteArray[4] & 0xFF);
+                    int month = byteArray[5];
+                    int day = byteArray[6];
+                    int hour = byteArray[7];
+                    int minute = byteArray[8];
+                    int second = byteArray[9];
 
-                // Command Feature 0xF1
-                case 233:
-                    // Handle case 0xE9
-                    // Request set camera control status response
-                    break;
-                case 235:
-                    // Handle case 0xEB
-                    // Request set turbo active response
+                    deviceTime = Calendar.getInstance();
+                    deviceTime.set(year, month - 1, day, hour, minute, second);
 
-                    // Implemented and it works
-                    break;
-                case 249:
-                    // Handle case 0xF9
-                    // Request set live stream response
-                    break;
+                    // Check whether the difference from the current time is 15 seconds or more
+                    Calendar currentTime = Calendar.getInstance();
+                    long timeDifference = Math.abs(currentTime.getTimeInMillis() - deviceTime.getTimeInMillis());
+                    if (timeDifference >= 15000) {
+                        setUTCDateTime();
+                        showToast(String.format(_context.getResources().getString(R.string.str_clock_is_wrong), displayName), Toast.LENGTH_LONG);
+                    }
 
-                // Query Feature 0xF5
-                case 242: // Handle case 0xF2 (Request get preset status response)
-                case 243: // Handle case 0xF3 (Async status update response)
-                    handlePresetStatusResponse(byteArray);
-                    break;
-                case 244:
-                    // Handle case 0xF4
-                    // Request get live stream status response
-                    break;
-                case 245:
-                    // Handle case 0xF5
-                    // Async status update response
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            int commandId = byteArray[0] & 0xFF;
-            int error = byteArray[1];
-            int nextStart = 2;
-
-            if (error == 0) { // success
-                ByteBuffer byteBuffer;
-                int nextLen;
-
-                switch (commandId) {
-                    case 83:
-                        // response for registerForAllStatusValueUpdates()
-                        autoValueUpdatesRegistered = true;
-
-                        for (int index = nextStart; index < byteArray.length; ) {
-                            int statusID = byteArray[index] & 0xff;
-                            if (byteArray.length > index + 1) nextLen = byteArray[index + 1];
-                            else break;
-
-                            if (nextLen > 0) {
-                                byteBuffer = ByteBuffer.allocate(nextLen);
-                                byteBuffer.put(byteArray, index + 2, nextLen);
-                                handleStatusData(statusID, byteBuffer);
-                            }
-
-                            index += nextLen + 2;
-                        }
-                        break;
-                    case 60:
-                        // Hardware info -> Model ID, model name, board type, firmware version, serial number, AP SSID, AP MAC Address
-                        nextLen = byteArray[nextStart];
-
-                        // Model ID
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        byteBuffer.flip();
-                        modelID = byteBuffer.getInt();
-                        handleModelId();
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // model name
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        modelName = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-                        sharedPreferences.edit().putString("model_name_" + btDeviceName, modelName).apply();
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // board type
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        boardType = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // firmware
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        fwVersion = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // serial number
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        serialNumber = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // AP SSID
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        wifiSSID = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-                        saveNewDisplayName(wifiSSID);
-
-                        nextStart = nextStart + 1 + nextLen;
-                        nextLen = byteArray[nextStart];
-
-                        // AP MAC Address
-                        byteBuffer = ByteBuffer.allocate(nextLen);
-                        byteBuffer.put(byteArray, nextStart + 1, nextLen);
-                        StringBuilder sb = new StringBuilder(new String(byteBuffer.array(), StandardCharsets.UTF_8).trim());
-                        sb.insert(2, ':');
-                        sb.insert(5, ':');
-                        sb.insert(8, ':');
-                        sb.insert(11, ':');
-                        sb.insert(14, ':');
-                        wifiBSSID = sb.toString().toUpperCase();
-                        break;
-                    case 147: // Why does Hero12 send 147 instead of 19?
-                    case 19:
-                        // All status values
-                        for (int index = nextStart; index < byteArray.length; ) {
-                            int statusID = byteArray[index] & 0xff;
-                            if (byteArray.length > index + 1) nextLen = byteArray[index + 1];
-                            else break;
-
-                            if (nextLen > 0) {
-                                byteBuffer = ByteBuffer.allocate(nextLen);
-                                byteBuffer.put(byteArray, index + 2, nextLen);
-                                handleStatusData(statusID, byteBuffer);
-                            }
-
-                            index += nextLen + 2;
-                        }
-                        break;
-                    case 162:
-                    case 50:
-                        // Available option IDs for all settings
-                        availableSettingsOptions = new ArrayList<>();
-
-                        for (int index = nextStart; index < byteArray.length; ) {
-                            int settingId = byteArray[index] & 0xff;
-                            if (byteArray.length > index + 1) nextLen = byteArray[index + 1];
-                            else break;
-
-                            if (nextLen > 0) {
-                                int optionId = byteArray[index + 2];
-
-                                availableSettingsOptions.add(new Pair<>(settingId, optionId));
-                            }
-
-                            index += nextLen + 2;
-                        }
-
-                        getAllSettings();
-                        break;
-                    case 146:
-                    case 18:
-                        // All settings
-                        goSettings = new ArrayList<>();
-
-                        for (int index = nextStart; index < byteArray.length; ) {
-                            int settingID = byteArray[index] & 0xff;
-                            if (byteArray.length > index + 1) {
-                                nextLen = byteArray[index + 1];
-                                if (byteArray.length < index + 2 + nextLen) {
-                                    //nextLen = byteArray.length - index - 2;
-                                    break;
-                                }
-                            } else {
-                                break;
-                            }
-
-                            if (nextLen > 0) {
-                                byteBuffer = ByteBuffer.allocate(nextLen);
-                                byteBuffer.put(byteArray, index + 2, nextLen);
-                                handleSettingData(settingID, byteBuffer);
-                            }
-
-                            index += nextLen + 2;
-                        }
-
-                        goSettings.sort(Comparator.comparing(GoSetting::getGroupName));
-                        goSettings.sort(Comparator.comparingInt(GoSetting::getSettingId));
-
-                        if (settingsChangedCallback != null)
-                            settingsChangedCallback.onSettingsChanged();
-                        break;
-                    case 59:
-                        // Settings JSON gzip
-                        byteBuffer = ByteBuffer.allocate(byteArray.length - 2);
-                        byteBuffer.put(byteArray, 2, byteArray.length - 2);
-                        byteBuffer.flip();
-
-                        String json_str = decompress(byteBuffer.array());
-                        Log.e("JSON", json_str);
-                        break;
+                    // Update the device time continuously
+                    deviceTimeUpdateHandler.removeCallbacksAndMessages(null);
+                    deviceTimeUpdateHandler.post(timeUpdater);
                 }
-            } else {
-                switch (error) {
-                    case 1:
-                        LE = "Error";
+                return;
+            case 23:
+                // AP Setting written
+                queryAllStatusValues();
+                return;
+            case 60:
+                // Hardware info -> Model ID, model name, board type, firmware version, serial number, AP SSID, AP MAC Address
+                nextLen = byteArray[nextStart];
+
+                // Model ID
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                byteBuffer.flip();
+                modelID = byteBuffer.getInt();
+                handleModelId();
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // model name
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                modelName = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+                sharedPreferences.edit().putString("model_name_" + btDeviceName, modelName).apply();
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // board type
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                boardType = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // firmware
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                fwVersion = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // serial number
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                serialNumber = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // AP SSID
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                wifiSSID = new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
+                saveNewDisplayName(wifiSSID);
+
+                nextStart = nextStart + 1 + nextLen;
+                nextLen = byteArray[nextStart];
+
+                // AP MAC Address
+                byteBuffer = ByteBuffer.allocate(nextLen);
+                byteBuffer.put(byteArray, nextStart + 1, nextLen);
+                StringBuilder sb = new StringBuilder(new String(byteBuffer.array(), StandardCharsets.UTF_8).trim());
+                sb.insert(2, ':');
+                sb.insert(5, ':');
+                sb.insert(8, ':');
+                sb.insert(11, ':');
+                sb.insert(14, ':');
+                wifiBSSID = sb.toString().toUpperCase();
+                return;
+            case 83:
+                // response for registerForAllStatusValueUpdates()
+                autoValueUpdatesRegistered = true;
+            case 147: // Why does Hero12 send 147 instead of 19?
+            case 19:
+                // All status values
+                for (int index = nextStart; index < byteArray.length; ) {
+                    int statusID = byteArray[index] & 0xff;
+
+                    if (byteArray.length > index + 1)
+                        nextLen = byteArray[index + 1];
+                    else
                         break;
-                    case 2:
-                        LE = "Invalid Parameter";
-                        break;
-                    default:
-                        LE = "Unknown error";
+
+                    if (nextLen > 0) {
+                        byteBuffer = ByteBuffer.allocate(nextLen);
+                        byteBuffer.put(byteArray, index + 2, nextLen);
+                        handleStatusData(statusID, byteBuffer);
+                    }
+
+                    index += nextLen + 2;
                 }
-                Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
-            }
+                return;
+            case 162:
+            case 50:
+                if (byteArray.length == 2) {
+                    // GoPro does not provide available setting options
+                    providesAvailableOptions = false;
+                    Log.i("GoProDevice", "'" + btDeviceName + "', model '" + modelName + "' does not provide the available setting options!");
+                } else {
+                    // Available option IDs for all settings
+                    availableSettingsOptions = new ArrayList<>();
+
+                    for (int index = nextStart; index < byteArray.length; ) {
+                        int settingId = byteArray[index] & 0xff;
+                        if (byteArray.length > index + 1) nextLen = byteArray[index + 1];
+                        else break;
+
+                        if (nextLen > 0) {
+                            int optionId = byteArray[index + 2];
+
+                            availableSettingsOptions.add(new Pair<>(settingId, optionId));
+                        }
+
+                        index += nextLen + 2;
+                    }
+                }
+
+                getAllSettings();
+                return;
+            case 146:
+            case 18:
+                // All settings
+                goSettings = new ArrayList<>();
+
+                for (int index = nextStart; index < byteArray.length; ) {
+                    int settingID = byteArray[index] & 0xff;
+                    if (byteArray.length > index + 1) {
+                        nextLen = byteArray[index + 1];
+                        if (byteArray.length < index + 2 + nextLen) {
+                            //nextLen = byteArray.length - index - 2;
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+
+                    if (nextLen > 0) {
+                        byteBuffer = ByteBuffer.allocate(nextLen);
+                        byteBuffer.put(byteArray, index + 2, nextLen);
+                        handleSettingData(settingID, byteBuffer);
+                    }
+
+                    index += nextLen + 2;
+                }
+
+                goSettings.sort(Comparator.comparing(GoSetting::getGroupName));
+                goSettings.sort(Comparator.comparingInt(GoSetting::getSettingId));
+
+                if (settingsChangedCallback != null)
+                    settingsChangedCallback.onSettingsChanged();
+                return;
+            case 59:
+                // Settings JSON gzip
+                byteBuffer = ByteBuffer.allocate(byteArray.length - 2);
+                byteBuffer.put(byteArray, 2, byteArray.length - 2);
+                byteBuffer.flip();
+
+                String json_str = decompress(byteBuffer.array());
+                Log.i("JSON", json_str);
+                return;
+            default:
         }
     }
 
-    private void handlePresetStatusResponse(byte[] byteArray) {
+    private void handlePresetStatusNotification(byte[] byteArray) {
         ArrayList<GoProtoPreset> newGoProtoPresets = new ArrayList<>();
         try {
             PresetStatus.NotifyPresetStatus notifyPresetStatus = PresetStatus.NotifyPresetStatus.parseFrom(byteArray);
@@ -1064,8 +1095,8 @@ public class GoProDevice {
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         }
-        if (newGoProtoPresets.size() > 0) {
-            if (goProtoPresets.size() <= 0) {
+        if (!newGoProtoPresets.isEmpty()) {
+            if (goProtoPresets.isEmpty()) {
                 goProtoPresets = newGoProtoPresets;
             } else {
                 // replace by id
@@ -1081,7 +1112,7 @@ public class GoProDevice {
     }
 
     public boolean hasProtoPresets() {
-        return goProtoPresets.size() > 0;
+        return !goProtoPresets.isEmpty();
     }
 
     public ArrayList<GoProtoPreset> getGoProtoPresets() {
@@ -1158,8 +1189,9 @@ public class GoProDevice {
                 int presetID = buffer.getInt();
                 preset = new GoPreset(_context, presetID);
                 for (GoProtoPreset goProtoPreset : goProtoPresets) {
-                    if (goProtoPreset.getId() == presetID)
+                    if (goProtoPreset.getId() == presetID) {
                         protoPreset = goProtoPreset;
+                    }
                 }
                 break;
             case 114: // Camera control status ID as integer
@@ -1216,7 +1248,6 @@ public class GoProDevice {
 
             //start timed actions
             initTimedActions();
-            initExecWatchdog();
 
             requestGetPresetStatus();
 
@@ -1236,29 +1267,22 @@ public class GoProDevice {
     }
 
     public void disconnectGoProDevice() {
-        _disconnectGoProDevice(false);
+        disconnectGoProDevice(false);
     }
 
     public void disconnectGoProDeviceByUser() {
-        _disconnectGoProDevice(true);
+        disconnectGoProDevice(true);
     }
 
-    private void _disconnectGoProDevice(boolean withoutReconnect) {
+    private void disconnectGoProDevice(boolean withoutReconnect) {
         Log.d("disconnectBt", "Disconnect forced");
         this.shouldNotBeReconnected = withoutReconnect;
         if (isWifiConnected()) wiFiHelper.disconnectWifi();
 
         if (bluetoothGatt != null) {
-            if (commandRespCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(commandRespCharacteristic, false);
-
-            if (settingsRespCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(settingsRespCharacteristic, false);
-
-            if (queryRespCharacteristic != null)
-                bluetoothGatt.setCharacteristicNotification(queryRespCharacteristic, false);
-
-            bluetoothGatt.disconnect();
+            gattHelper.setNotification(commandRespCharacteristic, false, null);
+            gattHelper.setNotification(settingsRespCharacteristic, false, null);
+            gattHelper.setNotification(queryRespCharacteristic, false, success -> gattHelper.disconnect());
         }
 
         commandCharacteristic = null;
@@ -1285,16 +1309,11 @@ public class GoProDevice {
             bluetoothGatt = null;
         }
 
-        execWatchdogTimer.cancel();
-        execWatchdogTimer.purge();
-
         actionTimer.cancel();
         actionTimer.purge();
 
-        if (btActionHelper != null) {
-            btActionHelper.release();
-            btActionHelper = null;
-        }
+        if (gattHelper != null)
+            gattHelper.reset();
 
         if (packBuffer != null) {
             packBuffer.clear();
@@ -1316,99 +1335,49 @@ public class GoProDevice {
     }
 
     private void startCrcNotification() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (commandRespCharacteristic == null || bluetoothGatt == null) {
-                Log.e("startCrcNotification", "Error 4");
-                showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
-                disconnectGoProDevice();
-                return;
-            }
-
-            if (bluetoothGatt.setCharacteristicNotification(commandRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = commandRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startCrcNotification", "Error 3");
-                        showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
-                        disconnectGoProDevice();
-                    }
-                } else {
-                    Log.e("startCrcNotification", "Error 2");
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
-                }
-            } else {
-                Log.e("startCrcNotification", "Error 1");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        setNotification(commandRespCharacteristic, "startCrcNotification");
     }
 
     private void startSrcNotification() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (settingsRespCharacteristic == null || bluetoothGatt == null) {
-                Log.e("startSrcNotification", "Error 4");
-                showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
-                disconnectGoProDevice();
-                return;
-            }
-
-            if (bluetoothGatt.setCharacteristicNotification(settingsRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = settingsRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startSrcNotification", "Error 3");
-                        showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
-                        disconnectGoProDevice();
-                    }
-                } else {
-                    Log.e("startSrcNotification", "Error 2");
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
-                }
-            } else {
-                Log.e("startSrcNotification", "Error 1");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        setNotification(settingsRespCharacteristic, "startSrcNotification");
     }
 
     private void startQrcNotification() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (queryRespCharacteristic == null || bluetoothGatt == null) {
-                Log.e("startQrcNotification", "Error 4");
-                showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
-                disconnectGoProDevice();
-                return;
-            }
+        setNotification(queryRespCharacteristic, "startQrcNotification");
+    }
 
-            if (bluetoothGatt.setCharacteristicNotification(queryRespCharacteristic, true)) {
-                BluetoothGattDescriptor descriptor = queryRespCharacteristic.getDescriptors().get(0);
-                if (descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
-                    if (!bluetoothGatt.writeDescriptor(descriptor)) {
-                        Log.e("startQrcNotification", "Error 3");
+    private void setNotification(BluetoothGattCharacteristic characteristic, String tag) {
+        if (gattHelper == null || characteristic == null || !gattHelper.setNotification(characteristic, true, success -> {
+            if (success) {
+                BluetoothGattDescriptor descriptor = characteristic.getDescriptors().get(0);
+                if (!gattHelper.writeDescriptor(descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE, success2 -> {
+                    if (!success2) {
+                        Log.e(tag, "Error 2");
                         showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
                         disconnectGoProDevice();
                     }
-                } else {
-                    Log.e("startQrcNotification", "Error 2");
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
+                })) {
+                    Log.e(tag, "Error 3");
+                    showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+                    disconnectGoProDevice();
                 }
             } else {
-                Log.e("startQrcNotification", "Error 1");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
+                Log.e(tag, "Error 4");
+                showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+                disconnectGoProDevice();
             }
-        });
+        })) {
+            Log.e(tag, "Error 1");
+            showToast(String.format(res.getString(R.string.str_connect_cam_problem), displayName), Toast.LENGTH_SHORT);
+            disconnectGoProDevice();
+        }
+    }
+
+    private void sendBtPairComplete() {
+        byte[] msg = {0x0f, 0x03, 0x01, 0x08, 0x00, 0x12, 0x09, 'G', 'o', 'E', 'a', 's', 'y', 'P', 'r', 'o'};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(nwManCmdCharacteristic, msg, success -> freshPaired = success)) {
+            Log.e("sendBtPairComplete", "not sent");
+        }
     }
 
     public void setNewCamName(String newName) {
@@ -1417,240 +1386,139 @@ public class GoProDevice {
         }
         wifiApOff();
 
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            byte[] msg = newName.getBytes(StandardCharsets.UTF_8);
-
-            if (!(wifiSsidCharacteristic != null && wifiSsidCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiSsidCharacteristic))) {
-                Log.e("setCamName", "not sent");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
+        // The name of the camera is also its Wifi SSID, so we change the SSID to change the camera name
+        byte[] ssidBytes = newName.getBytes(StandardCharsets.UTF_8);
+        if (gattHelper == null || !gattHelper.writeCharacteristic(wifiSsidCharacteristic, ssidBytes, success -> {
+            if (success) {
+                // The password must then also be written so that the camera accepts the new SSID
+                byte[] pwBytes = wifiPSK.getBytes(StandardCharsets.UTF_8);
+                if (gattHelper == null || !gattHelper.writeCharacteristic(wifiPwCharacteristic, pwBytes, null)) {
+                    Log.e("setCamName", "Password not sent");
                 }
             }
-        });
-
-        // The password must then also be written so that the camera accepts the new SSID
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            byte[] msg = wifiPSK.getBytes(StandardCharsets.UTF_8);
-
-            if (!(wifiPwCharacteristic != null && wifiPwCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(wifiPwCharacteristic))) {
-                Log.e("setCamName", "not sent");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        })) {
+            Log.e("setCamName", "SSID not sent");
+            return;
+        }
     }
     //endregion
 
     //region BT Readings
 
     private void readWifiApSsid() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (bluetoothGatt == null || wifiSsidCharacteristic == null || btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiSsidCharacteristic)) {
-                Log.e("readWifiApSsid", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        if (gattHelper == null || !gattHelper.readCharacteristic(wifiSsidCharacteristic, null)) {
+            Log.e("readWifiApSsid", "failed action");
+        }
     }
-
 
     private void readWifiApPw() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (bluetoothGatt == null || wifiPwCharacteristic == null || btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiPwCharacteristic)) {
-                Log.e("readWifiApPw", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        if (gattHelper == null || !gattHelper.readCharacteristic(wifiPwCharacteristic, null)) {
+            Log.e("readWifiApPw", "failed action");
+        }
     }
-
 
     private void readWifiApState() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (bluetoothGatt == null || wifiStateCharacteristic == null || btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-            if (!bluetoothGatt.readCharacteristic(wifiStateCharacteristic)) {
-                Log.e("readWifiApState", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        if (gattHelper == null || !gattHelper.readCharacteristic(wifiStateCharacteristic, null)) {
+            Log.e("readWifiApState", "failed action");
+        }
     }
 
-
     private void readBtRssi() {
-        if (btActionHelper != null && !((MyApplication) _application).isAppPaused())
-            btActionHelper.queueActionIfNotQueued(() -> {
-                if (bluetoothGatt == null || btConnectionStage < 2) {
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
-                    return;
-                }
-                if (!bluetoothGatt.readRemoteRssi()) {
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
-                }
-            });
+        if (((MyApplication) _application).isAppPaused())
+            return;
+
+        if (gattHelper == null || !gattHelper.readRemoteRssi()) {
+            Log.e("readBtRssi", "failed action");
+        }
     }
     //endregion
 
     //region BT Settings (0x0074)
 
     private void keepAlive() {
-        if (btActionHelper != null) btActionHelper.queueActionIfNotQueued(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-
-            if (modelID > HERO8_BLACK) {
-                byte[] msg = {0x03, 0x5B, 0x01, 0x42};
-                if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
-                    if (btActionHelper != null) {
-                        btActionHelper.resetGattInProgress();
-                    }
-                } else {
+        if (modelID > HERO8_BLACK) {
+            byte[] msg = {0x03, 0x5B, 0x01, 0x42};
+            if (gattHelper == null || !gattHelper.writeCharacteristic(settingsCharacteristic, msg, success -> {
+                if (success) {
                     lastKeepAlive = new Date();
+                } else {
+                    Log.e("keepAlive", "not sent");
                 }
-            } else {
-                // TODO another way to keep alive for hero 8 and downwards?
-                // Even the GoPro app writes 03 5b 01 42 as Keep Alive and gets an error back from the GoPro
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
+            })) {
+                Log.e("keepAlive", "not sent");
             }
-        });
+        } /* else {
+            // Even the GoPro app writes '03 5b 01 42' as Keep Alive and gets an error back from the GoPro
+        } */
     }
 
 
     public void setSetting(int settingId, int optionId) {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x03, (byte) settingId, 0x01, (byte) optionId};
-            if (settingsCharacteristic == null || !settingsCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(settingsCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x03, (byte) settingId, 0x01, (byte) optionId};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(settingsCharacteristic, msg, null)) {
+            Log.e("setSetting", "not sent");
+        }
     }
     //endregion
 
     //region BT Commands (0x0072)
 
     public void getHardwareInfo() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x3C};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x01, 0x3C};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("getHardwareInfo", "not sent");
+        }
     }
-
 
     public void getUTCDateTime() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x0E};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x01, 0x0E};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("getUTCDateTime", "not sent");
+        }
     }
 
-
     public void setUTCDateTime() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            Calendar currentTime = Calendar.getInstance();
+        byte[] msg = getDateTimeBytes();
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("setUTCDateTime", "not sent");
+        }
+    }
 
-            int year = currentTime.get(Calendar.YEAR);
-            int month = currentTime.get(Calendar.MONTH) + 1; // Month is 0 indexed
-            int day = currentTime.get(Calendar.DAY_OF_MONTH);
-            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = currentTime.get(Calendar.MINUTE);
-            int second = currentTime.get(Calendar.SECOND);
+    private static byte[] getDateTimeBytes() {
+        Calendar currentTime = Calendar.getInstance();
 
-            byte yyH = (byte) ((year >> 8) & 0xFF);
-            byte yyL = (byte) (year & 0xFF);
-            byte[] msg = {0x09, 0x0d, 0x07, yyH, yyL, (byte) month, (byte) day, (byte) hour, (byte) minute, (byte) second};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        int year = currentTime.get(Calendar.YEAR);
+        int month = currentTime.get(Calendar.MONTH) + 1; // Month is 0 indexed
+        int day = currentTime.get(Calendar.DAY_OF_MONTH);
+        int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = currentTime.get(Calendar.MINUTE);
+        int second = currentTime.get(Calendar.SECOND);
+
+        byte yyH = (byte) ((year >> 8) & 0xFF);
+        byte yyL = (byte) (year & 0xFF);
+        return new byte[]{0x09, 0x0d, 0x07, yyH, yyL, (byte) month, (byte) day, (byte) hour, (byte) minute, (byte) second};
     }
 
 
     public void setSubMode(int mode, int subMode) {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x05, 0x03, 0x01, (byte) mode, 0x01, (byte) subMode};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            } else {
+        byte[] msg = {0x05, 0x03, 0x01, (byte) mode, 0x01, (byte) subMode};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success && !autoValueUpdatesRegistered) {
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException e) {
@@ -1658,203 +1526,132 @@ public class GoProDevice {
                 }
                 queryAllStatusValues();
             }
-        });
+        })) {
+            Log.e("setSubMode", "not sent");
+        }
     }
 
-    /*public void getSettingsJson() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+    public void getSettingsJson() {
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x3B};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                Log.d("JSON", "getSettingsJson() sent");
-            } else {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
-    }*/
+        byte[] msg = {0x01, 0x3B};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("getSettingsJson", "not sent");
+        }
+    }
 
     public void shutterOn() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] shutterOn = {0x03, 0x01, 0x01, 0x01};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(shutterOn) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x03, 0x01, 0x01, 0x01};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("shutterOn", "not sent");
+        }
     }
 
 
     public void shutterOff() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] shutterOff = {0x03, 0x01, 0x01, 0x00};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(shutterOff) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x03, 0x01, 0x01, 0x00};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("shutterOff", "not sent");
+        }
     }
 
 
     public void sleep() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] camSleep = {0x01, 0x05};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(camSleep) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
+        byte[] msg = {0x01, 0x05};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success) {
                 connectBtCallback = null;
                 disconnectGoProDeviceByUser();
-            } else {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("sleep", "not sent");
+        }
     }
 
 
     public void wifiApOn() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
+
+        byte[] msg = {0x03, 0x17, 0x01, 0x01};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success && !autoValueUpdatesRegistered) {
+                readWifiApState();
             }
-            byte[] wifiApOn = {0x03, 0x17, 0x01, 0x01};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOn) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (!autoValueUpdatesRegistered) readWifiApState();
-            } else {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        })) {
+            Log.e("wifiApOn", "not sent");
+        }
     }
 
 
     public void wifiApOff() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-            if (isWifiConnected()) wiFiHelper.disconnectWifi();
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] wifiApOff = {0x03, 0x17, 0x01, 0x00};
-            if (commandCharacteristic != null && commandCharacteristic.setValue(wifiApOff) && bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (!autoValueUpdatesRegistered) readWifiApState();
-            } else {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
+        if (isWifiConnected())
+            wiFiHelper.disconnectWifi();
+
+        byte[] msg = {0x03, 0x17, 0x01, 0x00};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success && !autoValueUpdatesRegistered) {
+                readWifiApState();
             }
-        });
+        })) {
+            Log.e("wifiApOff", "not sent");
+        }
     }
 
 
     public void locateOn() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x03, 0x16, 0x01, 0x01};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x03, 0x16, 0x01, 0x01};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("locateOn", "not sent");
+        }
     }
 
 
     public void locateOff() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x03, 0x16, 0x01, 0x00};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x03, 0x16, 0x01, 0x00};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("locateOff", "not sent");
+        }
     }
 
 
     public void highlight() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] highlight = {0x01, 0x18};
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(highlight) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x01, 0x18};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("highlight", "not sent");
+        }
     }
 
 
     public void setPreset(String presetName) {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] cmd = presetCmds.getOrDefault(presetName, new byte[]{0x06, 0x40, 0x04, 0x00, 0x00, 0x00, 0x00}); // "standard" as default
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(cmd) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            } else {
+        byte[] msg = presetCmds.getOrDefault(presetName, new byte[]{0x06, 0x40, 0x04, 0x00, 0x00, 0x00, 0x00});
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success && !autoValueUpdatesRegistered) {
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException e) {
@@ -1862,33 +1659,26 @@ public class GoProDevice {
                 }
                 queryAllStatusValues();
             }
-        });
+        })) {
+            Log.e("setPreset", "not sent");
+        }
     }
 
     public void setPresetById(int id) {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            ByteBuffer buffer = ByteBuffer.allocate(4);
-            buffer.putInt(id);
-            byte[] idBytes = buffer.array();
+        ByteBuffer buffer = ByteBuffer.allocate(4);
+        buffer.putInt(id);
+        byte[] idBytes = buffer.array();
 
-            byte[] cmd = new byte[]{(byte) (idBytes.length + 2), 0x40, 0x04};
+        byte[] cmd = new byte[]{(byte) (idBytes.length + 2), 0x40, 0x04};
 
-            byte[] combined = new byte[cmd.length + idBytes.length];
-            System.arraycopy(cmd, 0, combined, 0, cmd.length);
-            System.arraycopy(idBytes, 0, combined, cmd.length, idBytes.length);
-
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(combined) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            } else {
+        byte[] msg = new byte[cmd.length + idBytes.length];
+        System.arraycopy(cmd, 0, msg, 0, cmd.length);
+        System.arraycopy(idBytes, 0, msg, cmd.length, idBytes.length);
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, success -> {
+            if (success && !autoValueUpdatesRegistered) {
                 try {
                     Thread.sleep(1500);
                 } catch (InterruptedException e) {
@@ -1896,244 +1686,165 @@ public class GoProDevice {
                 }
                 queryAllStatusValues();
             }
-        });
+        })) {
+            Log.e("setPresetById", "not sent");
+        }
     }
     //endregion
 
     //region BT Queries (0x0076)
 
     private void registerForAllStatusValueUpdates() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x53 /* 83 */};
-
-            if (queryCharacteristic == null || !queryCharacteristic.setValue(msg) || !bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                Log.e("registerForAllStatusValueUpdates", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = {0x01, 0x53};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, null)) {
+            Log.e("registerForAllStatusValueUpdates", "not sent");
+        }
     }
 
 
     public void queryAllStatusValues() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x13};
-
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x01, 0x13};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastMemoryQuery = new Date();
-            } else {
-                Log.e("getAllStatusValues", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("queryAllStatusValues", "not sent");
+        }
     }
 
 
     private void getAvailableOptions() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x32};
-
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x01, 0x32};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastSettingUpdate = new Date();
-            } else {
-                Log.e("getAvailableOptions", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getAvailableOptions", "not sent");
+        }
     }
 
 
     private void getAllSettings() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x01, 0x12};
-
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x01, 0x12};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastSettingUpdate = new Date();
-            } else {
-                Log.e("getAllSettings", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getAllSettings", "not sent");
+        }
     }
 
 
     private void getMemory() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x02, 0x13, 0x36};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x02, 0x13, 0x36};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastMemoryQuery = new Date();
-            } else {
-                Log.e("getMemory", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getMemory", "not sent");
+        }
     }
 
 
     private void getBatteryLevel() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x02, 0x13, 0x46};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x02, 0x13, 0x46};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastMemoryQuery = new Date();
-            } else {
-                Log.e("getBatteryLevel", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getBatteryLevel", "not sent");
+        }
     }
 
 
     private void getCurrentPreset() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x02, 0x13, 0x61};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x02, 0x13, 0x61};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastOtherQueries = new Date();
-            } else {
-                Log.e("getPreset", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getCurrentPreset", "not sent");
+        }
     }
 
 
     private void getCurrentMode() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] msg = {0x02, 0x13, 43};
-            if (queryCharacteristic != null && queryCharacteristic.setValue(msg) && bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
+        byte[] msg = {0x02, 0x13, 0x2b};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
                 lastOtherQueries = new Date();
-            } else {
-                Log.e("getMode", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
             }
-        });
+        })) {
+            Log.e("getCurrentMode", "not sent");
+        }
     }
     //endregion
 
     //region Protobuf
     public void requestSetTurboActive(boolean active) {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] proto = new TurboTransfer.RequestSetTurboActive.Builder().setActive(active).build().toByteArray();
+        byte[] proto = new TurboTransfer.RequestSetTurboActive.Builder().setActive(active).build().toByteArray();
+        byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF1, 0x6B};
+        byte[] msg = new byte[cmd.length + proto.length];
+        System.arraycopy(cmd, 0, msg, 0, cmd.length);
+        System.arraycopy(proto, 0, msg, cmd.length, proto.length);
 
-            byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF1, 0x6B};
-
-            byte[] combined = new byte[cmd.length + proto.length];
-            System.arraycopy(cmd, 0, combined, 0, cmd.length);
-            System.arraycopy(proto, 0, combined, cmd.length, proto.length);
-
-            if (commandCharacteristic == null || !commandCharacteristic.setValue(combined) || !bluetoothGatt.writeCharacteristic(commandCharacteristic)) {
-                Log.e("requestSetTurboActive", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
+            Log.e("requestSetTurboActive", "not sent");
+        }
     }
 
     private void requestGetPresetStatus() {
-        if (btActionHelper != null) btActionHelper.queueAction(() -> {
-            if (btConnectionStage < 2) {
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-                return;
-            }
-            byte[] proto = new RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder()
-                    .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET)
-                    .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY)
-                    .build()
-                    .toByteArray();
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
 
-            byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF5, 0x72};
+        byte[] proto = new RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder()
+                .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET)
+                .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY)
+                .build()
+                .toByteArray();
 
-            byte[] combined = new byte[cmd.length + proto.length];
-            System.arraycopy(cmd, 0, combined, 0, cmd.length);
-            System.arraycopy(proto, 0, combined, cmd.length, proto.length);
+        byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF5, 0x72};
 
-            if (queryCharacteristic == null || !queryCharacteristic.setValue(combined) || !bluetoothGatt.writeCharacteristic(queryCharacteristic)) {
-                Log.e("notifyPresetStatus", "failed action");
-                if (btActionHelper != null) {
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        });
+        byte[] msg = new byte[cmd.length + proto.length];
+        System.arraycopy(cmd, 0, msg, 0, cmd.length);
+        System.arraycopy(proto, 0, msg, cmd.length, proto.length);
+
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, null)) {
+            Log.e("requestGetPresetStatus", "not sent");
+        }
     }
     //endregion
 
@@ -2148,10 +1859,10 @@ public class GoProDevice {
         pairCallback = _pairCallback;
 
         try {
-            Method m = bluetoothDevice.getClass().getMethod("createBond", (Class[]) null);
-            boolean willBegin = (boolean) m.invoke(bluetoothDevice, (Object[]) null);
+            Method m = bluetoothDevice.getClass().getMethod("createBond", (Class<?>[]) null);
+            Object result = m.invoke(bluetoothDevice, (Object[]) null);
 
-            if (willBegin) {
+            if (result != null && (boolean) result) {
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
 
@@ -2159,8 +1870,9 @@ public class GoProDevice {
 
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        if (intent.getAction().equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
+                        if (Objects.equals(intent.getAction(), BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
                             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                            assert device != null;
                             int state = device.getBondState();
 
                             if (state == BluetoothDevice.BOND_BONDED) {
@@ -2196,11 +1908,17 @@ public class GoProDevice {
     private Timer checkConnected = null;
     private Timer retryConnectBt = null;
 
+    private void initGattHelper() {
+        if (gattHelper != null)
+            gattHelper.reset();
+        gattHelper = new GattHelper(bluetoothGatt, 125, 5000);
+    }
 
     public void connectBt(ConnectBtCallbackInterface _connectBtCallback) {
         shouldNotBeReconnected = false;
         connectBtCallback = _connectBtCallback;
         bluetoothGatt = bluetoothDevice.connectGatt(_context, false, gattCallback);
+        initGattHelper();
         if (bluetoothGatt != null) {
             btConnectionStage = BT_CONNECTING;
 
@@ -2216,6 +1934,7 @@ public class GoProDevice {
                         btRetryConnect = true;
                         bluetoothGatt.disconnect();
                         bluetoothGatt = bluetoothDevice.connectGatt(_context, false, gattCallback);
+                        initGattHelper();
                     }
                 }
             }, 10000);
@@ -2308,9 +2027,10 @@ public class GoProDevice {
         disconnectGoProDevice();
 
         try {
-            Method m;
-            m = bluetoothDevice.getClass().getMethod("removeBond", (Class[]) null);
-            if ((boolean) m.invoke(bluetoothDevice, (Object[]) null)) {
+            Method m = bluetoothDevice.getClass().getMethod("removeBond", (Class<?>[]) null);
+            Object result = m.invoke(bluetoothDevice, (Object[]) null);
+
+            if (result != null && (boolean) result) {
                 btPaired = false;
                 return true;
             }
@@ -2321,28 +2041,6 @@ public class GoProDevice {
     }
 
     //region Helpers
-    private void initExecWatchdog() {
-        execWatchdogTimer.cancel();
-        execWatchdogTimer.purge();
-
-        TimerTask timedExecWatchdog = new TimerTask() {
-            @Override
-            public void run() {
-                if (btConnectionStage < 2 || btActionHelper == null) {
-                    return;
-                }
-
-                if (System.currentTimeMillis() - btActionHelper.getLastExecMillis() >= 10000 && btActionHelper.isGattInProgress()) {
-                    Log.e("ExecWatchdog", "'Gatt in progress' timeout triggered!");
-                    btActionHelper.resetGattInProgress();
-                }
-            }
-        };
-
-        execWatchdogTimer = new Timer();
-        execWatchdogTimer.schedule(timedExecWatchdog, 0, 1000);
-    }
-
     private Timer shutterWatchdogTimer = new Timer();
     private Date lastVideoProgressReceived = new Date();
 

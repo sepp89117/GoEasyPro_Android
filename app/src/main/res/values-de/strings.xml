@@ -157,8 +157,8 @@
     <string name="str_multishot">Mehrfachaufnahme</string>
     <string name="str_burst">Burst</string>
     <string name="str_night_lapse">Nachzeitraffer</string>
-    <string name="str_enable_localization">GPS aktivieren</string>
-    <string name="str_disable_localization">GPS deaktivieren</string>
+    <string name="str_enable_localization">Piep aktivieren</string>
+    <string name="str_disable_localization">Piep deaktivieren</string>
     <string name="str_set_date_time">Uhrzeit einstellen</string>
     <string name="str_put_to_sleep">Abschalten</string>
     <string name="str_connection">Verbindung</string>

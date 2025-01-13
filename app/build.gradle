@@ -10,8 +10,8 @@ android {
         applicationId 'com.sepp89117.goeasypro_android'
         minSdk 27
         targetSdk 34
-        versionCode 174
-        versionName '1.7.4'
+        versionCode 175
+        versionName '1.7.5'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -30,16 +30,18 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.protobuf:protobuf-java:3.21.7'
+    implementation 'com.google.protobuf:protobuf-java:4.29.2'
     implementation 'me.saket.cascade:cascade:2.1.0' /* do not update 2.1.0 */
     implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
     implementation 'com.arthenica:ffmpeg-kit-min:6.0.LTS'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.14'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.9.0' /* do not update 1.9.0 */
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'com.google.code.gson:gson:2.11.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'

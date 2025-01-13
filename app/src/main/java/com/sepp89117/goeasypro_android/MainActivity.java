@@ -313,7 +313,9 @@ public class MainActivity extends AppCompatActivity {
                             if (!connected)
                                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), String.format(getResources().getString(R.string.str_powered_on), goProDevice.displayName), Toast.LENGTH_SHORT).show());
 
-                            runOnUiThread(() -> goListView.setAdapter(goListAdapter));
+                            runOnUiThread(() -> {
+                                goListAdapter.notifyDataSetChanged();
+                            });
                         });
                         break;
                     case R.id.del_device:
@@ -583,7 +585,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (goMediaFiles.size() > 0) {
+        if (!goMediaFiles.isEmpty()) {
             ((MyApplication) this.getApplication()).setGoMediaFiles(goMediaFiles);
             Intent storageBrowserActivityIntent = new Intent(MainActivity.this, StorageBrowserActivity.class);
             startActivity(storageBrowserActivityIntent);
@@ -594,7 +596,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOnDataChanged() {
         goProDevices.forEach(goProDevice -> goProDevice.getDataChanges(() -> runOnUiThread(() -> {
-            goListView.setAdapter(goListAdapter);
+            goListAdapter.notifyDataSetChanged();
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED)
                 bluetoothAdapter.cancelDiscovery(); // cancelDiscovery (restarts Discovery) to check more quickly whether the camera is still available.
             else if (!goProDevice.firmwareChecked && ((MyApplication) getApplication()).shouldCheckFirmware())
@@ -654,7 +656,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void onClickShutterOn(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -666,7 +668,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickShutterOff(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -678,7 +680,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSleep(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -689,7 +691,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickHighlight(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -701,7 +703,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSetMode(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -750,7 +752,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSetPreset(View v) {
-        if (goProDevices.size() <= 0) {
+        if (numConnected() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -767,6 +769,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         popupMenu.show();
+    }
+
+    public void onClickSyncSettings(View v) {
+        if (numConnected() == 0) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.str_to_pair_dev), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(MainActivity.this, SyncSettingsActivity.class);
+        startActivity(intent);
     }
 
     public void setControlMenuDependingOnModelID(CascadePopupMenu popupMenu) {
@@ -796,13 +808,10 @@ public class MainActivity extends AppCompatActivity {
                     presetSelectMenu.add(1, goProtoPreset.getId(), Menu.NONE, goProtoPreset.getPresetTitle());
                 }
             } else {
-                switch (goProDevice.modelID) {
-                    case HERO12_BLACK:
-                        // Make unavailable presets invisible
-                        presetSelectMenu.findItem(R.id.preset_activity).setVisible(false);
-                        presetSelectMenu.findItem(R.id.preset_cinematic).setVisible(false);
-                        presetSelectMenu.findItem(R.id.preset_liveBurst).setVisible(false);
-                        break;
+                if (goProDevice.modelID >= HERO12_BLACK) {// Make unavailable presets invisible
+                    presetSelectMenu.findItem(R.id.preset_activity).setVisible(false);
+                    presetSelectMenu.findItem(R.id.preset_cinematic).setVisible(false);
+                    presetSelectMenu.findItem(R.id.preset_liveBurst).setVisible(false);
                 }
             }
         }
@@ -865,14 +874,14 @@ public class MainActivity extends AppCompatActivity {
         if (((MyApplication) getApplication()).shouldCheckAppUpdate()) checkAppUpdate();
 
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
+        if (!pairedDevices.isEmpty()) {
             // There are paired devices. Get the name and address of each paired device.
             for (BluetoothDevice device : pairedDevices) {
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
                 if (deviceName != null && deviceName.contains("GoPro ")) {
                     boolean inList = false;
-                    if (goProDevices.size() > 0) {
+                    if (!goProDevices.isEmpty()) {
                         for (int i = 0; i < goProDevices.size(); i++) {
                             GoProDevice goProDevice = goProDevices.get(i);
                             if (Objects.equals(goProDevice.btMacAddress, device.getAddress())) {
@@ -889,7 +898,7 @@ public class MainActivity extends AppCompatActivity {
                             goProDevice.btConnectionStage = BT_NOT_CONNECTED;
                         }
                         goProDevices.add(goProDevice);
-                        goListView.setAdapter(goListAdapter);
+                        goListAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -979,26 +988,7 @@ public class MainActivity extends AppCompatActivity {
                     setOnDataChanged();
                 }
             }
-        } /*else if (requestCode == WIFI_PERMISSIONS_CODE) {
-            for (int i = 0; i < permissions.length; i++) {
-                String permission = permissions[i];
-                int grantResult = grantResults[i];
-
-                switch (permission) {
-                    case Manifest.permission.INTERNET:
-                    case Manifest.permission.ACCESS_WIFI_STATE:
-                    case Manifest.permission.CHANGE_WIFI_STATE:
-                    case Manifest.permission.ACCESS_NETWORK_STATE:
-                    case Manifest.permission.CHANGE_NETWORK_STATE:
-                    case Manifest.permission.ACCESS_FINE_LOCATION:
-                    case Manifest.permission.FOREGROUND_SERVICE:
-                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                        }
-                        break;
-                }
-
-            }
-        }*/
+        }
     }
 
     private void requestBtPermissions() {
@@ -1068,6 +1058,15 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private int numConnected() {
+        int numConnected = 0;
+        for (int i = 0; i < goProDevices.size(); i++) {
+            if (goProDevices.get(i).btConnectionStage == BT_CONNECTED)
+                numConnected++;
+        }
+        return numConnected;
+    }
+    
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -1082,9 +1081,11 @@ public class MainActivity extends AppCompatActivity {
                     goProDevices.stream().filter(goProDevice -> Objects.equals(goProDevice.btMacAddress, device.getAddress())).findFirst().ifPresent(goProDevice -> {
                         goProDevice.camBtAvailable = true;
                         if (((MyApplication) getApplication()).shouldAutoConnect() && goProDevice.btConnectionStage == BT_NOT_CONNECTED && !goProDevice.shouldNotBeReconnected) {
-                            goProDevice.connectBt(connected -> runOnUiThread(() -> goListView.setAdapter(goListAdapter)));
+                            goProDevice.connectBt(connected -> runOnUiThread(() -> {
+                                goListAdapter.notifyDataSetChanged();
+                            }));
                         }
-                        goListView.setAdapter(goListAdapter);
+                        goListAdapter.notifyDataSetChanged();
                     });
                     break;
                 case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
@@ -1135,7 +1136,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    Log.e("getFirmwareCatalog", "Response is unsuccessful with status code: " + response.code());
+                    Log.e("getFirmwareCatalog", "Response is not successful with status code: " + response.code());
                 }
             }
         });

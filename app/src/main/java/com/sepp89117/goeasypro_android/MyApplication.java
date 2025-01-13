@@ -111,10 +111,10 @@ public class MyApplication extends Application {
     }
 
     public static boolean checkBtDevConnected(BluetoothDevice device) {
-        Method m;
         try {
-            m = device.getClass().getMethod("isConnected", (Class[]) null);
-            return (boolean) m.invoke(device, (Object[]) null);
+            Method m = device.getClass().getMethod("isConnected", (Class<?>[]) null);
+            Object result = m.invoke(device, (Object[]) null);
+            return result != null && (boolean) result;
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
             return false;

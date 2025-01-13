@@ -63,6 +63,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".SyncSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".LogActivity"
             android:exported="false">
             <meta-data

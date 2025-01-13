@@ -4,7244 +4,9535 @@
 package com.sepp89117.goeasypro_android.gopro;
 
 public final class PresetStatus {
-  private PresetStatus() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+    private PresetStatus() {
+    }
 
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumFlatMode}
-   */
-  public enum EnumFlatMode
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>FLAT_MODE_UNKNOWN = -1;</code>
-     */
-    FLAT_MODE_UNKNOWN(-1),
-    /**
-     * <code>FLAT_MODE_PLAYBACK = 4;</code>
-     */
-    FLAT_MODE_PLAYBACK(4),
-    /**
-     * <code>FLAT_MODE_SETUP = 5;</code>
-     */
-    FLAT_MODE_SETUP(5),
-    /**
-     * <code>FLAT_MODE_VIDEO = 12;</code>
-     */
-    FLAT_MODE_VIDEO(12),
-    /**
-     * <code>FLAT_MODE_TIME_LAPSE_VIDEO = 13;</code>
-     */
-    FLAT_MODE_TIME_LAPSE_VIDEO(13),
-    /**
-     * <code>FLAT_MODE_LOOPING = 15;</code>
-     */
-    FLAT_MODE_LOOPING(15),
-    /**
-     * <code>FLAT_MODE_PHOTO_SINGLE = 16;</code>
-     */
-    FLAT_MODE_PHOTO_SINGLE(16),
-    /**
-     * <code>FLAT_MODE_PHOTO = 17;</code>
-     */
-    FLAT_MODE_PHOTO(17),
-    /**
-     * <code>FLAT_MODE_PHOTO_NIGHT = 18;</code>
-     */
-    FLAT_MODE_PHOTO_NIGHT(18),
-    /**
-     * <code>FLAT_MODE_PHOTO_BURST = 19;</code>
-     */
-    FLAT_MODE_PHOTO_BURST(19),
-    /**
-     * <code>FLAT_MODE_TIME_LAPSE_PHOTO = 20;</code>
-     */
-    FLAT_MODE_TIME_LAPSE_PHOTO(20),
-    /**
-     * <code>FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;</code>
-     */
-    FLAT_MODE_NIGHT_LAPSE_PHOTO(21),
-    /**
-     * <code>FLAT_MODE_BROADCAST_RECORD = 22;</code>
-     */
-    FLAT_MODE_BROADCAST_RECORD(22),
-    /**
-     * <code>FLAT_MODE_BROADCAST_BROADCAST = 23;</code>
-     */
-    FLAT_MODE_BROADCAST_BROADCAST(23),
-    /**
-     * <code>FLAT_MODE_TIME_WARP_VIDEO = 24;</code>
-     */
-    FLAT_MODE_TIME_WARP_VIDEO(24),
-    /**
-     * <code>FLAT_MODE_LIVE_BURST = 25;</code>
-     */
-    FLAT_MODE_LIVE_BURST(25),
-    /**
-     * <code>FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;</code>
-     */
-    FLAT_MODE_NIGHT_LAPSE_VIDEO(26),
-    /**
-     * <code>FLAT_MODE_SLOMO = 27;</code>
-     */
-    FLAT_MODE_SLOMO(27),
-    /**
-     * <code>FLAT_MODE_IDLE = 28;</code>
-     */
-    FLAT_MODE_IDLE(28),
-    /**
-     * <code>FLAT_MODE_VIDEO_STAR_TRAIL = 29;</code>
-     */
-    FLAT_MODE_VIDEO_STAR_TRAIL(29),
-    /**
-     * <code>FLAT_MODE_VIDEO_LIGHT_PAINTING = 30;</code>
-     */
-    FLAT_MODE_VIDEO_LIGHT_PAINTING(30),
-    /**
-     * <code>FLAT_MODE_VIDEO_LIGHT_TRAIL = 31;</code>
-     */
-    FLAT_MODE_VIDEO_LIGHT_TRAIL(31),
-    ;
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                /* major= */ 4,
+                /* minor= */ 29,
+                /* patch= */ 2,
+                /* suffix= */ "",
+                PresetStatus.class.getName());
+    }
 
-    /**
-     * <code>FLAT_MODE_UNKNOWN = -1;</code>
-     */
-    public static final int FLAT_MODE_UNKNOWN_VALUE = -1;
-    /**
-     * <code>FLAT_MODE_PLAYBACK = 4;</code>
-     */
-    public static final int FLAT_MODE_PLAYBACK_VALUE = 4;
-    /**
-     * <code>FLAT_MODE_SETUP = 5;</code>
-     */
-    public static final int FLAT_MODE_SETUP_VALUE = 5;
-    /**
-     * <code>FLAT_MODE_VIDEO = 12;</code>
-     */
-    public static final int FLAT_MODE_VIDEO_VALUE = 12;
-    /**
-     * <code>FLAT_MODE_TIME_LAPSE_VIDEO = 13;</code>
-     */
-    public static final int FLAT_MODE_TIME_LAPSE_VIDEO_VALUE = 13;
-    /**
-     * <code>FLAT_MODE_LOOPING = 15;</code>
-     */
-    public static final int FLAT_MODE_LOOPING_VALUE = 15;
-    /**
-     * <code>FLAT_MODE_PHOTO_SINGLE = 16;</code>
-     */
-    public static final int FLAT_MODE_PHOTO_SINGLE_VALUE = 16;
-    /**
-     * <code>FLAT_MODE_PHOTO = 17;</code>
-     */
-    public static final int FLAT_MODE_PHOTO_VALUE = 17;
-    /**
-     * <code>FLAT_MODE_PHOTO_NIGHT = 18;</code>
-     */
-    public static final int FLAT_MODE_PHOTO_NIGHT_VALUE = 18;
-    /**
-     * <code>FLAT_MODE_PHOTO_BURST = 19;</code>
-     */
-    public static final int FLAT_MODE_PHOTO_BURST_VALUE = 19;
-    /**
-     * <code>FLAT_MODE_TIME_LAPSE_PHOTO = 20;</code>
-     */
-    public static final int FLAT_MODE_TIME_LAPSE_PHOTO_VALUE = 20;
-    /**
-     * <code>FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;</code>
-     */
-    public static final int FLAT_MODE_NIGHT_LAPSE_PHOTO_VALUE = 21;
-    /**
-     * <code>FLAT_MODE_BROADCAST_RECORD = 22;</code>
-     */
-    public static final int FLAT_MODE_BROADCAST_RECORD_VALUE = 22;
-    /**
-     * <code>FLAT_MODE_BROADCAST_BROADCAST = 23;</code>
-     */
-    public static final int FLAT_MODE_BROADCAST_BROADCAST_VALUE = 23;
-    /**
-     * <code>FLAT_MODE_TIME_WARP_VIDEO = 24;</code>
-     */
-    public static final int FLAT_MODE_TIME_WARP_VIDEO_VALUE = 24;
-    /**
-     * <code>FLAT_MODE_LIVE_BURST = 25;</code>
-     */
-    public static final int FLAT_MODE_LIVE_BURST_VALUE = 25;
-    /**
-     * <code>FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;</code>
-     */
-    public static final int FLAT_MODE_NIGHT_LAPSE_VIDEO_VALUE = 26;
-    /**
-     * <code>FLAT_MODE_SLOMO = 27;</code>
-     */
-    public static final int FLAT_MODE_SLOMO_VALUE = 27;
-    /**
-     * <code>FLAT_MODE_IDLE = 28;</code>
-     */
-    public static final int FLAT_MODE_IDLE_VALUE = 28;
-    /**
-     * <code>FLAT_MODE_VIDEO_STAR_TRAIL = 29;</code>
-     */
-    public static final int FLAT_MODE_VIDEO_STAR_TRAIL_VALUE = 29;
-    /**
-     * <code>FLAT_MODE_VIDEO_LIGHT_PAINTING = 30;</code>
-     */
-    public static final int FLAT_MODE_VIDEO_LIGHT_PAINTING_VALUE = 30;
-    /**
-     * <code>FLAT_MODE_VIDEO_LIGHT_TRAIL = 31;</code>
-     */
-    public static final int FLAT_MODE_VIDEO_LIGHT_TRAIL_VALUE = 31;
+    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
+    }
 
-
-    public final int getNumber() {
-      return value;
+    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
+        registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumFlatMode}
      */
-    @Deprecated
-    public static EnumFlatMode valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum EnumFlatMode
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>FLAT_MODE_UNKNOWN = -1;</code>
+         */
+        FLAT_MODE_UNKNOWN(-1),
+        /**
+         * <code>FLAT_MODE_PLAYBACK = 4;</code>
+         */
+        FLAT_MODE_PLAYBACK(4),
+        /**
+         * <code>FLAT_MODE_SETUP = 5;</code>
+         */
+        FLAT_MODE_SETUP(5),
+        /**
+         * <code>FLAT_MODE_VIDEO = 12;</code>
+         */
+        FLAT_MODE_VIDEO(12),
+        /**
+         * <code>FLAT_MODE_TIME_LAPSE_VIDEO = 13;</code>
+         */
+        FLAT_MODE_TIME_LAPSE_VIDEO(13),
+        /**
+         * <code>FLAT_MODE_LOOPING = 15;</code>
+         */
+        FLAT_MODE_LOOPING(15),
+        /**
+         * <code>FLAT_MODE_PHOTO_SINGLE = 16;</code>
+         */
+        FLAT_MODE_PHOTO_SINGLE(16),
+        /**
+         * <code>FLAT_MODE_PHOTO = 17;</code>
+         */
+        FLAT_MODE_PHOTO(17),
+        /**
+         * <code>FLAT_MODE_PHOTO_NIGHT = 18;</code>
+         */
+        FLAT_MODE_PHOTO_NIGHT(18),
+        /**
+         * <code>FLAT_MODE_PHOTO_BURST = 19;</code>
+         */
+        FLAT_MODE_PHOTO_BURST(19),
+        /**
+         * <code>FLAT_MODE_TIME_LAPSE_PHOTO = 20;</code>
+         */
+        FLAT_MODE_TIME_LAPSE_PHOTO(20),
+        /**
+         * <code>FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;</code>
+         */
+        FLAT_MODE_NIGHT_LAPSE_PHOTO(21),
+        /**
+         * <code>FLAT_MODE_BROADCAST_RECORD = 22;</code>
+         */
+        FLAT_MODE_BROADCAST_RECORD(22),
+        /**
+         * <code>FLAT_MODE_BROADCAST_BROADCAST = 23;</code>
+         */
+        FLAT_MODE_BROADCAST_BROADCAST(23),
+        /**
+         * <code>FLAT_MODE_TIME_WARP_VIDEO = 24;</code>
+         */
+        FLAT_MODE_TIME_WARP_VIDEO(24),
+        /**
+         * <code>FLAT_MODE_LIVE_BURST = 25;</code>
+         */
+        FLAT_MODE_LIVE_BURST(25),
+        /**
+         * <code>FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;</code>
+         */
+        FLAT_MODE_NIGHT_LAPSE_VIDEO(26),
+        /**
+         * <code>FLAT_MODE_SLOMO = 27;</code>
+         */
+        FLAT_MODE_SLOMO(27),
+        /**
+         * <code>FLAT_MODE_IDLE = 28;</code>
+         */
+        FLAT_MODE_IDLE(28),
+        /**
+         * <code>FLAT_MODE_VIDEO_STAR_TRAIL = 29;</code>
+         */
+        FLAT_MODE_VIDEO_STAR_TRAIL(29),
+        /**
+         * <code>FLAT_MODE_VIDEO_LIGHT_PAINTING = 30;</code>
+         */
+        FLAT_MODE_VIDEO_LIGHT_PAINTING(30),
+        /**
+         * <code>FLAT_MODE_VIDEO_LIGHT_TRAIL = 31;</code>
+         */
+        FLAT_MODE_VIDEO_LIGHT_TRAIL(31),
+        /**
+         * <code>FLAT_MODE_VIDEO_BURST_SLOMO = 32;</code>
+         */
+        FLAT_MODE_VIDEO_BURST_SLOMO(32),
+        ;
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumFlatMode forNumber(int value) {
-      switch (value) {
-        case -1: return FLAT_MODE_UNKNOWN;
-        case 4: return FLAT_MODE_PLAYBACK;
-        case 5: return FLAT_MODE_SETUP;
-        case 12: return FLAT_MODE_VIDEO;
-        case 13: return FLAT_MODE_TIME_LAPSE_VIDEO;
-        case 15: return FLAT_MODE_LOOPING;
-        case 16: return FLAT_MODE_PHOTO_SINGLE;
-        case 17: return FLAT_MODE_PHOTO;
-        case 18: return FLAT_MODE_PHOTO_NIGHT;
-        case 19: return FLAT_MODE_PHOTO_BURST;
-        case 20: return FLAT_MODE_TIME_LAPSE_PHOTO;
-        case 21: return FLAT_MODE_NIGHT_LAPSE_PHOTO;
-        case 22: return FLAT_MODE_BROADCAST_RECORD;
-        case 23: return FLAT_MODE_BROADCAST_BROADCAST;
-        case 24: return FLAT_MODE_TIME_WARP_VIDEO;
-        case 25: return FLAT_MODE_LIVE_BURST;
-        case 26: return FLAT_MODE_NIGHT_LAPSE_VIDEO;
-        case 27: return FLAT_MODE_SLOMO;
-        case 28: return FLAT_MODE_IDLE;
-        case 29: return FLAT_MODE_VIDEO_STAR_TRAIL;
-        case 30: return FLAT_MODE_VIDEO_LIGHT_PAINTING;
-        case 31: return FLAT_MODE_VIDEO_LIGHT_TRAIL;
-        default: return null;
-      }
-    }
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumFlatMode.class.getName());
+        }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumFlatMode>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumFlatMode> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumFlatMode>() {
-            public EnumFlatMode findValueByNumber(int number) {
-              return EnumFlatMode.forNumber(number);
+        /**
+         * <code>FLAT_MODE_UNKNOWN = -1;</code>
+         */
+        public static final int FLAT_MODE_UNKNOWN_VALUE = -1;
+        /**
+         * <code>FLAT_MODE_PLAYBACK = 4;</code>
+         */
+        public static final int FLAT_MODE_PLAYBACK_VALUE = 4;
+        /**
+         * <code>FLAT_MODE_SETUP = 5;</code>
+         */
+        public static final int FLAT_MODE_SETUP_VALUE = 5;
+        /**
+         * <code>FLAT_MODE_VIDEO = 12;</code>
+         */
+        public static final int FLAT_MODE_VIDEO_VALUE = 12;
+        /**
+         * <code>FLAT_MODE_TIME_LAPSE_VIDEO = 13;</code>
+         */
+        public static final int FLAT_MODE_TIME_LAPSE_VIDEO_VALUE = 13;
+        /**
+         * <code>FLAT_MODE_LOOPING = 15;</code>
+         */
+        public static final int FLAT_MODE_LOOPING_VALUE = 15;
+        /**
+         * <code>FLAT_MODE_PHOTO_SINGLE = 16;</code>
+         */
+        public static final int FLAT_MODE_PHOTO_SINGLE_VALUE = 16;
+        /**
+         * <code>FLAT_MODE_PHOTO = 17;</code>
+         */
+        public static final int FLAT_MODE_PHOTO_VALUE = 17;
+        /**
+         * <code>FLAT_MODE_PHOTO_NIGHT = 18;</code>
+         */
+        public static final int FLAT_MODE_PHOTO_NIGHT_VALUE = 18;
+        /**
+         * <code>FLAT_MODE_PHOTO_BURST = 19;</code>
+         */
+        public static final int FLAT_MODE_PHOTO_BURST_VALUE = 19;
+        /**
+         * <code>FLAT_MODE_TIME_LAPSE_PHOTO = 20;</code>
+         */
+        public static final int FLAT_MODE_TIME_LAPSE_PHOTO_VALUE = 20;
+        /**
+         * <code>FLAT_MODE_NIGHT_LAPSE_PHOTO = 21;</code>
+         */
+        public static final int FLAT_MODE_NIGHT_LAPSE_PHOTO_VALUE = 21;
+        /**
+         * <code>FLAT_MODE_BROADCAST_RECORD = 22;</code>
+         */
+        public static final int FLAT_MODE_BROADCAST_RECORD_VALUE = 22;
+        /**
+         * <code>FLAT_MODE_BROADCAST_BROADCAST = 23;</code>
+         */
+        public static final int FLAT_MODE_BROADCAST_BROADCAST_VALUE = 23;
+        /**
+         * <code>FLAT_MODE_TIME_WARP_VIDEO = 24;</code>
+         */
+        public static final int FLAT_MODE_TIME_WARP_VIDEO_VALUE = 24;
+        /**
+         * <code>FLAT_MODE_LIVE_BURST = 25;</code>
+         */
+        public static final int FLAT_MODE_LIVE_BURST_VALUE = 25;
+        /**
+         * <code>FLAT_MODE_NIGHT_LAPSE_VIDEO = 26;</code>
+         */
+        public static final int FLAT_MODE_NIGHT_LAPSE_VIDEO_VALUE = 26;
+        /**
+         * <code>FLAT_MODE_SLOMO = 27;</code>
+         */
+        public static final int FLAT_MODE_SLOMO_VALUE = 27;
+        /**
+         * <code>FLAT_MODE_IDLE = 28;</code>
+         */
+        public static final int FLAT_MODE_IDLE_VALUE = 28;
+        /**
+         * <code>FLAT_MODE_VIDEO_STAR_TRAIL = 29;</code>
+         */
+        public static final int FLAT_MODE_VIDEO_STAR_TRAIL_VALUE = 29;
+        /**
+         * <code>FLAT_MODE_VIDEO_LIGHT_PAINTING = 30;</code>
+         */
+        public static final int FLAT_MODE_VIDEO_LIGHT_PAINTING_VALUE = 30;
+        /**
+         * <code>FLAT_MODE_VIDEO_LIGHT_TRAIL = 31;</code>
+         */
+        public static final int FLAT_MODE_VIDEO_LIGHT_TRAIL_VALUE = 31;
+        /**
+         * <code>FLAT_MODE_VIDEO_BURST_SLOMO = 32;</code>
+         */
+        public static final int FLAT_MODE_VIDEO_BURST_SLOMO_VALUE = 32;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumFlatMode valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumFlatMode forNumber(int value) {
+            switch (value) {
+                case -1:
+                    return FLAT_MODE_UNKNOWN;
+                case 4:
+                    return FLAT_MODE_PLAYBACK;
+                case 5:
+                    return FLAT_MODE_SETUP;
+                case 12:
+                    return FLAT_MODE_VIDEO;
+                case 13:
+                    return FLAT_MODE_TIME_LAPSE_VIDEO;
+                case 15:
+                    return FLAT_MODE_LOOPING;
+                case 16:
+                    return FLAT_MODE_PHOTO_SINGLE;
+                case 17:
+                    return FLAT_MODE_PHOTO;
+                case 18:
+                    return FLAT_MODE_PHOTO_NIGHT;
+                case 19:
+                    return FLAT_MODE_PHOTO_BURST;
+                case 20:
+                    return FLAT_MODE_TIME_LAPSE_PHOTO;
+                case 21:
+                    return FLAT_MODE_NIGHT_LAPSE_PHOTO;
+                case 22:
+                    return FLAT_MODE_BROADCAST_RECORD;
+                case 23:
+                    return FLAT_MODE_BROADCAST_BROADCAST;
+                case 24:
+                    return FLAT_MODE_TIME_WARP_VIDEO;
+                case 25:
+                    return FLAT_MODE_LIVE_BURST;
+                case 26:
+                    return FLAT_MODE_NIGHT_LAPSE_VIDEO;
+                case 27:
+                    return FLAT_MODE_SLOMO;
+                case 28:
+                    return FLAT_MODE_IDLE;
+                case 29:
+                    return FLAT_MODE_VIDEO_STAR_TRAIL;
+                case 30:
+                    return FLAT_MODE_VIDEO_LIGHT_PAINTING;
+                case 31:
+                    return FLAT_MODE_VIDEO_LIGHT_TRAIL;
+                case 32:
+                    return FLAT_MODE_VIDEO_BURST_SLOMO;
+                default:
+                    return null;
             }
-          };
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return PresetStatus.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final EnumFlatMode[] VALUES = values();
-
-    public static EnumFlatMode valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private EnumFlatMode(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumFlatMode)
-  }
-
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetGroup}
-   */
-  public enum EnumPresetGroup
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>PRESET_GROUP_ID_VIDEO = 1000;</code>
-     */
-    PRESET_GROUP_ID_VIDEO(1000),
-    /**
-     * <code>PRESET_GROUP_ID_PHOTO = 1001;</code>
-     */
-    PRESET_GROUP_ID_PHOTO(1001),
-    /**
-     * <code>PRESET_GROUP_ID_TIMELAPSE = 1002;</code>
-     */
-    PRESET_GROUP_ID_TIMELAPSE(1002),
-    /**
-     * <code>PRESET_GROUP_ID_VIDEO_DUAL_LENS = 1003;</code>
-     */
-    PRESET_GROUP_ID_VIDEO_DUAL_LENS(1003),
-    /**
-     * <code>PRESET_GROUP_ID_PHOTO_DUAL_LENS = 1004;</code>
-     */
-    PRESET_GROUP_ID_PHOTO_DUAL_LENS(1004),
-    /**
-     * <code>PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS = 1005;</code>
-     */
-    PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS(1005),
-    /**
-     * <code>PRESET_GROUP_ID_SPECIAL = 1006;</code>
-     */
-    PRESET_GROUP_ID_SPECIAL(1006),
-    ;
-
-    /**
-     * <code>PRESET_GROUP_ID_VIDEO = 1000;</code>
-     */
-    public static final int PRESET_GROUP_ID_VIDEO_VALUE = 1000;
-    /**
-     * <code>PRESET_GROUP_ID_PHOTO = 1001;</code>
-     */
-    public static final int PRESET_GROUP_ID_PHOTO_VALUE = 1001;
-    /**
-     * <code>PRESET_GROUP_ID_TIMELAPSE = 1002;</code>
-     */
-    public static final int PRESET_GROUP_ID_TIMELAPSE_VALUE = 1002;
-    /**
-     * <code>PRESET_GROUP_ID_VIDEO_DUAL_LENS = 1003;</code>
-     */
-    public static final int PRESET_GROUP_ID_VIDEO_DUAL_LENS_VALUE = 1003;
-    /**
-     * <code>PRESET_GROUP_ID_PHOTO_DUAL_LENS = 1004;</code>
-     */
-    public static final int PRESET_GROUP_ID_PHOTO_DUAL_LENS_VALUE = 1004;
-    /**
-     * <code>PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS = 1005;</code>
-     */
-    public static final int PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS_VALUE = 1005;
-    /**
-     * <code>PRESET_GROUP_ID_SPECIAL = 1006;</code>
-     */
-    public static final int PRESET_GROUP_ID_SPECIAL_VALUE = 1006;
-
-
-    public final int getNumber() {
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @Deprecated
-    public static EnumPresetGroup valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumPresetGroup forNumber(int value) {
-      switch (value) {
-        case 1000: return PRESET_GROUP_ID_VIDEO;
-        case 1001: return PRESET_GROUP_ID_PHOTO;
-        case 1002: return PRESET_GROUP_ID_TIMELAPSE;
-        case 1003: return PRESET_GROUP_ID_VIDEO_DUAL_LENS;
-        case 1004: return PRESET_GROUP_ID_PHOTO_DUAL_LENS;
-        case 1005: return PRESET_GROUP_ID_TIMELAPSE_DUAL_LENS;
-        case 1006: return PRESET_GROUP_ID_SPECIAL;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroup>
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumFlatMode>
         internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumPresetGroup> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroup>() {
-            public EnumPresetGroup findValueByNumber(int number) {
-              return EnumPresetGroup.forNumber(number);
-            }
-          };
+            return internalValueMap;
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumFlatMode> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumFlatMode>() {
+                    public EnumFlatMode findValueByNumber(int number) {
+                        return EnumFlatMode.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return PresetStatus.getDescriptor().getEnumTypes().get(1);
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.getDescriptor().getEnumTypes().get(0);
+        }
 
-    private static final EnumPresetGroup[] VALUES = values();
+        private static final EnumFlatMode[] VALUES = values();
 
-    public static EnumPresetGroup valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
+        public static EnumFlatMode valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
 
-    private final int value;
+        private final int value;
 
-    private EnumPresetGroup(int value) {
-      this.value = value;
-    }
+        private EnumFlatMode(int value) {
+            this.value = value;
+        }
 
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetGroup)
-  }
-
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon}
-   */
-  public enum EnumPresetGroupIcon
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>PRESET_GROUP_VIDEO_ICON_ID = 0;</code>
-     */
-    PRESET_GROUP_VIDEO_ICON_ID(0),
-    /**
-     * <code>PRESET_GROUP_PHOTO_ICON_ID = 1;</code>
-     */
-    PRESET_GROUP_PHOTO_ICON_ID(1),
-    /**
-     * <code>PRESET_GROUP_TIMELAPSE_ICON_ID = 2;</code>
-     */
-    PRESET_GROUP_TIMELAPSE_ICON_ID(2),
-    /**
-     * <code>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID = 3;</code>
-     */
-    PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID(3),
-    /**
-     * <code>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;</code>
-     */
-    PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID(4),
-    /**
-     * <code>PRESET_GROUP_MAX_VIDEO_ICON_ID = 5;</code>
-     */
-    PRESET_GROUP_MAX_VIDEO_ICON_ID(5),
-    /**
-     * <code>PRESET_GROUP_MAX_PHOTO_ICON_ID = 6;</code>
-     */
-    PRESET_GROUP_MAX_PHOTO_ICON_ID(6),
-    /**
-     * <code>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID = 7;</code>
-     */
-    PRESET_GROUP_MAX_TIMELAPSE_ICON_ID(7),
-    ;
-
-    /**
-     * <code>PRESET_GROUP_VIDEO_ICON_ID = 0;</code>
-     */
-    public static final int PRESET_GROUP_VIDEO_ICON_ID_VALUE = 0;
-    /**
-     * <code>PRESET_GROUP_PHOTO_ICON_ID = 1;</code>
-     */
-    public static final int PRESET_GROUP_PHOTO_ICON_ID_VALUE = 1;
-    /**
-     * <code>PRESET_GROUP_TIMELAPSE_ICON_ID = 2;</code>
-     */
-    public static final int PRESET_GROUP_TIMELAPSE_ICON_ID_VALUE = 2;
-    /**
-     * <code>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID = 3;</code>
-     */
-    public static final int PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID_VALUE = 3;
-    /**
-     * <code>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;</code>
-     */
-    public static final int PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID_VALUE = 4;
-    /**
-     * <code>PRESET_GROUP_MAX_VIDEO_ICON_ID = 5;</code>
-     */
-    public static final int PRESET_GROUP_MAX_VIDEO_ICON_ID_VALUE = 5;
-    /**
-     * <code>PRESET_GROUP_MAX_PHOTO_ICON_ID = 6;</code>
-     */
-    public static final int PRESET_GROUP_MAX_PHOTO_ICON_ID_VALUE = 6;
-    /**
-     * <code>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID = 7;</code>
-     */
-    public static final int PRESET_GROUP_MAX_TIMELAPSE_ICON_ID_VALUE = 7;
-
-
-    public final int getNumber() {
-      return value;
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumFlatMode)
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetGroup}
      */
-    @Deprecated
-    public static EnumPresetGroupIcon valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum EnumPresetGroup
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>PRESET_GROUP_ID_VIDEO = 1000;</code>
+         */
+        PRESET_GROUP_ID_VIDEO(1000),
+        /**
+         * <code>PRESET_GROUP_ID_PHOTO = 1001;</code>
+         */
+        PRESET_GROUP_ID_PHOTO(1001),
+        /**
+         * <code>PRESET_GROUP_ID_TIMELAPSE = 1002;</code>
+         */
+        PRESET_GROUP_ID_TIMELAPSE(1002),
+        ;
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumPresetGroupIcon forNumber(int value) {
-      switch (value) {
-        case 0: return PRESET_GROUP_VIDEO_ICON_ID;
-        case 1: return PRESET_GROUP_PHOTO_ICON_ID;
-        case 2: return PRESET_GROUP_TIMELAPSE_ICON_ID;
-        case 3: return PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID;
-        case 4: return PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID;
-        case 5: return PRESET_GROUP_MAX_VIDEO_ICON_ID;
-        case 6: return PRESET_GROUP_MAX_PHOTO_ICON_ID;
-        case 7: return PRESET_GROUP_MAX_TIMELAPSE_ICON_ID;
-        default: return null;
-      }
-    }
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumPresetGroup.class.getName());
+        }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroupIcon>
+        /**
+         * <code>PRESET_GROUP_ID_VIDEO = 1000;</code>
+         */
+        public static final int PRESET_GROUP_ID_VIDEO_VALUE = 1000;
+        /**
+         * <code>PRESET_GROUP_ID_PHOTO = 1001;</code>
+         */
+        public static final int PRESET_GROUP_ID_PHOTO_VALUE = 1001;
+        /**
+         * <code>PRESET_GROUP_ID_TIMELAPSE = 1002;</code>
+         */
+        public static final int PRESET_GROUP_ID_TIMELAPSE_VALUE = 1002;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumPresetGroup valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumPresetGroup forNumber(int value) {
+            switch (value) {
+                case 1000:
+                    return PRESET_GROUP_ID_VIDEO;
+                case 1001:
+                    return PRESET_GROUP_ID_PHOTO;
+                case 1002:
+                    return PRESET_GROUP_ID_TIMELAPSE;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroup>
         internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumPresetGroupIcon> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroupIcon>() {
-            public EnumPresetGroupIcon findValueByNumber(int number) {
-              return EnumPresetGroupIcon.forNumber(number);
-            }
-          };
+            return internalValueMap;
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumPresetGroup> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroup>() {
+                    public EnumPresetGroup findValueByNumber(int number) {
+                        return EnumPresetGroup.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return PresetStatus.getDescriptor().getEnumTypes().get(2);
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.getDescriptor().getEnumTypes().get(1);
+        }
 
-    private static final EnumPresetGroupIcon[] VALUES = values();
+        private static final EnumPresetGroup[] VALUES = values();
 
-    public static EnumPresetGroupIcon valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
+        public static EnumPresetGroup valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
 
-    private final int value;
+        private final int value;
 
-    private EnumPresetGroupIcon(int value) {
-      this.value = value;
-    }
+        private EnumPresetGroup(int value) {
+            this.value = value;
+        }
 
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon)
-  }
-
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetIcon}
-   */
-  public enum EnumPresetIcon
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>PRESET_ICON_VIDEO = 0;</code>
-     */
-    PRESET_ICON_VIDEO(0),
-    /**
-     * <code>PRESET_ICON_ACTIVITY = 1;</code>
-     */
-    PRESET_ICON_ACTIVITY(1),
-    /**
-     * <code>PRESET_ICON_CINEMATIC = 2;</code>
-     */
-    PRESET_ICON_CINEMATIC(2),
-    /**
-     * <code>PRESET_ICON_PHOTO = 3;</code>
-     */
-    PRESET_ICON_PHOTO(3),
-    /**
-     * <code>PRESET_ICON_LIVE_BURST = 4;</code>
-     */
-    PRESET_ICON_LIVE_BURST(4),
-    /**
-     * <code>PRESET_ICON_BURST = 5;</code>
-     */
-    PRESET_ICON_BURST(5),
-    /**
-     * <code>PRESET_ICON_PHOTO_NIGHT = 6;</code>
-     */
-    PRESET_ICON_PHOTO_NIGHT(6),
-    /**
-     * <code>PRESET_ICON_TIMEWARP = 7;</code>
-     */
-    PRESET_ICON_TIMEWARP(7),
-    /**
-     * <code>PRESET_ICON_TIMELAPSE = 8;</code>
-     */
-    PRESET_ICON_TIMELAPSE(8),
-    /**
-     * <code>PRESET_ICON_NIGHTLAPSE = 9;</code>
-     */
-    PRESET_ICON_NIGHTLAPSE(9),
-    /**
-     * <code>PRESET_ICON_SNAIL = 10;</code>
-     */
-    PRESET_ICON_SNAIL(10),
-    /**
-     * <code>PRESET_ICON_VIDEO_2 = 11;</code>
-     */
-    PRESET_ICON_VIDEO_2(11),
-    /**
-     * <code>PRESET_ICON_360_VIDEO = 12;</code>
-     */
-    PRESET_ICON_360_VIDEO(12),
-    /**
-     * <code>PRESET_ICON_PHOTO_2 = 13;</code>
-     */
-    PRESET_ICON_PHOTO_2(13),
-    /**
-     * <code>PRESET_ICON_PANORAMA = 14;</code>
-     */
-    PRESET_ICON_PANORAMA(14),
-    /**
-     * <code>PRESET_ICON_BURST_2 = 15;</code>
-     */
-    PRESET_ICON_BURST_2(15),
-    /**
-     * <code>PRESET_ICON_TIMEWARP_2 = 16;</code>
-     */
-    PRESET_ICON_TIMEWARP_2(16),
-    /**
-     * <code>PRESET_ICON_TIMELAPSE_2 = 17;</code>
-     */
-    PRESET_ICON_TIMELAPSE_2(17),
-    /**
-     * <code>PRESET_ICON_CUSTOM = 18;</code>
-     */
-    PRESET_ICON_CUSTOM(18),
-    /**
-     * <code>PRESET_ICON_AIR = 19;</code>
-     */
-    PRESET_ICON_AIR(19),
-    /**
-     * <code>PRESET_ICON_BIKE = 20;</code>
-     */
-    PRESET_ICON_BIKE(20),
-    /**
-     * <code>PRESET_ICON_EPIC = 21;</code>
-     */
-    PRESET_ICON_EPIC(21),
-    /**
-     * <code>PRESET_ICON_INDOOR = 22;</code>
-     */
-    PRESET_ICON_INDOOR(22),
-    /**
-     * <code>PRESET_ICON_MOTOR = 23;</code>
-     */
-    PRESET_ICON_MOTOR(23),
-    /**
-     * <code>PRESET_ICON_MOUNTED = 24;</code>
-     */
-    PRESET_ICON_MOUNTED(24),
-    /**
-     * <code>PRESET_ICON_OUTDOOR = 25;</code>
-     */
-    PRESET_ICON_OUTDOOR(25),
-    /**
-     * <code>PRESET_ICON_POV = 26;</code>
-     */
-    PRESET_ICON_POV(26),
-    /**
-     * <code>PRESET_ICON_SELFIE = 27;</code>
-     */
-    PRESET_ICON_SELFIE(27),
-    /**
-     * <code>PRESET_ICON_SKATE = 28;</code>
-     */
-    PRESET_ICON_SKATE(28),
-    /**
-     * <code>PRESET_ICON_SNOW = 29;</code>
-     */
-    PRESET_ICON_SNOW(29),
-    /**
-     * <code>PRESET_ICON_TRAIL = 30;</code>
-     */
-    PRESET_ICON_TRAIL(30),
-    /**
-     * <code>PRESET_ICON_TRAVEL = 31;</code>
-     */
-    PRESET_ICON_TRAVEL(31),
-    /**
-     * <code>PRESET_ICON_WATER = 32;</code>
-     */
-    PRESET_ICON_WATER(32),
-    /**
-     * <code>PRESET_ICON_LOOPING = 33;</code>
-     */
-    PRESET_ICON_LOOPING(33),
-    /**
-     * <pre>
-     * Reserved 34 - 50 for Custom presets 
-     * </pre>
-     *
-     * <code>PRESET_ICON_MAX_VIDEO = 55;</code>
-     */
-    PRESET_ICON_MAX_VIDEO(55),
-    /**
-     * <code>PRESET_ICON_MAX_PHOTO = 56;</code>
-     */
-    PRESET_ICON_MAX_PHOTO(56),
-    /**
-     * <code>PRESET_ICON_MAX_TIMEWARP = 57;</code>
-     */
-    PRESET_ICON_MAX_TIMEWARP(57),
-    /**
-     * <code>PRESET_ICON_BASIC = 58;</code>
-     */
-    PRESET_ICON_BASIC(58),
-    /**
-     * <code>PRESET_ICON_ULTRA_SLO_MO = 59;</code>
-     */
-    PRESET_ICON_ULTRA_SLO_MO(59),
-    /**
-     * <code>PRESET_ICON_STANDARD_ENDURANCE = 60;</code>
-     */
-    PRESET_ICON_STANDARD_ENDURANCE(60),
-    /**
-     * <code>PRESET_ICON_ACTIVITY_ENDURANCE = 61;</code>
-     */
-    PRESET_ICON_ACTIVITY_ENDURANCE(61),
-    /**
-     * <code>PRESET_ICON_CINEMATIC_ENDURANCE = 62;</code>
-     */
-    PRESET_ICON_CINEMATIC_ENDURANCE(62),
-    /**
-     * <code>PRESET_ICON_SLOMO_ENDURANCE = 63;</code>
-     */
-    PRESET_ICON_SLOMO_ENDURANCE(63),
-    /**
-     * <code>PRESET_ICON_STATIONARY_1 = 64;</code>
-     */
-    PRESET_ICON_STATIONARY_1(64),
-    /**
-     * <code>PRESET_ICON_STATIONARY_2 = 65;</code>
-     */
-    PRESET_ICON_STATIONARY_2(65),
-    /**
-     * <code>PRESET_ICON_STATIONARY_3 = 66;</code>
-     */
-    PRESET_ICON_STATIONARY_3(66),
-    /**
-     * <code>PRESET_ICON_STATIONARY_4 = 67;</code>
-     */
-    PRESET_ICON_STATIONARY_4(67),
-    /**
-     * <code>PRESET_ICON_SIMPLE_SUPER_PHOTO = 70;</code>
-     */
-    PRESET_ICON_SIMPLE_SUPER_PHOTO(70),
-    /**
-     * <code>PRESET_ICON_SIMPLE_NIGHT_PHOTO = 71;</code>
-     */
-    PRESET_ICON_SIMPLE_NIGHT_PHOTO(71),
-    /**
-     * <code>PRESET_ICON_HIGHEST_QUALITY_VIDEO = 73;</code>
-     */
-    PRESET_ICON_HIGHEST_QUALITY_VIDEO(73),
-    /**
-     * <code>PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;</code>
-     */
-    PRESET_ICON_STANDARD_QUALITY_VIDEO(74),
-    /**
-     * <code>PRESET_ICON_BASIC_QUALITY_VIDEO = 75;</code>
-     */
-    PRESET_ICON_BASIC_QUALITY_VIDEO(75),
-    /**
-     * <code>PRESET_ICON_STAR_TRAIL = 76;</code>
-     */
-    PRESET_ICON_STAR_TRAIL(76),
-    /**
-     * <code>PRESET_ICON_LIGHT_PAINTING = 77;</code>
-     */
-    PRESET_ICON_LIGHT_PAINTING(77),
-    /**
-     * <code>PRESET_ICON_LIGHT_TRAIL = 78;</code>
-     */
-    PRESET_ICON_LIGHT_TRAIL(78),
-    /**
-     * <code>PRESET_ICON_FULL_FRAME = 79;</code>
-     */
-    PRESET_ICON_FULL_FRAME(79),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_VIDEO = 80;</code>
-     */
-    PRESET_ICON_EASY_MAX_VIDEO(80),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_PHOTO = 81;</code>
-     */
-    PRESET_ICON_EASY_MAX_PHOTO(81),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_TIMEWARP = 82;</code>
-     */
-    PRESET_ICON_EASY_MAX_TIMEWARP(82),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_STAR_TRAIL = 83;</code>
-     */
-    PRESET_ICON_EASY_MAX_STAR_TRAIL(83),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;</code>
-     */
-    PRESET_ICON_EASY_MAX_LIGHT_PAINTING(84),
-    /**
-     * <code>PRESET_ICON_EASY_MAX_LIGHT_TRAIL = 85;</code>
-     */
-    PRESET_ICON_EASY_MAX_LIGHT_TRAIL(85),
-    /**
-     * <code>PRESET_ICON_MAX_STAR_TRAIL = 89;</code>
-     */
-    PRESET_ICON_MAX_STAR_TRAIL(89),
-    /**
-     * <code>PRESET_ICON_MAX_LIGHT_PAINTING = 90;</code>
-     */
-    PRESET_ICON_MAX_LIGHT_PAINTING(90),
-    /**
-     * <code>PRESET_ICON_MAX_LIGHT_TRAIL = 91;</code>
-     */
-    PRESET_ICON_MAX_LIGHT_TRAIL(91),
-    /**
-     * <code>PRESET_ICON_TIMELAPSE_PHOTO = 1000;</code>
-     */
-    PRESET_ICON_TIMELAPSE_PHOTO(1000),
-    /**
-     * <code>PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;</code>
-     */
-    PRESET_ICON_NIGHTLAPSE_PHOTO(1001),
-    ;
-
-    /**
-     * <code>PRESET_ICON_VIDEO = 0;</code>
-     */
-    public static final int PRESET_ICON_VIDEO_VALUE = 0;
-    /**
-     * <code>PRESET_ICON_ACTIVITY = 1;</code>
-     */
-    public static final int PRESET_ICON_ACTIVITY_VALUE = 1;
-    /**
-     * <code>PRESET_ICON_CINEMATIC = 2;</code>
-     */
-    public static final int PRESET_ICON_CINEMATIC_VALUE = 2;
-    /**
-     * <code>PRESET_ICON_PHOTO = 3;</code>
-     */
-    public static final int PRESET_ICON_PHOTO_VALUE = 3;
-    /**
-     * <code>PRESET_ICON_LIVE_BURST = 4;</code>
-     */
-    public static final int PRESET_ICON_LIVE_BURST_VALUE = 4;
-    /**
-     * <code>PRESET_ICON_BURST = 5;</code>
-     */
-    public static final int PRESET_ICON_BURST_VALUE = 5;
-    /**
-     * <code>PRESET_ICON_PHOTO_NIGHT = 6;</code>
-     */
-    public static final int PRESET_ICON_PHOTO_NIGHT_VALUE = 6;
-    /**
-     * <code>PRESET_ICON_TIMEWARP = 7;</code>
-     */
-    public static final int PRESET_ICON_TIMEWARP_VALUE = 7;
-    /**
-     * <code>PRESET_ICON_TIMELAPSE = 8;</code>
-     */
-    public static final int PRESET_ICON_TIMELAPSE_VALUE = 8;
-    /**
-     * <code>PRESET_ICON_NIGHTLAPSE = 9;</code>
-     */
-    public static final int PRESET_ICON_NIGHTLAPSE_VALUE = 9;
-    /**
-     * <code>PRESET_ICON_SNAIL = 10;</code>
-     */
-    public static final int PRESET_ICON_SNAIL_VALUE = 10;
-    /**
-     * <code>PRESET_ICON_VIDEO_2 = 11;</code>
-     */
-    public static final int PRESET_ICON_VIDEO_2_VALUE = 11;
-    /**
-     * <code>PRESET_ICON_360_VIDEO = 12;</code>
-     */
-    public static final int PRESET_ICON_360_VIDEO_VALUE = 12;
-    /**
-     * <code>PRESET_ICON_PHOTO_2 = 13;</code>
-     */
-    public static final int PRESET_ICON_PHOTO_2_VALUE = 13;
-    /**
-     * <code>PRESET_ICON_PANORAMA = 14;</code>
-     */
-    public static final int PRESET_ICON_PANORAMA_VALUE = 14;
-    /**
-     * <code>PRESET_ICON_BURST_2 = 15;</code>
-     */
-    public static final int PRESET_ICON_BURST_2_VALUE = 15;
-    /**
-     * <code>PRESET_ICON_TIMEWARP_2 = 16;</code>
-     */
-    public static final int PRESET_ICON_TIMEWARP_2_VALUE = 16;
-    /**
-     * <code>PRESET_ICON_TIMELAPSE_2 = 17;</code>
-     */
-    public static final int PRESET_ICON_TIMELAPSE_2_VALUE = 17;
-    /**
-     * <code>PRESET_ICON_CUSTOM = 18;</code>
-     */
-    public static final int PRESET_ICON_CUSTOM_VALUE = 18;
-    /**
-     * <code>PRESET_ICON_AIR = 19;</code>
-     */
-    public static final int PRESET_ICON_AIR_VALUE = 19;
-    /**
-     * <code>PRESET_ICON_BIKE = 20;</code>
-     */
-    public static final int PRESET_ICON_BIKE_VALUE = 20;
-    /**
-     * <code>PRESET_ICON_EPIC = 21;</code>
-     */
-    public static final int PRESET_ICON_EPIC_VALUE = 21;
-    /**
-     * <code>PRESET_ICON_INDOOR = 22;</code>
-     */
-    public static final int PRESET_ICON_INDOOR_VALUE = 22;
-    /**
-     * <code>PRESET_ICON_MOTOR = 23;</code>
-     */
-    public static final int PRESET_ICON_MOTOR_VALUE = 23;
-    /**
-     * <code>PRESET_ICON_MOUNTED = 24;</code>
-     */
-    public static final int PRESET_ICON_MOUNTED_VALUE = 24;
-    /**
-     * <code>PRESET_ICON_OUTDOOR = 25;</code>
-     */
-    public static final int PRESET_ICON_OUTDOOR_VALUE = 25;
-    /**
-     * <code>PRESET_ICON_POV = 26;</code>
-     */
-    public static final int PRESET_ICON_POV_VALUE = 26;
-    /**
-     * <code>PRESET_ICON_SELFIE = 27;</code>
-     */
-    public static final int PRESET_ICON_SELFIE_VALUE = 27;
-    /**
-     * <code>PRESET_ICON_SKATE = 28;</code>
-     */
-    public static final int PRESET_ICON_SKATE_VALUE = 28;
-    /**
-     * <code>PRESET_ICON_SNOW = 29;</code>
-     */
-    public static final int PRESET_ICON_SNOW_VALUE = 29;
-    /**
-     * <code>PRESET_ICON_TRAIL = 30;</code>
-     */
-    public static final int PRESET_ICON_TRAIL_VALUE = 30;
-    /**
-     * <code>PRESET_ICON_TRAVEL = 31;</code>
-     */
-    public static final int PRESET_ICON_TRAVEL_VALUE = 31;
-    /**
-     * <code>PRESET_ICON_WATER = 32;</code>
-     */
-    public static final int PRESET_ICON_WATER_VALUE = 32;
-    /**
-     * <code>PRESET_ICON_LOOPING = 33;</code>
-     */
-    public static final int PRESET_ICON_LOOPING_VALUE = 33;
-    /**
-     * <pre>
-     * Reserved 34 - 50 for Custom presets 
-     * </pre>
-     *
-     * <code>PRESET_ICON_MAX_VIDEO = 55;</code>
-     */
-    public static final int PRESET_ICON_MAX_VIDEO_VALUE = 55;
-    /**
-     * <code>PRESET_ICON_MAX_PHOTO = 56;</code>
-     */
-    public static final int PRESET_ICON_MAX_PHOTO_VALUE = 56;
-    /**
-     * <code>PRESET_ICON_MAX_TIMEWARP = 57;</code>
-     */
-    public static final int PRESET_ICON_MAX_TIMEWARP_VALUE = 57;
-    /**
-     * <code>PRESET_ICON_BASIC = 58;</code>
-     */
-    public static final int PRESET_ICON_BASIC_VALUE = 58;
-    /**
-     * <code>PRESET_ICON_ULTRA_SLO_MO = 59;</code>
-     */
-    public static final int PRESET_ICON_ULTRA_SLO_MO_VALUE = 59;
-    /**
-     * <code>PRESET_ICON_STANDARD_ENDURANCE = 60;</code>
-     */
-    public static final int PRESET_ICON_STANDARD_ENDURANCE_VALUE = 60;
-    /**
-     * <code>PRESET_ICON_ACTIVITY_ENDURANCE = 61;</code>
-     */
-    public static final int PRESET_ICON_ACTIVITY_ENDURANCE_VALUE = 61;
-    /**
-     * <code>PRESET_ICON_CINEMATIC_ENDURANCE = 62;</code>
-     */
-    public static final int PRESET_ICON_CINEMATIC_ENDURANCE_VALUE = 62;
-    /**
-     * <code>PRESET_ICON_SLOMO_ENDURANCE = 63;</code>
-     */
-    public static final int PRESET_ICON_SLOMO_ENDURANCE_VALUE = 63;
-    /**
-     * <code>PRESET_ICON_STATIONARY_1 = 64;</code>
-     */
-    public static final int PRESET_ICON_STATIONARY_1_VALUE = 64;
-    /**
-     * <code>PRESET_ICON_STATIONARY_2 = 65;</code>
-     */
-    public static final int PRESET_ICON_STATIONARY_2_VALUE = 65;
-    /**
-     * <code>PRESET_ICON_STATIONARY_3 = 66;</code>
-     */
-    public static final int PRESET_ICON_STATIONARY_3_VALUE = 66;
-    /**
-     * <code>PRESET_ICON_STATIONARY_4 = 67;</code>
-     */
-    public static final int PRESET_ICON_STATIONARY_4_VALUE = 67;
-    /**
-     * <code>PRESET_ICON_SIMPLE_SUPER_PHOTO = 70;</code>
-     */
-    public static final int PRESET_ICON_SIMPLE_SUPER_PHOTO_VALUE = 70;
-    /**
-     * <code>PRESET_ICON_SIMPLE_NIGHT_PHOTO = 71;</code>
-     */
-    public static final int PRESET_ICON_SIMPLE_NIGHT_PHOTO_VALUE = 71;
-    /**
-     * <code>PRESET_ICON_HIGHEST_QUALITY_VIDEO = 73;</code>
-     */
-    public static final int PRESET_ICON_HIGHEST_QUALITY_VIDEO_VALUE = 73;
-    /**
-     * <code>PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;</code>
-     */
-    public static final int PRESET_ICON_STANDARD_QUALITY_VIDEO_VALUE = 74;
-    /**
-     * <code>PRESET_ICON_BASIC_QUALITY_VIDEO = 75;</code>
-     */
-    public static final int PRESET_ICON_BASIC_QUALITY_VIDEO_VALUE = 75;
-    /**
-     * <code>PRESET_ICON_STAR_TRAIL = 76;</code>
-     */
-    public static final int PRESET_ICON_STAR_TRAIL_VALUE = 76;
-    /**
-     * <code>PRESET_ICON_LIGHT_PAINTING = 77;</code>
-     */
-    public static final int PRESET_ICON_LIGHT_PAINTING_VALUE = 77;
-    /**
-     * <code>PRESET_ICON_LIGHT_TRAIL = 78;</code>
-     */
-    public static final int PRESET_ICON_LIGHT_TRAIL_VALUE = 78;
-    /**
-     * <code>PRESET_ICON_FULL_FRAME = 79;</code>
-     */
-    public static final int PRESET_ICON_FULL_FRAME_VALUE = 79;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_VIDEO = 80;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_VIDEO_VALUE = 80;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_PHOTO = 81;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_PHOTO_VALUE = 81;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_TIMEWARP = 82;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_TIMEWARP_VALUE = 82;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_STAR_TRAIL = 83;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_STAR_TRAIL_VALUE = 83;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_LIGHT_PAINTING_VALUE = 84;
-    /**
-     * <code>PRESET_ICON_EASY_MAX_LIGHT_TRAIL = 85;</code>
-     */
-    public static final int PRESET_ICON_EASY_MAX_LIGHT_TRAIL_VALUE = 85;
-    /**
-     * <code>PRESET_ICON_MAX_STAR_TRAIL = 89;</code>
-     */
-    public static final int PRESET_ICON_MAX_STAR_TRAIL_VALUE = 89;
-    /**
-     * <code>PRESET_ICON_MAX_LIGHT_PAINTING = 90;</code>
-     */
-    public static final int PRESET_ICON_MAX_LIGHT_PAINTING_VALUE = 90;
-    /**
-     * <code>PRESET_ICON_MAX_LIGHT_TRAIL = 91;</code>
-     */
-    public static final int PRESET_ICON_MAX_LIGHT_TRAIL_VALUE = 91;
-    /**
-     * <code>PRESET_ICON_TIMELAPSE_PHOTO = 1000;</code>
-     */
-    public static final int PRESET_ICON_TIMELAPSE_PHOTO_VALUE = 1000;
-    /**
-     * <code>PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;</code>
-     */
-    public static final int PRESET_ICON_NIGHTLAPSE_PHOTO_VALUE = 1001;
-
-
-    public final int getNumber() {
-      return value;
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetGroup)
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon}
      */
-    @Deprecated
-    public static EnumPresetIcon valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum EnumPresetGroupIcon
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>PRESET_GROUP_VIDEO_ICON_ID = 0;</code>
+         */
+        PRESET_GROUP_VIDEO_ICON_ID(0),
+        /**
+         * <code>PRESET_GROUP_PHOTO_ICON_ID = 1;</code>
+         */
+        PRESET_GROUP_PHOTO_ICON_ID(1),
+        /**
+         * <code>PRESET_GROUP_TIMELAPSE_ICON_ID = 2;</code>
+         */
+        PRESET_GROUP_TIMELAPSE_ICON_ID(2),
+        /**
+         * <code>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID = 3;</code>
+         */
+        PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID(3),
+        /**
+         * <code>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;</code>
+         */
+        PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID(4),
+        /**
+         * <code>PRESET_GROUP_MAX_VIDEO_ICON_ID = 5;</code>
+         */
+        PRESET_GROUP_MAX_VIDEO_ICON_ID(5),
+        /**
+         * <code>PRESET_GROUP_MAX_PHOTO_ICON_ID = 6;</code>
+         */
+        PRESET_GROUP_MAX_PHOTO_ICON_ID(6),
+        /**
+         * <code>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID = 7;</code>
+         */
+        PRESET_GROUP_MAX_TIMELAPSE_ICON_ID(7),
+        /**
+         * <code>PRESET_GROUP_ND_MOD_VIDEO_ICON_ID = 8;</code>
+         */
+        PRESET_GROUP_ND_MOD_VIDEO_ICON_ID(8),
+        /**
+         * <code>PRESET_GROUP_ND_MOD_PHOTO_ICON_ID = 9;</code>
+         */
+        PRESET_GROUP_ND_MOD_PHOTO_ICON_ID(9),
+        /**
+         * <code>PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID = 10;</code>
+         */
+        PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID(10),
+        ;
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumPresetIcon forNumber(int value) {
-      switch (value) {
-        case 0: return PRESET_ICON_VIDEO;
-        case 1: return PRESET_ICON_ACTIVITY;
-        case 2: return PRESET_ICON_CINEMATIC;
-        case 3: return PRESET_ICON_PHOTO;
-        case 4: return PRESET_ICON_LIVE_BURST;
-        case 5: return PRESET_ICON_BURST;
-        case 6: return PRESET_ICON_PHOTO_NIGHT;
-        case 7: return PRESET_ICON_TIMEWARP;
-        case 8: return PRESET_ICON_TIMELAPSE;
-        case 9: return PRESET_ICON_NIGHTLAPSE;
-        case 10: return PRESET_ICON_SNAIL;
-        case 11: return PRESET_ICON_VIDEO_2;
-        case 12: return PRESET_ICON_360_VIDEO;
-        case 13: return PRESET_ICON_PHOTO_2;
-        case 14: return PRESET_ICON_PANORAMA;
-        case 15: return PRESET_ICON_BURST_2;
-        case 16: return PRESET_ICON_TIMEWARP_2;
-        case 17: return PRESET_ICON_TIMELAPSE_2;
-        case 18: return PRESET_ICON_CUSTOM;
-        case 19: return PRESET_ICON_AIR;
-        case 20: return PRESET_ICON_BIKE;
-        case 21: return PRESET_ICON_EPIC;
-        case 22: return PRESET_ICON_INDOOR;
-        case 23: return PRESET_ICON_MOTOR;
-        case 24: return PRESET_ICON_MOUNTED;
-        case 25: return PRESET_ICON_OUTDOOR;
-        case 26: return PRESET_ICON_POV;
-        case 27: return PRESET_ICON_SELFIE;
-        case 28: return PRESET_ICON_SKATE;
-        case 29: return PRESET_ICON_SNOW;
-        case 30: return PRESET_ICON_TRAIL;
-        case 31: return PRESET_ICON_TRAVEL;
-        case 32: return PRESET_ICON_WATER;
-        case 33: return PRESET_ICON_LOOPING;
-        case 55: return PRESET_ICON_MAX_VIDEO;
-        case 56: return PRESET_ICON_MAX_PHOTO;
-        case 57: return PRESET_ICON_MAX_TIMEWARP;
-        case 58: return PRESET_ICON_BASIC;
-        case 59: return PRESET_ICON_ULTRA_SLO_MO;
-        case 60: return PRESET_ICON_STANDARD_ENDURANCE;
-        case 61: return PRESET_ICON_ACTIVITY_ENDURANCE;
-        case 62: return PRESET_ICON_CINEMATIC_ENDURANCE;
-        case 63: return PRESET_ICON_SLOMO_ENDURANCE;
-        case 64: return PRESET_ICON_STATIONARY_1;
-        case 65: return PRESET_ICON_STATIONARY_2;
-        case 66: return PRESET_ICON_STATIONARY_3;
-        case 67: return PRESET_ICON_STATIONARY_4;
-        case 70: return PRESET_ICON_SIMPLE_SUPER_PHOTO;
-        case 71: return PRESET_ICON_SIMPLE_NIGHT_PHOTO;
-        case 73: return PRESET_ICON_HIGHEST_QUALITY_VIDEO;
-        case 74: return PRESET_ICON_STANDARD_QUALITY_VIDEO;
-        case 75: return PRESET_ICON_BASIC_QUALITY_VIDEO;
-        case 76: return PRESET_ICON_STAR_TRAIL;
-        case 77: return PRESET_ICON_LIGHT_PAINTING;
-        case 78: return PRESET_ICON_LIGHT_TRAIL;
-        case 79: return PRESET_ICON_FULL_FRAME;
-        case 80: return PRESET_ICON_EASY_MAX_VIDEO;
-        case 81: return PRESET_ICON_EASY_MAX_PHOTO;
-        case 82: return PRESET_ICON_EASY_MAX_TIMEWARP;
-        case 83: return PRESET_ICON_EASY_MAX_STAR_TRAIL;
-        case 84: return PRESET_ICON_EASY_MAX_LIGHT_PAINTING;
-        case 85: return PRESET_ICON_EASY_MAX_LIGHT_TRAIL;
-        case 89: return PRESET_ICON_MAX_STAR_TRAIL;
-        case 90: return PRESET_ICON_MAX_LIGHT_PAINTING;
-        case 91: return PRESET_ICON_MAX_LIGHT_TRAIL;
-        case 1000: return PRESET_ICON_TIMELAPSE_PHOTO;
-        case 1001: return PRESET_ICON_NIGHTLAPSE_PHOTO;
-        default: return null;
-      }
-    }
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumPresetGroupIcon.class.getName());
+        }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetIcon>
+        /**
+         * <code>PRESET_GROUP_VIDEO_ICON_ID = 0;</code>
+         */
+        public static final int PRESET_GROUP_VIDEO_ICON_ID_VALUE = 0;
+        /**
+         * <code>PRESET_GROUP_PHOTO_ICON_ID = 1;</code>
+         */
+        public static final int PRESET_GROUP_PHOTO_ICON_ID_VALUE = 1;
+        /**
+         * <code>PRESET_GROUP_TIMELAPSE_ICON_ID = 2;</code>
+         */
+        public static final int PRESET_GROUP_TIMELAPSE_ICON_ID_VALUE = 2;
+        /**
+         * <code>PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID = 3;</code>
+         */
+        public static final int PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID_VALUE = 3;
+        /**
+         * <code>PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID = 4;</code>
+         */
+        public static final int PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID_VALUE = 4;
+        /**
+         * <code>PRESET_GROUP_MAX_VIDEO_ICON_ID = 5;</code>
+         */
+        public static final int PRESET_GROUP_MAX_VIDEO_ICON_ID_VALUE = 5;
+        /**
+         * <code>PRESET_GROUP_MAX_PHOTO_ICON_ID = 6;</code>
+         */
+        public static final int PRESET_GROUP_MAX_PHOTO_ICON_ID_VALUE = 6;
+        /**
+         * <code>PRESET_GROUP_MAX_TIMELAPSE_ICON_ID = 7;</code>
+         */
+        public static final int PRESET_GROUP_MAX_TIMELAPSE_ICON_ID_VALUE = 7;
+        /**
+         * <code>PRESET_GROUP_ND_MOD_VIDEO_ICON_ID = 8;</code>
+         */
+        public static final int PRESET_GROUP_ND_MOD_VIDEO_ICON_ID_VALUE = 8;
+        /**
+         * <code>PRESET_GROUP_ND_MOD_PHOTO_ICON_ID = 9;</code>
+         */
+        public static final int PRESET_GROUP_ND_MOD_PHOTO_ICON_ID_VALUE = 9;
+        /**
+         * <code>PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID = 10;</code>
+         */
+        public static final int PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID_VALUE = 10;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumPresetGroupIcon valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumPresetGroupIcon forNumber(int value) {
+            switch (value) {
+                case 0:
+                    return PRESET_GROUP_VIDEO_ICON_ID;
+                case 1:
+                    return PRESET_GROUP_PHOTO_ICON_ID;
+                case 2:
+                    return PRESET_GROUP_TIMELAPSE_ICON_ID;
+                case 3:
+                    return PRESET_GROUP_LONG_BAT_VIDEO_ICON_ID;
+                case 4:
+                    return PRESET_GROUP_ENDURANCE_VIDEO_ICON_ID;
+                case 5:
+                    return PRESET_GROUP_MAX_VIDEO_ICON_ID;
+                case 6:
+                    return PRESET_GROUP_MAX_PHOTO_ICON_ID;
+                case 7:
+                    return PRESET_GROUP_MAX_TIMELAPSE_ICON_ID;
+                case 8:
+                    return PRESET_GROUP_ND_MOD_VIDEO_ICON_ID;
+                case 9:
+                    return PRESET_GROUP_ND_MOD_PHOTO_ICON_ID;
+                case 10:
+                    return PRESET_GROUP_ND_MOD_TIMELAPSE_ICON_ID;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroupIcon>
         internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumPresetIcon> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumPresetIcon>() {
-            public EnumPresetIcon findValueByNumber(int number) {
-              return EnumPresetIcon.forNumber(number);
-            }
-          };
+            return internalValueMap;
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumPresetGroupIcon> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumPresetGroupIcon>() {
+                    public EnumPresetGroupIcon findValueByNumber(int number) {
+                        return EnumPresetGroupIcon.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return PresetStatus.getDescriptor().getEnumTypes().get(3);
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.getDescriptor().getEnumTypes().get(2);
+        }
 
-    private static final EnumPresetIcon[] VALUES = values();
+        private static final EnumPresetGroupIcon[] VALUES = values();
 
-    public static EnumPresetIcon valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
+        public static EnumPresetGroupIcon valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
 
-    private final int value;
+        private final int value;
 
-    private EnumPresetIcon(int value) {
-      this.value = value;
-    }
+        private EnumPresetGroupIcon(int value) {
+            this.value = value;
+        }
 
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetIcon)
-  }
-
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetTitle}
-   */
-  public enum EnumPresetTitle
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>PRESET_TITLE_ACTIVITY = 0;</code>
-     */
-    PRESET_TITLE_ACTIVITY(0),
-    /**
-     * <code>PRESET_TITLE_STANDARD = 1;</code>
-     */
-    PRESET_TITLE_STANDARD(1),
-    /**
-     * <code>PRESET_TITLE_CINEMATIC = 2;</code>
-     */
-    PRESET_TITLE_CINEMATIC(2),
-    /**
-     * <code>PRESET_TITLE_PHOTO = 3;</code>
-     */
-    PRESET_TITLE_PHOTO(3),
-    /**
-     * <code>PRESET_TITLE_LIVE_BURST = 4;</code>
-     */
-    PRESET_TITLE_LIVE_BURST(4),
-    /**
-     * <code>PRESET_TITLE_BURST = 5;</code>
-     */
-    PRESET_TITLE_BURST(5),
-    /**
-     * <code>PRESET_TITLE_NIGHT = 6;</code>
-     */
-    PRESET_TITLE_NIGHT(6),
-    /**
-     * <code>PRESET_TITLE_TIME_WARP = 7;</code>
-     */
-    PRESET_TITLE_TIME_WARP(7),
-    /**
-     * <code>PRESET_TITLE_TIME_LAPSE = 8;</code>
-     */
-    PRESET_TITLE_TIME_LAPSE(8),
-    /**
-     * <code>PRESET_TITLE_NIGHT_LAPSE = 9;</code>
-     */
-    PRESET_TITLE_NIGHT_LAPSE(9),
-    /**
-     * <code>PRESET_TITLE_VIDEO = 10;</code>
-     */
-    PRESET_TITLE_VIDEO(10),
-    /**
-     * <code>PRESET_TITLE_SLOMO = 11;</code>
-     */
-    PRESET_TITLE_SLOMO(11),
-    /**
-     * <code>PRESET_TITLE_360_VIDEO = 12;</code>
-     */
-    PRESET_TITLE_360_VIDEO(12),
-    /**
-     * <code>PRESET_TITLE_PHOTO_2 = 13;</code>
-     */
-    PRESET_TITLE_PHOTO_2(13),
-    /**
-     * <code>PRESET_TITLE_PANORAMA = 14;</code>
-     */
-    PRESET_TITLE_PANORAMA(14),
-    /**
-     * <code>PRESET_TITLE_360_PHOTO = 15;</code>
-     */
-    PRESET_TITLE_360_PHOTO(15),
-    /**
-     * <code>PRESET_TITLE_TIME_WARP_2 = 16;</code>
-     */
-    PRESET_TITLE_TIME_WARP_2(16),
-    /**
-     * <code>PRESET_TITLE_360_TIME_WARP = 17;</code>
-     */
-    PRESET_TITLE_360_TIME_WARP(17),
-    /**
-     * <code>PRESET_TITLE_CUSTOM = 18;</code>
-     */
-    PRESET_TITLE_CUSTOM(18),
-    /**
-     * <code>PRESET_TITLE_AIR = 19;</code>
-     */
-    PRESET_TITLE_AIR(19),
-    /**
-     * <code>PRESET_TITLE_BIKE = 20;</code>
-     */
-    PRESET_TITLE_BIKE(20),
-    /**
-     * <code>PRESET_TITLE_EPIC = 21;</code>
-     */
-    PRESET_TITLE_EPIC(21),
-    /**
-     * <code>PRESET_TITLE_INDOOR = 22;</code>
-     */
-    PRESET_TITLE_INDOOR(22),
-    /**
-     * <code>PRESET_TITLE_MOTOR = 23;</code>
-     */
-    PRESET_TITLE_MOTOR(23),
-    /**
-     * <code>PRESET_TITLE_MOUNTED = 24;</code>
-     */
-    PRESET_TITLE_MOUNTED(24),
-    /**
-     * <code>PRESET_TITLE_OUTDOOR = 25;</code>
-     */
-    PRESET_TITLE_OUTDOOR(25),
-    /**
-     * <code>PRESET_TITLE_POV = 26;</code>
-     */
-    PRESET_TITLE_POV(26),
-    /**
-     * <code>PRESET_TITLE_SELFIE = 27;</code>
-     */
-    PRESET_TITLE_SELFIE(27),
-    /**
-     * <code>PRESET_TITLE_SKATE = 28;</code>
-     */
-    PRESET_TITLE_SKATE(28),
-    /**
-     * <code>PRESET_TITLE_SNOW = 29;</code>
-     */
-    PRESET_TITLE_SNOW(29),
-    /**
-     * <code>PRESET_TITLE_TRAIL = 30;</code>
-     */
-    PRESET_TITLE_TRAIL(30),
-    /**
-     * <code>PRESET_TITLE_TRAVEL = 31;</code>
-     */
-    PRESET_TITLE_TRAVEL(31),
-    /**
-     * <code>PRESET_TITLE_WATER = 32;</code>
-     */
-    PRESET_TITLE_WATER(32),
-    /**
-     * <code>PRESET_TITLE_LOOPING = 33;</code>
-     */
-    PRESET_TITLE_LOOPING(33),
-    /**
-     * <pre>
-     * Reserved 34 - 50 for custom presets. 
-     * </pre>
-     *
-     * <code>PRESET_TITLE_360_TIMELAPSE = 51;</code>
-     */
-    PRESET_TITLE_360_TIMELAPSE(51),
-    /**
-     * <code>PRESET_TITLE_360_NIGHT_LAPSE = 52;</code>
-     */
-    PRESET_TITLE_360_NIGHT_LAPSE(52),
-    /**
-     * <code>PRESET_TITLE_360_NIGHT_PHOTO = 53;</code>
-     */
-    PRESET_TITLE_360_NIGHT_PHOTO(53),
-    /**
-     * <code>PRESET_TITLE_PANO_TIME_LAPSE = 54;</code>
-     */
-    PRESET_TITLE_PANO_TIME_LAPSE(54),
-    /**
-     * <code>PRESET_TITLE_MAX_VIDEO = 55;</code>
-     */
-    PRESET_TITLE_MAX_VIDEO(55),
-    /**
-     * <code>PRESET_TITLE_MAX_PHOTO = 56;</code>
-     */
-    PRESET_TITLE_MAX_PHOTO(56),
-    /**
-     * <code>PRESET_TITLE_MAX_TIMEWARP = 57;</code>
-     */
-    PRESET_TITLE_MAX_TIMEWARP(57),
-    /**
-     * <code>PRESET_TITLE_BASIC = 58;</code>
-     */
-    PRESET_TITLE_BASIC(58),
-    /**
-     * <code>PRESET_TITLE_ULTRA_SLO_MO = 59;</code>
-     */
-    PRESET_TITLE_ULTRA_SLO_MO(59),
-    /**
-     * <code>PRESET_TITLE_STANDARD_ENDURANCE = 60;</code>
-     */
-    PRESET_TITLE_STANDARD_ENDURANCE(60),
-    /**
-     * <code>PRESET_TITLE_ACTIVITY_ENDURANCE = 61;</code>
-     */
-    PRESET_TITLE_ACTIVITY_ENDURANCE(61),
-    /**
-     * <code>PRESET_TITLE_CINEMATIC_ENDURANCE = 62;</code>
-     */
-    PRESET_TITLE_CINEMATIC_ENDURANCE(62),
-    /**
-     * <code>PRESET_TITLE_SLOMO_ENDURANCE = 63;</code>
-     */
-    PRESET_TITLE_SLOMO_ENDURANCE(63),
-    /**
-     * <code>PRESET_TITLE_STATIONARY_1 = 64;</code>
-     */
-    PRESET_TITLE_STATIONARY_1(64),
-    /**
-     * <code>PRESET_TITLE_STATIONARY_2 = 65;</code>
-     */
-    PRESET_TITLE_STATIONARY_2(65),
-    /**
-     * <code>PRESET_TITLE_STATIONARY_3 = 66;</code>
-     */
-    PRESET_TITLE_STATIONARY_3(66),
-    /**
-     * <code>PRESET_TITLE_STATIONARY_4 = 67;</code>
-     */
-    PRESET_TITLE_STATIONARY_4(67),
-    /**
-     * <code>PRESET_TITLE_SIMPLE_VIDEO = 68;</code>
-     */
-    PRESET_TITLE_SIMPLE_VIDEO(68),
-    /**
-     * <code>PRESET_TITLE_SIMPLE_TIME_WARP = 69;</code>
-     */
-    PRESET_TITLE_SIMPLE_TIME_WARP(69),
-    /**
-     * <code>PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;</code>
-     */
-    PRESET_TITLE_SIMPLE_SUPER_PHOTO(70),
-    /**
-     * <code>PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;</code>
-     */
-    PRESET_TITLE_SIMPLE_NIGHT_PHOTO(71),
-    /**
-     * <code>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;</code>
-     */
-    PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE(72),
-    /**
-     * <code>PRESET_TITLE_HIGHEST_QUALITY = 73;</code>
-     */
-    PRESET_TITLE_HIGHEST_QUALITY(73),
-    /**
-     * <code>PRESET_TITLE_EXTENDED_BATTERY = 74;</code>
-     */
-    PRESET_TITLE_EXTENDED_BATTERY(74),
-    /**
-     * <code>PRESET_TITLE_LONGEST_BATTERY = 75;</code>
-     */
-    PRESET_TITLE_LONGEST_BATTERY(75),
-    /**
-     * <code>PRESET_TITLE_STAR_TRAIL = 76;</code>
-     */
-    PRESET_TITLE_STAR_TRAIL(76),
-    /**
-     * <code>PRESET_TITLE_LIGHT_PAINTING = 77;</code>
-     */
-    PRESET_TITLE_LIGHT_PAINTING(77),
-    /**
-     * <code>PRESET_TITLE_LIGHT_TRAIL = 78;</code>
-     */
-    PRESET_TITLE_LIGHT_TRAIL(78),
-    /**
-     * <code>PRESET_TITLE_FULL_FRAME = 79;</code>
-     */
-    PRESET_TITLE_FULL_FRAME(79),
-    /**
-     * <code>PRESET_TITLE_MAX_LENS_VIDEO = 80;</code>
-     */
-    PRESET_TITLE_MAX_LENS_VIDEO(80),
-    /**
-     * <code>PRESET_TITLE_MAX_LENS_TIMEWARP = 81;</code>
-     */
-    PRESET_TITLE_MAX_LENS_TIMEWARP(81),
-    /**
-     * <code>PRESET_TITLE_STANDARD_QUALITY_VIDEO = 82;</code>
-     */
-    PRESET_TITLE_STANDARD_QUALITY_VIDEO(82),
-    /**
-     * <code>PRESET_TITLE_BASIC_QUALITY_VIDEO = 83;</code>
-     */
-    PRESET_TITLE_BASIC_QUALITY_VIDEO(83),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_VIDEO = 84;</code>
-     */
-    PRESET_TITLE_EASY_MAX_VIDEO(84),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_PHOTO = 85;</code>
-     */
-    PRESET_TITLE_EASY_MAX_PHOTO(85),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_TIMEWARP = 86;</code>
-     */
-    PRESET_TITLE_EASY_MAX_TIMEWARP(86),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_STAR_TRAIL = 87;</code>
-     */
-    PRESET_TITLE_EASY_MAX_STAR_TRAIL(87),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_LIGHT_PAINTING = 88;</code>
-     */
-    PRESET_TITLE_EASY_MAX_LIGHT_PAINTING(88),
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_LIGHT_TRAIL = 89;</code>
-     */
-    PRESET_TITLE_EASY_MAX_LIGHT_TRAIL(89),
-    /**
-     * <code>PRESET_TITLE_MAX_STAR_TRAIL = 90;</code>
-     */
-    PRESET_TITLE_MAX_STAR_TRAIL(90),
-    /**
-     * <code>PRESET_TITLE_MAX_LIGHT_PAINTING = 91;</code>
-     */
-    PRESET_TITLE_MAX_LIGHT_PAINTING(91),
-    /**
-     * <code>PRESET_TITLE_MAX_LIGHT_TRAIL = 92;</code>
-     */
-    PRESET_TITLE_MAX_LIGHT_TRAIL(92),
-    /**
-     * <code>PRESET_TITLE_HIGHEST_QUALITY_VIDEO = 93;</code>
-     */
-    PRESET_TITLE_HIGHEST_QUALITY_VIDEO(93),
-    ;
-
-    /**
-     * <code>PRESET_TITLE_ACTIVITY = 0;</code>
-     */
-    public static final int PRESET_TITLE_ACTIVITY_VALUE = 0;
-    /**
-     * <code>PRESET_TITLE_STANDARD = 1;</code>
-     */
-    public static final int PRESET_TITLE_STANDARD_VALUE = 1;
-    /**
-     * <code>PRESET_TITLE_CINEMATIC = 2;</code>
-     */
-    public static final int PRESET_TITLE_CINEMATIC_VALUE = 2;
-    /**
-     * <code>PRESET_TITLE_PHOTO = 3;</code>
-     */
-    public static final int PRESET_TITLE_PHOTO_VALUE = 3;
-    /**
-     * <code>PRESET_TITLE_LIVE_BURST = 4;</code>
-     */
-    public static final int PRESET_TITLE_LIVE_BURST_VALUE = 4;
-    /**
-     * <code>PRESET_TITLE_BURST = 5;</code>
-     */
-    public static final int PRESET_TITLE_BURST_VALUE = 5;
-    /**
-     * <code>PRESET_TITLE_NIGHT = 6;</code>
-     */
-    public static final int PRESET_TITLE_NIGHT_VALUE = 6;
-    /**
-     * <code>PRESET_TITLE_TIME_WARP = 7;</code>
-     */
-    public static final int PRESET_TITLE_TIME_WARP_VALUE = 7;
-    /**
-     * <code>PRESET_TITLE_TIME_LAPSE = 8;</code>
-     */
-    public static final int PRESET_TITLE_TIME_LAPSE_VALUE = 8;
-    /**
-     * <code>PRESET_TITLE_NIGHT_LAPSE = 9;</code>
-     */
-    public static final int PRESET_TITLE_NIGHT_LAPSE_VALUE = 9;
-    /**
-     * <code>PRESET_TITLE_VIDEO = 10;</code>
-     */
-    public static final int PRESET_TITLE_VIDEO_VALUE = 10;
-    /**
-     * <code>PRESET_TITLE_SLOMO = 11;</code>
-     */
-    public static final int PRESET_TITLE_SLOMO_VALUE = 11;
-    /**
-     * <code>PRESET_TITLE_360_VIDEO = 12;</code>
-     */
-    public static final int PRESET_TITLE_360_VIDEO_VALUE = 12;
-    /**
-     * <code>PRESET_TITLE_PHOTO_2 = 13;</code>
-     */
-    public static final int PRESET_TITLE_PHOTO_2_VALUE = 13;
-    /**
-     * <code>PRESET_TITLE_PANORAMA = 14;</code>
-     */
-    public static final int PRESET_TITLE_PANORAMA_VALUE = 14;
-    /**
-     * <code>PRESET_TITLE_360_PHOTO = 15;</code>
-     */
-    public static final int PRESET_TITLE_360_PHOTO_VALUE = 15;
-    /**
-     * <code>PRESET_TITLE_TIME_WARP_2 = 16;</code>
-     */
-    public static final int PRESET_TITLE_TIME_WARP_2_VALUE = 16;
-    /**
-     * <code>PRESET_TITLE_360_TIME_WARP = 17;</code>
-     */
-    public static final int PRESET_TITLE_360_TIME_WARP_VALUE = 17;
-    /**
-     * <code>PRESET_TITLE_CUSTOM = 18;</code>
-     */
-    public static final int PRESET_TITLE_CUSTOM_VALUE = 18;
-    /**
-     * <code>PRESET_TITLE_AIR = 19;</code>
-     */
-    public static final int PRESET_TITLE_AIR_VALUE = 19;
-    /**
-     * <code>PRESET_TITLE_BIKE = 20;</code>
-     */
-    public static final int PRESET_TITLE_BIKE_VALUE = 20;
-    /**
-     * <code>PRESET_TITLE_EPIC = 21;</code>
-     */
-    public static final int PRESET_TITLE_EPIC_VALUE = 21;
-    /**
-     * <code>PRESET_TITLE_INDOOR = 22;</code>
-     */
-    public static final int PRESET_TITLE_INDOOR_VALUE = 22;
-    /**
-     * <code>PRESET_TITLE_MOTOR = 23;</code>
-     */
-    public static final int PRESET_TITLE_MOTOR_VALUE = 23;
-    /**
-     * <code>PRESET_TITLE_MOUNTED = 24;</code>
-     */
-    public static final int PRESET_TITLE_MOUNTED_VALUE = 24;
-    /**
-     * <code>PRESET_TITLE_OUTDOOR = 25;</code>
-     */
-    public static final int PRESET_TITLE_OUTDOOR_VALUE = 25;
-    /**
-     * <code>PRESET_TITLE_POV = 26;</code>
-     */
-    public static final int PRESET_TITLE_POV_VALUE = 26;
-    /**
-     * <code>PRESET_TITLE_SELFIE = 27;</code>
-     */
-    public static final int PRESET_TITLE_SELFIE_VALUE = 27;
-    /**
-     * <code>PRESET_TITLE_SKATE = 28;</code>
-     */
-    public static final int PRESET_TITLE_SKATE_VALUE = 28;
-    /**
-     * <code>PRESET_TITLE_SNOW = 29;</code>
-     */
-    public static final int PRESET_TITLE_SNOW_VALUE = 29;
-    /**
-     * <code>PRESET_TITLE_TRAIL = 30;</code>
-     */
-    public static final int PRESET_TITLE_TRAIL_VALUE = 30;
-    /**
-     * <code>PRESET_TITLE_TRAVEL = 31;</code>
-     */
-    public static final int PRESET_TITLE_TRAVEL_VALUE = 31;
-    /**
-     * <code>PRESET_TITLE_WATER = 32;</code>
-     */
-    public static final int PRESET_TITLE_WATER_VALUE = 32;
-    /**
-     * <code>PRESET_TITLE_LOOPING = 33;</code>
-     */
-    public static final int PRESET_TITLE_LOOPING_VALUE = 33;
-    /**
-     * <pre>
-     * Reserved 34 - 50 for custom presets. 
-     * </pre>
-     *
-     * <code>PRESET_TITLE_360_TIMELAPSE = 51;</code>
-     */
-    public static final int PRESET_TITLE_360_TIMELAPSE_VALUE = 51;
-    /**
-     * <code>PRESET_TITLE_360_NIGHT_LAPSE = 52;</code>
-     */
-    public static final int PRESET_TITLE_360_NIGHT_LAPSE_VALUE = 52;
-    /**
-     * <code>PRESET_TITLE_360_NIGHT_PHOTO = 53;</code>
-     */
-    public static final int PRESET_TITLE_360_NIGHT_PHOTO_VALUE = 53;
-    /**
-     * <code>PRESET_TITLE_PANO_TIME_LAPSE = 54;</code>
-     */
-    public static final int PRESET_TITLE_PANO_TIME_LAPSE_VALUE = 54;
-    /**
-     * <code>PRESET_TITLE_MAX_VIDEO = 55;</code>
-     */
-    public static final int PRESET_TITLE_MAX_VIDEO_VALUE = 55;
-    /**
-     * <code>PRESET_TITLE_MAX_PHOTO = 56;</code>
-     */
-    public static final int PRESET_TITLE_MAX_PHOTO_VALUE = 56;
-    /**
-     * <code>PRESET_TITLE_MAX_TIMEWARP = 57;</code>
-     */
-    public static final int PRESET_TITLE_MAX_TIMEWARP_VALUE = 57;
-    /**
-     * <code>PRESET_TITLE_BASIC = 58;</code>
-     */
-    public static final int PRESET_TITLE_BASIC_VALUE = 58;
-    /**
-     * <code>PRESET_TITLE_ULTRA_SLO_MO = 59;</code>
-     */
-    public static final int PRESET_TITLE_ULTRA_SLO_MO_VALUE = 59;
-    /**
-     * <code>PRESET_TITLE_STANDARD_ENDURANCE = 60;</code>
-     */
-    public static final int PRESET_TITLE_STANDARD_ENDURANCE_VALUE = 60;
-    /**
-     * <code>PRESET_TITLE_ACTIVITY_ENDURANCE = 61;</code>
-     */
-    public static final int PRESET_TITLE_ACTIVITY_ENDURANCE_VALUE = 61;
-    /**
-     * <code>PRESET_TITLE_CINEMATIC_ENDURANCE = 62;</code>
-     */
-    public static final int PRESET_TITLE_CINEMATIC_ENDURANCE_VALUE = 62;
-    /**
-     * <code>PRESET_TITLE_SLOMO_ENDURANCE = 63;</code>
-     */
-    public static final int PRESET_TITLE_SLOMO_ENDURANCE_VALUE = 63;
-    /**
-     * <code>PRESET_TITLE_STATIONARY_1 = 64;</code>
-     */
-    public static final int PRESET_TITLE_STATIONARY_1_VALUE = 64;
-    /**
-     * <code>PRESET_TITLE_STATIONARY_2 = 65;</code>
-     */
-    public static final int PRESET_TITLE_STATIONARY_2_VALUE = 65;
-    /**
-     * <code>PRESET_TITLE_STATIONARY_3 = 66;</code>
-     */
-    public static final int PRESET_TITLE_STATIONARY_3_VALUE = 66;
-    /**
-     * <code>PRESET_TITLE_STATIONARY_4 = 67;</code>
-     */
-    public static final int PRESET_TITLE_STATIONARY_4_VALUE = 67;
-    /**
-     * <code>PRESET_TITLE_SIMPLE_VIDEO = 68;</code>
-     */
-    public static final int PRESET_TITLE_SIMPLE_VIDEO_VALUE = 68;
-    /**
-     * <code>PRESET_TITLE_SIMPLE_TIME_WARP = 69;</code>
-     */
-    public static final int PRESET_TITLE_SIMPLE_TIME_WARP_VALUE = 69;
-    /**
-     * <code>PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;</code>
-     */
-    public static final int PRESET_TITLE_SIMPLE_SUPER_PHOTO_VALUE = 70;
-    /**
-     * <code>PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;</code>
-     */
-    public static final int PRESET_TITLE_SIMPLE_NIGHT_PHOTO_VALUE = 71;
-    /**
-     * <code>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;</code>
-     */
-    public static final int PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE_VALUE = 72;
-    /**
-     * <code>PRESET_TITLE_HIGHEST_QUALITY = 73;</code>
-     */
-    public static final int PRESET_TITLE_HIGHEST_QUALITY_VALUE = 73;
-    /**
-     * <code>PRESET_TITLE_EXTENDED_BATTERY = 74;</code>
-     */
-    public static final int PRESET_TITLE_EXTENDED_BATTERY_VALUE = 74;
-    /**
-     * <code>PRESET_TITLE_LONGEST_BATTERY = 75;</code>
-     */
-    public static final int PRESET_TITLE_LONGEST_BATTERY_VALUE = 75;
-    /**
-     * <code>PRESET_TITLE_STAR_TRAIL = 76;</code>
-     */
-    public static final int PRESET_TITLE_STAR_TRAIL_VALUE = 76;
-    /**
-     * <code>PRESET_TITLE_LIGHT_PAINTING = 77;</code>
-     */
-    public static final int PRESET_TITLE_LIGHT_PAINTING_VALUE = 77;
-    /**
-     * <code>PRESET_TITLE_LIGHT_TRAIL = 78;</code>
-     */
-    public static final int PRESET_TITLE_LIGHT_TRAIL_VALUE = 78;
-    /**
-     * <code>PRESET_TITLE_FULL_FRAME = 79;</code>
-     */
-    public static final int PRESET_TITLE_FULL_FRAME_VALUE = 79;
-    /**
-     * <code>PRESET_TITLE_MAX_LENS_VIDEO = 80;</code>
-     */
-    public static final int PRESET_TITLE_MAX_LENS_VIDEO_VALUE = 80;
-    /**
-     * <code>PRESET_TITLE_MAX_LENS_TIMEWARP = 81;</code>
-     */
-    public static final int PRESET_TITLE_MAX_LENS_TIMEWARP_VALUE = 81;
-    /**
-     * <code>PRESET_TITLE_STANDARD_QUALITY_VIDEO = 82;</code>
-     */
-    public static final int PRESET_TITLE_STANDARD_QUALITY_VIDEO_VALUE = 82;
-    /**
-     * <code>PRESET_TITLE_BASIC_QUALITY_VIDEO = 83;</code>
-     */
-    public static final int PRESET_TITLE_BASIC_QUALITY_VIDEO_VALUE = 83;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_VIDEO = 84;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_VIDEO_VALUE = 84;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_PHOTO = 85;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_PHOTO_VALUE = 85;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_TIMEWARP = 86;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_TIMEWARP_VALUE = 86;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_STAR_TRAIL = 87;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_STAR_TRAIL_VALUE = 87;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_LIGHT_PAINTING = 88;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_LIGHT_PAINTING_VALUE = 88;
-    /**
-     * <code>PRESET_TITLE_EASY_MAX_LIGHT_TRAIL = 89;</code>
-     */
-    public static final int PRESET_TITLE_EASY_MAX_LIGHT_TRAIL_VALUE = 89;
-    /**
-     * <code>PRESET_TITLE_MAX_STAR_TRAIL = 90;</code>
-     */
-    public static final int PRESET_TITLE_MAX_STAR_TRAIL_VALUE = 90;
-    /**
-     * <code>PRESET_TITLE_MAX_LIGHT_PAINTING = 91;</code>
-     */
-    public static final int PRESET_TITLE_MAX_LIGHT_PAINTING_VALUE = 91;
-    /**
-     * <code>PRESET_TITLE_MAX_LIGHT_TRAIL = 92;</code>
-     */
-    public static final int PRESET_TITLE_MAX_LIGHT_TRAIL_VALUE = 92;
-    /**
-     * <code>PRESET_TITLE_HIGHEST_QUALITY_VIDEO = 93;</code>
-     */
-    public static final int PRESET_TITLE_HIGHEST_QUALITY_VIDEO_VALUE = 93;
-
-
-    public final int getNumber() {
-      return value;
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon)
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetIcon}
      */
-    @Deprecated
-    public static EnumPresetTitle valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum EnumPresetIcon
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>PRESET_ICON_VIDEO = 0;</code>
+         */
+        PRESET_ICON_VIDEO(0),
+        /**
+         * <code>PRESET_ICON_ACTIVITY = 1;</code>
+         */
+        PRESET_ICON_ACTIVITY(1),
+        /**
+         * <code>PRESET_ICON_CINEMATIC = 2;</code>
+         */
+        PRESET_ICON_CINEMATIC(2),
+        /**
+         * <code>PRESET_ICON_PHOTO = 3;</code>
+         */
+        PRESET_ICON_PHOTO(3),
+        /**
+         * <code>PRESET_ICON_LIVE_BURST = 4;</code>
+         */
+        PRESET_ICON_LIVE_BURST(4),
+        /**
+         * <code>PRESET_ICON_BURST = 5;</code>
+         */
+        PRESET_ICON_BURST(5),
+        /**
+         * <code>PRESET_ICON_PHOTO_NIGHT = 6;</code>
+         */
+        PRESET_ICON_PHOTO_NIGHT(6),
+        /**
+         * <code>PRESET_ICON_TIMEWARP = 7;</code>
+         */
+        PRESET_ICON_TIMEWARP(7),
+        /**
+         * <code>PRESET_ICON_TIMELAPSE = 8;</code>
+         */
+        PRESET_ICON_TIMELAPSE(8),
+        /**
+         * <code>PRESET_ICON_NIGHTLAPSE = 9;</code>
+         */
+        PRESET_ICON_NIGHTLAPSE(9),
+        /**
+         * <code>PRESET_ICON_SNAIL = 10;</code>
+         */
+        PRESET_ICON_SNAIL(10),
+        /**
+         * <code>PRESET_ICON_VIDEO_2 = 11;</code>
+         */
+        PRESET_ICON_VIDEO_2(11),
+        /**
+         * <code>PRESET_ICON_PHOTO_2 = 13;</code>
+         */
+        PRESET_ICON_PHOTO_2(13),
+        /**
+         * <code>PRESET_ICON_PANORAMA = 14;</code>
+         */
+        PRESET_ICON_PANORAMA(14),
+        /**
+         * <code>PRESET_ICON_BURST_2 = 15;</code>
+         */
+        PRESET_ICON_BURST_2(15),
+        /**
+         * <code>PRESET_ICON_TIMEWARP_2 = 16;</code>
+         */
+        PRESET_ICON_TIMEWARP_2(16),
+        /**
+         * <code>PRESET_ICON_TIMELAPSE_2 = 17;</code>
+         */
+        PRESET_ICON_TIMELAPSE_2(17),
+        /**
+         * <code>PRESET_ICON_CUSTOM = 18;</code>
+         */
+        PRESET_ICON_CUSTOM(18),
+        /**
+         * <code>PRESET_ICON_AIR = 19;</code>
+         */
+        PRESET_ICON_AIR(19),
+        /**
+         * <code>PRESET_ICON_BIKE = 20;</code>
+         */
+        PRESET_ICON_BIKE(20),
+        /**
+         * <code>PRESET_ICON_EPIC = 21;</code>
+         */
+        PRESET_ICON_EPIC(21),
+        /**
+         * <code>PRESET_ICON_INDOOR = 22;</code>
+         */
+        PRESET_ICON_INDOOR(22),
+        /**
+         * <code>PRESET_ICON_MOTOR = 23;</code>
+         */
+        PRESET_ICON_MOTOR(23),
+        /**
+         * <code>PRESET_ICON_MOUNTED = 24;</code>
+         */
+        PRESET_ICON_MOUNTED(24),
+        /**
+         * <code>PRESET_ICON_OUTDOOR = 25;</code>
+         */
+        PRESET_ICON_OUTDOOR(25),
+        /**
+         * <code>PRESET_ICON_POV = 26;</code>
+         */
+        PRESET_ICON_POV(26),
+        /**
+         * <code>PRESET_ICON_SELFIE = 27;</code>
+         */
+        PRESET_ICON_SELFIE(27),
+        /**
+         * <code>PRESET_ICON_SKATE = 28;</code>
+         */
+        PRESET_ICON_SKATE(28),
+        /**
+         * <code>PRESET_ICON_SNOW = 29;</code>
+         */
+        PRESET_ICON_SNOW(29),
+        /**
+         * <code>PRESET_ICON_TRAIL = 30;</code>
+         */
+        PRESET_ICON_TRAIL(30),
+        /**
+         * <code>PRESET_ICON_TRAVEL = 31;</code>
+         */
+        PRESET_ICON_TRAVEL(31),
+        /**
+         * <code>PRESET_ICON_WATER = 32;</code>
+         */
+        PRESET_ICON_WATER(32),
+        /**
+         * <code>PRESET_ICON_LOOPING = 33;</code>
+         */
+        PRESET_ICON_LOOPING(33),
+        /**
+         * <code>PRESET_ICON_STARS = 34;</code>
+         */
+        PRESET_ICON_STARS(34),
+        /**
+         * <code>PRESET_ICON_ACTION = 35;</code>
+         */
+        PRESET_ICON_ACTION(35),
+        /**
+         * <code>PRESET_ICON_FOLLOW_CAM = 36;</code>
+         */
+        PRESET_ICON_FOLLOW_CAM(36),
+        /**
+         * <code>PRESET_ICON_SURF = 37;</code>
+         */
+        PRESET_ICON_SURF(37),
+        /**
+         * <code>PRESET_ICON_CITY = 38;</code>
+         */
+        PRESET_ICON_CITY(38),
+        /**
+         * <code>PRESET_ICON_SHAKY = 39;</code>
+         */
+        PRESET_ICON_SHAKY(39),
+        /**
+         * <code>PRESET_ICON_CHESTY = 40;</code>
+         */
+        PRESET_ICON_CHESTY(40),
+        /**
+         * <code>PRESET_ICON_HELMET = 41;</code>
+         */
+        PRESET_ICON_HELMET(41),
+        /**
+         * <code>PRESET_ICON_BITE = 42;</code>
+         */
+        PRESET_ICON_BITE(42),
+        /**
+         * <code>PRESET_ICON_CUSTOM_CINEMATIC = 43;</code>
+         */
+        PRESET_ICON_CUSTOM_CINEMATIC(43),
+        /**
+         * <code>PRESET_ICON_VLOG = 44;</code>
+         */
+        PRESET_ICON_VLOG(44),
+        /**
+         * <code>PRESET_ICON_FPV = 45;</code>
+         */
+        PRESET_ICON_FPV(45),
+        /**
+         * <code>PRESET_ICON_HDR = 46;</code>
+         */
+        PRESET_ICON_HDR(46),
+        /**
+         * <code>PRESET_ICON_LANDSCAPE = 47;</code>
+         */
+        PRESET_ICON_LANDSCAPE(47),
+        /**
+         * <code>PRESET_ICON_LOG = 48;</code>
+         */
+        PRESET_ICON_LOG(48),
+        /**
+         * <code>PRESET_ICON_CUSTOM_SLOMO = 49;</code>
+         */
+        PRESET_ICON_CUSTOM_SLOMO(49),
+        /**
+         * <code>PRESET_ICON_TRIPOD = 50;</code>
+         */
+        PRESET_ICON_TRIPOD(50),
+        /**
+         * <code>PRESET_ICON_MAX_VIDEO = 55;</code>
+         */
+        PRESET_ICON_MAX_VIDEO(55),
+        /**
+         * <code>PRESET_ICON_MAX_PHOTO = 56;</code>
+         */
+        PRESET_ICON_MAX_PHOTO(56),
+        /**
+         * <code>PRESET_ICON_MAX_TIMEWARP = 57;</code>
+         */
+        PRESET_ICON_MAX_TIMEWARP(57),
+        /**
+         * <code>PRESET_ICON_BASIC = 58;</code>
+         */
+        PRESET_ICON_BASIC(58),
+        /**
+         * <code>PRESET_ICON_ULTRA_SLO_MO = 59;</code>
+         */
+        PRESET_ICON_ULTRA_SLO_MO(59),
+        /**
+         * <code>PRESET_ICON_STANDARD_ENDURANCE = 60;</code>
+         */
+        PRESET_ICON_STANDARD_ENDURANCE(60),
+        /**
+         * <code>PRESET_ICON_ACTIVITY_ENDURANCE = 61;</code>
+         */
+        PRESET_ICON_ACTIVITY_ENDURANCE(61),
+        /**
+         * <code>PRESET_ICON_CINEMATIC_ENDURANCE = 62;</code>
+         */
+        PRESET_ICON_CINEMATIC_ENDURANCE(62),
+        /**
+         * <code>PRESET_ICON_SLOMO_ENDURANCE = 63;</code>
+         */
+        PRESET_ICON_SLOMO_ENDURANCE(63),
+        /**
+         * <code>PRESET_ICON_STATIONARY_1 = 64;</code>
+         */
+        PRESET_ICON_STATIONARY_1(64),
+        /**
+         * <code>PRESET_ICON_STATIONARY_2 = 65;</code>
+         */
+        PRESET_ICON_STATIONARY_2(65),
+        /**
+         * <code>PRESET_ICON_STATIONARY_3 = 66;</code>
+         */
+        PRESET_ICON_STATIONARY_3(66),
+        /**
+         * <code>PRESET_ICON_STATIONARY_4 = 67;</code>
+         */
+        PRESET_ICON_STATIONARY_4(67),
+        /**
+         * <code>PRESET_ICON_SIMPLE_SUPER_PHOTO = 70;</code>
+         */
+        PRESET_ICON_SIMPLE_SUPER_PHOTO(70),
+        /**
+         * <code>PRESET_ICON_SIMPLE_NIGHT_PHOTO = 71;</code>
+         */
+        PRESET_ICON_SIMPLE_NIGHT_PHOTO(71),
+        /**
+         * <code>PRESET_ICON_HIGHEST_QUALITY_VIDEO = 73;</code>
+         */
+        PRESET_ICON_HIGHEST_QUALITY_VIDEO(73),
+        /**
+         * <code>PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;</code>
+         */
+        PRESET_ICON_STANDARD_QUALITY_VIDEO(74),
+        /**
+         * <code>PRESET_ICON_BASIC_QUALITY_VIDEO = 75;</code>
+         */
+        PRESET_ICON_BASIC_QUALITY_VIDEO(75),
+        /**
+         * <code>PRESET_ICON_STAR_TRAIL = 76;</code>
+         */
+        PRESET_ICON_STAR_TRAIL(76),
+        /**
+         * <code>PRESET_ICON_LIGHT_PAINTING = 77;</code>
+         */
+        PRESET_ICON_LIGHT_PAINTING(77),
+        /**
+         * <code>PRESET_ICON_LIGHT_TRAIL = 78;</code>
+         */
+        PRESET_ICON_LIGHT_TRAIL(78),
+        /**
+         * <code>PRESET_ICON_FULL_FRAME = 79;</code>
+         */
+        PRESET_ICON_FULL_FRAME(79),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_VIDEO = 80;</code>
+         */
+        PRESET_ICON_EASY_MAX_VIDEO(80),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_PHOTO = 81;</code>
+         */
+        PRESET_ICON_EASY_MAX_PHOTO(81),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_TIMEWARP = 82;</code>
+         */
+        PRESET_ICON_EASY_MAX_TIMEWARP(82),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_STAR_TRAIL = 83;</code>
+         */
+        PRESET_ICON_EASY_MAX_STAR_TRAIL(83),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;</code>
+         */
+        PRESET_ICON_EASY_MAX_LIGHT_PAINTING(84),
+        /**
+         * <code>PRESET_ICON_EASY_MAX_LIGHT_TRAIL = 85;</code>
+         */
+        PRESET_ICON_EASY_MAX_LIGHT_TRAIL(85),
+        /**
+         * <code>PRESET_ICON_MAX_STAR_TRAIL = 89;</code>
+         */
+        PRESET_ICON_MAX_STAR_TRAIL(89),
+        /**
+         * <code>PRESET_ICON_MAX_LIGHT_PAINTING = 90;</code>
+         */
+        PRESET_ICON_MAX_LIGHT_PAINTING(90),
+        /**
+         * <code>PRESET_ICON_MAX_LIGHT_TRAIL = 91;</code>
+         */
+        PRESET_ICON_MAX_LIGHT_TRAIL(91),
+        /**
+         * <code>PRESET_ICON_EASY_STANDARD_PROFILE = 100;</code>
+         */
+        PRESET_ICON_EASY_STANDARD_PROFILE(100),
+        /**
+         * <code>PRESET_ICON_EASY_HDR_PROFILE = 101;</code>
+         */
+        PRESET_ICON_EASY_HDR_PROFILE(101),
+        /**
+         * <code>PRESET_ICON_BURST_SLOMO = 102;</code>
+         */
+        PRESET_ICON_BURST_SLOMO(102),
+        /**
+         * <code>PRESET_ICON_TIMELAPSE_PHOTO = 1000;</code>
+         */
+        PRESET_ICON_TIMELAPSE_PHOTO(1000),
+        /**
+         * <code>PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;</code>
+         */
+        PRESET_ICON_NIGHTLAPSE_PHOTO(1001),
+        ;
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumPresetTitle forNumber(int value) {
-      switch (value) {
-        case 0: return PRESET_TITLE_ACTIVITY;
-        case 1: return PRESET_TITLE_STANDARD;
-        case 2: return PRESET_TITLE_CINEMATIC;
-        case 3: return PRESET_TITLE_PHOTO;
-        case 4: return PRESET_TITLE_LIVE_BURST;
-        case 5: return PRESET_TITLE_BURST;
-        case 6: return PRESET_TITLE_NIGHT;
-        case 7: return PRESET_TITLE_TIME_WARP;
-        case 8: return PRESET_TITLE_TIME_LAPSE;
-        case 9: return PRESET_TITLE_NIGHT_LAPSE;
-        case 10: return PRESET_TITLE_VIDEO;
-        case 11: return PRESET_TITLE_SLOMO;
-        case 12: return PRESET_TITLE_360_VIDEO;
-        case 13: return PRESET_TITLE_PHOTO_2;
-        case 14: return PRESET_TITLE_PANORAMA;
-        case 15: return PRESET_TITLE_360_PHOTO;
-        case 16: return PRESET_TITLE_TIME_WARP_2;
-        case 17: return PRESET_TITLE_360_TIME_WARP;
-        case 18: return PRESET_TITLE_CUSTOM;
-        case 19: return PRESET_TITLE_AIR;
-        case 20: return PRESET_TITLE_BIKE;
-        case 21: return PRESET_TITLE_EPIC;
-        case 22: return PRESET_TITLE_INDOOR;
-        case 23: return PRESET_TITLE_MOTOR;
-        case 24: return PRESET_TITLE_MOUNTED;
-        case 25: return PRESET_TITLE_OUTDOOR;
-        case 26: return PRESET_TITLE_POV;
-        case 27: return PRESET_TITLE_SELFIE;
-        case 28: return PRESET_TITLE_SKATE;
-        case 29: return PRESET_TITLE_SNOW;
-        case 30: return PRESET_TITLE_TRAIL;
-        case 31: return PRESET_TITLE_TRAVEL;
-        case 32: return PRESET_TITLE_WATER;
-        case 33: return PRESET_TITLE_LOOPING;
-        case 51: return PRESET_TITLE_360_TIMELAPSE;
-        case 52: return PRESET_TITLE_360_NIGHT_LAPSE;
-        case 53: return PRESET_TITLE_360_NIGHT_PHOTO;
-        case 54: return PRESET_TITLE_PANO_TIME_LAPSE;
-        case 55: return PRESET_TITLE_MAX_VIDEO;
-        case 56: return PRESET_TITLE_MAX_PHOTO;
-        case 57: return PRESET_TITLE_MAX_TIMEWARP;
-        case 58: return PRESET_TITLE_BASIC;
-        case 59: return PRESET_TITLE_ULTRA_SLO_MO;
-        case 60: return PRESET_TITLE_STANDARD_ENDURANCE;
-        case 61: return PRESET_TITLE_ACTIVITY_ENDURANCE;
-        case 62: return PRESET_TITLE_CINEMATIC_ENDURANCE;
-        case 63: return PRESET_TITLE_SLOMO_ENDURANCE;
-        case 64: return PRESET_TITLE_STATIONARY_1;
-        case 65: return PRESET_TITLE_STATIONARY_2;
-        case 66: return PRESET_TITLE_STATIONARY_3;
-        case 67: return PRESET_TITLE_STATIONARY_4;
-        case 68: return PRESET_TITLE_SIMPLE_VIDEO;
-        case 69: return PRESET_TITLE_SIMPLE_TIME_WARP;
-        case 70: return PRESET_TITLE_SIMPLE_SUPER_PHOTO;
-        case 71: return PRESET_TITLE_SIMPLE_NIGHT_PHOTO;
-        case 72: return PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE;
-        case 73: return PRESET_TITLE_HIGHEST_QUALITY;
-        case 74: return PRESET_TITLE_EXTENDED_BATTERY;
-        case 75: return PRESET_TITLE_LONGEST_BATTERY;
-        case 76: return PRESET_TITLE_STAR_TRAIL;
-        case 77: return PRESET_TITLE_LIGHT_PAINTING;
-        case 78: return PRESET_TITLE_LIGHT_TRAIL;
-        case 79: return PRESET_TITLE_FULL_FRAME;
-        case 80: return PRESET_TITLE_MAX_LENS_VIDEO;
-        case 81: return PRESET_TITLE_MAX_LENS_TIMEWARP;
-        case 82: return PRESET_TITLE_STANDARD_QUALITY_VIDEO;
-        case 83: return PRESET_TITLE_BASIC_QUALITY_VIDEO;
-        case 84: return PRESET_TITLE_EASY_MAX_VIDEO;
-        case 85: return PRESET_TITLE_EASY_MAX_PHOTO;
-        case 86: return PRESET_TITLE_EASY_MAX_TIMEWARP;
-        case 87: return PRESET_TITLE_EASY_MAX_STAR_TRAIL;
-        case 88: return PRESET_TITLE_EASY_MAX_LIGHT_PAINTING;
-        case 89: return PRESET_TITLE_EASY_MAX_LIGHT_TRAIL;
-        case 90: return PRESET_TITLE_MAX_STAR_TRAIL;
-        case 91: return PRESET_TITLE_MAX_LIGHT_PAINTING;
-        case 92: return PRESET_TITLE_MAX_LIGHT_TRAIL;
-        case 93: return PRESET_TITLE_HIGHEST_QUALITY_VIDEO;
-        default: return null;
-      }
-    }
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumPresetIcon.class.getName());
+        }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetTitle>
+        /**
+         * <code>PRESET_ICON_VIDEO = 0;</code>
+         */
+        public static final int PRESET_ICON_VIDEO_VALUE = 0;
+        /**
+         * <code>PRESET_ICON_ACTIVITY = 1;</code>
+         */
+        public static final int PRESET_ICON_ACTIVITY_VALUE = 1;
+        /**
+         * <code>PRESET_ICON_CINEMATIC = 2;</code>
+         */
+        public static final int PRESET_ICON_CINEMATIC_VALUE = 2;
+        /**
+         * <code>PRESET_ICON_PHOTO = 3;</code>
+         */
+        public static final int PRESET_ICON_PHOTO_VALUE = 3;
+        /**
+         * <code>PRESET_ICON_LIVE_BURST = 4;</code>
+         */
+        public static final int PRESET_ICON_LIVE_BURST_VALUE = 4;
+        /**
+         * <code>PRESET_ICON_BURST = 5;</code>
+         */
+        public static final int PRESET_ICON_BURST_VALUE = 5;
+        /**
+         * <code>PRESET_ICON_PHOTO_NIGHT = 6;</code>
+         */
+        public static final int PRESET_ICON_PHOTO_NIGHT_VALUE = 6;
+        /**
+         * <code>PRESET_ICON_TIMEWARP = 7;</code>
+         */
+        public static final int PRESET_ICON_TIMEWARP_VALUE = 7;
+        /**
+         * <code>PRESET_ICON_TIMELAPSE = 8;</code>
+         */
+        public static final int PRESET_ICON_TIMELAPSE_VALUE = 8;
+        /**
+         * <code>PRESET_ICON_NIGHTLAPSE = 9;</code>
+         */
+        public static final int PRESET_ICON_NIGHTLAPSE_VALUE = 9;
+        /**
+         * <code>PRESET_ICON_SNAIL = 10;</code>
+         */
+        public static final int PRESET_ICON_SNAIL_VALUE = 10;
+        /**
+         * <code>PRESET_ICON_VIDEO_2 = 11;</code>
+         */
+        public static final int PRESET_ICON_VIDEO_2_VALUE = 11;
+        /**
+         * <code>PRESET_ICON_PHOTO_2 = 13;</code>
+         */
+        public static final int PRESET_ICON_PHOTO_2_VALUE = 13;
+        /**
+         * <code>PRESET_ICON_PANORAMA = 14;</code>
+         */
+        public static final int PRESET_ICON_PANORAMA_VALUE = 14;
+        /**
+         * <code>PRESET_ICON_BURST_2 = 15;</code>
+         */
+        public static final int PRESET_ICON_BURST_2_VALUE = 15;
+        /**
+         * <code>PRESET_ICON_TIMEWARP_2 = 16;</code>
+         */
+        public static final int PRESET_ICON_TIMEWARP_2_VALUE = 16;
+        /**
+         * <code>PRESET_ICON_TIMELAPSE_2 = 17;</code>
+         */
+        public static final int PRESET_ICON_TIMELAPSE_2_VALUE = 17;
+        /**
+         * <code>PRESET_ICON_CUSTOM = 18;</code>
+         */
+        public static final int PRESET_ICON_CUSTOM_VALUE = 18;
+        /**
+         * <code>PRESET_ICON_AIR = 19;</code>
+         */
+        public static final int PRESET_ICON_AIR_VALUE = 19;
+        /**
+         * <code>PRESET_ICON_BIKE = 20;</code>
+         */
+        public static final int PRESET_ICON_BIKE_VALUE = 20;
+        /**
+         * <code>PRESET_ICON_EPIC = 21;</code>
+         */
+        public static final int PRESET_ICON_EPIC_VALUE = 21;
+        /**
+         * <code>PRESET_ICON_INDOOR = 22;</code>
+         */
+        public static final int PRESET_ICON_INDOOR_VALUE = 22;
+        /**
+         * <code>PRESET_ICON_MOTOR = 23;</code>
+         */
+        public static final int PRESET_ICON_MOTOR_VALUE = 23;
+        /**
+         * <code>PRESET_ICON_MOUNTED = 24;</code>
+         */
+        public static final int PRESET_ICON_MOUNTED_VALUE = 24;
+        /**
+         * <code>PRESET_ICON_OUTDOOR = 25;</code>
+         */
+        public static final int PRESET_ICON_OUTDOOR_VALUE = 25;
+        /**
+         * <code>PRESET_ICON_POV = 26;</code>
+         */
+        public static final int PRESET_ICON_POV_VALUE = 26;
+        /**
+         * <code>PRESET_ICON_SELFIE = 27;</code>
+         */
+        public static final int PRESET_ICON_SELFIE_VALUE = 27;
+        /**
+         * <code>PRESET_ICON_SKATE = 28;</code>
+         */
+        public static final int PRESET_ICON_SKATE_VALUE = 28;
+        /**
+         * <code>PRESET_ICON_SNOW = 29;</code>
+         */
+        public static final int PRESET_ICON_SNOW_VALUE = 29;
+        /**
+         * <code>PRESET_ICON_TRAIL = 30;</code>
+         */
+        public static final int PRESET_ICON_TRAIL_VALUE = 30;
+        /**
+         * <code>PRESET_ICON_TRAVEL = 31;</code>
+         */
+        public static final int PRESET_ICON_TRAVEL_VALUE = 31;
+        /**
+         * <code>PRESET_ICON_WATER = 32;</code>
+         */
+        public static final int PRESET_ICON_WATER_VALUE = 32;
+        /**
+         * <code>PRESET_ICON_LOOPING = 33;</code>
+         */
+        public static final int PRESET_ICON_LOOPING_VALUE = 33;
+        /**
+         * <code>PRESET_ICON_STARS = 34;</code>
+         */
+        public static final int PRESET_ICON_STARS_VALUE = 34;
+        /**
+         * <code>PRESET_ICON_ACTION = 35;</code>
+         */
+        public static final int PRESET_ICON_ACTION_VALUE = 35;
+        /**
+         * <code>PRESET_ICON_FOLLOW_CAM = 36;</code>
+         */
+        public static final int PRESET_ICON_FOLLOW_CAM_VALUE = 36;
+        /**
+         * <code>PRESET_ICON_SURF = 37;</code>
+         */
+        public static final int PRESET_ICON_SURF_VALUE = 37;
+        /**
+         * <code>PRESET_ICON_CITY = 38;</code>
+         */
+        public static final int PRESET_ICON_CITY_VALUE = 38;
+        /**
+         * <code>PRESET_ICON_SHAKY = 39;</code>
+         */
+        public static final int PRESET_ICON_SHAKY_VALUE = 39;
+        /**
+         * <code>PRESET_ICON_CHESTY = 40;</code>
+         */
+        public static final int PRESET_ICON_CHESTY_VALUE = 40;
+        /**
+         * <code>PRESET_ICON_HELMET = 41;</code>
+         */
+        public static final int PRESET_ICON_HELMET_VALUE = 41;
+        /**
+         * <code>PRESET_ICON_BITE = 42;</code>
+         */
+        public static final int PRESET_ICON_BITE_VALUE = 42;
+        /**
+         * <code>PRESET_ICON_CUSTOM_CINEMATIC = 43;</code>
+         */
+        public static final int PRESET_ICON_CUSTOM_CINEMATIC_VALUE = 43;
+        /**
+         * <code>PRESET_ICON_VLOG = 44;</code>
+         */
+        public static final int PRESET_ICON_VLOG_VALUE = 44;
+        /**
+         * <code>PRESET_ICON_FPV = 45;</code>
+         */
+        public static final int PRESET_ICON_FPV_VALUE = 45;
+        /**
+         * <code>PRESET_ICON_HDR = 46;</code>
+         */
+        public static final int PRESET_ICON_HDR_VALUE = 46;
+        /**
+         * <code>PRESET_ICON_LANDSCAPE = 47;</code>
+         */
+        public static final int PRESET_ICON_LANDSCAPE_VALUE = 47;
+        /**
+         * <code>PRESET_ICON_LOG = 48;</code>
+         */
+        public static final int PRESET_ICON_LOG_VALUE = 48;
+        /**
+         * <code>PRESET_ICON_CUSTOM_SLOMO = 49;</code>
+         */
+        public static final int PRESET_ICON_CUSTOM_SLOMO_VALUE = 49;
+        /**
+         * <code>PRESET_ICON_TRIPOD = 50;</code>
+         */
+        public static final int PRESET_ICON_TRIPOD_VALUE = 50;
+        /**
+         * <code>PRESET_ICON_MAX_VIDEO = 55;</code>
+         */
+        public static final int PRESET_ICON_MAX_VIDEO_VALUE = 55;
+        /**
+         * <code>PRESET_ICON_MAX_PHOTO = 56;</code>
+         */
+        public static final int PRESET_ICON_MAX_PHOTO_VALUE = 56;
+        /**
+         * <code>PRESET_ICON_MAX_TIMEWARP = 57;</code>
+         */
+        public static final int PRESET_ICON_MAX_TIMEWARP_VALUE = 57;
+        /**
+         * <code>PRESET_ICON_BASIC = 58;</code>
+         */
+        public static final int PRESET_ICON_BASIC_VALUE = 58;
+        /**
+         * <code>PRESET_ICON_ULTRA_SLO_MO = 59;</code>
+         */
+        public static final int PRESET_ICON_ULTRA_SLO_MO_VALUE = 59;
+        /**
+         * <code>PRESET_ICON_STANDARD_ENDURANCE = 60;</code>
+         */
+        public static final int PRESET_ICON_STANDARD_ENDURANCE_VALUE = 60;
+        /**
+         * <code>PRESET_ICON_ACTIVITY_ENDURANCE = 61;</code>
+         */
+        public static final int PRESET_ICON_ACTIVITY_ENDURANCE_VALUE = 61;
+        /**
+         * <code>PRESET_ICON_CINEMATIC_ENDURANCE = 62;</code>
+         */
+        public static final int PRESET_ICON_CINEMATIC_ENDURANCE_VALUE = 62;
+        /**
+         * <code>PRESET_ICON_SLOMO_ENDURANCE = 63;</code>
+         */
+        public static final int PRESET_ICON_SLOMO_ENDURANCE_VALUE = 63;
+        /**
+         * <code>PRESET_ICON_STATIONARY_1 = 64;</code>
+         */
+        public static final int PRESET_ICON_STATIONARY_1_VALUE = 64;
+        /**
+         * <code>PRESET_ICON_STATIONARY_2 = 65;</code>
+         */
+        public static final int PRESET_ICON_STATIONARY_2_VALUE = 65;
+        /**
+         * <code>PRESET_ICON_STATIONARY_3 = 66;</code>
+         */
+        public static final int PRESET_ICON_STATIONARY_3_VALUE = 66;
+        /**
+         * <code>PRESET_ICON_STATIONARY_4 = 67;</code>
+         */
+        public static final int PRESET_ICON_STATIONARY_4_VALUE = 67;
+        /**
+         * <code>PRESET_ICON_SIMPLE_SUPER_PHOTO = 70;</code>
+         */
+        public static final int PRESET_ICON_SIMPLE_SUPER_PHOTO_VALUE = 70;
+        /**
+         * <code>PRESET_ICON_SIMPLE_NIGHT_PHOTO = 71;</code>
+         */
+        public static final int PRESET_ICON_SIMPLE_NIGHT_PHOTO_VALUE = 71;
+        /**
+         * <code>PRESET_ICON_HIGHEST_QUALITY_VIDEO = 73;</code>
+         */
+        public static final int PRESET_ICON_HIGHEST_QUALITY_VIDEO_VALUE = 73;
+        /**
+         * <code>PRESET_ICON_STANDARD_QUALITY_VIDEO = 74;</code>
+         */
+        public static final int PRESET_ICON_STANDARD_QUALITY_VIDEO_VALUE = 74;
+        /**
+         * <code>PRESET_ICON_BASIC_QUALITY_VIDEO = 75;</code>
+         */
+        public static final int PRESET_ICON_BASIC_QUALITY_VIDEO_VALUE = 75;
+        /**
+         * <code>PRESET_ICON_STAR_TRAIL = 76;</code>
+         */
+        public static final int PRESET_ICON_STAR_TRAIL_VALUE = 76;
+        /**
+         * <code>PRESET_ICON_LIGHT_PAINTING = 77;</code>
+         */
+        public static final int PRESET_ICON_LIGHT_PAINTING_VALUE = 77;
+        /**
+         * <code>PRESET_ICON_LIGHT_TRAIL = 78;</code>
+         */
+        public static final int PRESET_ICON_LIGHT_TRAIL_VALUE = 78;
+        /**
+         * <code>PRESET_ICON_FULL_FRAME = 79;</code>
+         */
+        public static final int PRESET_ICON_FULL_FRAME_VALUE = 79;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_VIDEO = 80;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_VIDEO_VALUE = 80;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_PHOTO = 81;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_PHOTO_VALUE = 81;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_TIMEWARP = 82;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_TIMEWARP_VALUE = 82;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_STAR_TRAIL = 83;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_STAR_TRAIL_VALUE = 83;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_LIGHT_PAINTING = 84;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_LIGHT_PAINTING_VALUE = 84;
+        /**
+         * <code>PRESET_ICON_EASY_MAX_LIGHT_TRAIL = 85;</code>
+         */
+        public static final int PRESET_ICON_EASY_MAX_LIGHT_TRAIL_VALUE = 85;
+        /**
+         * <code>PRESET_ICON_MAX_STAR_TRAIL = 89;</code>
+         */
+        public static final int PRESET_ICON_MAX_STAR_TRAIL_VALUE = 89;
+        /**
+         * <code>PRESET_ICON_MAX_LIGHT_PAINTING = 90;</code>
+         */
+        public static final int PRESET_ICON_MAX_LIGHT_PAINTING_VALUE = 90;
+        /**
+         * <code>PRESET_ICON_MAX_LIGHT_TRAIL = 91;</code>
+         */
+        public static final int PRESET_ICON_MAX_LIGHT_TRAIL_VALUE = 91;
+        /**
+         * <code>PRESET_ICON_EASY_STANDARD_PROFILE = 100;</code>
+         */
+        public static final int PRESET_ICON_EASY_STANDARD_PROFILE_VALUE = 100;
+        /**
+         * <code>PRESET_ICON_EASY_HDR_PROFILE = 101;</code>
+         */
+        public static final int PRESET_ICON_EASY_HDR_PROFILE_VALUE = 101;
+        /**
+         * <code>PRESET_ICON_BURST_SLOMO = 102;</code>
+         */
+        public static final int PRESET_ICON_BURST_SLOMO_VALUE = 102;
+        /**
+         * <code>PRESET_ICON_TIMELAPSE_PHOTO = 1000;</code>
+         */
+        public static final int PRESET_ICON_TIMELAPSE_PHOTO_VALUE = 1000;
+        /**
+         * <code>PRESET_ICON_NIGHTLAPSE_PHOTO = 1001;</code>
+         */
+        public static final int PRESET_ICON_NIGHTLAPSE_PHOTO_VALUE = 1001;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumPresetIcon valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumPresetIcon forNumber(int value) {
+            switch (value) {
+                case 0:
+                    return PRESET_ICON_VIDEO;
+                case 1:
+                    return PRESET_ICON_ACTIVITY;
+                case 2:
+                    return PRESET_ICON_CINEMATIC;
+                case 3:
+                    return PRESET_ICON_PHOTO;
+                case 4:
+                    return PRESET_ICON_LIVE_BURST;
+                case 5:
+                    return PRESET_ICON_BURST;
+                case 6:
+                    return PRESET_ICON_PHOTO_NIGHT;
+                case 7:
+                    return PRESET_ICON_TIMEWARP;
+                case 8:
+                    return PRESET_ICON_TIMELAPSE;
+                case 9:
+                    return PRESET_ICON_NIGHTLAPSE;
+                case 10:
+                    return PRESET_ICON_SNAIL;
+                case 11:
+                    return PRESET_ICON_VIDEO_2;
+                case 13:
+                    return PRESET_ICON_PHOTO_2;
+                case 14:
+                    return PRESET_ICON_PANORAMA;
+                case 15:
+                    return PRESET_ICON_BURST_2;
+                case 16:
+                    return PRESET_ICON_TIMEWARP_2;
+                case 17:
+                    return PRESET_ICON_TIMELAPSE_2;
+                case 18:
+                    return PRESET_ICON_CUSTOM;
+                case 19:
+                    return PRESET_ICON_AIR;
+                case 20:
+                    return PRESET_ICON_BIKE;
+                case 21:
+                    return PRESET_ICON_EPIC;
+                case 22:
+                    return PRESET_ICON_INDOOR;
+                case 23:
+                    return PRESET_ICON_MOTOR;
+                case 24:
+                    return PRESET_ICON_MOUNTED;
+                case 25:
+                    return PRESET_ICON_OUTDOOR;
+                case 26:
+                    return PRESET_ICON_POV;
+                case 27:
+                    return PRESET_ICON_SELFIE;
+                case 28:
+                    return PRESET_ICON_SKATE;
+                case 29:
+                    return PRESET_ICON_SNOW;
+                case 30:
+                    return PRESET_ICON_TRAIL;
+                case 31:
+                    return PRESET_ICON_TRAVEL;
+                case 32:
+                    return PRESET_ICON_WATER;
+                case 33:
+                    return PRESET_ICON_LOOPING;
+                case 34:
+                    return PRESET_ICON_STARS;
+                case 35:
+                    return PRESET_ICON_ACTION;
+                case 36:
+                    return PRESET_ICON_FOLLOW_CAM;
+                case 37:
+                    return PRESET_ICON_SURF;
+                case 38:
+                    return PRESET_ICON_CITY;
+                case 39:
+                    return PRESET_ICON_SHAKY;
+                case 40:
+                    return PRESET_ICON_CHESTY;
+                case 41:
+                    return PRESET_ICON_HELMET;
+                case 42:
+                    return PRESET_ICON_BITE;
+                case 43:
+                    return PRESET_ICON_CUSTOM_CINEMATIC;
+                case 44:
+                    return PRESET_ICON_VLOG;
+                case 45:
+                    return PRESET_ICON_FPV;
+                case 46:
+                    return PRESET_ICON_HDR;
+                case 47:
+                    return PRESET_ICON_LANDSCAPE;
+                case 48:
+                    return PRESET_ICON_LOG;
+                case 49:
+                    return PRESET_ICON_CUSTOM_SLOMO;
+                case 50:
+                    return PRESET_ICON_TRIPOD;
+                case 55:
+                    return PRESET_ICON_MAX_VIDEO;
+                case 56:
+                    return PRESET_ICON_MAX_PHOTO;
+                case 57:
+                    return PRESET_ICON_MAX_TIMEWARP;
+                case 58:
+                    return PRESET_ICON_BASIC;
+                case 59:
+                    return PRESET_ICON_ULTRA_SLO_MO;
+                case 60:
+                    return PRESET_ICON_STANDARD_ENDURANCE;
+                case 61:
+                    return PRESET_ICON_ACTIVITY_ENDURANCE;
+                case 62:
+                    return PRESET_ICON_CINEMATIC_ENDURANCE;
+                case 63:
+                    return PRESET_ICON_SLOMO_ENDURANCE;
+                case 64:
+                    return PRESET_ICON_STATIONARY_1;
+                case 65:
+                    return PRESET_ICON_STATIONARY_2;
+                case 66:
+                    return PRESET_ICON_STATIONARY_3;
+                case 67:
+                    return PRESET_ICON_STATIONARY_4;
+                case 70:
+                    return PRESET_ICON_SIMPLE_SUPER_PHOTO;
+                case 71:
+                    return PRESET_ICON_SIMPLE_NIGHT_PHOTO;
+                case 73:
+                    return PRESET_ICON_HIGHEST_QUALITY_VIDEO;
+                case 74:
+                    return PRESET_ICON_STANDARD_QUALITY_VIDEO;
+                case 75:
+                    return PRESET_ICON_BASIC_QUALITY_VIDEO;
+                case 76:
+                    return PRESET_ICON_STAR_TRAIL;
+                case 77:
+                    return PRESET_ICON_LIGHT_PAINTING;
+                case 78:
+                    return PRESET_ICON_LIGHT_TRAIL;
+                case 79:
+                    return PRESET_ICON_FULL_FRAME;
+                case 80:
+                    return PRESET_ICON_EASY_MAX_VIDEO;
+                case 81:
+                    return PRESET_ICON_EASY_MAX_PHOTO;
+                case 82:
+                    return PRESET_ICON_EASY_MAX_TIMEWARP;
+                case 83:
+                    return PRESET_ICON_EASY_MAX_STAR_TRAIL;
+                case 84:
+                    return PRESET_ICON_EASY_MAX_LIGHT_PAINTING;
+                case 85:
+                    return PRESET_ICON_EASY_MAX_LIGHT_TRAIL;
+                case 89:
+                    return PRESET_ICON_MAX_STAR_TRAIL;
+                case 90:
+                    return PRESET_ICON_MAX_LIGHT_PAINTING;
+                case 91:
+                    return PRESET_ICON_MAX_LIGHT_TRAIL;
+                case 100:
+                    return PRESET_ICON_EASY_STANDARD_PROFILE;
+                case 101:
+                    return PRESET_ICON_EASY_HDR_PROFILE;
+                case 102:
+                    return PRESET_ICON_BURST_SLOMO;
+                case 1000:
+                    return PRESET_ICON_TIMELAPSE_PHOTO;
+                case 1001:
+                    return PRESET_ICON_NIGHTLAPSE_PHOTO;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetIcon>
         internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumPresetTitle> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumPresetTitle>() {
-            public EnumPresetTitle findValueByNumber(int number) {
-              return EnumPresetTitle.forNumber(number);
-            }
-          };
+            return internalValueMap;
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumPresetIcon> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumPresetIcon>() {
+                    public EnumPresetIcon findValueByNumber(int number) {
+                        return EnumPresetIcon.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return PresetStatus.getDescriptor().getEnumTypes().get(4);
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.getDescriptor().getEnumTypes().get(3);
+        }
+
+        private static final EnumPresetIcon[] VALUES = values();
+
+        public static EnumPresetIcon valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private EnumPresetIcon(int value) {
+            this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetIcon)
     }
-
-    private static final EnumPresetTitle[] VALUES = values();
-
-    public static EnumPresetTitle valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private EnumPresetTitle(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetTitle)
-  }
-
-  public interface NotifyPresetStatusOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
-      com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumPresetTitle}
      */
-    java.util.List<PresetGroup>
+    public enum EnumPresetTitle
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <code>PRESET_TITLE_ACTIVITY = 0;</code>
+         */
+        PRESET_TITLE_ACTIVITY(0),
+        /**
+         * <code>PRESET_TITLE_STANDARD = 1;</code>
+         */
+        PRESET_TITLE_STANDARD(1),
+        /**
+         * <code>PRESET_TITLE_CINEMATIC = 2;</code>
+         */
+        PRESET_TITLE_CINEMATIC(2),
+        /**
+         * <code>PRESET_TITLE_PHOTO = 3;</code>
+         */
+        PRESET_TITLE_PHOTO(3),
+        /**
+         * <code>PRESET_TITLE_LIVE_BURST = 4;</code>
+         */
+        PRESET_TITLE_LIVE_BURST(4),
+        /**
+         * <code>PRESET_TITLE_BURST = 5;</code>
+         */
+        PRESET_TITLE_BURST(5),
+        /**
+         * <code>PRESET_TITLE_NIGHT = 6;</code>
+         */
+        PRESET_TITLE_NIGHT(6),
+        /**
+         * <code>PRESET_TITLE_TIME_WARP = 7;</code>
+         */
+        PRESET_TITLE_TIME_WARP(7),
+        /**
+         * <code>PRESET_TITLE_TIME_LAPSE = 8;</code>
+         */
+        PRESET_TITLE_TIME_LAPSE(8),
+        /**
+         * <code>PRESET_TITLE_NIGHT_LAPSE = 9;</code>
+         */
+        PRESET_TITLE_NIGHT_LAPSE(9),
+        /**
+         * <code>PRESET_TITLE_VIDEO = 10;</code>
+         */
+        PRESET_TITLE_VIDEO(10),
+        /**
+         * <code>PRESET_TITLE_SLOMO = 11;</code>
+         */
+        PRESET_TITLE_SLOMO(11),
+        /**
+         * <code>PRESET_TITLE_PHOTO_2 = 13;</code>
+         */
+        PRESET_TITLE_PHOTO_2(13),
+        /**
+         * <code>PRESET_TITLE_PANORAMA = 14;</code>
+         */
+        PRESET_TITLE_PANORAMA(14),
+        /**
+         * <code>PRESET_TITLE_TIME_WARP_2 = 16;</code>
+         */
+        PRESET_TITLE_TIME_WARP_2(16),
+        /**
+         * <code>PRESET_TITLE_CUSTOM = 18;</code>
+         */
+        PRESET_TITLE_CUSTOM(18),
+        /**
+         * <code>PRESET_TITLE_AIR = 19;</code>
+         */
+        PRESET_TITLE_AIR(19),
+        /**
+         * <code>PRESET_TITLE_BIKE = 20;</code>
+         */
+        PRESET_TITLE_BIKE(20),
+        /**
+         * <code>PRESET_TITLE_EPIC = 21;</code>
+         */
+        PRESET_TITLE_EPIC(21),
+        /**
+         * <code>PRESET_TITLE_INDOOR = 22;</code>
+         */
+        PRESET_TITLE_INDOOR(22),
+        /**
+         * <code>PRESET_TITLE_MOTOR = 23;</code>
+         */
+        PRESET_TITLE_MOTOR(23),
+        /**
+         * <code>PRESET_TITLE_MOUNTED = 24;</code>
+         */
+        PRESET_TITLE_MOUNTED(24),
+        /**
+         * <code>PRESET_TITLE_OUTDOOR = 25;</code>
+         */
+        PRESET_TITLE_OUTDOOR(25),
+        /**
+         * <code>PRESET_TITLE_POV = 26;</code>
+         */
+        PRESET_TITLE_POV(26),
+        /**
+         * <code>PRESET_TITLE_SELFIE = 27;</code>
+         */
+        PRESET_TITLE_SELFIE(27),
+        /**
+         * <code>PRESET_TITLE_SKATE = 28;</code>
+         */
+        PRESET_TITLE_SKATE(28),
+        /**
+         * <code>PRESET_TITLE_SNOW = 29;</code>
+         */
+        PRESET_TITLE_SNOW(29),
+        /**
+         * <code>PRESET_TITLE_TRAIL = 30;</code>
+         */
+        PRESET_TITLE_TRAIL(30),
+        /**
+         * <code>PRESET_TITLE_TRAVEL = 31;</code>
+         */
+        PRESET_TITLE_TRAVEL(31),
+        /**
+         * <code>PRESET_TITLE_WATER = 32;</code>
+         */
+        PRESET_TITLE_WATER(32),
+        /**
+         * <code>PRESET_TITLE_LOOPING = 33;</code>
+         */
+        PRESET_TITLE_LOOPING(33),
+        /**
+         * <code>PRESET_TITLE_STARS = 34;</code>
+         */
+        PRESET_TITLE_STARS(34),
+        /**
+         * <code>PRESET_TITLE_ACTION = 35;</code>
+         */
+        PRESET_TITLE_ACTION(35),
+        /**
+         * <code>PRESET_TITLE_FOLLOW_CAM = 36;</code>
+         */
+        PRESET_TITLE_FOLLOW_CAM(36),
+        /**
+         * <code>PRESET_TITLE_SURF = 37;</code>
+         */
+        PRESET_TITLE_SURF(37),
+        /**
+         * <code>PRESET_TITLE_CITY = 38;</code>
+         */
+        PRESET_TITLE_CITY(38),
+        /**
+         * <code>PRESET_TITLE_SHAKY = 39;</code>
+         */
+        PRESET_TITLE_SHAKY(39),
+        /**
+         * <code>PRESET_TITLE_CHESTY = 40;</code>
+         */
+        PRESET_TITLE_CHESTY(40),
+        /**
+         * <code>PRESET_TITLE_HELMET = 41;</code>
+         */
+        PRESET_TITLE_HELMET(41),
+        /**
+         * <code>PRESET_TITLE_BITE = 42;</code>
+         */
+        PRESET_TITLE_BITE(42),
+        /**
+         * <code>PRESET_TITLE_CUSTOM_CINEMATIC = 43;</code>
+         */
+        PRESET_TITLE_CUSTOM_CINEMATIC(43),
+        /**
+         * <code>PRESET_TITLE_VLOG = 44;</code>
+         */
+        PRESET_TITLE_VLOG(44),
+        /**
+         * <code>PRESET_TITLE_FPV = 45;</code>
+         */
+        PRESET_TITLE_FPV(45),
+        /**
+         * <code>PRESET_TITLE_HDR = 46;</code>
+         */
+        PRESET_TITLE_HDR(46),
+        /**
+         * <code>PRESET_TITLE_LANDSCAPE = 47;</code>
+         */
+        PRESET_TITLE_LANDSCAPE(47),
+        /**
+         * <code>PRESET_TITLE_LOG = 48;</code>
+         */
+        PRESET_TITLE_LOG(48),
+        /**
+         * <code>PRESET_TITLE_CUSTOM_SLOMO = 49;</code>
+         */
+        PRESET_TITLE_CUSTOM_SLOMO(49),
+        /**
+         * <code>PRESET_TITLE_TRIPOD = 50;</code>
+         */
+        PRESET_TITLE_TRIPOD(50),
+        /**
+         * <code>PRESET_TITLE_BASIC = 58;</code>
+         */
+        PRESET_TITLE_BASIC(58),
+        /**
+         * <code>PRESET_TITLE_ULTRA_SLO_MO = 59;</code>
+         */
+        PRESET_TITLE_ULTRA_SLO_MO(59),
+        /**
+         * <code>PRESET_TITLE_STANDARD_ENDURANCE = 60;</code>
+         */
+        PRESET_TITLE_STANDARD_ENDURANCE(60),
+        /**
+         * <code>PRESET_TITLE_ACTIVITY_ENDURANCE = 61;</code>
+         */
+        PRESET_TITLE_ACTIVITY_ENDURANCE(61),
+        /**
+         * <code>PRESET_TITLE_CINEMATIC_ENDURANCE = 62;</code>
+         */
+        PRESET_TITLE_CINEMATIC_ENDURANCE(62),
+        /**
+         * <code>PRESET_TITLE_SLOMO_ENDURANCE = 63;</code>
+         */
+        PRESET_TITLE_SLOMO_ENDURANCE(63),
+        /**
+         * <code>PRESET_TITLE_STATIONARY_1 = 64;</code>
+         */
+        PRESET_TITLE_STATIONARY_1(64),
+        /**
+         * <code>PRESET_TITLE_STATIONARY_2 = 65;</code>
+         */
+        PRESET_TITLE_STATIONARY_2(65),
+        /**
+         * <code>PRESET_TITLE_STATIONARY_3 = 66;</code>
+         */
+        PRESET_TITLE_STATIONARY_3(66),
+        /**
+         * <code>PRESET_TITLE_STATIONARY_4 = 67;</code>
+         */
+        PRESET_TITLE_STATIONARY_4(67),
+        /**
+         * <code>PRESET_TITLE_SIMPLE_VIDEO = 68;</code>
+         */
+        PRESET_TITLE_SIMPLE_VIDEO(68),
+        /**
+         * <code>PRESET_TITLE_SIMPLE_TIME_WARP = 69;</code>
+         */
+        PRESET_TITLE_SIMPLE_TIME_WARP(69),
+        /**
+         * <code>PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;</code>
+         */
+        PRESET_TITLE_SIMPLE_SUPER_PHOTO(70),
+        /**
+         * <code>PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;</code>
+         */
+        PRESET_TITLE_SIMPLE_NIGHT_PHOTO(71),
+        /**
+         * <code>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;</code>
+         */
+        PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE(72),
+        /**
+         * <code>PRESET_TITLE_HIGHEST_QUALITY = 73;</code>
+         */
+        PRESET_TITLE_HIGHEST_QUALITY(73),
+        /**
+         * <code>PRESET_TITLE_EXTENDED_BATTERY = 74;</code>
+         */
+        PRESET_TITLE_EXTENDED_BATTERY(74),
+        /**
+         * <code>PRESET_TITLE_LONGEST_BATTERY = 75;</code>
+         */
+        PRESET_TITLE_LONGEST_BATTERY(75),
+        /**
+         * <code>PRESET_TITLE_STAR_TRAIL = 76;</code>
+         */
+        PRESET_TITLE_STAR_TRAIL(76),
+        /**
+         * <code>PRESET_TITLE_LIGHT_PAINTING = 77;</code>
+         */
+        PRESET_TITLE_LIGHT_PAINTING(77),
+        /**
+         * <code>PRESET_TITLE_LIGHT_TRAIL = 78;</code>
+         */
+        PRESET_TITLE_LIGHT_TRAIL(78),
+        /**
+         * <code>PRESET_TITLE_FULL_FRAME = 79;</code>
+         */
+        PRESET_TITLE_FULL_FRAME(79),
+        /**
+         * <code>PRESET_TITLE_STANDARD_QUALITY_VIDEO = 82;</code>
+         */
+        PRESET_TITLE_STANDARD_QUALITY_VIDEO(82),
+        /**
+         * <code>PRESET_TITLE_BASIC_QUALITY_VIDEO = 83;</code>
+         */
+        PRESET_TITLE_BASIC_QUALITY_VIDEO(83),
+        /**
+         * <code>PRESET_TITLE_HIGHEST_QUALITY_VIDEO = 93;</code>
+         */
+        PRESET_TITLE_HIGHEST_QUALITY_VIDEO(93),
+        /**
+         * <code>PRESET_TITLE_USER_DEFINED_CUSTOM_NAME = 94;</code>
+         */
+        PRESET_TITLE_USER_DEFINED_CUSTOM_NAME(94),
+        /**
+         * <code>PRESET_TITLE_EASY_STANDARD_PROFILE = 99;</code>
+         */
+        PRESET_TITLE_EASY_STANDARD_PROFILE(99),
+        /**
+         * <code>PRESET_TITLE_EASY_HDR_PROFILE = 100;</code>
+         */
+        PRESET_TITLE_EASY_HDR_PROFILE(100),
+        /**
+         * <code>PRESET_TITLE_BURST_SLOMO = 106;</code>
+         */
+        PRESET_TITLE_BURST_SLOMO(106),
+        ;
+
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumPresetTitle.class.getName());
+        }
+
+        /**
+         * <code>PRESET_TITLE_ACTIVITY = 0;</code>
+         */
+        public static final int PRESET_TITLE_ACTIVITY_VALUE = 0;
+        /**
+         * <code>PRESET_TITLE_STANDARD = 1;</code>
+         */
+        public static final int PRESET_TITLE_STANDARD_VALUE = 1;
+        /**
+         * <code>PRESET_TITLE_CINEMATIC = 2;</code>
+         */
+        public static final int PRESET_TITLE_CINEMATIC_VALUE = 2;
+        /**
+         * <code>PRESET_TITLE_PHOTO = 3;</code>
+         */
+        public static final int PRESET_TITLE_PHOTO_VALUE = 3;
+        /**
+         * <code>PRESET_TITLE_LIVE_BURST = 4;</code>
+         */
+        public static final int PRESET_TITLE_LIVE_BURST_VALUE = 4;
+        /**
+         * <code>PRESET_TITLE_BURST = 5;</code>
+         */
+        public static final int PRESET_TITLE_BURST_VALUE = 5;
+        /**
+         * <code>PRESET_TITLE_NIGHT = 6;</code>
+         */
+        public static final int PRESET_TITLE_NIGHT_VALUE = 6;
+        /**
+         * <code>PRESET_TITLE_TIME_WARP = 7;</code>
+         */
+        public static final int PRESET_TITLE_TIME_WARP_VALUE = 7;
+        /**
+         * <code>PRESET_TITLE_TIME_LAPSE = 8;</code>
+         */
+        public static final int PRESET_TITLE_TIME_LAPSE_VALUE = 8;
+        /**
+         * <code>PRESET_TITLE_NIGHT_LAPSE = 9;</code>
+         */
+        public static final int PRESET_TITLE_NIGHT_LAPSE_VALUE = 9;
+        /**
+         * <code>PRESET_TITLE_VIDEO = 10;</code>
+         */
+        public static final int PRESET_TITLE_VIDEO_VALUE = 10;
+        /**
+         * <code>PRESET_TITLE_SLOMO = 11;</code>
+         */
+        public static final int PRESET_TITLE_SLOMO_VALUE = 11;
+        /**
+         * <code>PRESET_TITLE_PHOTO_2 = 13;</code>
+         */
+        public static final int PRESET_TITLE_PHOTO_2_VALUE = 13;
+        /**
+         * <code>PRESET_TITLE_PANORAMA = 14;</code>
+         */
+        public static final int PRESET_TITLE_PANORAMA_VALUE = 14;
+        /**
+         * <code>PRESET_TITLE_TIME_WARP_2 = 16;</code>
+         */
+        public static final int PRESET_TITLE_TIME_WARP_2_VALUE = 16;
+        /**
+         * <code>PRESET_TITLE_CUSTOM = 18;</code>
+         */
+        public static final int PRESET_TITLE_CUSTOM_VALUE = 18;
+        /**
+         * <code>PRESET_TITLE_AIR = 19;</code>
+         */
+        public static final int PRESET_TITLE_AIR_VALUE = 19;
+        /**
+         * <code>PRESET_TITLE_BIKE = 20;</code>
+         */
+        public static final int PRESET_TITLE_BIKE_VALUE = 20;
+        /**
+         * <code>PRESET_TITLE_EPIC = 21;</code>
+         */
+        public static final int PRESET_TITLE_EPIC_VALUE = 21;
+        /**
+         * <code>PRESET_TITLE_INDOOR = 22;</code>
+         */
+        public static final int PRESET_TITLE_INDOOR_VALUE = 22;
+        /**
+         * <code>PRESET_TITLE_MOTOR = 23;</code>
+         */
+        public static final int PRESET_TITLE_MOTOR_VALUE = 23;
+        /**
+         * <code>PRESET_TITLE_MOUNTED = 24;</code>
+         */
+        public static final int PRESET_TITLE_MOUNTED_VALUE = 24;
+        /**
+         * <code>PRESET_TITLE_OUTDOOR = 25;</code>
+         */
+        public static final int PRESET_TITLE_OUTDOOR_VALUE = 25;
+        /**
+         * <code>PRESET_TITLE_POV = 26;</code>
+         */
+        public static final int PRESET_TITLE_POV_VALUE = 26;
+        /**
+         * <code>PRESET_TITLE_SELFIE = 27;</code>
+         */
+        public static final int PRESET_TITLE_SELFIE_VALUE = 27;
+        /**
+         * <code>PRESET_TITLE_SKATE = 28;</code>
+         */
+        public static final int PRESET_TITLE_SKATE_VALUE = 28;
+        /**
+         * <code>PRESET_TITLE_SNOW = 29;</code>
+         */
+        public static final int PRESET_TITLE_SNOW_VALUE = 29;
+        /**
+         * <code>PRESET_TITLE_TRAIL = 30;</code>
+         */
+        public static final int PRESET_TITLE_TRAIL_VALUE = 30;
+        /**
+         * <code>PRESET_TITLE_TRAVEL = 31;</code>
+         */
+        public static final int PRESET_TITLE_TRAVEL_VALUE = 31;
+        /**
+         * <code>PRESET_TITLE_WATER = 32;</code>
+         */
+        public static final int PRESET_TITLE_WATER_VALUE = 32;
+        /**
+         * <code>PRESET_TITLE_LOOPING = 33;</code>
+         */
+        public static final int PRESET_TITLE_LOOPING_VALUE = 33;
+        /**
+         * <code>PRESET_TITLE_STARS = 34;</code>
+         */
+        public static final int PRESET_TITLE_STARS_VALUE = 34;
+        /**
+         * <code>PRESET_TITLE_ACTION = 35;</code>
+         */
+        public static final int PRESET_TITLE_ACTION_VALUE = 35;
+        /**
+         * <code>PRESET_TITLE_FOLLOW_CAM = 36;</code>
+         */
+        public static final int PRESET_TITLE_FOLLOW_CAM_VALUE = 36;
+        /**
+         * <code>PRESET_TITLE_SURF = 37;</code>
+         */
+        public static final int PRESET_TITLE_SURF_VALUE = 37;
+        /**
+         * <code>PRESET_TITLE_CITY = 38;</code>
+         */
+        public static final int PRESET_TITLE_CITY_VALUE = 38;
+        /**
+         * <code>PRESET_TITLE_SHAKY = 39;</code>
+         */
+        public static final int PRESET_TITLE_SHAKY_VALUE = 39;
+        /**
+         * <code>PRESET_TITLE_CHESTY = 40;</code>
+         */
+        public static final int PRESET_TITLE_CHESTY_VALUE = 40;
+        /**
+         * <code>PRESET_TITLE_HELMET = 41;</code>
+         */
+        public static final int PRESET_TITLE_HELMET_VALUE = 41;
+        /**
+         * <code>PRESET_TITLE_BITE = 42;</code>
+         */
+        public static final int PRESET_TITLE_BITE_VALUE = 42;
+        /**
+         * <code>PRESET_TITLE_CUSTOM_CINEMATIC = 43;</code>
+         */
+        public static final int PRESET_TITLE_CUSTOM_CINEMATIC_VALUE = 43;
+        /**
+         * <code>PRESET_TITLE_VLOG = 44;</code>
+         */
+        public static final int PRESET_TITLE_VLOG_VALUE = 44;
+        /**
+         * <code>PRESET_TITLE_FPV = 45;</code>
+         */
+        public static final int PRESET_TITLE_FPV_VALUE = 45;
+        /**
+         * <code>PRESET_TITLE_HDR = 46;</code>
+         */
+        public static final int PRESET_TITLE_HDR_VALUE = 46;
+        /**
+         * <code>PRESET_TITLE_LANDSCAPE = 47;</code>
+         */
+        public static final int PRESET_TITLE_LANDSCAPE_VALUE = 47;
+        /**
+         * <code>PRESET_TITLE_LOG = 48;</code>
+         */
+        public static final int PRESET_TITLE_LOG_VALUE = 48;
+        /**
+         * <code>PRESET_TITLE_CUSTOM_SLOMO = 49;</code>
+         */
+        public static final int PRESET_TITLE_CUSTOM_SLOMO_VALUE = 49;
+        /**
+         * <code>PRESET_TITLE_TRIPOD = 50;</code>
+         */
+        public static final int PRESET_TITLE_TRIPOD_VALUE = 50;
+        /**
+         * <code>PRESET_TITLE_BASIC = 58;</code>
+         */
+        public static final int PRESET_TITLE_BASIC_VALUE = 58;
+        /**
+         * <code>PRESET_TITLE_ULTRA_SLO_MO = 59;</code>
+         */
+        public static final int PRESET_TITLE_ULTRA_SLO_MO_VALUE = 59;
+        /**
+         * <code>PRESET_TITLE_STANDARD_ENDURANCE = 60;</code>
+         */
+        public static final int PRESET_TITLE_STANDARD_ENDURANCE_VALUE = 60;
+        /**
+         * <code>PRESET_TITLE_ACTIVITY_ENDURANCE = 61;</code>
+         */
+        public static final int PRESET_TITLE_ACTIVITY_ENDURANCE_VALUE = 61;
+        /**
+         * <code>PRESET_TITLE_CINEMATIC_ENDURANCE = 62;</code>
+         */
+        public static final int PRESET_TITLE_CINEMATIC_ENDURANCE_VALUE = 62;
+        /**
+         * <code>PRESET_TITLE_SLOMO_ENDURANCE = 63;</code>
+         */
+        public static final int PRESET_TITLE_SLOMO_ENDURANCE_VALUE = 63;
+        /**
+         * <code>PRESET_TITLE_STATIONARY_1 = 64;</code>
+         */
+        public static final int PRESET_TITLE_STATIONARY_1_VALUE = 64;
+        /**
+         * <code>PRESET_TITLE_STATIONARY_2 = 65;</code>
+         */
+        public static final int PRESET_TITLE_STATIONARY_2_VALUE = 65;
+        /**
+         * <code>PRESET_TITLE_STATIONARY_3 = 66;</code>
+         */
+        public static final int PRESET_TITLE_STATIONARY_3_VALUE = 66;
+        /**
+         * <code>PRESET_TITLE_STATIONARY_4 = 67;</code>
+         */
+        public static final int PRESET_TITLE_STATIONARY_4_VALUE = 67;
+        /**
+         * <code>PRESET_TITLE_SIMPLE_VIDEO = 68;</code>
+         */
+        public static final int PRESET_TITLE_SIMPLE_VIDEO_VALUE = 68;
+        /**
+         * <code>PRESET_TITLE_SIMPLE_TIME_WARP = 69;</code>
+         */
+        public static final int PRESET_TITLE_SIMPLE_TIME_WARP_VALUE = 69;
+        /**
+         * <code>PRESET_TITLE_SIMPLE_SUPER_PHOTO = 70;</code>
+         */
+        public static final int PRESET_TITLE_SIMPLE_SUPER_PHOTO_VALUE = 70;
+        /**
+         * <code>PRESET_TITLE_SIMPLE_NIGHT_PHOTO = 71;</code>
+         */
+        public static final int PRESET_TITLE_SIMPLE_NIGHT_PHOTO_VALUE = 71;
+        /**
+         * <code>PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE = 72;</code>
+         */
+        public static final int PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE_VALUE = 72;
+        /**
+         * <code>PRESET_TITLE_HIGHEST_QUALITY = 73;</code>
+         */
+        public static final int PRESET_TITLE_HIGHEST_QUALITY_VALUE = 73;
+        /**
+         * <code>PRESET_TITLE_EXTENDED_BATTERY = 74;</code>
+         */
+        public static final int PRESET_TITLE_EXTENDED_BATTERY_VALUE = 74;
+        /**
+         * <code>PRESET_TITLE_LONGEST_BATTERY = 75;</code>
+         */
+        public static final int PRESET_TITLE_LONGEST_BATTERY_VALUE = 75;
+        /**
+         * <code>PRESET_TITLE_STAR_TRAIL = 76;</code>
+         */
+        public static final int PRESET_TITLE_STAR_TRAIL_VALUE = 76;
+        /**
+         * <code>PRESET_TITLE_LIGHT_PAINTING = 77;</code>
+         */
+        public static final int PRESET_TITLE_LIGHT_PAINTING_VALUE = 77;
+        /**
+         * <code>PRESET_TITLE_LIGHT_TRAIL = 78;</code>
+         */
+        public static final int PRESET_TITLE_LIGHT_TRAIL_VALUE = 78;
+        /**
+         * <code>PRESET_TITLE_FULL_FRAME = 79;</code>
+         */
+        public static final int PRESET_TITLE_FULL_FRAME_VALUE = 79;
+        /**
+         * <code>PRESET_TITLE_STANDARD_QUALITY_VIDEO = 82;</code>
+         */
+        public static final int PRESET_TITLE_STANDARD_QUALITY_VIDEO_VALUE = 82;
+        /**
+         * <code>PRESET_TITLE_BASIC_QUALITY_VIDEO = 83;</code>
+         */
+        public static final int PRESET_TITLE_BASIC_QUALITY_VIDEO_VALUE = 83;
+        /**
+         * <code>PRESET_TITLE_HIGHEST_QUALITY_VIDEO = 93;</code>
+         */
+        public static final int PRESET_TITLE_HIGHEST_QUALITY_VIDEO_VALUE = 93;
+        /**
+         * <code>PRESET_TITLE_USER_DEFINED_CUSTOM_NAME = 94;</code>
+         */
+        public static final int PRESET_TITLE_USER_DEFINED_CUSTOM_NAME_VALUE = 94;
+        /**
+         * <code>PRESET_TITLE_EASY_STANDARD_PROFILE = 99;</code>
+         */
+        public static final int PRESET_TITLE_EASY_STANDARD_PROFILE_VALUE = 99;
+        /**
+         * <code>PRESET_TITLE_EASY_HDR_PROFILE = 100;</code>
+         */
+        public static final int PRESET_TITLE_EASY_HDR_PROFILE_VALUE = 100;
+        /**
+         * <code>PRESET_TITLE_BURST_SLOMO = 106;</code>
+         */
+        public static final int PRESET_TITLE_BURST_SLOMO_VALUE = 106;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumPresetTitle valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumPresetTitle forNumber(int value) {
+            switch (value) {
+                case 0:
+                    return PRESET_TITLE_ACTIVITY;
+                case 1:
+                    return PRESET_TITLE_STANDARD;
+                case 2:
+                    return PRESET_TITLE_CINEMATIC;
+                case 3:
+                    return PRESET_TITLE_PHOTO;
+                case 4:
+                    return PRESET_TITLE_LIVE_BURST;
+                case 5:
+                    return PRESET_TITLE_BURST;
+                case 6:
+                    return PRESET_TITLE_NIGHT;
+                case 7:
+                    return PRESET_TITLE_TIME_WARP;
+                case 8:
+                    return PRESET_TITLE_TIME_LAPSE;
+                case 9:
+                    return PRESET_TITLE_NIGHT_LAPSE;
+                case 10:
+                    return PRESET_TITLE_VIDEO;
+                case 11:
+                    return PRESET_TITLE_SLOMO;
+                case 13:
+                    return PRESET_TITLE_PHOTO_2;
+                case 14:
+                    return PRESET_TITLE_PANORAMA;
+                case 16:
+                    return PRESET_TITLE_TIME_WARP_2;
+                case 18:
+                    return PRESET_TITLE_CUSTOM;
+                case 19:
+                    return PRESET_TITLE_AIR;
+                case 20:
+                    return PRESET_TITLE_BIKE;
+                case 21:
+                    return PRESET_TITLE_EPIC;
+                case 22:
+                    return PRESET_TITLE_INDOOR;
+                case 23:
+                    return PRESET_TITLE_MOTOR;
+                case 24:
+                    return PRESET_TITLE_MOUNTED;
+                case 25:
+                    return PRESET_TITLE_OUTDOOR;
+                case 26:
+                    return PRESET_TITLE_POV;
+                case 27:
+                    return PRESET_TITLE_SELFIE;
+                case 28:
+                    return PRESET_TITLE_SKATE;
+                case 29:
+                    return PRESET_TITLE_SNOW;
+                case 30:
+                    return PRESET_TITLE_TRAIL;
+                case 31:
+                    return PRESET_TITLE_TRAVEL;
+                case 32:
+                    return PRESET_TITLE_WATER;
+                case 33:
+                    return PRESET_TITLE_LOOPING;
+                case 34:
+                    return PRESET_TITLE_STARS;
+                case 35:
+                    return PRESET_TITLE_ACTION;
+                case 36:
+                    return PRESET_TITLE_FOLLOW_CAM;
+                case 37:
+                    return PRESET_TITLE_SURF;
+                case 38:
+                    return PRESET_TITLE_CITY;
+                case 39:
+                    return PRESET_TITLE_SHAKY;
+                case 40:
+                    return PRESET_TITLE_CHESTY;
+                case 41:
+                    return PRESET_TITLE_HELMET;
+                case 42:
+                    return PRESET_TITLE_BITE;
+                case 43:
+                    return PRESET_TITLE_CUSTOM_CINEMATIC;
+                case 44:
+                    return PRESET_TITLE_VLOG;
+                case 45:
+                    return PRESET_TITLE_FPV;
+                case 46:
+                    return PRESET_TITLE_HDR;
+                case 47:
+                    return PRESET_TITLE_LANDSCAPE;
+                case 48:
+                    return PRESET_TITLE_LOG;
+                case 49:
+                    return PRESET_TITLE_CUSTOM_SLOMO;
+                case 50:
+                    return PRESET_TITLE_TRIPOD;
+                case 58:
+                    return PRESET_TITLE_BASIC;
+                case 59:
+                    return PRESET_TITLE_ULTRA_SLO_MO;
+                case 60:
+                    return PRESET_TITLE_STANDARD_ENDURANCE;
+                case 61:
+                    return PRESET_TITLE_ACTIVITY_ENDURANCE;
+                case 62:
+                    return PRESET_TITLE_CINEMATIC_ENDURANCE;
+                case 63:
+                    return PRESET_TITLE_SLOMO_ENDURANCE;
+                case 64:
+                    return PRESET_TITLE_STATIONARY_1;
+                case 65:
+                    return PRESET_TITLE_STATIONARY_2;
+                case 66:
+                    return PRESET_TITLE_STATIONARY_3;
+                case 67:
+                    return PRESET_TITLE_STATIONARY_4;
+                case 68:
+                    return PRESET_TITLE_SIMPLE_VIDEO;
+                case 69:
+                    return PRESET_TITLE_SIMPLE_TIME_WARP;
+                case 70:
+                    return PRESET_TITLE_SIMPLE_SUPER_PHOTO;
+                case 71:
+                    return PRESET_TITLE_SIMPLE_NIGHT_PHOTO;
+                case 72:
+                    return PRESET_TITLE_SIMPLE_VIDEO_ENDURANCE;
+                case 73:
+                    return PRESET_TITLE_HIGHEST_QUALITY;
+                case 74:
+                    return PRESET_TITLE_EXTENDED_BATTERY;
+                case 75:
+                    return PRESET_TITLE_LONGEST_BATTERY;
+                case 76:
+                    return PRESET_TITLE_STAR_TRAIL;
+                case 77:
+                    return PRESET_TITLE_LIGHT_PAINTING;
+                case 78:
+                    return PRESET_TITLE_LIGHT_TRAIL;
+                case 79:
+                    return PRESET_TITLE_FULL_FRAME;
+                case 82:
+                    return PRESET_TITLE_STANDARD_QUALITY_VIDEO;
+                case 83:
+                    return PRESET_TITLE_BASIC_QUALITY_VIDEO;
+                case 93:
+                    return PRESET_TITLE_HIGHEST_QUALITY_VIDEO;
+                case 94:
+                    return PRESET_TITLE_USER_DEFINED_CUSTOM_NAME;
+                case 99:
+                    return PRESET_TITLE_EASY_STANDARD_PROFILE;
+                case 100:
+                    return PRESET_TITLE_EASY_HDR_PROFILE;
+                case 106:
+                    return PRESET_TITLE_BURST_SLOMO;
+                default:
+                    return null;
+            }
+        }
+
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumPresetTitle>
+        internalGetValueMap() {
+            return internalValueMap;
+        }
+
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumPresetTitle> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumPresetTitle>() {
+                    public EnumPresetTitle findValueByNumber(int number) {
+                        return EnumPresetTitle.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+            return getDescriptor();
+        }
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.getDescriptor().getEnumTypes().get(4);
+        }
+
+        private static final EnumPresetTitle[] VALUES = values();
+
+        public static EnumPresetTitle valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private EnumPresetTitle(int value) {
+            this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumPresetTitle)
+    }
+
+    public interface NotifyPresetStatusOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup>
         getPresetGroupArrayList();
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    PresetGroup getPresetGroupArray(int index);
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    int getPresetGroupArrayCount();
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    java.util.List<? extends PresetGroupOrBuilder>
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getPresetGroupArray(int index);
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        int getPresetGroupArrayCount();
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder>
         getPresetGroupArrayOrBuilderList();
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder getPresetGroupArrayOrBuilder(int index);
+    }
+
     /**
      * <pre>
-     * Array of Preset Groups
-     * </pre>
+     * *
+     * Current Preset status
      *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    PresetGroupOrBuilder getPresetGroupArrayOrBuilder(
-        int index);
-  }
-  /**
-   * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus}
-   */
-  public static final class NotifyPresetStatus extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
-      NotifyPresetStatusOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use NotifyPresetStatus.newBuilder() to construct.
-    private NotifyPresetStatus(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private NotifyPresetStatus() {
-      presetGroupArray_ = java.util.Collections.emptyList();
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new NotifyPresetStatus();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor;
-    }
-
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              NotifyPresetStatus.class, Builder.class);
-    }
-
-    public static final int PRESET_GROUP_ARRAY_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private java.util.List<PresetGroup> presetGroupArray_;
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
+     * Sent either:
      *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    @Override
-    public java.util.List<PresetGroup> getPresetGroupArrayList() {
-      return presetGroupArray_;
-    }
-    /**
-     * <pre>
-     * Array of Preset Groups
+     * - Synchronously via initial response to &#64;ref RequestGetPresetStatus
+     * - Asynchronously when Preset change if registered in &#64;ref RequestGetPresetStatus
      * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    @Override
-    public java.util.List<? extends PresetGroupOrBuilder>
-        getPresetGroupArrayOrBuilderList() {
-      return presetGroupArray_;
-    }
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    @Override
-    public int getPresetGroupArrayCount() {
-      return presetGroupArray_.size();
-    }
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    @Override
-    public PresetGroup getPresetGroupArray(int index) {
-      return presetGroupArray_.get(index);
-    }
-    /**
-     * <pre>
-     * Array of Preset Groups
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-     */
-    @Override
-    public PresetGroupOrBuilder getPresetGroupArrayOrBuilder(
-        int index) {
-      return presetGroupArray_.get(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < presetGroupArray_.size(); i++) {
-        output.writeMessage(1, presetGroupArray_.get(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      for (int i = 0; i < presetGroupArray_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, presetGroupArray_.get(i));
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof NotifyPresetStatus)) {
-        return super.equals(obj);
-      }
-      NotifyPresetStatus other = (NotifyPresetStatus) obj;
-
-      if (!getPresetGroupArrayList()
-          .equals(other.getPresetGroupArrayList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getPresetGroupArrayCount() > 0) {
-        hash = (37 * hash) + PRESET_GROUP_ARRAY_FIELD_NUMBER;
-        hash = (53 * hash) + getPresetGroupArrayList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static NotifyPresetStatus parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static NotifyPresetStatus parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static NotifyPresetStatus parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static NotifyPresetStatus parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static NotifyPresetStatus parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static NotifyPresetStatus parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static NotifyPresetStatus parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static NotifyPresetStatus parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static NotifyPresetStatus parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static NotifyPresetStatus parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static NotifyPresetStatus parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static NotifyPresetStatus parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(NotifyPresetStatus prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
+     * <p>
      * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
-        NotifyPresetStatusOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor;
-      }
+    public static final class NotifyPresetStatus extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
+            NotifyPresetStatusOrBuilder {
+        private static final long serialVersionUID = 0L;
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                NotifyPresetStatus.class, Builder.class);
-      }
-
-      // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.newBuilder()
-      Builder() {
-
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        if (presetGroupArrayBuilder_ == null) {
-          presetGroupArray_ = java.util.Collections.emptyList();
-        } else {
-          presetGroupArray_ = null;
-          presetGroupArrayBuilder_.clear();
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    NotifyPresetStatus.class.getName());
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
-        return this;
-      }
 
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor;
-      }
-
-      @Override
-      public NotifyPresetStatus getDefaultInstanceForType() {
-        return NotifyPresetStatus.getDefaultInstance();
-      }
-
-      @Override
-      public NotifyPresetStatus build() {
-        NotifyPresetStatus result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        // Use NotifyPresetStatus.newBuilder() to construct.
+        private NotifyPresetStatus(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
         }
-        return result;
-      }
 
-      @Override
-      public NotifyPresetStatus buildPartial() {
-        NotifyPresetStatus result = new NotifyPresetStatus(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(NotifyPresetStatus result) {
-        if (presetGroupArrayBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
-            presetGroupArray_ = java.util.Collections.unmodifiableList(presetGroupArray_);
-            bitField0_ = (bitField0_ & ~0x00000001);
-          }
-          result.presetGroupArray_ = presetGroupArray_;
-        } else {
-          result.presetGroupArray_ = presetGroupArrayBuilder_.build();
+        private NotifyPresetStatus() {
+            presetGroupArray_ = java.util.Collections.emptyList();
         }
-      }
 
-      private void buildPartial0(NotifyPresetStatus result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof NotifyPresetStatus) {
-          return mergeFrom((NotifyPresetStatus)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(NotifyPresetStatus other) {
-        if (other == NotifyPresetStatus.getDefaultInstance()) return this;
-        if (presetGroupArrayBuilder_ == null) {
-          if (!other.presetGroupArray_.isEmpty()) {
-            if (presetGroupArray_.isEmpty()) {
-              presetGroupArray_ = other.presetGroupArray_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-            } else {
-              ensurePresetGroupArrayIsMutable();
-              presetGroupArray_.addAll(other.presetGroupArray_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.presetGroupArray_.isEmpty()) {
-            if (presetGroupArrayBuilder_.isEmpty()) {
-              presetGroupArrayBuilder_.dispose();
-              presetGroupArrayBuilder_ = null;
-              presetGroupArray_ = other.presetGroupArray_;
-              bitField0_ = (bitField0_ & ~0x00000001);
-              presetGroupArrayBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getPresetGroupArrayFieldBuilder() : null;
-            } else {
-              presetGroupArrayBuilder_.addAllMessages(other.presetGroupArray_);
-            }
-          }
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10: {
-                PresetGroup m =
-                    input.readMessage(
-                        PresetGroup.PARSER,
-                        extensionRegistry);
-                if (presetGroupArrayBuilder_ == null) {
-                  ensurePresetGroupArrayIsMutable();
-                  presetGroupArray_.add(m);
-                } else {
-                  presetGroupArrayBuilder_.addMessage(m);
-                }
-                break;
-              } // case 10
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private java.util.List<PresetGroup> presetGroupArray_ =
-        java.util.Collections.emptyList();
-      private void ensurePresetGroupArrayIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          presetGroupArray_ = new java.util.ArrayList<PresetGroup>(presetGroupArray_);
-          bitField0_ |= 0x00000001;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          PresetGroup, PresetGroup.Builder, PresetGroupOrBuilder> presetGroupArrayBuilder_;
-
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public java.util.List<PresetGroup> getPresetGroupArrayList() {
-        if (presetGroupArrayBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(presetGroupArray_);
-        } else {
-          return presetGroupArrayBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public int getPresetGroupArrayCount() {
-        if (presetGroupArrayBuilder_ == null) {
-          return presetGroupArray_.size();
-        } else {
-          return presetGroupArrayBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public PresetGroup getPresetGroupArray(int index) {
-        if (presetGroupArrayBuilder_ == null) {
-          return presetGroupArray_.get(index);
-        } else {
-          return presetGroupArrayBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder setPresetGroupArray(
-          int index, PresetGroup value) {
-        if (presetGroupArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.set(index, value);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder setPresetGroupArray(
-          int index, PresetGroup.Builder builderForValue) {
-        if (presetGroupArrayBuilder_ == null) {
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder addPresetGroupArray(PresetGroup value) {
-        if (presetGroupArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.add(value);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder addPresetGroupArray(
-          int index, PresetGroup value) {
-        if (presetGroupArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.add(index, value);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder addPresetGroupArray(
-          PresetGroup.Builder builderForValue) {
-        if (presetGroupArrayBuilder_ == null) {
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.add(builderForValue.build());
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder addPresetGroupArray(
-          int index, PresetGroup.Builder builderForValue) {
-        if (presetGroupArrayBuilder_ == null) {
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder addAllPresetGroupArray(
-          Iterable<? extends PresetGroup> values) {
-        if (presetGroupArrayBuilder_ == null) {
-          ensurePresetGroupArrayIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, presetGroupArray_);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder clearPresetGroupArray() {
-        if (presetGroupArrayBuilder_ == null) {
-          presetGroupArray_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public Builder removePresetGroupArray(int index) {
-        if (presetGroupArrayBuilder_ == null) {
-          ensurePresetGroupArrayIsMutable();
-          presetGroupArray_.remove(index);
-          onChanged();
-        } else {
-          presetGroupArrayBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public PresetGroup.Builder getPresetGroupArrayBuilder(
-          int index) {
-        return getPresetGroupArrayFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public PresetGroupOrBuilder getPresetGroupArrayOrBuilder(
-          int index) {
-        if (presetGroupArrayBuilder_ == null) {
-          return presetGroupArray_.get(index);  } else {
-          return presetGroupArrayBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public java.util.List<? extends PresetGroupOrBuilder>
-           getPresetGroupArrayOrBuilderList() {
-        if (presetGroupArrayBuilder_ != null) {
-          return presetGroupArrayBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(presetGroupArray_);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public PresetGroup.Builder addPresetGroupArrayBuilder() {
-        return getPresetGroupArrayFieldBuilder().addBuilder(
-            PresetGroup.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public PresetGroup.Builder addPresetGroupArrayBuilder(
-          int index) {
-        return getPresetGroupArrayFieldBuilder().addBuilder(
-            index, PresetGroup.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of Preset Groups
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
-       */
-      public java.util.List<PresetGroup.Builder>
-           getPresetGroupArrayBuilderList() {
-        return getPresetGroupArrayFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          PresetGroup, PresetGroup.Builder, PresetGroupOrBuilder>
-          getPresetGroupArrayFieldBuilder() {
-        if (presetGroupArrayBuilder_ == null) {
-          presetGroupArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              PresetGroup, PresetGroup.Builder, PresetGroupOrBuilder>(
-                  presetGroupArray_,
-                  ((bitField0_ & 0x00000001) != 0),
-                  getParentForChildren(),
-                  isClean());
-          presetGroupArray_ = null;
-        }
-        return presetGroupArrayBuilder_;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
-    private static final NotifyPresetStatus DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new NotifyPresetStatus();
-    }
-
-    public static NotifyPresetStatus getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @Deprecated public static final com.google.protobuf.Parser<NotifyPresetStatus>
-        PARSER = new com.google.protobuf.AbstractParser<NotifyPresetStatus>() {
-      @Override
-      public NotifyPresetStatus parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<NotifyPresetStatus> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<NotifyPresetStatus> getParserForType() {
-      return PARSER;
-    }
-
-    @Override
-    public NotifyPresetStatus getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface PresetOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.Preset)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * Preset ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return Whether the id field is set.
-     */
-    boolean hasId();
-    /**
-     * <pre>
-     * Preset ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return The id.
-     */
-    int getId();
-
-    /**
-     * <pre>
-     * Preset flatmode ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-     * @return Whether the mode field is set.
-     */
-    boolean hasMode();
-    /**
-     * <pre>
-     * Preset flatmode ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-     * @return The mode.
-     */
-    EnumFlatMode getMode();
-
-    /**
-     * <pre>
-     * Preset Title ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-     * @return Whether the titleId field is set.
-     */
-    boolean hasTitleId();
-    /**
-     * <pre>
-     * Preset Title ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-     * @return The titleId.
-     */
-    EnumPresetTitle getTitleId();
-
-    /**
-     * <pre>
-     * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-     * </pre>
-     *
-     * <code>optional int32 title_number = 4;</code>
-     * @return Whether the titleNumber field is set.
-     */
-    boolean hasTitleNumber();
-    /**
-     * <pre>
-     * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-     * </pre>
-     *
-     * <code>optional int32 title_number = 4;</code>
-     * @return The titleNumber.
-     */
-    int getTitleNumber();
-
-    /**
-     * <pre>
-     * Is the Preset custom/user-defined?
-     * </pre>
-     *
-     * <code>optional bool user_defined = 5;</code>
-     * @return Whether the userDefined field is set.
-     */
-    boolean hasUserDefined();
-    /**
-     * <pre>
-     * Is the Preset custom/user-defined?
-     * </pre>
-     *
-     * <code>optional bool user_defined = 5;</code>
-     * @return The userDefined.
-     */
-    boolean getUserDefined();
-
-    /**
-     * <pre>
-     * Preset Icon ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-     * @return Whether the icon field is set.
-     */
-    boolean hasIcon();
-    /**
-     * <pre>
-     * Preset Icon ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-     * @return The icon.
-     */
-    EnumPresetIcon getIcon();
-
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    java.util.List<PresetSetting>
-        getSettingArrayList();
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    PresetSetting getSettingArray(int index);
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    int getSettingArrayCount();
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    java.util.List<? extends PresetSettingOrBuilder>
-        getSettingArrayOrBuilderList();
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    PresetSettingOrBuilder getSettingArrayOrBuilder(
-        int index);
-
-    /**
-     * <pre>
-     * Has Preset been modified from factory
-     * </pre>
-     *
-     * <code>optional bool is_modified = 8;</code>
-     * @return Whether the isModified field is set.
-     */
-    boolean hasIsModified();
-    /**
-     * <pre>
-     * Has Preset been modified from factory
-     * </pre>
-     *
-     * <code>optional bool is_modified = 8;</code>
-     * @return The isModified.
-     */
-    boolean getIsModified();
-
-    /**
-     * <pre>
-     * Is this Preset mutable?
-     * </pre>
-     *
-     * <code>optional bool is_fixed = 9;</code>
-     * @return Whether the isFixed field is set.
-     */
-    boolean hasIsFixed();
-    /**
-     * <pre>
-     * Is this Preset mutable?
-     * </pre>
-     *
-     * <code>optional bool is_fixed = 9;</code>
-     * @return The isFixed.
-     */
-    boolean getIsFixed();
-  }
-  /**
-   * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.Preset}
-   */
-  public static final class Preset extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.Preset)
-      PresetOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Preset.newBuilder() to construct.
-    private Preset(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Preset() {
-      mode_ = -1;
-      titleId_ = 0;
-      icon_ = 0;
-      settingArray_ = java.util.Collections.emptyList();
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Preset();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor;
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_NotifyPresetStatus_descriptor;
+        }
 
-    @Override
-    protected FieldAccessorTable
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_Preset_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              Preset.class, Builder.class);
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_NotifyPresetStatus_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.Builder.class);
+        }
+
+        public static final int PRESET_GROUP_ARRAY_FIELD_NUMBER = 1;
+        @SuppressWarnings("serial")
+        private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup> presetGroupArray_;
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup> getPresetGroupArrayList() {
+            return presetGroupArray_;
+        }
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        @java.lang.Override
+        public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder>
+        getPresetGroupArrayOrBuilderList() {
+            return presetGroupArray_;
+        }
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        @java.lang.Override
+        public int getPresetGroupArrayCount() {
+            return presetGroupArray_.size();
+        }
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getPresetGroupArray(int index) {
+            return presetGroupArray_.get(index);
+        }
+
+        /**
+         * <pre>
+         * List of currently available Preset Groups
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder getPresetGroupArrayOrBuilder(int index) {
+            return presetGroupArray_.get(index);
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            for (int i = 0; i < presetGroupArray_.size(); i++) {
+                output.writeMessage(1, presetGroupArray_.get(i));
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            for (int i = 0; i < presetGroupArray_.size(); i++) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(1, presetGroupArray_.get(i));
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus other = (com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus) obj;
+
+            if (!getPresetGroupArrayList()
+                    .equals(other.getPresetGroupArrayList())) return false;
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (getPresetGroupArrayCount() > 0) {
+                hash = (37 * hash) + PRESET_GROUP_ARRAY_FIELD_NUMBER;
+                hash = (53 * hash) + getPresetGroupArrayList().hashCode();
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(java.nio.ByteBuffer data,
+                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(com.google.protobuf.ByteString data,
+                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(byte[] data,
+                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(java.io.InputStream input,
+                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseDelimitedFrom(java.io.InputStream input,
+                                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         * *
+         * Current Preset status
+         *
+         * Sent either:
+         *
+         * - Synchronously via initial response to &#64;ref RequestGetPresetStatus
+         * - Asynchronously when Preset change if registered in &#64;ref RequestGetPresetStatus
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatusOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_NotifyPresetStatus_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_NotifyPresetStatus_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                if (presetGroupArrayBuilder_ == null) {
+                    presetGroupArray_ = java.util.Collections.emptyList();
+                } else {
+                    presetGroupArray_ = null;
+                    presetGroupArrayBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000001);
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_NotifyPresetStatus_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus build() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus result = new com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus(this);
+                buildPartialRepeatedFields(result);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartialRepeatedFields(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus result) {
+                if (presetGroupArrayBuilder_ == null) {
+                    if (((bitField0_ & 0x00000001) != 0)) {
+                        presetGroupArray_ = java.util.Collections.unmodifiableList(presetGroupArray_);
+                        bitField0_ = (bitField0_ & ~0x00000001);
+                    }
+                    result.presetGroupArray_ = presetGroupArray_;
+                } else {
+                    result.presetGroupArray_ = presetGroupArrayBuilder_.build();
+                }
+            }
+
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus result) {
+                int from_bitField0_ = bitField0_;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus.getDefaultInstance())
+                    return this;
+                if (presetGroupArrayBuilder_ == null) {
+                    if (!other.presetGroupArray_.isEmpty()) {
+                        if (presetGroupArray_.isEmpty()) {
+                            presetGroupArray_ = other.presetGroupArray_;
+                            bitField0_ = (bitField0_ & ~0x00000001);
+                        } else {
+                            ensurePresetGroupArrayIsMutable();
+                            presetGroupArray_.addAll(other.presetGroupArray_);
+                        }
+                        onChanged();
+                    }
+                } else {
+                    if (!other.presetGroupArray_.isEmpty()) {
+                        if (presetGroupArrayBuilder_.isEmpty()) {
+                            presetGroupArrayBuilder_.dispose();
+                            presetGroupArrayBuilder_ = null;
+                            presetGroupArray_ = other.presetGroupArray_;
+                            bitField0_ = (bitField0_ & ~0x00000001);
+                            presetGroupArrayBuilder_ =
+                                    com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                                            getPresetGroupArrayFieldBuilder() : null;
+                        } else {
+                            presetGroupArrayBuilder_.addAllMessages(other.presetGroupArray_);
+                        }
+                    }
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 10: {
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup m =
+                                        input.readMessage(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.parser(),
+                                                extensionRegistry);
+                                if (presetGroupArrayBuilder_ == null) {
+                                    ensurePresetGroupArrayIsMutable();
+                                    presetGroupArray_.add(m);
+                                } else {
+                                    presetGroupArrayBuilder_.addMessage(m);
+                                }
+                                break;
+                            } // case 10
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+
+            private int bitField0_;
+
+            private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup> presetGroupArray_ =
+                    java.util.Collections.emptyList();
+
+            private void ensurePresetGroupArrayIsMutable() {
+                if (!((bitField0_ & 0x00000001) != 0)) {
+                    presetGroupArray_ = new java.util.ArrayList<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup>(presetGroupArray_);
+                    bitField0_ |= 0x00000001;
+                }
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder> presetGroupArrayBuilder_;
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup> getPresetGroupArrayList() {
+                if (presetGroupArrayBuilder_ == null) {
+                    return java.util.Collections.unmodifiableList(presetGroupArray_);
+                } else {
+                    return presetGroupArrayBuilder_.getMessageList();
+                }
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public int getPresetGroupArrayCount() {
+                if (presetGroupArrayBuilder_ == null) {
+                    return presetGroupArray_.size();
+                } else {
+                    return presetGroupArrayBuilder_.getCount();
+                }
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getPresetGroupArray(int index) {
+                if (presetGroupArrayBuilder_ == null) {
+                    return presetGroupArray_.get(index);
+                } else {
+                    return presetGroupArrayBuilder_.getMessage(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder setPresetGroupArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup value) {
+                if (presetGroupArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.set(index, value);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.setMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder setPresetGroupArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder builderForValue) {
+                if (presetGroupArrayBuilder_ == null) {
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.set(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.setMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder addPresetGroupArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup value) {
+                if (presetGroupArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.add(value);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.addMessage(value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder addPresetGroupArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup value) {
+                if (presetGroupArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.add(index, value);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.addMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder addPresetGroupArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder builderForValue) {
+                if (presetGroupArrayBuilder_ == null) {
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.add(builderForValue.build());
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.addMessage(builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder addPresetGroupArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder builderForValue) {
+                if (presetGroupArrayBuilder_ == null) {
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.add(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.addMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder addAllPresetGroupArray(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup> values) {
+                if (presetGroupArrayBuilder_ == null) {
+                    ensurePresetGroupArrayIsMutable();
+                    com.google.protobuf.AbstractMessageLite.Builder.addAll(values, presetGroupArray_);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.addAllMessages(values);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder clearPresetGroupArray() {
+                if (presetGroupArrayBuilder_ == null) {
+                    presetGroupArray_ = java.util.Collections.emptyList();
+                    bitField0_ = (bitField0_ & ~0x00000001);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.clear();
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public Builder removePresetGroupArray(int index) {
+                if (presetGroupArrayBuilder_ == null) {
+                    ensurePresetGroupArrayIsMutable();
+                    presetGroupArray_.remove(index);
+                    onChanged();
+                } else {
+                    presetGroupArrayBuilder_.remove(index);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder getPresetGroupArrayBuilder(int index) {
+                return getPresetGroupArrayFieldBuilder().getBuilder(index);
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder getPresetGroupArrayOrBuilder(int index) {
+                if (presetGroupArrayBuilder_ == null) {
+                    return presetGroupArray_.get(index);
+                } else {
+                    return presetGroupArrayBuilder_.getMessageOrBuilder(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder>
+            getPresetGroupArrayOrBuilderList() {
+                if (presetGroupArrayBuilder_ != null) {
+                    return presetGroupArrayBuilder_.getMessageOrBuilderList();
+                } else {
+                    return java.util.Collections.unmodifiableList(presetGroupArray_);
+                }
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder addPresetGroupArrayBuilder() {
+                return getPresetGroupArrayFieldBuilder().addBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder addPresetGroupArrayBuilder(int index) {
+                return getPresetGroupArrayFieldBuilder().addBuilder(index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * List of currently available Preset Groups
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetGroup preset_group_array = 1;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder>
+            getPresetGroupArrayBuilderList() {
+                return getPresetGroupArrayFieldBuilder().getBuilderList();
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder>
+            getPresetGroupArrayFieldBuilder() {
+                if (presetGroupArrayBuilder_ == null) {
+                    presetGroupArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                            com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder>(presetGroupArray_,
+                            ((bitField0_ & 0x00000001) != 0),
+                            getParentForChildren(),
+                            isClean());
+                    presetGroupArray_ = null;
+                }
+                return presetGroupArrayBuilder_;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
+        }
+
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.NotifyPresetStatus)
+        private static final com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<NotifyPresetStatus>
+                PARSER = new com.google.protobuf.AbstractParser<NotifyPresetStatus>() {
+            @java.lang.Override
+            public NotifyPresetStatus parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                                       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<NotifyPresetStatus> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<NotifyPresetStatus> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.NotifyPresetStatus getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
 
-    private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_ = 0;
+    public interface PresetOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.Preset)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <pre>
+         * Preset ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        boolean hasId();
+
+        /**
+         * <pre>
+         * Preset ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return The id.
+         */
+        int getId();
+
+        /**
+         * <pre>
+         * Preset flatmode ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+         *
+         * @return Whether the mode field is set.
+         */
+        boolean hasMode();
+
+        /**
+         * <pre>
+         * Preset flatmode ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+         *
+         * @return The mode.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getMode();
+
+        /**
+         * <pre>
+         * Preset Title ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+         *
+         * @return Whether the titleId field is set.
+         */
+        boolean hasTitleId();
+
+        /**
+         * <pre>
+         * Preset Title ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+         *
+         * @return The titleId.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId();
+
+        /**
+         * <pre>
+         * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+         * </pre>
+         *
+         * <code>optional int32 title_number = 4;</code>
+         *
+         * @return Whether the titleNumber field is set.
+         */
+        boolean hasTitleNumber();
+
+        /**
+         * <pre>
+         * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+         * </pre>
+         *
+         * <code>optional int32 title_number = 4;</code>
+         *
+         * @return The titleNumber.
+         */
+        int getTitleNumber();
+
+        /**
+         * <pre>
+         * Is the Preset custom/user-defined?
+         * </pre>
+         *
+         * <code>optional bool user_defined = 5;</code>
+         *
+         * @return Whether the userDefined field is set.
+         */
+        boolean hasUserDefined();
+
+        /**
+         * <pre>
+         * Is the Preset custom/user-defined?
+         * </pre>
+         *
+         * <code>optional bool user_defined = 5;</code>
+         *
+         * @return The userDefined.
+         */
+        boolean getUserDefined();
+
+        /**
+         * <pre>
+         * Preset Icon ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+         *
+         * @return Whether the icon field is set.
+         */
+        boolean hasIcon();
+
+        /**
+         * <pre>
+         * Preset Icon ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+         *
+         * @return The icon.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIcon();
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting>
+        getSettingArrayList();
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getSettingArray(int index);
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        int getSettingArrayCount();
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder>
+        getSettingArrayOrBuilderList();
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder getSettingArrayOrBuilder(int index);
+
+        /**
+         * <pre>
+         * Has Preset been modified from factory defaults? (False for user-defined Presets)
+         * </pre>
+         *
+         * <code>optional bool is_modified = 8;</code>
+         *
+         * @return Whether the isModified field is set.
+         */
+        boolean hasIsModified();
+
+        /**
+         * <pre>
+         * Has Preset been modified from factory defaults? (False for user-defined Presets)
+         * </pre>
+         *
+         * <code>optional bool is_modified = 8;</code>
+         *
+         * @return The isModified.
+         */
+        boolean getIsModified();
+
+        /**
+         * <pre>
+         * Is this Preset mutable?
+         * </pre>
+         *
+         * <code>optional bool is_fixed = 9;</code>
+         *
+         * @return Whether the isFixed field is set.
+         */
+        boolean hasIsFixed();
+
+        /**
+         * <pre>
+         * Is this Preset mutable?
+         * </pre>
+         *
+         * <code>optional bool is_fixed = 9;</code>
+         *
+         * @return The isFixed.
+         */
+        boolean getIsFixed();
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return Whether the customName field is set.
+         */
+        boolean hasCustomName();
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return The customName.
+         */
+        java.lang.String getCustomName();
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return The bytes for customName.
+         */
+        com.google.protobuf.ByteString
+        getCustomNameBytes();
+    }
+
     /**
      * <pre>
-     * Preset ID
+     * *
+     * An individual preset.
      * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return Whether the id field is set.
-     */
-    @Override
-    public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <pre>
-     * Preset ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return The id.
-     */
-    @Override
-    public int getId() {
-      return id_;
-    }
-
-    public static final int MODE_FIELD_NUMBER = 2;
-    private int mode_ = -1;
-    /**
-     * <pre>
-     * Preset flatmode ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-     * @return Whether the mode field is set.
-     */
-    @Override public boolean hasMode() {
-      return ((bitField0_ & 0x00000002) != 0);
-    }
-    /**
-     * <pre>
-     * Preset flatmode ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-     * @return The mode.
-     */
-    @Override public EnumFlatMode getMode() {
-      EnumFlatMode result = EnumFlatMode.forNumber(mode_);
-      return result == null ? EnumFlatMode.FLAT_MODE_UNKNOWN : result;
-    }
-
-    public static final int TITLE_ID_FIELD_NUMBER = 3;
-    private int titleId_ = 0;
-    /**
-     * <pre>
-     * Preset Title ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-     * @return Whether the titleId field is set.
-     */
-    @Override public boolean hasTitleId() {
-      return ((bitField0_ & 0x00000004) != 0);
-    }
-    /**
-     * <pre>
-     * Preset Title ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-     * @return The titleId.
-     */
-    @Override public EnumPresetTitle getTitleId() {
-      EnumPresetTitle result = EnumPresetTitle.forNumber(titleId_);
-      return result == null ? EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
-    }
-
-    public static final int TITLE_NUMBER_FIELD_NUMBER = 4;
-    private int titleNumber_ = 0;
-    /**
-     * <pre>
-     * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-     * </pre>
-     *
-     * <code>optional int32 title_number = 4;</code>
-     * @return Whether the titleNumber field is set.
-     */
-    @Override
-    public boolean hasTitleNumber() {
-      return ((bitField0_ & 0x00000008) != 0);
-    }
-    /**
-     * <pre>
-     * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-     * </pre>
-     *
-     * <code>optional int32 title_number = 4;</code>
-     * @return The titleNumber.
-     */
-    @Override
-    public int getTitleNumber() {
-      return titleNumber_;
-    }
-
-    public static final int USER_DEFINED_FIELD_NUMBER = 5;
-    private boolean userDefined_ = false;
-    /**
-     * <pre>
-     * Is the Preset custom/user-defined?
-     * </pre>
-     *
-     * <code>optional bool user_defined = 5;</code>
-     * @return Whether the userDefined field is set.
-     */
-    @Override
-    public boolean hasUserDefined() {
-      return ((bitField0_ & 0x00000010) != 0);
-    }
-    /**
-     * <pre>
-     * Is the Preset custom/user-defined?
-     * </pre>
-     *
-     * <code>optional bool user_defined = 5;</code>
-     * @return The userDefined.
-     */
-    @Override
-    public boolean getUserDefined() {
-      return userDefined_;
-    }
-
-    public static final int ICON_FIELD_NUMBER = 6;
-    private int icon_ = 0;
-    /**
-     * <pre>
-     * Preset Icon ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-     * @return Whether the icon field is set.
-     */
-    @Override public boolean hasIcon() {
-      return ((bitField0_ & 0x00000020) != 0);
-    }
-    /**
-     * <pre>
-     * Preset Icon ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-     * @return The icon.
-     */
-    @Override public EnumPresetIcon getIcon() {
-      EnumPresetIcon result = EnumPresetIcon.forNumber(icon_);
-      return result == null ? EnumPresetIcon.PRESET_ICON_VIDEO : result;
-    }
-
-    public static final int SETTING_ARRAY_FIELD_NUMBER = 7;
-    @SuppressWarnings("serial")
-    private java.util.List<PresetSetting> settingArray_;
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    @Override
-    public java.util.List<PresetSetting> getSettingArrayList() {
-      return settingArray_;
-    }
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    @Override
-    public java.util.List<? extends PresetSettingOrBuilder>
-        getSettingArrayOrBuilderList() {
-      return settingArray_;
-    }
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    @Override
-    public int getSettingArrayCount() {
-      return settingArray_.size();
-    }
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    @Override
-    public PresetSetting getSettingArray(int index) {
-      return settingArray_.get(index);
-    }
-    /**
-     * <pre>
-     * Array of settings associated with this Preset
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-     */
-    @Override
-    public PresetSettingOrBuilder getSettingArrayOrBuilder(
-        int index) {
-      return settingArray_.get(index);
-    }
-
-    public static final int IS_MODIFIED_FIELD_NUMBER = 8;
-    private boolean isModified_ = false;
-    /**
-     * <pre>
-     * Has Preset been modified from factory
-     * </pre>
-     *
-     * <code>optional bool is_modified = 8;</code>
-     * @return Whether the isModified field is set.
-     */
-    @Override
-    public boolean hasIsModified() {
-      return ((bitField0_ & 0x00000040) != 0);
-    }
-    /**
-     * <pre>
-     * Has Preset been modified from factory
-     * </pre>
-     *
-     * <code>optional bool is_modified = 8;</code>
-     * @return The isModified.
-     */
-    @Override
-    public boolean getIsModified() {
-      return isModified_;
-    }
-
-    public static final int IS_FIXED_FIELD_NUMBER = 9;
-    private boolean isFixed_ = false;
-    /**
-     * <pre>
-     * Is this Preset mutable?
-     * </pre>
-     *
-     * <code>optional bool is_fixed = 9;</code>
-     * @return Whether the isFixed field is set.
-     */
-    @Override
-    public boolean hasIsFixed() {
-      return ((bitField0_ & 0x00000080) != 0);
-    }
-    /**
-     * <pre>
-     * Is this Preset mutable?
-     * </pre>
-     *
-     * <code>optional bool is_fixed = 9;</code>
-     * @return The isFixed.
-     */
-    @Override
-    public boolean getIsFixed() {
-      return isFixed_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt32(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeEnum(2, mode_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeEnum(3, titleId_);
-      }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        output.writeInt32(4, titleNumber_);
-      }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        output.writeBool(5, userDefined_);
-      }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        output.writeEnum(6, icon_);
-      }
-      for (int i = 0; i < settingArray_.size(); i++) {
-        output.writeMessage(7, settingArray_.get(i));
-      }
-      if (((bitField0_ & 0x00000040) != 0)) {
-        output.writeBool(8, isModified_);
-      }
-      if (((bitField0_ & 0x00000080) != 0)) {
-        output.writeBool(9, isFixed_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, mode_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, titleId_);
-      }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, titleNumber_);
-      }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(5, userDefined_);
-      }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(6, icon_);
-      }
-      for (int i = 0; i < settingArray_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, settingArray_.get(i));
-      }
-      if (((bitField0_ & 0x00000040) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(8, isModified_);
-      }
-      if (((bitField0_ & 0x00000080) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(9, isFixed_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof Preset)) {
-        return super.equals(obj);
-      }
-      Preset other = (Preset) obj;
-
-      if (hasId() != other.hasId()) return false;
-      if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
-      }
-      if (hasMode() != other.hasMode()) return false;
-      if (hasMode()) {
-        if (mode_ != other.mode_) return false;
-      }
-      if (hasTitleId() != other.hasTitleId()) return false;
-      if (hasTitleId()) {
-        if (titleId_ != other.titleId_) return false;
-      }
-      if (hasTitleNumber() != other.hasTitleNumber()) return false;
-      if (hasTitleNumber()) {
-        if (getTitleNumber()
-            != other.getTitleNumber()) return false;
-      }
-      if (hasUserDefined() != other.hasUserDefined()) return false;
-      if (hasUserDefined()) {
-        if (getUserDefined()
-            != other.getUserDefined()) return false;
-      }
-      if (hasIcon() != other.hasIcon()) return false;
-      if (hasIcon()) {
-        if (icon_ != other.icon_) return false;
-      }
-      if (!getSettingArrayList()
-          .equals(other.getSettingArrayList())) return false;
-      if (hasIsModified() != other.hasIsModified()) return false;
-      if (hasIsModified()) {
-        if (getIsModified()
-            != other.getIsModified()) return false;
-      }
-      if (hasIsFixed() != other.hasIsFixed()) return false;
-      if (hasIsFixed()) {
-        if (getIsFixed()
-            != other.getIsFixed()) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasId()) {
-        hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + getId();
-      }
-      if (hasMode()) {
-        hash = (37 * hash) + MODE_FIELD_NUMBER;
-        hash = (53 * hash) + mode_;
-      }
-      if (hasTitleId()) {
-        hash = (37 * hash) + TITLE_ID_FIELD_NUMBER;
-        hash = (53 * hash) + titleId_;
-      }
-      if (hasTitleNumber()) {
-        hash = (37 * hash) + TITLE_NUMBER_FIELD_NUMBER;
-        hash = (53 * hash) + getTitleNumber();
-      }
-      if (hasUserDefined()) {
-        hash = (37 * hash) + USER_DEFINED_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getUserDefined());
-      }
-      if (hasIcon()) {
-        hash = (37 * hash) + ICON_FIELD_NUMBER;
-        hash = (53 * hash) + icon_;
-      }
-      if (getSettingArrayCount() > 0) {
-        hash = (37 * hash) + SETTING_ARRAY_FIELD_NUMBER;
-        hash = (53 * hash) + getSettingArrayList().hashCode();
-      }
-      if (hasIsModified()) {
-        hash = (37 * hash) + IS_MODIFIED_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getIsModified());
-      }
-      if (hasIsFixed()) {
-        hash = (37 * hash) + IS_FIXED_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getIsFixed());
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static Preset parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Preset parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Preset parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Preset parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Preset parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Preset parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Preset parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Preset parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static Preset parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static Preset parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Preset parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Preset parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(Preset prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
+     * <p>
      * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.Preset}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.Preset)
-        PresetOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor;
-      }
+    public static final class Preset extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.Preset)
+            PresetOrBuilder {
+        private static final long serialVersionUID = 0L;
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_Preset_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                Preset.class, Builder.class);
-      }
-
-      // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = 0;
-        mode_ = -1;
-        titleId_ = 0;
-        titleNumber_ = 0;
-        userDefined_ = false;
-        icon_ = 0;
-        if (settingArrayBuilder_ == null) {
-          settingArray_ = java.util.Collections.emptyList();
-        } else {
-          settingArray_ = null;
-          settingArrayBuilder_.clear();
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    Preset.class.getName());
         }
-        bitField0_ = (bitField0_ & ~0x00000040);
-        isModified_ = false;
-        isFixed_ = false;
-        return this;
-      }
 
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor;
-      }
-
-      @Override
-      public Preset getDefaultInstanceForType() {
-        return Preset.getDefaultInstance();
-      }
-
-      @Override
-      public Preset build() {
-        Preset result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        // Use Preset.newBuilder() to construct.
+        private Preset(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
         }
-        return result;
-      }
 
-      @Override
-      public Preset buildPartial() {
-        Preset result = new Preset(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(Preset result) {
-        if (settingArrayBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) != 0)) {
-            settingArray_ = java.util.Collections.unmodifiableList(settingArray_);
-            bitField0_ = (bitField0_ & ~0x00000040);
-          }
-          result.settingArray_ = settingArray_;
-        } else {
-          result.settingArray_ = settingArrayBuilder_.build();
+        private Preset() {
+            mode_ = -1;
+            titleId_ = 0;
+            icon_ = 0;
+            settingArray_ = java.util.Collections.emptyList();
+            customName_ = "";
         }
-      }
 
-      private void buildPartial0(Preset result) {
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.mode_ = mode_;
-          to_bitField0_ |= 0x00000002;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.titleId_ = titleId_;
-          to_bitField0_ |= 0x00000004;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.titleNumber_ = titleNumber_;
-          to_bitField0_ |= 0x00000008;
-        }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.userDefined_ = userDefined_;
-          to_bitField0_ |= 0x00000010;
-        }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.icon_ = icon_;
-          to_bitField0_ |= 0x00000020;
-        }
-        if (((from_bitField0_ & 0x00000080) != 0)) {
-          result.isModified_ = isModified_;
-          to_bitField0_ |= 0x00000040;
-        }
-        if (((from_bitField0_ & 0x00000100) != 0)) {
-          result.isFixed_ = isFixed_;
-          to_bitField0_ |= 0x00000080;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Preset) {
-          return mergeFrom((Preset)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(Preset other) {
-        if (other == Preset.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
-        }
-        if (other.hasMode()) {
-          setMode(other.getMode());
-        }
-        if (other.hasTitleId()) {
-          setTitleId(other.getTitleId());
-        }
-        if (other.hasTitleNumber()) {
-          setTitleNumber(other.getTitleNumber());
-        }
-        if (other.hasUserDefined()) {
-          setUserDefined(other.getUserDefined());
-        }
-        if (other.hasIcon()) {
-          setIcon(other.getIcon());
-        }
-        if (settingArrayBuilder_ == null) {
-          if (!other.settingArray_.isEmpty()) {
-            if (settingArray_.isEmpty()) {
-              settingArray_ = other.settingArray_;
-              bitField0_ = (bitField0_ & ~0x00000040);
-            } else {
-              ensureSettingArrayIsMutable();
-              settingArray_.addAll(other.settingArray_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.settingArray_.isEmpty()) {
-            if (settingArrayBuilder_.isEmpty()) {
-              settingArrayBuilder_.dispose();
-              settingArrayBuilder_ = null;
-              settingArray_ = other.settingArray_;
-              bitField0_ = (bitField0_ & ~0x00000040);
-              settingArrayBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getSettingArrayFieldBuilder() : null;
-            } else {
-              settingArrayBuilder_.addAllMessages(other.settingArray_);
-            }
-          }
-        }
-        if (other.hasIsModified()) {
-          setIsModified(other.getIsModified());
-        }
-        if (other.hasIsFixed()) {
-          setIsFixed(other.getIsFixed());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-                id_ = input.readInt32();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-              case 16: {
-                int tmpRaw = input.readEnum();
-                EnumFlatMode tmpValue =
-                    EnumFlatMode.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(2, tmpRaw);
-                } else {
-                  mode_ = tmpRaw;
-                  bitField0_ |= 0x00000002;
-                }
-                break;
-              } // case 16
-              case 24: {
-                int tmpRaw = input.readEnum();
-                EnumPresetTitle tmpValue =
-                    EnumPresetTitle.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(3, tmpRaw);
-                } else {
-                  titleId_ = tmpRaw;
-                  bitField0_ |= 0x00000004;
-                }
-                break;
-              } // case 24
-              case 32: {
-                titleNumber_ = input.readInt32();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 32
-              case 40: {
-                userDefined_ = input.readBool();
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 40
-              case 48: {
-                int tmpRaw = input.readEnum();
-                EnumPresetIcon tmpValue =
-                    EnumPresetIcon.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(6, tmpRaw);
-                } else {
-                  icon_ = tmpRaw;
-                  bitField0_ |= 0x00000020;
-                }
-                break;
-              } // case 48
-              case 58: {
-                PresetSetting m =
-                    input.readMessage(
-                        PresetSetting.PARSER,
-                        extensionRegistry);
-                if (settingArrayBuilder_ == null) {
-                  ensureSettingArrayIsMutable();
-                  settingArray_.add(m);
-                } else {
-                  settingArrayBuilder_.addMessage(m);
-                }
-                break;
-              } // case 58
-              case 64: {
-                isModified_ = input.readBool();
-                bitField0_ |= 0x00000080;
-                break;
-              } // case 64
-              case 72: {
-                isFixed_ = input.readBool();
-                bitField0_ |= 0x00000100;
-                break;
-              } // case 72
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private int id_ ;
-      /**
-       * <pre>
-       * Preset ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return Whether the id field is set.
-       */
-      @Override
-      public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
-      }
-      /**
-       * <pre>
-       * Preset ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return The id.
-       */
-      @Override
-      public int getId() {
-        return id_;
-      }
-      /**
-       * <pre>
-       * Preset ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(int value) {
-
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int mode_ = -1;
-      /**
-       * <pre>
-       * Preset flatmode ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-       * @return Whether the mode field is set.
-       */
-      @Override public boolean hasMode() {
-        return ((bitField0_ & 0x00000002) != 0);
-      }
-      /**
-       * <pre>
-       * Preset flatmode ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-       * @return The mode.
-       */
-      @Override
-      public EnumFlatMode getMode() {
-        EnumFlatMode result = EnumFlatMode.forNumber(mode_);
-        return result == null ? EnumFlatMode.FLAT_MODE_UNKNOWN : result;
-      }
-      /**
-       * <pre>
-       * Preset flatmode ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-       * @param value The mode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMode(EnumFlatMode value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        mode_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset flatmode ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMode() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        mode_ = -1;
-        onChanged();
-        return this;
-      }
-
-      private int titleId_ = 0;
-      /**
-       * <pre>
-       * Preset Title ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-       * @return Whether the titleId field is set.
-       */
-      @Override public boolean hasTitleId() {
-        return ((bitField0_ & 0x00000004) != 0);
-      }
-      /**
-       * <pre>
-       * Preset Title ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-       * @return The titleId.
-       */
-      @Override
-      public EnumPresetTitle getTitleId() {
-        EnumPresetTitle result = EnumPresetTitle.forNumber(titleId_);
-        return result == null ? EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
-      }
-      /**
-       * <pre>
-       * Preset Title ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-       * @param value The titleId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTitleId(EnumPresetTitle value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        titleId_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset Title ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearTitleId() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        titleId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int titleNumber_ ;
-      /**
-       * <pre>
-       * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-       * </pre>
-       *
-       * <code>optional int32 title_number = 4;</code>
-       * @return Whether the titleNumber field is set.
-       */
-      @Override
-      public boolean hasTitleNumber() {
-        return ((bitField0_ & 0x00000008) != 0);
-      }
-      /**
-       * <pre>
-       * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-       * </pre>
-       *
-       * <code>optional int32 title_number = 4;</code>
-       * @return The titleNumber.
-       */
-      @Override
-      public int getTitleNumber() {
-        return titleNumber_;
-      }
-      /**
-       * <pre>
-       * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-       * </pre>
-       *
-       * <code>optional int32 title_number = 4;</code>
-       * @param value The titleNumber to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTitleNumber(int value) {
-
-        titleNumber_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
-       * </pre>
-       *
-       * <code>optional int32 title_number = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearTitleNumber() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        titleNumber_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private boolean userDefined_ ;
-      /**
-       * <pre>
-       * Is the Preset custom/user-defined?
-       * </pre>
-       *
-       * <code>optional bool user_defined = 5;</code>
-       * @return Whether the userDefined field is set.
-       */
-      @Override
-      public boolean hasUserDefined() {
-        return ((bitField0_ & 0x00000010) != 0);
-      }
-      /**
-       * <pre>
-       * Is the Preset custom/user-defined?
-       * </pre>
-       *
-       * <code>optional bool user_defined = 5;</code>
-       * @return The userDefined.
-       */
-      @Override
-      public boolean getUserDefined() {
-        return userDefined_;
-      }
-      /**
-       * <pre>
-       * Is the Preset custom/user-defined?
-       * </pre>
-       *
-       * <code>optional bool user_defined = 5;</code>
-       * @param value The userDefined to set.
-       * @return This builder for chaining.
-       */
-      public Builder setUserDefined(boolean value) {
-
-        userDefined_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Is the Preset custom/user-defined?
-       * </pre>
-       *
-       * <code>optional bool user_defined = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearUserDefined() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        userDefined_ = false;
-        onChanged();
-        return this;
-      }
-
-      private int icon_ = 0;
-      /**
-       * <pre>
-       * Preset Icon ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-       * @return Whether the icon field is set.
-       */
-      @Override public boolean hasIcon() {
-        return ((bitField0_ & 0x00000020) != 0);
-      }
-      /**
-       * <pre>
-       * Preset Icon ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-       * @return The icon.
-       */
-      @Override
-      public EnumPresetIcon getIcon() {
-        EnumPresetIcon result = EnumPresetIcon.forNumber(icon_);
-        return result == null ? EnumPresetIcon.PRESET_ICON_VIDEO : result;
-      }
-      /**
-       * <pre>
-       * Preset Icon ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-       * @param value The icon to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIcon(EnumPresetIcon value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000020;
-        icon_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset Icon ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIcon() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        icon_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<PresetSetting> settingArray_ =
-        java.util.Collections.emptyList();
-      private void ensureSettingArrayIsMutable() {
-        if (!((bitField0_ & 0x00000040) != 0)) {
-          settingArray_ = new java.util.ArrayList<PresetSetting>(settingArray_);
-          bitField0_ |= 0x00000040;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          PresetSetting, PresetSetting.Builder, PresetSettingOrBuilder> settingArrayBuilder_;
-
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public java.util.List<PresetSetting> getSettingArrayList() {
-        if (settingArrayBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(settingArray_);
-        } else {
-          return settingArrayBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public int getSettingArrayCount() {
-        if (settingArrayBuilder_ == null) {
-          return settingArray_.size();
-        } else {
-          return settingArrayBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public PresetSetting getSettingArray(int index) {
-        if (settingArrayBuilder_ == null) {
-          return settingArray_.get(index);
-        } else {
-          return settingArrayBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder setSettingArray(
-          int index, PresetSetting value) {
-        if (settingArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSettingArrayIsMutable();
-          settingArray_.set(index, value);
-          onChanged();
-        } else {
-          settingArrayBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder setSettingArray(
-          int index, PresetSetting.Builder builderForValue) {
-        if (settingArrayBuilder_ == null) {
-          ensureSettingArrayIsMutable();
-          settingArray_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          settingArrayBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder addSettingArray(PresetSetting value) {
-        if (settingArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSettingArrayIsMutable();
-          settingArray_.add(value);
-          onChanged();
-        } else {
-          settingArrayBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder addSettingArray(
-          int index, PresetSetting value) {
-        if (settingArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureSettingArrayIsMutable();
-          settingArray_.add(index, value);
-          onChanged();
-        } else {
-          settingArrayBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder addSettingArray(
-          PresetSetting.Builder builderForValue) {
-        if (settingArrayBuilder_ == null) {
-          ensureSettingArrayIsMutable();
-          settingArray_.add(builderForValue.build());
-          onChanged();
-        } else {
-          settingArrayBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder addSettingArray(
-          int index, PresetSetting.Builder builderForValue) {
-        if (settingArrayBuilder_ == null) {
-          ensureSettingArrayIsMutable();
-          settingArray_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          settingArrayBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder addAllSettingArray(
-          Iterable<? extends PresetSetting> values) {
-        if (settingArrayBuilder_ == null) {
-          ensureSettingArrayIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, settingArray_);
-          onChanged();
-        } else {
-          settingArrayBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder clearSettingArray() {
-        if (settingArrayBuilder_ == null) {
-          settingArray_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
-          onChanged();
-        } else {
-          settingArrayBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public Builder removeSettingArray(int index) {
-        if (settingArrayBuilder_ == null) {
-          ensureSettingArrayIsMutable();
-          settingArray_.remove(index);
-          onChanged();
-        } else {
-          settingArrayBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public PresetSetting.Builder getSettingArrayBuilder(
-          int index) {
-        return getSettingArrayFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public PresetSettingOrBuilder getSettingArrayOrBuilder(
-          int index) {
-        if (settingArrayBuilder_ == null) {
-          return settingArray_.get(index);  } else {
-          return settingArrayBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public java.util.List<? extends PresetSettingOrBuilder>
-           getSettingArrayOrBuilderList() {
-        if (settingArrayBuilder_ != null) {
-          return settingArrayBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(settingArray_);
-        }
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public PresetSetting.Builder addSettingArrayBuilder() {
-        return getSettingArrayFieldBuilder().addBuilder(
-            PresetSetting.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public PresetSetting.Builder addSettingArrayBuilder(
-          int index) {
-        return getSettingArrayFieldBuilder().addBuilder(
-            index, PresetSetting.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of settings associated with this Preset
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
-       */
-      public java.util.List<PresetSetting.Builder>
-           getSettingArrayBuilderList() {
-        return getSettingArrayFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          PresetSetting, PresetSetting.Builder, PresetSettingOrBuilder>
-          getSettingArrayFieldBuilder() {
-        if (settingArrayBuilder_ == null) {
-          settingArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              PresetSetting, PresetSetting.Builder, PresetSettingOrBuilder>(
-                  settingArray_,
-                  ((bitField0_ & 0x00000040) != 0),
-                  getParentForChildren(),
-                  isClean());
-          settingArray_ = null;
-        }
-        return settingArrayBuilder_;
-      }
-
-      private boolean isModified_ ;
-      /**
-       * <pre>
-       * Has Preset been modified from factory
-       * </pre>
-       *
-       * <code>optional bool is_modified = 8;</code>
-       * @return Whether the isModified field is set.
-       */
-      @Override
-      public boolean hasIsModified() {
-        return ((bitField0_ & 0x00000080) != 0);
-      }
-      /**
-       * <pre>
-       * Has Preset been modified from factory
-       * </pre>
-       *
-       * <code>optional bool is_modified = 8;</code>
-       * @return The isModified.
-       */
-      @Override
-      public boolean getIsModified() {
-        return isModified_;
-      }
-      /**
-       * <pre>
-       * Has Preset been modified from factory
-       * </pre>
-       *
-       * <code>optional bool is_modified = 8;</code>
-       * @param value The isModified to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsModified(boolean value) {
-
-        isModified_ = value;
-        bitField0_ |= 0x00000080;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Has Preset been modified from factory
-       * </pre>
-       *
-       * <code>optional bool is_modified = 8;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsModified() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        isModified_ = false;
-        onChanged();
-        return this;
-      }
-
-      private boolean isFixed_ ;
-      /**
-       * <pre>
-       * Is this Preset mutable?
-       * </pre>
-       *
-       * <code>optional bool is_fixed = 9;</code>
-       * @return Whether the isFixed field is set.
-       */
-      @Override
-      public boolean hasIsFixed() {
-        return ((bitField0_ & 0x00000100) != 0);
-      }
-      /**
-       * <pre>
-       * Is this Preset mutable?
-       * </pre>
-       *
-       * <code>optional bool is_fixed = 9;</code>
-       * @return The isFixed.
-       */
-      @Override
-      public boolean getIsFixed() {
-        return isFixed_;
-      }
-      /**
-       * <pre>
-       * Is this Preset mutable?
-       * </pre>
-       *
-       * <code>optional bool is_fixed = 9;</code>
-       * @param value The isFixed to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsFixed(boolean value) {
-
-        isFixed_ = value;
-        bitField0_ |= 0x00000100;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Is this Preset mutable?
-       * </pre>
-       *
-       * <code>optional bool is_fixed = 9;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsFixed() {
-        bitField0_ = (bitField0_ & ~0x00000100);
-        isFixed_ = false;
-        onChanged();
-        return this;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.Preset)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.Preset)
-    private static final Preset DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new Preset();
-    }
-
-    public static Preset getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @Deprecated public static final com.google.protobuf.Parser<Preset>
-        PARSER = new com.google.protobuf.AbstractParser<Preset>() {
-      @Override
-      public Preset parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<Preset> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<Preset> getParserForType() {
-      return PARSER;
-    }
-
-    @Override
-    public Preset getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface PresetGroupOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.PresetGroup)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * Preset Group ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-     * @return Whether the id field is set.
-     */
-    boolean hasId();
-    /**
-     * <pre>
-     * Preset Group ID
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-     * @return The id.
-     */
-    EnumPresetGroup getId();
-
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    java.util.List<Preset>
-        getPresetArrayList();
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    Preset getPresetArray(int index);
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    int getPresetArrayCount();
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    java.util.List<? extends PresetOrBuilder>
-        getPresetArrayOrBuilderList();
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    PresetOrBuilder getPresetArrayOrBuilder(
-        int index);
-
-    /**
-     * <pre>
-     * Is there room in the group to add additional Presets?
-     * </pre>
-     *
-     * <code>optional bool can_add_preset = 3;</code>
-     * @return Whether the canAddPreset field is set.
-     */
-    boolean hasCanAddPreset();
-    /**
-     * <pre>
-     * Is there room in the group to add additional Presets?
-     * </pre>
-     *
-     * <code>optional bool can_add_preset = 3;</code>
-     * @return The canAddPreset.
-     */
-    boolean getCanAddPreset();
-
-    /**
-     * <pre>
-     * The icon to display for this preset group
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-     * @return Whether the icon field is set.
-     */
-    boolean hasIcon();
-    /**
-     * <pre>
-     * The icon to display for this preset group
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-     * @return The icon.
-     */
-    EnumPresetGroupIcon getIcon();
-  }
-  /**
-   * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetGroup}
-   */
-  public static final class PresetGroup extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.PresetGroup)
-      PresetGroupOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use PresetGroup.newBuilder() to construct.
-    private PresetGroup(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private PresetGroup() {
-      id_ = 1000;
-      presetArray_ = java.util.Collections.emptyList();
-      icon_ = 0;
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new PresetGroup();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor;
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_Preset_descriptor;
+        }
 
-    @Override
-    protected FieldAccessorTable
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              PresetGroup.class, Builder.class);
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_Preset_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder.class);
+        }
+
+        private int bitField0_;
+        public static final int ID_FIELD_NUMBER = 1;
+        private int id_ = 0;
+
+        /**
+         * <pre>
+         * Preset ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        @java.lang.Override
+        public boolean hasId() {
+            return ((bitField0_ & 0x00000001) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return The id.
+         */
+        @java.lang.Override
+        public int getId() {
+            return id_;
+        }
+
+        public static final int MODE_FIELD_NUMBER = 2;
+        private int mode_ = -1;
+
+        /**
+         * <pre>
+         * Preset flatmode ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+         *
+         * @return Whether the mode field is set.
+         */
+        @java.lang.Override
+        public boolean hasMode() {
+            return ((bitField0_ & 0x00000002) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset flatmode ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+         *
+         * @return The mode.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getMode() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(mode_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.FLAT_MODE_UNKNOWN : result;
+        }
+
+        public static final int TITLE_ID_FIELD_NUMBER = 3;
+        private int titleId_ = 0;
+
+        /**
+         * <pre>
+         * Preset Title ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+         *
+         * @return Whether the titleId field is set.
+         */
+        @java.lang.Override
+        public boolean hasTitleId() {
+            return ((bitField0_ & 0x00000004) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset Title ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+         *
+         * @return The titleId.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(titleId_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
+        }
+
+        public static final int TITLE_NUMBER_FIELD_NUMBER = 4;
+        private int titleNumber_ = 0;
+
+        /**
+         * <pre>
+         * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+         * </pre>
+         *
+         * <code>optional int32 title_number = 4;</code>
+         *
+         * @return Whether the titleNumber field is set.
+         */
+        @java.lang.Override
+        public boolean hasTitleNumber() {
+            return ((bitField0_ & 0x00000008) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+         * </pre>
+         *
+         * <code>optional int32 title_number = 4;</code>
+         *
+         * @return The titleNumber.
+         */
+        @java.lang.Override
+        public int getTitleNumber() {
+            return titleNumber_;
+        }
+
+        public static final int USER_DEFINED_FIELD_NUMBER = 5;
+        private boolean userDefined_ = false;
+
+        /**
+         * <pre>
+         * Is the Preset custom/user-defined?
+         * </pre>
+         *
+         * <code>optional bool user_defined = 5;</code>
+         *
+         * @return Whether the userDefined field is set.
+         */
+        @java.lang.Override
+        public boolean hasUserDefined() {
+            return ((bitField0_ & 0x00000010) != 0);
+        }
+
+        /**
+         * <pre>
+         * Is the Preset custom/user-defined?
+         * </pre>
+         *
+         * <code>optional bool user_defined = 5;</code>
+         *
+         * @return The userDefined.
+         */
+        @java.lang.Override
+        public boolean getUserDefined() {
+            return userDefined_;
+        }
+
+        public static final int ICON_FIELD_NUMBER = 6;
+        private int icon_ = 0;
+
+        /**
+         * <pre>
+         * Preset Icon ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+         *
+         * @return Whether the icon field is set.
+         */
+        @java.lang.Override
+        public boolean hasIcon() {
+            return ((bitField0_ & 0x00000020) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset Icon ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+         *
+         * @return The icon.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIcon() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(icon_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.PRESET_ICON_VIDEO : result;
+        }
+
+        public static final int SETTING_ARRAY_FIELD_NUMBER = 7;
+        @SuppressWarnings("serial")
+        private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting> settingArray_;
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting> getSettingArrayList() {
+            return settingArray_;
+        }
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        @java.lang.Override
+        public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder>
+        getSettingArrayOrBuilderList() {
+            return settingArray_;
+        }
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        @java.lang.Override
+        public int getSettingArrayCount() {
+            return settingArray_.size();
+        }
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getSettingArray(int index) {
+            return settingArray_.get(index);
+        }
+
+        /**
+         * <pre>
+         * Array of settings associated with this Preset
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder getSettingArrayOrBuilder(int index) {
+            return settingArray_.get(index);
+        }
+
+        public static final int IS_MODIFIED_FIELD_NUMBER = 8;
+        private boolean isModified_ = false;
+
+        /**
+         * <pre>
+         * Has Preset been modified from factory defaults? (False for user-defined Presets)
+         * </pre>
+         *
+         * <code>optional bool is_modified = 8;</code>
+         *
+         * @return Whether the isModified field is set.
+         */
+        @java.lang.Override
+        public boolean hasIsModified() {
+            return ((bitField0_ & 0x00000040) != 0);
+        }
+
+        /**
+         * <pre>
+         * Has Preset been modified from factory defaults? (False for user-defined Presets)
+         * </pre>
+         *
+         * <code>optional bool is_modified = 8;</code>
+         *
+         * @return The isModified.
+         */
+        @java.lang.Override
+        public boolean getIsModified() {
+            return isModified_;
+        }
+
+        public static final int IS_FIXED_FIELD_NUMBER = 9;
+        private boolean isFixed_ = false;
+
+        /**
+         * <pre>
+         * Is this Preset mutable?
+         * </pre>
+         *
+         * <code>optional bool is_fixed = 9;</code>
+         *
+         * @return Whether the isFixed field is set.
+         */
+        @java.lang.Override
+        public boolean hasIsFixed() {
+            return ((bitField0_ & 0x00000080) != 0);
+        }
+
+        /**
+         * <pre>
+         * Is this Preset mutable?
+         * </pre>
+         *
+         * <code>optional bool is_fixed = 9;</code>
+         *
+         * @return The isFixed.
+         */
+        @java.lang.Override
+        public boolean getIsFixed() {
+            return isFixed_;
+        }
+
+        public static final int CUSTOM_NAME_FIELD_NUMBER = 10;
+        @SuppressWarnings("serial")
+        private volatile java.lang.Object customName_ = "";
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return Whether the customName field is set.
+         */
+        @java.lang.Override
+        public boolean hasCustomName() {
+            return ((bitField0_ & 0x00000100) != 0);
+        }
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return The customName.
+         */
+        @java.lang.Override
+        public java.lang.String getCustomName() {
+            java.lang.Object ref = customName_;
+            if (ref instanceof java.lang.String) {
+                return (java.lang.String) ref;
+            } else {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                if (bs.isValidUtf8()) {
+                    customName_ = s;
+                }
+                return s;
+            }
+        }
+
+        /**
+         * <pre>
+         * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+         * </pre>
+         *
+         * <code>optional string custom_name = 10;</code>
+         *
+         * @return The bytes for customName.
+         */
+        @java.lang.Override
+        public com.google.protobuf.ByteString
+        getCustomNameBytes() {
+            java.lang.Object ref = customName_;
+            if (ref instanceof java.lang.String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+                customName_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (((bitField0_ & 0x00000001) != 0)) {
+                output.writeInt32(1, id_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                output.writeEnum(2, mode_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                output.writeEnum(3, titleId_);
+            }
+            if (((bitField0_ & 0x00000008) != 0)) {
+                output.writeInt32(4, titleNumber_);
+            }
+            if (((bitField0_ & 0x00000010) != 0)) {
+                output.writeBool(5, userDefined_);
+            }
+            if (((bitField0_ & 0x00000020) != 0)) {
+                output.writeEnum(6, icon_);
+            }
+            for (int i = 0; i < settingArray_.size(); i++) {
+                output.writeMessage(7, settingArray_.get(i));
+            }
+            if (((bitField0_ & 0x00000040) != 0)) {
+                output.writeBool(8, isModified_);
+            }
+            if (((bitField0_ & 0x00000080) != 0)) {
+                output.writeBool(9, isFixed_);
+            }
+            if (((bitField0_ & 0x00000100) != 0)) {
+                com.google.protobuf.GeneratedMessage.writeString(output, 10, customName_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(1, id_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(2, mode_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(3, titleId_);
+            }
+            if (((bitField0_ & 0x00000008) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(4, titleNumber_);
+            }
+            if (((bitField0_ & 0x00000010) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(5, userDefined_);
+            }
+            if (((bitField0_ & 0x00000020) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(6, icon_);
+            }
+            for (int i = 0; i < settingArray_.size(); i++) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(7, settingArray_.get(i));
+            }
+            if (((bitField0_ & 0x00000040) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(8, isModified_);
+            }
+            if (((bitField0_ & 0x00000080) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(9, isFixed_);
+            }
+            if (((bitField0_ & 0x00000100) != 0)) {
+                size += com.google.protobuf.GeneratedMessage.computeStringSize(10, customName_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset other = (com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset) obj;
+
+            if (hasId() != other.hasId()) return false;
+            if (hasId()) {
+                if (getId()
+                        != other.getId()) return false;
+            }
+            if (hasMode() != other.hasMode()) return false;
+            if (hasMode()) {
+                if (mode_ != other.mode_) return false;
+            }
+            if (hasTitleId() != other.hasTitleId()) return false;
+            if (hasTitleId()) {
+                if (titleId_ != other.titleId_) return false;
+            }
+            if (hasTitleNumber() != other.hasTitleNumber()) return false;
+            if (hasTitleNumber()) {
+                if (getTitleNumber()
+                        != other.getTitleNumber()) return false;
+            }
+            if (hasUserDefined() != other.hasUserDefined()) return false;
+            if (hasUserDefined()) {
+                if (getUserDefined()
+                        != other.getUserDefined()) return false;
+            }
+            if (hasIcon() != other.hasIcon()) return false;
+            if (hasIcon()) {
+                if (icon_ != other.icon_) return false;
+            }
+            if (!getSettingArrayList()
+                    .equals(other.getSettingArrayList())) return false;
+            if (hasIsModified() != other.hasIsModified()) return false;
+            if (hasIsModified()) {
+                if (getIsModified()
+                        != other.getIsModified()) return false;
+            }
+            if (hasIsFixed() != other.hasIsFixed()) return false;
+            if (hasIsFixed()) {
+                if (getIsFixed()
+                        != other.getIsFixed()) return false;
+            }
+            if (hasCustomName() != other.hasCustomName()) return false;
+            if (hasCustomName()) {
+                if (!getCustomName()
+                        .equals(other.getCustomName())) return false;
+            }
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (hasId()) {
+                hash = (37 * hash) + ID_FIELD_NUMBER;
+                hash = (53 * hash) + getId();
+            }
+            if (hasMode()) {
+                hash = (37 * hash) + MODE_FIELD_NUMBER;
+                hash = (53 * hash) + mode_;
+            }
+            if (hasTitleId()) {
+                hash = (37 * hash) + TITLE_ID_FIELD_NUMBER;
+                hash = (53 * hash) + titleId_;
+            }
+            if (hasTitleNumber()) {
+                hash = (37 * hash) + TITLE_NUMBER_FIELD_NUMBER;
+                hash = (53 * hash) + getTitleNumber();
+            }
+            if (hasUserDefined()) {
+                hash = (37 * hash) + USER_DEFINED_FIELD_NUMBER;
+                hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getUserDefined());
+            }
+            if (hasIcon()) {
+                hash = (37 * hash) + ICON_FIELD_NUMBER;
+                hash = (53 * hash) + icon_;
+            }
+            if (getSettingArrayCount() > 0) {
+                hash = (37 * hash) + SETTING_ARRAY_FIELD_NUMBER;
+                hash = (53 * hash) + getSettingArrayList().hashCode();
+            }
+            if (hasIsModified()) {
+                hash = (37 * hash) + IS_MODIFIED_FIELD_NUMBER;
+                hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getIsModified());
+            }
+            if (hasIsFixed()) {
+                hash = (37 * hash) + IS_FIXED_FIELD_NUMBER;
+                hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getIsFixed());
+            }
+            if (hasCustomName()) {
+                hash = (37 * hash) + CUSTOM_NAME_FIELD_NUMBER;
+                hash = (53 * hash) + getCustomName().hashCode();
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(java.nio.ByteBuffer data,
+                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(com.google.protobuf.ByteString data,
+                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(byte[] data,
+                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(java.io.InputStream input,
+                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseDelimitedFrom(java.io.InputStream input,
+                                                                                                   com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         * *
+         * An individual preset.
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.Preset}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.Preset)
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_Preset_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_Preset_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                id_ = 0;
+                mode_ = -1;
+                titleId_ = 0;
+                titleNumber_ = 0;
+                userDefined_ = false;
+                icon_ = 0;
+                if (settingArrayBuilder_ == null) {
+                    settingArray_ = java.util.Collections.emptyList();
+                } else {
+                    settingArray_ = null;
+                    settingArrayBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000040);
+                isModified_ = false;
+                isFixed_ = false;
+                customName_ = "";
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_Preset_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset build() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset result = new com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset(this);
+                buildPartialRepeatedFields(result);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartialRepeatedFields(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset result) {
+                if (settingArrayBuilder_ == null) {
+                    if (((bitField0_ & 0x00000040) != 0)) {
+                        settingArray_ = java.util.Collections.unmodifiableList(settingArray_);
+                        bitField0_ = (bitField0_ & ~0x00000040);
+                    }
+                    result.settingArray_ = settingArray_;
+                } else {
+                    result.settingArray_ = settingArrayBuilder_.build();
+                }
+            }
+
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset result) {
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.id_ = id_;
+                    to_bitField0_ |= 0x00000001;
+                }
+                if (((from_bitField0_ & 0x00000002) != 0)) {
+                    result.mode_ = mode_;
+                    to_bitField0_ |= 0x00000002;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.titleId_ = titleId_;
+                    to_bitField0_ |= 0x00000004;
+                }
+                if (((from_bitField0_ & 0x00000008) != 0)) {
+                    result.titleNumber_ = titleNumber_;
+                    to_bitField0_ |= 0x00000008;
+                }
+                if (((from_bitField0_ & 0x00000010) != 0)) {
+                    result.userDefined_ = userDefined_;
+                    to_bitField0_ |= 0x00000010;
+                }
+                if (((from_bitField0_ & 0x00000020) != 0)) {
+                    result.icon_ = icon_;
+                    to_bitField0_ |= 0x00000020;
+                }
+                if (((from_bitField0_ & 0x00000080) != 0)) {
+                    result.isModified_ = isModified_;
+                    to_bitField0_ |= 0x00000040;
+                }
+                if (((from_bitField0_ & 0x00000100) != 0)) {
+                    result.isFixed_ = isFixed_;
+                    to_bitField0_ |= 0x00000080;
+                }
+                if (((from_bitField0_ & 0x00000200) != 0)) {
+                    result.customName_ = customName_;
+                    to_bitField0_ |= 0x00000100;
+                }
+                result.bitField0_ |= to_bitField0_;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.getDefaultInstance())
+                    return this;
+                if (other.hasId()) {
+                    setId(other.getId());
+                }
+                if (other.hasMode()) {
+                    setMode(other.getMode());
+                }
+                if (other.hasTitleId()) {
+                    setTitleId(other.getTitleId());
+                }
+                if (other.hasTitleNumber()) {
+                    setTitleNumber(other.getTitleNumber());
+                }
+                if (other.hasUserDefined()) {
+                    setUserDefined(other.getUserDefined());
+                }
+                if (other.hasIcon()) {
+                    setIcon(other.getIcon());
+                }
+                if (settingArrayBuilder_ == null) {
+                    if (!other.settingArray_.isEmpty()) {
+                        if (settingArray_.isEmpty()) {
+                            settingArray_ = other.settingArray_;
+                            bitField0_ = (bitField0_ & ~0x00000040);
+                        } else {
+                            ensureSettingArrayIsMutable();
+                            settingArray_.addAll(other.settingArray_);
+                        }
+                        onChanged();
+                    }
+                } else {
+                    if (!other.settingArray_.isEmpty()) {
+                        if (settingArrayBuilder_.isEmpty()) {
+                            settingArrayBuilder_.dispose();
+                            settingArrayBuilder_ = null;
+                            settingArray_ = other.settingArray_;
+                            bitField0_ = (bitField0_ & ~0x00000040);
+                            settingArrayBuilder_ =
+                                    com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                                            getSettingArrayFieldBuilder() : null;
+                        } else {
+                            settingArrayBuilder_.addAllMessages(other.settingArray_);
+                        }
+                    }
+                }
+                if (other.hasIsModified()) {
+                    setIsModified(other.getIsModified());
+                }
+                if (other.hasIsFixed()) {
+                    setIsFixed(other.getIsFixed());
+                }
+                if (other.hasCustomName()) {
+                    customName_ = other.customName_;
+                    bitField0_ |= 0x00000200;
+                    onChanged();
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 8: {
+                                id_ = input.readInt32();
+                                bitField0_ |= 0x00000001;
+                                break;
+                            } // case 8
+                            case 16: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(2, tmpRaw);
+                                } else {
+                                    mode_ = tmpRaw;
+                                    bitField0_ |= 0x00000002;
+                                }
+                                break;
+                            } // case 16
+                            case 24: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(3, tmpRaw);
+                                } else {
+                                    titleId_ = tmpRaw;
+                                    bitField0_ |= 0x00000004;
+                                }
+                                break;
+                            } // case 24
+                            case 32: {
+                                titleNumber_ = input.readInt32();
+                                bitField0_ |= 0x00000008;
+                                break;
+                            } // case 32
+                            case 40: {
+                                userDefined_ = input.readBool();
+                                bitField0_ |= 0x00000010;
+                                break;
+                            } // case 40
+                            case 48: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(6, tmpRaw);
+                                } else {
+                                    icon_ = tmpRaw;
+                                    bitField0_ |= 0x00000020;
+                                }
+                                break;
+                            } // case 48
+                            case 58: {
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting m =
+                                        input.readMessage(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.parser(),
+                                                extensionRegistry);
+                                if (settingArrayBuilder_ == null) {
+                                    ensureSettingArrayIsMutable();
+                                    settingArray_.add(m);
+                                } else {
+                                    settingArrayBuilder_.addMessage(m);
+                                }
+                                break;
+                            } // case 58
+                            case 64: {
+                                isModified_ = input.readBool();
+                                bitField0_ |= 0x00000080;
+                                break;
+                            } // case 64
+                            case 72: {
+                                isFixed_ = input.readBool();
+                                bitField0_ |= 0x00000100;
+                                break;
+                            } // case 72
+                            case 82: {
+                                customName_ = input.readBytes();
+                                bitField0_ |= 0x00000200;
+                                break;
+                            } // case 82
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+
+            private int bitField0_;
+
+            private int id_;
+
+            /**
+             * <pre>
+             * Preset ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return Whether the id field is set.
+             */
+            @java.lang.Override
+            public boolean hasId() {
+                return ((bitField0_ & 0x00000001) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return The id.
+             */
+            @java.lang.Override
+            public int getId() {
+                return id_;
+            }
+
+            /**
+             * <pre>
+             * Preset ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @param value The id to set.
+             * @return This builder for chaining.
+             */
+            public Builder setId(int value) {
+
+                id_ = value;
+                bitField0_ |= 0x00000001;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearId() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                id_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int mode_ = -1;
+
+            /**
+             * <pre>
+             * Preset flatmode ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+             *
+             * @return Whether the mode field is set.
+             */
+            @java.lang.Override
+            public boolean hasMode() {
+                return ((bitField0_ & 0x00000002) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset flatmode ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+             *
+             * @return The mode.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getMode() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(mode_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.FLAT_MODE_UNKNOWN : result;
+            }
+
+            /**
+             * <pre>
+             * Preset flatmode ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+             *
+             * @param value The mode to set.
+             * @return This builder for chaining.
+             */
+            public Builder setMode(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000002;
+                mode_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset flatmode ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode = 2;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearMode() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                mode_ = -1;
+                onChanged();
+                return this;
+            }
+
+            private int titleId_ = 0;
+
+            /**
+             * <pre>
+             * Preset Title ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+             *
+             * @return Whether the titleId field is set.
+             */
+            @java.lang.Override
+            public boolean hasTitleId() {
+                return ((bitField0_ & 0x00000004) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset Title ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+             *
+             * @return The titleId.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(titleId_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
+            }
+
+            /**
+             * <pre>
+             * Preset Title ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+             *
+             * @param value The titleId to set.
+             * @return This builder for chaining.
+             */
+            public Builder setTitleId(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000004;
+                titleId_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset Title ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 3;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearTitleId() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                titleId_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int titleNumber_;
+
+            /**
+             * <pre>
+             * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+             * </pre>
+             *
+             * <code>optional int32 title_number = 4;</code>
+             *
+             * @return Whether the titleNumber field is set.
+             */
+            @java.lang.Override
+            public boolean hasTitleNumber() {
+                return ((bitField0_ & 0x00000008) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+             * </pre>
+             *
+             * <code>optional int32 title_number = 4;</code>
+             *
+             * @return The titleNumber.
+             */
+            @java.lang.Override
+            public int getTitleNumber() {
+                return titleNumber_;
+            }
+
+            /**
+             * <pre>
+             * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+             * </pre>
+             *
+             * <code>optional int32 title_number = 4;</code>
+             *
+             * @param value The titleNumber to set.
+             * @return This builder for chaining.
+             */
+            public Builder setTitleNumber(int value) {
+
+                titleNumber_ = value;
+                bitField0_ |= 0x00000008;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset Title Number (e.g. 1/2/3 in Custom1, Custom2, Custom3)
+             * </pre>
+             *
+             * <code>optional int32 title_number = 4;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearTitleNumber() {
+                bitField0_ = (bitField0_ & ~0x00000008);
+                titleNumber_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private boolean userDefined_;
+
+            /**
+             * <pre>
+             * Is the Preset custom/user-defined?
+             * </pre>
+             *
+             * <code>optional bool user_defined = 5;</code>
+             *
+             * @return Whether the userDefined field is set.
+             */
+            @java.lang.Override
+            public boolean hasUserDefined() {
+                return ((bitField0_ & 0x00000010) != 0);
+            }
+
+            /**
+             * <pre>
+             * Is the Preset custom/user-defined?
+             * </pre>
+             *
+             * <code>optional bool user_defined = 5;</code>
+             *
+             * @return The userDefined.
+             */
+            @java.lang.Override
+            public boolean getUserDefined() {
+                return userDefined_;
+            }
+
+            /**
+             * <pre>
+             * Is the Preset custom/user-defined?
+             * </pre>
+             *
+             * <code>optional bool user_defined = 5;</code>
+             *
+             * @param value The userDefined to set.
+             * @return This builder for chaining.
+             */
+            public Builder setUserDefined(boolean value) {
+
+                userDefined_ = value;
+                bitField0_ |= 0x00000010;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Is the Preset custom/user-defined?
+             * </pre>
+             *
+             * <code>optional bool user_defined = 5;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearUserDefined() {
+                bitField0_ = (bitField0_ & ~0x00000010);
+                userDefined_ = false;
+                onChanged();
+                return this;
+            }
+
+            private int icon_ = 0;
+
+            /**
+             * <pre>
+             * Preset Icon ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+             *
+             * @return Whether the icon field is set.
+             */
+            @java.lang.Override
+            public boolean hasIcon() {
+                return ((bitField0_ & 0x00000020) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset Icon ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+             *
+             * @return The icon.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIcon() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(icon_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.PRESET_ICON_VIDEO : result;
+            }
+
+            /**
+             * <pre>
+             * Preset Icon ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+             *
+             * @param value The icon to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIcon(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000020;
+                icon_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset Icon ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon = 6;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIcon() {
+                bitField0_ = (bitField0_ & ~0x00000020);
+                icon_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting> settingArray_ =
+                    java.util.Collections.emptyList();
+
+            private void ensureSettingArrayIsMutable() {
+                if (!((bitField0_ & 0x00000040) != 0)) {
+                    settingArray_ = new java.util.ArrayList<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting>(settingArray_);
+                    bitField0_ |= 0x00000040;
+                }
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder> settingArrayBuilder_;
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting> getSettingArrayList() {
+                if (settingArrayBuilder_ == null) {
+                    return java.util.Collections.unmodifiableList(settingArray_);
+                } else {
+                    return settingArrayBuilder_.getMessageList();
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public int getSettingArrayCount() {
+                if (settingArrayBuilder_ == null) {
+                    return settingArray_.size();
+                } else {
+                    return settingArrayBuilder_.getCount();
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getSettingArray(int index) {
+                if (settingArrayBuilder_ == null) {
+                    return settingArray_.get(index);
+                } else {
+                    return settingArrayBuilder_.getMessage(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder setSettingArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting value) {
+                if (settingArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensureSettingArrayIsMutable();
+                    settingArray_.set(index, value);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.setMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder setSettingArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder builderForValue) {
+                if (settingArrayBuilder_ == null) {
+                    ensureSettingArrayIsMutable();
+                    settingArray_.set(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.setMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder addSettingArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting value) {
+                if (settingArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensureSettingArrayIsMutable();
+                    settingArray_.add(value);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.addMessage(value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder addSettingArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting value) {
+                if (settingArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensureSettingArrayIsMutable();
+                    settingArray_.add(index, value);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.addMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder addSettingArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder builderForValue) {
+                if (settingArrayBuilder_ == null) {
+                    ensureSettingArrayIsMutable();
+                    settingArray_.add(builderForValue.build());
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.addMessage(builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder addSettingArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder builderForValue) {
+                if (settingArrayBuilder_ == null) {
+                    ensureSettingArrayIsMutable();
+                    settingArray_.add(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.addMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder addAllSettingArray(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting> values) {
+                if (settingArrayBuilder_ == null) {
+                    ensureSettingArrayIsMutable();
+                    com.google.protobuf.AbstractMessageLite.Builder.addAll(values, settingArray_);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.addAllMessages(values);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder clearSettingArray() {
+                if (settingArrayBuilder_ == null) {
+                    settingArray_ = java.util.Collections.emptyList();
+                    bitField0_ = (bitField0_ & ~0x00000040);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.clear();
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public Builder removeSettingArray(int index) {
+                if (settingArrayBuilder_ == null) {
+                    ensureSettingArrayIsMutable();
+                    settingArray_.remove(index);
+                    onChanged();
+                } else {
+                    settingArrayBuilder_.remove(index);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder getSettingArrayBuilder(int index) {
+                return getSettingArrayFieldBuilder().getBuilder(index);
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder getSettingArrayOrBuilder(int index) {
+                if (settingArrayBuilder_ == null) {
+                    return settingArray_.get(index);
+                } else {
+                    return settingArrayBuilder_.getMessageOrBuilder(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder>
+            getSettingArrayOrBuilderList() {
+                if (settingArrayBuilder_ != null) {
+                    return settingArrayBuilder_.getMessageOrBuilderList();
+                } else {
+                    return java.util.Collections.unmodifiableList(settingArray_);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder addSettingArrayBuilder() {
+                return getSettingArrayFieldBuilder().addBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder addSettingArrayBuilder(int index) {
+                return getSettingArrayFieldBuilder().addBuilder(index, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * Array of settings associated with this Preset
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.PresetSetting setting_array = 7;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder>
+            getSettingArrayBuilderList() {
+                return getSettingArrayFieldBuilder().getBuilderList();
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder>
+            getSettingArrayFieldBuilder() {
+                if (settingArrayBuilder_ == null) {
+                    settingArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                            com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder>(settingArray_,
+                            ((bitField0_ & 0x00000040) != 0),
+                            getParentForChildren(),
+                            isClean());
+                    settingArray_ = null;
+                }
+                return settingArrayBuilder_;
+            }
+
+            private boolean isModified_;
+
+            /**
+             * <pre>
+             * Has Preset been modified from factory defaults? (False for user-defined Presets)
+             * </pre>
+             *
+             * <code>optional bool is_modified = 8;</code>
+             *
+             * @return Whether the isModified field is set.
+             */
+            @java.lang.Override
+            public boolean hasIsModified() {
+                return ((bitField0_ & 0x00000080) != 0);
+            }
+
+            /**
+             * <pre>
+             * Has Preset been modified from factory defaults? (False for user-defined Presets)
+             * </pre>
+             *
+             * <code>optional bool is_modified = 8;</code>
+             *
+             * @return The isModified.
+             */
+            @java.lang.Override
+            public boolean getIsModified() {
+                return isModified_;
+            }
+
+            /**
+             * <pre>
+             * Has Preset been modified from factory defaults? (False for user-defined Presets)
+             * </pre>
+             *
+             * <code>optional bool is_modified = 8;</code>
+             *
+             * @param value The isModified to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIsModified(boolean value) {
+
+                isModified_ = value;
+                bitField0_ |= 0x00000080;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Has Preset been modified from factory defaults? (False for user-defined Presets)
+             * </pre>
+             *
+             * <code>optional bool is_modified = 8;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIsModified() {
+                bitField0_ = (bitField0_ & ~0x00000080);
+                isModified_ = false;
+                onChanged();
+                return this;
+            }
+
+            private boolean isFixed_;
+
+            /**
+             * <pre>
+             * Is this Preset mutable?
+             * </pre>
+             *
+             * <code>optional bool is_fixed = 9;</code>
+             *
+             * @return Whether the isFixed field is set.
+             */
+            @java.lang.Override
+            public boolean hasIsFixed() {
+                return ((bitField0_ & 0x00000100) != 0);
+            }
+
+            /**
+             * <pre>
+             * Is this Preset mutable?
+             * </pre>
+             *
+             * <code>optional bool is_fixed = 9;</code>
+             *
+             * @return The isFixed.
+             */
+            @java.lang.Override
+            public boolean getIsFixed() {
+                return isFixed_;
+            }
+
+            /**
+             * <pre>
+             * Is this Preset mutable?
+             * </pre>
+             *
+             * <code>optional bool is_fixed = 9;</code>
+             *
+             * @param value The isFixed to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIsFixed(boolean value) {
+
+                isFixed_ = value;
+                bitField0_ |= 0x00000100;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Is this Preset mutable?
+             * </pre>
+             *
+             * <code>optional bool is_fixed = 9;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIsFixed() {
+                bitField0_ = (bitField0_ & ~0x00000100);
+                isFixed_ = false;
+                onChanged();
+                return this;
+            }
+
+            private java.lang.Object customName_ = "";
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @return Whether the customName field is set.
+             */
+            public boolean hasCustomName() {
+                return ((bitField0_ & 0x00000200) != 0);
+            }
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @return The customName.
+             */
+            public java.lang.String getCustomName() {
+                java.lang.Object ref = customName_;
+                if (!(ref instanceof java.lang.String)) {
+                    com.google.protobuf.ByteString bs =
+                            (com.google.protobuf.ByteString) ref;
+                    java.lang.String s = bs.toStringUtf8();
+                    if (bs.isValidUtf8()) {
+                        customName_ = s;
+                    }
+                    return s;
+                } else {
+                    return (java.lang.String) ref;
+                }
+            }
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @return The bytes for customName.
+             */
+            public com.google.protobuf.ByteString
+            getCustomNameBytes() {
+                java.lang.Object ref = customName_;
+                if (ref instanceof String) {
+                    com.google.protobuf.ByteString b =
+                            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+                    customName_ = b;
+                    return b;
+                } else {
+                    return (com.google.protobuf.ByteString) ref;
+                }
+            }
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @param value The customName to set.
+             * @return This builder for chaining.
+             */
+            public Builder setCustomName(java.lang.String value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                customName_ = value;
+                bitField0_ |= 0x00000200;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearCustomName() {
+                customName_ = getDefaultInstance().getCustomName();
+                bitField0_ = (bitField0_ & ~0x00000200);
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Custom string name given to this preset via &#64;ref RequestCustomPresetUpdate
+             * </pre>
+             *
+             * <code>optional string custom_name = 10;</code>
+             *
+             * @param value The bytes for customName to set.
+             * @return This builder for chaining.
+             */
+            public Builder setCustomNameBytes(com.google.protobuf.ByteString value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                customName_ = value;
+                bitField0_ |= 0x00000200;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.Preset)
+        }
+
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.Preset)
+        private static final com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<Preset>
+                PARSER = new com.google.protobuf.AbstractParser<Preset>() {
+            @java.lang.Override
+            public Preset parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<Preset> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<Preset> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
 
-    private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_ = 1000;
+    public interface RequestCustomPresetUpdateOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <pre>
+         * *
+         * Preset Title ID
+         *
+         * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+         * to &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+         *
+         * @return Whether the titleId field is set.
+         */
+        boolean hasTitleId();
+
+        /**
+         * <pre>
+         * *
+         * Preset Title ID
+         *
+         * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+         * to &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+         *
+         * @return The titleId.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId();
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return Whether the customName field is set.
+         */
+        boolean hasCustomName();
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return The customName.
+         */
+        java.lang.String getCustomName();
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return The bytes for customName.
+         */
+        com.google.protobuf.ByteString
+        getCustomNameBytes();
+
+        /**
+         * <pre>
+         * *
+         * Preset Icon ID
+         *
+         * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+         * &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+         *
+         * @return Whether the iconId field is set.
+         */
+        boolean hasIconId();
+
+        /**
+         * <pre>
+         * *
+         * Preset Icon ID
+         *
+         * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+         * &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+         *
+         * @return The iconId.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIconId();
+    }
+
     /**
      * <pre>
-     * Preset Group ID
-     * </pre>
+     * *
+     * Request to Update the Title and / or Icon of the Active Custom Preset
      *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-     * @return Whether the id field is set.
+     * This only operates on the currently active Preset and will fail  if the current
+     * Preset is not custom.
+     *
+     * The use cases are:
+     *
+     * 1. Update the Custom Preset Icon
+     *
+     * - `icon_id` is always optional and can always be passed
+     *
+     * and / or
+     *
+     * 2. Update the Custom Preset Title to a...
+     *
+     * - **Factory Preset Title**: Set `title_id` to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value
+     * - **Custom Preset Name**: Set `title_id` to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a `custom_name`
+     *
+     * Returns a &#64;ref ResponseGeneric with the status of the preset update request.
+     * </pre>
+     * <p>
+     * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate}
      */
-    @Override public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+    public static final class RequestCustomPresetUpdate extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate)
+            RequestCustomPresetUpdateOrBuilder {
+        private static final long serialVersionUID = 0L;
+
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    RequestCustomPresetUpdate.class.getName());
+        }
+
+        // Use RequestCustomPresetUpdate.newBuilder() to construct.
+        private RequestCustomPresetUpdate(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+        }
+
+        private RequestCustomPresetUpdate() {
+            titleId_ = 0;
+            customName_ = "";
+            iconId_ = 0;
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_RequestCustomPresetUpdate_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_RequestCustomPresetUpdate_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.Builder.class);
+        }
+
+        private int bitField0_;
+        public static final int TITLE_ID_FIELD_NUMBER = 1;
+        private int titleId_ = 0;
+
+        /**
+         * <pre>
+         * *
+         * Preset Title ID
+         *
+         * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+         * to &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+         *
+         * @return Whether the titleId field is set.
+         */
+        @java.lang.Override
+        public boolean hasTitleId() {
+            return ((bitField0_ & 0x00000001) != 0);
+        }
+
+        /**
+         * <pre>
+         * *
+         * Preset Title ID
+         *
+         * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+         * to &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+         *
+         * @return The titleId.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(titleId_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
+        }
+
+        public static final int CUSTOM_NAME_FIELD_NUMBER = 2;
+        @SuppressWarnings("serial")
+        private volatile java.lang.Object customName_ = "";
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return Whether the customName field is set.
+         */
+        @java.lang.Override
+        public boolean hasCustomName() {
+            return ((bitField0_ & 0x00000002) != 0);
+        }
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return The customName.
+         */
+        @java.lang.Override
+        public java.lang.String getCustomName() {
+            java.lang.Object ref = customName_;
+            if (ref instanceof java.lang.String) {
+                return (java.lang.String) ref;
+            } else {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                if (bs.isValidUtf8()) {
+                    customName_ = s;
+                }
+                return s;
+            }
+        }
+
+        /**
+         * <pre>
+         * *
+         * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+         *
+         * The name must obey the following:
+         *
+         * - Custom titles must be between 1 and 16 characters (inclusive)
+         * - No special characters outside of the following languages: English, French, Italian, German,
+         * Spanish, Portuguese, Swedish, Russian
+         * </pre>
+         *
+         * <code>optional string custom_name = 2;</code>
+         *
+         * @return The bytes for customName.
+         */
+        @java.lang.Override
+        public com.google.protobuf.ByteString
+        getCustomNameBytes() {
+            java.lang.Object ref = customName_;
+            if (ref instanceof java.lang.String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+                customName_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        public static final int ICON_ID_FIELD_NUMBER = 3;
+        private int iconId_ = 0;
+
+        /**
+         * <pre>
+         * *
+         * Preset Icon ID
+         *
+         * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+         * &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+         *
+         * @return Whether the iconId field is set.
+         */
+        @java.lang.Override
+        public boolean hasIconId() {
+            return ((bitField0_ & 0x00000004) != 0);
+        }
+
+        /**
+         * <pre>
+         * *
+         * Preset Icon ID
+         *
+         * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+         * &#64;ref RequestGetPresetStatus
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+         *
+         * @return The iconId.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIconId() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(iconId_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.PRESET_ICON_VIDEO : result;
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (((bitField0_ & 0x00000001) != 0)) {
+                output.writeEnum(1, titleId_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                com.google.protobuf.GeneratedMessage.writeString(output, 2, customName_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                output.writeEnum(3, iconId_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(1, titleId_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                size += com.google.protobuf.GeneratedMessage.computeStringSize(2, customName_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(3, iconId_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate other = (com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate) obj;
+
+            if (hasTitleId() != other.hasTitleId()) return false;
+            if (hasTitleId()) {
+                if (titleId_ != other.titleId_) return false;
+            }
+            if (hasCustomName() != other.hasCustomName()) return false;
+            if (hasCustomName()) {
+                if (!getCustomName()
+                        .equals(other.getCustomName())) return false;
+            }
+            if (hasIconId() != other.hasIconId()) return false;
+            if (hasIconId()) {
+                if (iconId_ != other.iconId_) return false;
+            }
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (hasTitleId()) {
+                hash = (37 * hash) + TITLE_ID_FIELD_NUMBER;
+                hash = (53 * hash) + titleId_;
+            }
+            if (hasCustomName()) {
+                hash = (37 * hash) + CUSTOM_NAME_FIELD_NUMBER;
+                hash = (53 * hash) + getCustomName().hashCode();
+            }
+            if (hasIconId()) {
+                hash = (37 * hash) + ICON_ID_FIELD_NUMBER;
+                hash = (53 * hash) + iconId_;
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(java.nio.ByteBuffer data,
+                                                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(com.google.protobuf.ByteString data,
+                                                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(byte[] data,
+                                                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(java.io.InputStream input,
+                                                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseDelimitedFrom(java.io.InputStream input,
+                                                                                                                      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         * *
+         * Request to Update the Title and / or Icon of the Active Custom Preset
+         *
+         * This only operates on the currently active Preset and will fail  if the current
+         * Preset is not custom.
+         *
+         * The use cases are:
+         *
+         * 1. Update the Custom Preset Icon
+         *
+         * - `icon_id` is always optional and can always be passed
+         *
+         * and / or
+         *
+         * 2. Update the Custom Preset Title to a...
+         *
+         * - **Factory Preset Title**: Set `title_id` to a non-PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) value
+         * - **Custom Preset Name**: Set `title_id` to PRESET_TITLE_USER_DEFINED_CUSTOM_NAME (94) and specify a `custom_name`
+         *
+         * Returns a &#64;ref ResponseGeneric with the status of the preset update request.
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate)
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdateOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_RequestCustomPresetUpdate_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_RequestCustomPresetUpdate_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                titleId_ = 0;
+                customName_ = "";
+                iconId_ = 0;
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_RequestCustomPresetUpdate_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate build() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate result = new com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate(this);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate result) {
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.titleId_ = titleId_;
+                    to_bitField0_ |= 0x00000001;
+                }
+                if (((from_bitField0_ & 0x00000002) != 0)) {
+                    result.customName_ = customName_;
+                    to_bitField0_ |= 0x00000002;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.iconId_ = iconId_;
+                    to_bitField0_ |= 0x00000004;
+                }
+                result.bitField0_ |= to_bitField0_;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate.getDefaultInstance())
+                    return this;
+                if (other.hasTitleId()) {
+                    setTitleId(other.getTitleId());
+                }
+                if (other.hasCustomName()) {
+                    customName_ = other.customName_;
+                    bitField0_ |= 0x00000002;
+                    onChanged();
+                }
+                if (other.hasIconId()) {
+                    setIconId(other.getIconId());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 8: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(1, tmpRaw);
+                                } else {
+                                    titleId_ = tmpRaw;
+                                    bitField0_ |= 0x00000001;
+                                }
+                                break;
+                            } // case 8
+                            case 18: {
+                                customName_ = input.readBytes();
+                                bitField0_ |= 0x00000002;
+                                break;
+                            } // case 18
+                            case 24: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(3, tmpRaw);
+                                } else {
+                                    iconId_ = tmpRaw;
+                                    bitField0_ |= 0x00000004;
+                                }
+                                break;
+                            } // case 24
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+
+            private int bitField0_;
+
+            private int titleId_ = 0;
+
+            /**
+             * <pre>
+             * *
+             * Preset Title ID
+             *
+             * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+             * to &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+             *
+             * @return Whether the titleId field is set.
+             */
+            @java.lang.Override
+            public boolean hasTitleId() {
+                return ((bitField0_ & 0x00000001) != 0);
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Title ID
+             *
+             * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+             * to &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+             *
+             * @return The titleId.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle getTitleId() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.forNumber(titleId_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle.PRESET_TITLE_ACTIVITY : result;
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Title ID
+             *
+             * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+             * to &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+             *
+             * @param value The titleId to set.
+             * @return This builder for chaining.
+             */
+            public Builder setTitleId(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetTitle value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000001;
+                titleId_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Title ID
+             *
+             * The range of acceptable custom title ID's can be found in the initial &#64;ref NotifyPresetStatus response
+             * to &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetTitle title_id = 1;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearTitleId() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                titleId_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private java.lang.Object customName_ = "";
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @return Whether the customName field is set.
+             */
+            public boolean hasCustomName() {
+                return ((bitField0_ & 0x00000002) != 0);
+            }
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @return The customName.
+             */
+            public java.lang.String getCustomName() {
+                java.lang.Object ref = customName_;
+                if (!(ref instanceof java.lang.String)) {
+                    com.google.protobuf.ByteString bs =
+                            (com.google.protobuf.ByteString) ref;
+                    java.lang.String s = bs.toStringUtf8();
+                    if (bs.isValidUtf8()) {
+                        customName_ = s;
+                    }
+                    return s;
+                } else {
+                    return (java.lang.String) ref;
+                }
+            }
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @return The bytes for customName.
+             */
+            public com.google.protobuf.ByteString
+            getCustomNameBytes() {
+                java.lang.Object ref = customName_;
+                if (ref instanceof String) {
+                    com.google.protobuf.ByteString b =
+                            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+                    customName_ = b;
+                    return b;
+                } else {
+                    return (com.google.protobuf.ByteString) ref;
+                }
+            }
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @param value The customName to set.
+             * @return This builder for chaining.
+             */
+            public Builder setCustomName(java.lang.String value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                customName_ = value;
+                bitField0_ |= 0x00000002;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearCustomName() {
+                customName_ = getDefaultInstance().getCustomName();
+                bitField0_ = (bitField0_ & ~0x00000002);
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * *
+             * UTF-8 encoded custom preset name to be used if `title_id` is set to 94 (PRESET_TITLE_USER_DEFINED_CUSTOM_NAME)
+             *
+             * The name must obey the following:
+             *
+             * - Custom titles must be between 1 and 16 characters (inclusive)
+             * - No special characters outside of the following languages: English, French, Italian, German,
+             * Spanish, Portuguese, Swedish, Russian
+             * </pre>
+             *
+             * <code>optional string custom_name = 2;</code>
+             *
+             * @param value The bytes for customName to set.
+             * @return This builder for chaining.
+             */
+            public Builder setCustomNameBytes(com.google.protobuf.ByteString value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                customName_ = value;
+                bitField0_ |= 0x00000002;
+                onChanged();
+                return this;
+            }
+
+            private int iconId_ = 0;
+
+            /**
+             * <pre>
+             * *
+             * Preset Icon ID
+             *
+             * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+             * &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+             *
+             * @return Whether the iconId field is set.
+             */
+            @java.lang.Override
+            public boolean hasIconId() {
+                return ((bitField0_ & 0x00000004) != 0);
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Icon ID
+             *
+             * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+             * &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+             *
+             * @return The iconId.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon getIconId() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.forNumber(iconId_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon.PRESET_ICON_VIDEO : result;
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Icon ID
+             *
+             * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+             * &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+             *
+             * @param value The iconId to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIconId(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetIcon value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000004;
+                iconId_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * *
+             * Preset Icon ID
+             *
+             * The range of acceptable custom icon ID's can be found in the initial &#64;ref NotifyPresetStatus response to
+             * &#64;ref RequestGetPresetStatus
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetIcon icon_id = 3;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIconId() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                iconId_ = 0;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate)
+        }
+
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.RequestCustomPresetUpdate)
+        private static final com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<RequestCustomPresetUpdate>
+                PARSER = new com.google.protobuf.AbstractParser<RequestCustomPresetUpdate>() {
+            @java.lang.Override
+            public RequestCustomPresetUpdate parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<RequestCustomPresetUpdate> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<RequestCustomPresetUpdate> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.RequestCustomPresetUpdate getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
+
+    public interface PresetGroupOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.PresetGroup)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <pre>
+         * Preset Group ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        boolean hasId();
+
+        /**
+         * <pre>
+         * Preset Group ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+         *
+         * @return The id.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup getId();
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset>
+        getPresetArrayList();
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getPresetArray(int index);
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        int getPresetArrayCount();
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder>
+        getPresetArrayOrBuilderList();
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder getPresetArrayOrBuilder(int index);
+
+        /**
+         * <pre>
+         * Is there room in the group to add additional Presets?
+         * </pre>
+         *
+         * <code>optional bool can_add_preset = 3;</code>
+         *
+         * @return Whether the canAddPreset field is set.
+         */
+        boolean hasCanAddPreset();
+
+        /**
+         * <pre>
+         * Is there room in the group to add additional Presets?
+         * </pre>
+         *
+         * <code>optional bool can_add_preset = 3;</code>
+         *
+         * @return The canAddPreset.
+         */
+        boolean getCanAddPreset();
+
+        /**
+         * <pre>
+         * The icon to display for this preset group
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+         *
+         * @return Whether the icon field is set.
+         */
+        boolean hasIcon();
+
+        /**
+         * <pre>
+         * The icon to display for this preset group
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+         *
+         * @return The icon.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon getIcon();
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @return A list containing the modeArray.
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode> getModeArrayList();
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @return The count of modeArray.
+         */
+        int getModeArrayCount();
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The modeArray at the given index.
+         */
+        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getModeArray(int index);
+    }
+
     /**
      * <pre>
-     * Preset Group ID
-     * </pre>
      *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-     * @return The id.
-     */
-    @Override public EnumPresetGroup getId() {
-      EnumPresetGroup result = EnumPresetGroup.forNumber(id_);
-      return result == null ? EnumPresetGroup.PRESET_GROUP_ID_VIDEO : result;
-    }
-
-    public static final int PRESET_ARRAY_FIELD_NUMBER = 2;
-    @SuppressWarnings("serial")
-    private java.util.List<Preset> presetArray_;
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
+     * Preset Group meta information and contained Presets
      * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    @Override
-    public java.util.List<Preset> getPresetArrayList() {
-      return presetArray_;
-    }
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    @Override
-    public java.util.List<? extends PresetOrBuilder>
-        getPresetArrayOrBuilderList() {
-      return presetArray_;
-    }
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    @Override
-    public int getPresetArrayCount() {
-      return presetArray_.size();
-    }
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    @Override
-    public Preset getPresetArray(int index) {
-      return presetArray_.get(index);
-    }
-    /**
-     * <pre>
-     * Array of Presets contained in this Preset Group
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-     */
-    @Override
-    public PresetOrBuilder getPresetArrayOrBuilder(
-        int index) {
-      return presetArray_.get(index);
-    }
-
-    public static final int CAN_ADD_PRESET_FIELD_NUMBER = 3;
-    private boolean canAddPreset_ = false;
-    /**
-     * <pre>
-     * Is there room in the group to add additional Presets?
-     * </pre>
-     *
-     * <code>optional bool can_add_preset = 3;</code>
-     * @return Whether the canAddPreset field is set.
-     */
-    @Override
-    public boolean hasCanAddPreset() {
-      return ((bitField0_ & 0x00000002) != 0);
-    }
-    /**
-     * <pre>
-     * Is there room in the group to add additional Presets?
-     * </pre>
-     *
-     * <code>optional bool can_add_preset = 3;</code>
-     * @return The canAddPreset.
-     */
-    @Override
-    public boolean getCanAddPreset() {
-      return canAddPreset_;
-    }
-
-    public static final int ICON_FIELD_NUMBER = 4;
-    private int icon_ = 0;
-    /**
-     * <pre>
-     * The icon to display for this preset group
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-     * @return Whether the icon field is set.
-     */
-    @Override public boolean hasIcon() {
-      return ((bitField0_ & 0x00000004) != 0);
-    }
-    /**
-     * <pre>
-     * The icon to display for this preset group
-     * </pre>
-     *
-     * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-     * @return The icon.
-     */
-    @Override public EnumPresetGroupIcon getIcon() {
-      EnumPresetGroupIcon result = EnumPresetGroupIcon.forNumber(icon_);
-      return result == null ? EnumPresetGroupIcon.PRESET_GROUP_VIDEO_ICON_ID : result;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeEnum(1, id_);
-      }
-      for (int i = 0; i < presetArray_.size(); i++) {
-        output.writeMessage(2, presetArray_.get(i));
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeBool(3, canAddPreset_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeEnum(4, icon_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, id_);
-      }
-      for (int i = 0; i < presetArray_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, presetArray_.get(i));
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, canAddPreset_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, icon_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof PresetGroup)) {
-        return super.equals(obj);
-      }
-      PresetGroup other = (PresetGroup) obj;
-
-      if (hasId() != other.hasId()) return false;
-      if (hasId()) {
-        if (id_ != other.id_) return false;
-      }
-      if (!getPresetArrayList()
-          .equals(other.getPresetArrayList())) return false;
-      if (hasCanAddPreset() != other.hasCanAddPreset()) return false;
-      if (hasCanAddPreset()) {
-        if (getCanAddPreset()
-            != other.getCanAddPreset()) return false;
-      }
-      if (hasIcon() != other.hasIcon()) return false;
-      if (hasIcon()) {
-        if (icon_ != other.icon_) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasId()) {
-        hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + id_;
-      }
-      if (getPresetArrayCount() > 0) {
-        hash = (37 * hash) + PRESET_ARRAY_FIELD_NUMBER;
-        hash = (53 * hash) + getPresetArrayList().hashCode();
-      }
-      if (hasCanAddPreset()) {
-        hash = (37 * hash) + CAN_ADD_PRESET_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getCanAddPreset());
-      }
-      if (hasIcon()) {
-        hash = (37 * hash) + ICON_FIELD_NUMBER;
-        hash = (53 * hash) + icon_;
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static PresetGroup parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetGroup parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetGroup parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetGroup parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetGroup parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetGroup parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetGroup parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static PresetGroup parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static PresetGroup parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static PresetGroup parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static PresetGroup parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static PresetGroup parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(PresetGroup prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
+     * <p>
      * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetGroup}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.PresetGroup)
-        PresetGroupOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor;
-      }
+    public static final class PresetGroup extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.PresetGroup)
+            PresetGroupOrBuilder {
+        private static final long serialVersionUID = 0L;
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                PresetGroup.class, Builder.class);
-      }
-
-      // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = 1000;
-        if (presetArrayBuilder_ == null) {
-          presetArray_ = java.util.Collections.emptyList();
-        } else {
-          presetArray_ = null;
-          presetArrayBuilder_.clear();
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    PresetGroup.class.getName());
         }
-        bitField0_ = (bitField0_ & ~0x00000002);
-        canAddPreset_ = false;
-        icon_ = 0;
-        return this;
-      }
 
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor;
-      }
-
-      @Override
-      public PresetGroup getDefaultInstanceForType() {
-        return PresetGroup.getDefaultInstance();
-      }
-
-      @Override
-      public PresetGroup build() {
-        PresetGroup result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        // Use PresetGroup.newBuilder() to construct.
+        private PresetGroup(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
         }
-        return result;
-      }
 
-      @Override
-      public PresetGroup buildPartial() {
-        PresetGroup result = new PresetGroup(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(PresetGroup result) {
-        if (presetArrayBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)) {
-            presetArray_ = java.util.Collections.unmodifiableList(presetArray_);
-            bitField0_ = (bitField0_ & ~0x00000002);
-          }
-          result.presetArray_ = presetArray_;
-        } else {
-          result.presetArray_ = presetArrayBuilder_.build();
+        private PresetGroup() {
+            id_ = 1000;
+            presetArray_ = java.util.Collections.emptyList();
+            icon_ = 0;
+            modeArray_ = emptyIntList();
         }
-      }
 
-      private void buildPartial0(PresetGroup result) {
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-          to_bitField0_ |= 0x00000001;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.canAddPreset_ = canAddPreset_;
-          to_bitField0_ |= 0x00000002;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.icon_ = icon_;
-          to_bitField0_ |= 0x00000004;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
-
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof PresetGroup) {
-          return mergeFrom((PresetGroup)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(PresetGroup other) {
-        if (other == PresetGroup.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
-        }
-        if (presetArrayBuilder_ == null) {
-          if (!other.presetArray_.isEmpty()) {
-            if (presetArray_.isEmpty()) {
-              presetArray_ = other.presetArray_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-            } else {
-              ensurePresetArrayIsMutable();
-              presetArray_.addAll(other.presetArray_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.presetArray_.isEmpty()) {
-            if (presetArrayBuilder_.isEmpty()) {
-              presetArrayBuilder_.dispose();
-              presetArrayBuilder_ = null;
-              presetArray_ = other.presetArray_;
-              bitField0_ = (bitField0_ & ~0x00000002);
-              presetArrayBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getPresetArrayFieldBuilder() : null;
-            } else {
-              presetArrayBuilder_.addAllMessages(other.presetArray_);
-            }
-          }
-        }
-        if (other.hasCanAddPreset()) {
-          setCanAddPreset(other.getCanAddPreset());
-        }
-        if (other.hasIcon()) {
-          setIcon(other.getIcon());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-                int tmpRaw = input.readEnum();
-                EnumPresetGroup tmpValue =
-                    EnumPresetGroup.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(1, tmpRaw);
-                } else {
-                  id_ = tmpRaw;
-                  bitField0_ |= 0x00000001;
-                }
-                break;
-              } // case 8
-              case 18: {
-                Preset m =
-                    input.readMessage(
-                        Preset.PARSER,
-                        extensionRegistry);
-                if (presetArrayBuilder_ == null) {
-                  ensurePresetArrayIsMutable();
-                  presetArray_.add(m);
-                } else {
-                  presetArrayBuilder_.addMessage(m);
-                }
-                break;
-              } // case 18
-              case 24: {
-                canAddPreset_ = input.readBool();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-              case 32: {
-                int tmpRaw = input.readEnum();
-                EnumPresetGroupIcon tmpValue =
-                    EnumPresetGroupIcon.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(4, tmpRaw);
-                } else {
-                  icon_ = tmpRaw;
-                  bitField0_ |= 0x00000008;
-                }
-                break;
-              } // case 32
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private int id_ = 1000;
-      /**
-       * <pre>
-       * Preset Group ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-       * @return Whether the id field is set.
-       */
-      @Override public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
-      }
-      /**
-       * <pre>
-       * Preset Group ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-       * @return The id.
-       */
-      @Override
-      public EnumPresetGroup getId() {
-        EnumPresetGroup result = EnumPresetGroup.forNumber(id_);
-        return result == null ? EnumPresetGroup.PRESET_GROUP_ID_VIDEO : result;
-      }
-      /**
-       * <pre>
-       * Preset Group ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(EnumPresetGroup value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000001;
-        id_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Preset Group ID
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 1000;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<Preset> presetArray_ =
-        java.util.Collections.emptyList();
-      private void ensurePresetArrayIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
-          presetArray_ = new java.util.ArrayList<Preset>(presetArray_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Preset, Preset.Builder, PresetOrBuilder> presetArrayBuilder_;
-
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public java.util.List<Preset> getPresetArrayList() {
-        if (presetArrayBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(presetArray_);
-        } else {
-          return presetArrayBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public int getPresetArrayCount() {
-        if (presetArrayBuilder_ == null) {
-          return presetArray_.size();
-        } else {
-          return presetArrayBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Preset getPresetArray(int index) {
-        if (presetArrayBuilder_ == null) {
-          return presetArray_.get(index);
-        } else {
-          return presetArrayBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder setPresetArray(
-          int index, Preset value) {
-        if (presetArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetArrayIsMutable();
-          presetArray_.set(index, value);
-          onChanged();
-        } else {
-          presetArrayBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder setPresetArray(
-          int index, Preset.Builder builderForValue) {
-        if (presetArrayBuilder_ == null) {
-          ensurePresetArrayIsMutable();
-          presetArray_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          presetArrayBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder addPresetArray(Preset value) {
-        if (presetArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetArrayIsMutable();
-          presetArray_.add(value);
-          onChanged();
-        } else {
-          presetArrayBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder addPresetArray(
-          int index, Preset value) {
-        if (presetArrayBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePresetArrayIsMutable();
-          presetArray_.add(index, value);
-          onChanged();
-        } else {
-          presetArrayBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder addPresetArray(
-          Preset.Builder builderForValue) {
-        if (presetArrayBuilder_ == null) {
-          ensurePresetArrayIsMutable();
-          presetArray_.add(builderForValue.build());
-          onChanged();
-        } else {
-          presetArrayBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder addPresetArray(
-          int index, Preset.Builder builderForValue) {
-        if (presetArrayBuilder_ == null) {
-          ensurePresetArrayIsMutable();
-          presetArray_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          presetArrayBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder addAllPresetArray(
-          Iterable<? extends Preset> values) {
-        if (presetArrayBuilder_ == null) {
-          ensurePresetArrayIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, presetArray_);
-          onChanged();
-        } else {
-          presetArrayBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder clearPresetArray() {
-        if (presetArrayBuilder_ == null) {
-          presetArray_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
-          onChanged();
-        } else {
-          presetArrayBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Builder removePresetArray(int index) {
-        if (presetArrayBuilder_ == null) {
-          ensurePresetArrayIsMutable();
-          presetArray_.remove(index);
-          onChanged();
-        } else {
-          presetArrayBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Preset.Builder getPresetArrayBuilder(
-          int index) {
-        return getPresetArrayFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public PresetOrBuilder getPresetArrayOrBuilder(
-          int index) {
-        if (presetArrayBuilder_ == null) {
-          return presetArray_.get(index);  } else {
-          return presetArrayBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public java.util.List<? extends PresetOrBuilder>
-           getPresetArrayOrBuilderList() {
-        if (presetArrayBuilder_ != null) {
-          return presetArrayBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(presetArray_);
-        }
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Preset.Builder addPresetArrayBuilder() {
-        return getPresetArrayFieldBuilder().addBuilder(
-            Preset.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public Preset.Builder addPresetArrayBuilder(
-          int index) {
-        return getPresetArrayFieldBuilder().addBuilder(
-            index, Preset.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * Array of Presets contained in this Preset Group
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
-       */
-      public java.util.List<Preset.Builder>
-           getPresetArrayBuilderList() {
-        return getPresetArrayFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          Preset, Preset.Builder, PresetOrBuilder>
-          getPresetArrayFieldBuilder() {
-        if (presetArrayBuilder_ == null) {
-          presetArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              Preset, Preset.Builder, PresetOrBuilder>(
-                  presetArray_,
-                  ((bitField0_ & 0x00000002) != 0),
-                  getParentForChildren(),
-                  isClean());
-          presetArray_ = null;
-        }
-        return presetArrayBuilder_;
-      }
-
-      private boolean canAddPreset_ ;
-      /**
-       * <pre>
-       * Is there room in the group to add additional Presets?
-       * </pre>
-       *
-       * <code>optional bool can_add_preset = 3;</code>
-       * @return Whether the canAddPreset field is set.
-       */
-      @Override
-      public boolean hasCanAddPreset() {
-        return ((bitField0_ & 0x00000004) != 0);
-      }
-      /**
-       * <pre>
-       * Is there room in the group to add additional Presets?
-       * </pre>
-       *
-       * <code>optional bool can_add_preset = 3;</code>
-       * @return The canAddPreset.
-       */
-      @Override
-      public boolean getCanAddPreset() {
-        return canAddPreset_;
-      }
-      /**
-       * <pre>
-       * Is there room in the group to add additional Presets?
-       * </pre>
-       *
-       * <code>optional bool can_add_preset = 3;</code>
-       * @param value The canAddPreset to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCanAddPreset(boolean value) {
-
-        canAddPreset_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Is there room in the group to add additional Presets?
-       * </pre>
-       *
-       * <code>optional bool can_add_preset = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCanAddPreset() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        canAddPreset_ = false;
-        onChanged();
-        return this;
-      }
-
-      private int icon_ = 0;
-      /**
-       * <pre>
-       * The icon to display for this preset group
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-       * @return Whether the icon field is set.
-       */
-      @Override public boolean hasIcon() {
-        return ((bitField0_ & 0x00000008) != 0);
-      }
-      /**
-       * <pre>
-       * The icon to display for this preset group
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-       * @return The icon.
-       */
-      @Override
-      public EnumPresetGroupIcon getIcon() {
-        EnumPresetGroupIcon result = EnumPresetGroupIcon.forNumber(icon_);
-        return result == null ? EnumPresetGroupIcon.PRESET_GROUP_VIDEO_ICON_ID : result;
-      }
-      /**
-       * <pre>
-       * The icon to display for this preset group
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-       * @param value The icon to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIcon(EnumPresetGroupIcon value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000008;
-        icon_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * The icon to display for this preset group
-       * </pre>
-       *
-       * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIcon() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        icon_ = 0;
-        onChanged();
-        return this;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.PresetGroup)
-    }
-
-    // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.PresetGroup)
-    private static final PresetGroup DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new PresetGroup();
-    }
-
-    public static PresetGroup getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @Deprecated public static final com.google.protobuf.Parser<PresetGroup>
-        PARSER = new com.google.protobuf.AbstractParser<PresetGroup>() {
-      @Override
-      public PresetGroup parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<PresetGroup> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<PresetGroup> getParserForType() {
-      return PARSER;
-    }
-
-    @Override
-    public PresetGroup getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface PresetSettingOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.PresetSetting)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * Setting ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return Whether the id field is set.
-     */
-    boolean hasId();
-    /**
-     * <pre>
-     * Setting ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return The id.
-     */
-    int getId();
-
-    /**
-     * <pre>
-     * Setting value
-     * </pre>
-     *
-     * <code>optional int32 value = 2;</code>
-     * @return Whether the value field is set.
-     */
-    boolean hasValue();
-    /**
-     * <pre>
-     * Setting value
-     * </pre>
-     *
-     * <code>optional int32 value = 2;</code>
-     * @return The value.
-     */
-    int getValue();
-
-    /**
-     * <pre>
-     * Does this setting appear on the Preset "pill" in the camera UI?
-     * </pre>
-     *
-     * <code>optional bool is_caption = 3;</code>
-     * @return Whether the isCaption field is set.
-     */
-    boolean hasIsCaption();
-    /**
-     * <pre>
-     * Does this setting appear on the Preset "pill" in the camera UI?
-     * </pre>
-     *
-     * <code>optional bool is_caption = 3;</code>
-     * @return The isCaption.
-     */
-    boolean getIsCaption();
-  }
-  /**
-   * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetSetting}
-   */
-  public static final class PresetSetting extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.PresetSetting)
-      PresetSettingOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use PresetSetting.newBuilder() to construct.
-    private PresetSetting(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private PresetSetting() {
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new PresetSetting();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor;
-    }
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetGroup_descriptor;
+        }
 
-    @Override
-    protected FieldAccessorTable
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              PresetSetting.class, Builder.class);
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetGroup_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder.class);
+        }
+
+        private int bitField0_;
+        public static final int ID_FIELD_NUMBER = 1;
+        private int id_ = 1000;
+
+        /**
+         * <pre>
+         * Preset Group ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        @java.lang.Override
+        public boolean hasId() {
+            return ((bitField0_ & 0x00000001) != 0);
+        }
+
+        /**
+         * <pre>
+         * Preset Group ID
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+         *
+         * @return The id.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup getId() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup.forNumber(id_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup.PRESET_GROUP_ID_VIDEO : result;
+        }
+
+        public static final int PRESET_ARRAY_FIELD_NUMBER = 2;
+        @SuppressWarnings("serial")
+        private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset> presetArray_;
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset> getPresetArrayList() {
+            return presetArray_;
+        }
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        @java.lang.Override
+        public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder>
+        getPresetArrayOrBuilderList() {
+            return presetArray_;
+        }
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        @java.lang.Override
+        public int getPresetArrayCount() {
+            return presetArray_.size();
+        }
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getPresetArray(int index) {
+            return presetArray_.get(index);
+        }
+
+        /**
+         * <pre>
+         * Array of Presets contained in this Preset Group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder getPresetArrayOrBuilder(int index) {
+            return presetArray_.get(index);
+        }
+
+        public static final int CAN_ADD_PRESET_FIELD_NUMBER = 3;
+        private boolean canAddPreset_ = false;
+
+        /**
+         * <pre>
+         * Is there room in the group to add additional Presets?
+         * </pre>
+         *
+         * <code>optional bool can_add_preset = 3;</code>
+         *
+         * @return Whether the canAddPreset field is set.
+         */
+        @java.lang.Override
+        public boolean hasCanAddPreset() {
+            return ((bitField0_ & 0x00000002) != 0);
+        }
+
+        /**
+         * <pre>
+         * Is there room in the group to add additional Presets?
+         * </pre>
+         *
+         * <code>optional bool can_add_preset = 3;</code>
+         *
+         * @return The canAddPreset.
+         */
+        @java.lang.Override
+        public boolean getCanAddPreset() {
+            return canAddPreset_;
+        }
+
+        public static final int ICON_FIELD_NUMBER = 4;
+        private int icon_ = 0;
+
+        /**
+         * <pre>
+         * The icon to display for this preset group
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+         *
+         * @return Whether the icon field is set.
+         */
+        @java.lang.Override
+        public boolean hasIcon() {
+            return ((bitField0_ & 0x00000004) != 0);
+        }
+
+        /**
+         * <pre>
+         * The icon to display for this preset group
+         * </pre>
+         *
+         * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+         *
+         * @return The icon.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon getIcon() {
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon.forNumber(icon_);
+            return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon.PRESET_GROUP_VIDEO_ICON_ID : result;
+        }
+
+        public static final int MODE_ARRAY_FIELD_NUMBER = 5;
+        @SuppressWarnings("serial")
+        private com.google.protobuf.Internal.IntList modeArray_;
+        private static final com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode> modeArray_converter_ =
+                new com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode>() {
+                    public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode convert(int from) {
+                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(from);
+                        return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.FLAT_MODE_UNKNOWN : result;
+                    }
+                };
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @return A list containing the modeArray.
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode> getModeArrayList() {
+            return new com.google.protobuf.Internal.IntListAdapter<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode>(modeArray_, modeArray_converter_);
+        }
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @return The count of modeArray.
+         */
+        @java.lang.Override
+        public int getModeArrayCount() {
+            return modeArray_.size();
+        }
+
+        /**
+         * <pre>
+         * A list of flatmodes available for this preset group
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The modeArray at the given index.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getModeArray(int index) {
+            return modeArray_converter_.convert(modeArray_.getInt(index));
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (((bitField0_ & 0x00000001) != 0)) {
+                output.writeEnum(1, id_);
+            }
+            for (int i = 0; i < presetArray_.size(); i++) {
+                output.writeMessage(2, presetArray_.get(i));
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                output.writeBool(3, canAddPreset_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                output.writeEnum(4, icon_);
+            }
+            for (int i = 0; i < modeArray_.size(); i++) {
+                output.writeEnum(5, modeArray_.getInt(i));
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(1, id_);
+            }
+            for (int i = 0; i < presetArray_.size(); i++) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(2, presetArray_.get(i));
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(3, canAddPreset_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeEnumSize(4, icon_);
+            }
+            {
+                int dataSize = 0;
+                for (int i = 0; i < modeArray_.size(); i++) {
+                    dataSize += com.google.protobuf.CodedOutputStream
+                            .computeEnumSizeNoTag(modeArray_.getInt(i));
+                }
+                size += dataSize;
+                size += 1 * modeArray_.size();
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup other = (com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup) obj;
+
+            if (hasId() != other.hasId()) return false;
+            if (hasId()) {
+                if (id_ != other.id_) return false;
+            }
+            if (!getPresetArrayList()
+                    .equals(other.getPresetArrayList())) return false;
+            if (hasCanAddPreset() != other.hasCanAddPreset()) return false;
+            if (hasCanAddPreset()) {
+                if (getCanAddPreset()
+                        != other.getCanAddPreset()) return false;
+            }
+            if (hasIcon() != other.hasIcon()) return false;
+            if (hasIcon()) {
+                if (icon_ != other.icon_) return false;
+            }
+            if (!modeArray_.equals(other.modeArray_)) return false;
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (hasId()) {
+                hash = (37 * hash) + ID_FIELD_NUMBER;
+                hash = (53 * hash) + id_;
+            }
+            if (getPresetArrayCount() > 0) {
+                hash = (37 * hash) + PRESET_ARRAY_FIELD_NUMBER;
+                hash = (53 * hash) + getPresetArrayList().hashCode();
+            }
+            if (hasCanAddPreset()) {
+                hash = (37 * hash) + CAN_ADD_PRESET_FIELD_NUMBER;
+                hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getCanAddPreset());
+            }
+            if (hasIcon()) {
+                hash = (37 * hash) + ICON_FIELD_NUMBER;
+                hash = (53 * hash) + icon_;
+            }
+            if (getModeArrayCount() > 0) {
+                hash = (37 * hash) + MODE_ARRAY_FIELD_NUMBER;
+                hash = (53 * hash) + modeArray_.hashCode();
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(java.nio.ByteBuffer data,
+                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(com.google.protobuf.ByteString data,
+                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(byte[] data,
+                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(java.io.InputStream input,
+                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseDelimitedFrom(java.io.InputStream input,
+                                                                                                        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         *
+         * Preset Group meta information and contained Presets
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetGroup}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.PresetGroup)
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroupOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetGroup_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetGroup_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                id_ = 1000;
+                if (presetArrayBuilder_ == null) {
+                    presetArray_ = java.util.Collections.emptyList();
+                } else {
+                    presetArray_ = null;
+                    presetArrayBuilder_.clear();
+                }
+                bitField0_ = (bitField0_ & ~0x00000002);
+                canAddPreset_ = false;
+                icon_ = 0;
+                modeArray_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000010);
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetGroup_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup build() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup result = new com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup(this);
+                buildPartialRepeatedFields(result);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartialRepeatedFields(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup result) {
+                if (presetArrayBuilder_ == null) {
+                    if (((bitField0_ & 0x00000002) != 0)) {
+                        presetArray_ = java.util.Collections.unmodifiableList(presetArray_);
+                        bitField0_ = (bitField0_ & ~0x00000002);
+                    }
+                    result.presetArray_ = presetArray_;
+                } else {
+                    result.presetArray_ = presetArrayBuilder_.build();
+                }
+                if (((bitField0_ & 0x00000010) != 0)) {
+                    modeArray_.makeImmutable();
+                    bitField0_ = (bitField0_ & ~0x00000010);
+                }
+                result.modeArray_ = modeArray_;
+            }
+
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup result) {
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.id_ = id_;
+                    to_bitField0_ |= 0x00000001;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.canAddPreset_ = canAddPreset_;
+                    to_bitField0_ |= 0x00000002;
+                }
+                if (((from_bitField0_ & 0x00000008) != 0)) {
+                    result.icon_ = icon_;
+                    to_bitField0_ |= 0x00000004;
+                }
+                result.bitField0_ |= to_bitField0_;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
+
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup.getDefaultInstance())
+                    return this;
+                if (other.hasId()) {
+                    setId(other.getId());
+                }
+                if (presetArrayBuilder_ == null) {
+                    if (!other.presetArray_.isEmpty()) {
+                        if (presetArray_.isEmpty()) {
+                            presetArray_ = other.presetArray_;
+                            bitField0_ = (bitField0_ & ~0x00000002);
+                        } else {
+                            ensurePresetArrayIsMutable();
+                            presetArray_.addAll(other.presetArray_);
+                        }
+                        onChanged();
+                    }
+                } else {
+                    if (!other.presetArray_.isEmpty()) {
+                        if (presetArrayBuilder_.isEmpty()) {
+                            presetArrayBuilder_.dispose();
+                            presetArrayBuilder_ = null;
+                            presetArray_ = other.presetArray_;
+                            bitField0_ = (bitField0_ & ~0x00000002);
+                            presetArrayBuilder_ =
+                                    com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                                            getPresetArrayFieldBuilder() : null;
+                        } else {
+                            presetArrayBuilder_.addAllMessages(other.presetArray_);
+                        }
+                    }
+                }
+                if (other.hasCanAddPreset()) {
+                    setCanAddPreset(other.getCanAddPreset());
+                }
+                if (other.hasIcon()) {
+                    setIcon(other.getIcon());
+                }
+                if (!other.modeArray_.isEmpty()) {
+                    if (modeArray_.isEmpty()) {
+                        modeArray_ = other.modeArray_;
+                        bitField0_ = (bitField0_ & ~0x00000010);
+                    } else {
+                        ensureModeArrayIsMutable();
+                        modeArray_.addAll(other.modeArray_);
+                    }
+                    onChanged();
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 8: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(1, tmpRaw);
+                                } else {
+                                    id_ = tmpRaw;
+                                    bitField0_ |= 0x00000001;
+                                }
+                                break;
+                            } // case 8
+                            case 18: {
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset m =
+                                        input.readMessage(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.parser(),
+                                                extensionRegistry);
+                                if (presetArrayBuilder_ == null) {
+                                    ensurePresetArrayIsMutable();
+                                    presetArray_.add(m);
+                                } else {
+                                    presetArrayBuilder_.addMessage(m);
+                                }
+                                break;
+                            } // case 18
+                            case 24: {
+                                canAddPreset_ = input.readBool();
+                                bitField0_ |= 0x00000004;
+                                break;
+                            } // case 24
+                            case 32: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(4, tmpRaw);
+                                } else {
+                                    icon_ = tmpRaw;
+                                    bitField0_ |= 0x00000008;
+                                }
+                                break;
+                            } // case 32
+                            case 40: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(5, tmpRaw);
+                                } else {
+                                    ensureModeArrayIsMutable();
+                                    modeArray_.addInt(tmpRaw);
+                                }
+                                break;
+                            } // case 40
+                            case 42: {
+                                int length = input.readRawVarint32();
+                                int oldLimit = input.pushLimit(length);
+                                while (input.getBytesUntilLimit() > 0) {
+                                    int tmpRaw = input.readEnum();
+                                    com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode tmpValue =
+                                            com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode.forNumber(tmpRaw);
+                                    if (tmpValue == null) {
+                                        mergeUnknownVarintField(5, tmpRaw);
+                                    } else {
+                                        ensureModeArrayIsMutable();
+                                        modeArray_.addInt(tmpRaw);
+                                    }
+                                }
+                                input.popLimit(oldLimit);
+                                break;
+                            } // case 42
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+
+            private int bitField0_;
+
+            private int id_ = 1000;
+
+            /**
+             * <pre>
+             * Preset Group ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+             *
+             * @return Whether the id field is set.
+             */
+            @java.lang.Override
+            public boolean hasId() {
+                return ((bitField0_ & 0x00000001) != 0);
+            }
+
+            /**
+             * <pre>
+             * Preset Group ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+             *
+             * @return The id.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup getId() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup.forNumber(id_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup.PRESET_GROUP_ID_VIDEO : result;
+            }
+
+            /**
+             * <pre>
+             * Preset Group ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+             *
+             * @param value The id to set.
+             * @return This builder for chaining.
+             */
+            public Builder setId(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroup value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000001;
+                id_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Preset Group ID
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroup id = 1;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearId() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                id_ = 1000;
+                onChanged();
+                return this;
+            }
+
+            private java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset> presetArray_ =
+                    java.util.Collections.emptyList();
+
+            private void ensurePresetArrayIsMutable() {
+                if (!((bitField0_ & 0x00000002) != 0)) {
+                    presetArray_ = new java.util.ArrayList<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset>(presetArray_);
+                    bitField0_ |= 0x00000002;
+                }
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder> presetArrayBuilder_;
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset> getPresetArrayList() {
+                if (presetArrayBuilder_ == null) {
+                    return java.util.Collections.unmodifiableList(presetArray_);
+                } else {
+                    return presetArrayBuilder_.getMessageList();
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public int getPresetArrayCount() {
+                if (presetArrayBuilder_ == null) {
+                    return presetArray_.size();
+                } else {
+                    return presetArrayBuilder_.getCount();
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset getPresetArray(int index) {
+                if (presetArrayBuilder_ == null) {
+                    return presetArray_.get(index);
+                } else {
+                    return presetArrayBuilder_.getMessage(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder setPresetArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset value) {
+                if (presetArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetArrayIsMutable();
+                    presetArray_.set(index, value);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.setMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder setPresetArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder builderForValue) {
+                if (presetArrayBuilder_ == null) {
+                    ensurePresetArrayIsMutable();
+                    presetArray_.set(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.setMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder addPresetArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset value) {
+                if (presetArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetArrayIsMutable();
+                    presetArray_.add(value);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.addMessage(value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder addPresetArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset value) {
+                if (presetArrayBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    ensurePresetArrayIsMutable();
+                    presetArray_.add(index, value);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.addMessage(index, value);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder addPresetArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder builderForValue) {
+                if (presetArrayBuilder_ == null) {
+                    ensurePresetArrayIsMutable();
+                    presetArray_.add(builderForValue.build());
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.addMessage(builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder addPresetArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder builderForValue) {
+                if (presetArrayBuilder_ == null) {
+                    ensurePresetArrayIsMutable();
+                    presetArray_.add(index, builderForValue.build());
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.addMessage(index, builderForValue.build());
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder addAllPresetArray(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset> values) {
+                if (presetArrayBuilder_ == null) {
+                    ensurePresetArrayIsMutable();
+                    com.google.protobuf.AbstractMessageLite.Builder.addAll(values, presetArray_);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.addAllMessages(values);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder clearPresetArray() {
+                if (presetArrayBuilder_ == null) {
+                    presetArray_ = java.util.Collections.emptyList();
+                    bitField0_ = (bitField0_ & ~0x00000002);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.clear();
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public Builder removePresetArray(int index) {
+                if (presetArrayBuilder_ == null) {
+                    ensurePresetArrayIsMutable();
+                    presetArray_.remove(index);
+                    onChanged();
+                } else {
+                    presetArrayBuilder_.remove(index);
+                }
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder getPresetArrayBuilder(int index) {
+                return getPresetArrayFieldBuilder().getBuilder(index);
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder getPresetArrayOrBuilder(int index) {
+                if (presetArrayBuilder_ == null) {
+                    return presetArray_.get(index);
+                } else {
+                    return presetArrayBuilder_.getMessageOrBuilder(index);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public java.util.List<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder>
+            getPresetArrayOrBuilderList() {
+                if (presetArrayBuilder_ != null) {
+                    return presetArrayBuilder_.getMessageOrBuilderList();
+                } else {
+                    return java.util.Collections.unmodifiableList(presetArray_);
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder addPresetArrayBuilder() {
+                return getPresetArrayFieldBuilder().addBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder addPresetArrayBuilder(int index) {
+                return getPresetArrayFieldBuilder().addBuilder(index, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.getDefaultInstance());
+            }
+
+            /**
+             * <pre>
+             * Array of Presets contained in this Preset Group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.Preset preset_array = 2;</code>
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder>
+            getPresetArrayBuilderList() {
+                return getPresetArrayFieldBuilder().getBuilderList();
+            }
+
+            private com.google.protobuf.RepeatedFieldBuilder<
+                    com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder>
+            getPresetArrayFieldBuilder() {
+                if (presetArrayBuilder_ == null) {
+                    presetArrayBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+                            com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset, com.sepp89117.goeasypro_android.gopro.PresetStatus.Preset.Builder, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetOrBuilder>(presetArray_,
+                            ((bitField0_ & 0x00000002) != 0),
+                            getParentForChildren(),
+                            isClean());
+                    presetArray_ = null;
+                }
+                return presetArrayBuilder_;
+            }
+
+            private boolean canAddPreset_;
+
+            /**
+             * <pre>
+             * Is there room in the group to add additional Presets?
+             * </pre>
+             *
+             * <code>optional bool can_add_preset = 3;</code>
+             *
+             * @return Whether the canAddPreset field is set.
+             */
+            @java.lang.Override
+            public boolean hasCanAddPreset() {
+                return ((bitField0_ & 0x00000004) != 0);
+            }
+
+            /**
+             * <pre>
+             * Is there room in the group to add additional Presets?
+             * </pre>
+             *
+             * <code>optional bool can_add_preset = 3;</code>
+             *
+             * @return The canAddPreset.
+             */
+            @java.lang.Override
+            public boolean getCanAddPreset() {
+                return canAddPreset_;
+            }
+
+            /**
+             * <pre>
+             * Is there room in the group to add additional Presets?
+             * </pre>
+             *
+             * <code>optional bool can_add_preset = 3;</code>
+             *
+             * @param value The canAddPreset to set.
+             * @return This builder for chaining.
+             */
+            public Builder setCanAddPreset(boolean value) {
+
+                canAddPreset_ = value;
+                bitField0_ |= 0x00000004;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Is there room in the group to add additional Presets?
+             * </pre>
+             *
+             * <code>optional bool can_add_preset = 3;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearCanAddPreset() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                canAddPreset_ = false;
+                onChanged();
+                return this;
+            }
+
+            private int icon_ = 0;
+
+            /**
+             * <pre>
+             * The icon to display for this preset group
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+             *
+             * @return Whether the icon field is set.
+             */
+            @java.lang.Override
+            public boolean hasIcon() {
+                return ((bitField0_ & 0x00000008) != 0);
+            }
+
+            /**
+             * <pre>
+             * The icon to display for this preset group
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+             *
+             * @return The icon.
+             */
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon getIcon() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon result = com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon.forNumber(icon_);
+                return result == null ? com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon.PRESET_GROUP_VIDEO_ICON_ID : result;
+            }
+
+            /**
+             * <pre>
+             * The icon to display for this preset group
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+             *
+             * @param value The icon to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIcon(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumPresetGroupIcon value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                bitField0_ |= 0x00000008;
+                icon_ = value.getNumber();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * The icon to display for this preset group
+             * </pre>
+             *
+             * <code>optional .com.sepp89117.goeasypro_android.gopro.EnumPresetGroupIcon icon = 4;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIcon() {
+                bitField0_ = (bitField0_ & ~0x00000008);
+                icon_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private com.google.protobuf.Internal.IntList modeArray_ =
+                    emptyIntList();
+
+            private void ensureModeArrayIsMutable() {
+                if (!((bitField0_ & 0x00000010) != 0)) {
+                    modeArray_ = makeMutableCopy(modeArray_);
+                    bitField0_ |= 0x00000010;
+                }
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @return A list containing the modeArray.
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode> getModeArrayList() {
+                return new com.google.protobuf.Internal.IntListAdapter<
+                        com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode>(modeArray_, modeArray_converter_);
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @return The count of modeArray.
+             */
+            public int getModeArrayCount() {
+                return modeArray_.size();
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @param index The index of the element to return.
+             * @return The modeArray at the given index.
+             */
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode getModeArray(int index) {
+                return modeArray_converter_.convert(modeArray_.getInt(index));
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @param index The index to set the value at.
+             * @param value The modeArray to set.
+             * @return This builder for chaining.
+             */
+            public Builder setModeArray(int index, com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureModeArrayIsMutable();
+                modeArray_.setInt(index, value.getNumber());
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @param value The modeArray to add.
+             * @return This builder for chaining.
+             */
+            public Builder addModeArray(com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureModeArrayIsMutable();
+                modeArray_.addInt(value.getNumber());
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @param values The modeArray to add.
+             * @return This builder for chaining.
+             */
+            public Builder addAllModeArray(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode> values) {
+                ensureModeArrayIsMutable();
+                for (com.sepp89117.goeasypro_android.gopro.PresetStatus.EnumFlatMode value : values) {
+                    modeArray_.addInt(value.getNumber());
+                }
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * A list of flatmodes available for this preset group
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumFlatMode mode_array = 5;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearModeArray() {
+                modeArray_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000010);
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.PresetGroup)
+        }
+
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.PresetGroup)
+        private static final com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<PresetGroup>
+                PARSER = new com.google.protobuf.AbstractParser<PresetGroup>() {
+            @java.lang.Override
+            public PresetGroup parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<PresetGroup> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<PresetGroup> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetGroup getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
 
-    private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private int id_ = 0;
+    public interface PresetSettingOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.PresetSetting)
+            com.google.protobuf.MessageOrBuilder {
+
+        /**
+         * <pre>
+         * Setting ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        boolean hasId();
+
+        /**
+         * <pre>
+         * Setting ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return The id.
+         */
+        int getId();
+
+        /**
+         * <pre>
+         * Setting value
+         * </pre>
+         *
+         * <code>optional int32 value = 2;</code>
+         *
+         * @return Whether the value field is set.
+         */
+        boolean hasValue();
+
+        /**
+         * <pre>
+         * Setting value
+         * </pre>
+         *
+         * <code>optional int32 value = 2;</code>
+         *
+         * @return The value.
+         */
+        int getValue();
+
+        /**
+         * <pre>
+         * Does this setting appear on the Preset "pill" in the camera UI?
+         * </pre>
+         *
+         * <code>optional bool is_caption = 3;</code>
+         *
+         * @return Whether the isCaption field is set.
+         */
+        boolean hasIsCaption();
+
+        /**
+         * <pre>
+         * Does this setting appear on the Preset "pill" in the camera UI?
+         * </pre>
+         *
+         * <code>optional bool is_caption = 3;</code>
+         *
+         * @return The isCaption.
+         */
+        boolean getIsCaption();
+    }
+
     /**
      * <pre>
-     * Setting ID
+     * *
+     * Setting representation that comprises a  &#64;ref Preset
      * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return Whether the id field is set.
-     */
-    @Override
-    public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <pre>
-     * Setting ID
-     * </pre>
-     *
-     * <code>optional int32 id = 1;</code>
-     * @return The id.
-     */
-    @Override
-    public int getId() {
-      return id_;
-    }
-
-    public static final int VALUE_FIELD_NUMBER = 2;
-    private int value_ = 0;
-    /**
-     * <pre>
-     * Setting value
-     * </pre>
-     *
-     * <code>optional int32 value = 2;</code>
-     * @return Whether the value field is set.
-     */
-    @Override
-    public boolean hasValue() {
-      return ((bitField0_ & 0x00000002) != 0);
-    }
-    /**
-     * <pre>
-     * Setting value
-     * </pre>
-     *
-     * <code>optional int32 value = 2;</code>
-     * @return The value.
-     */
-    @Override
-    public int getValue() {
-      return value_;
-    }
-
-    public static final int IS_CAPTION_FIELD_NUMBER = 3;
-    private boolean isCaption_ = false;
-    /**
-     * <pre>
-     * Does this setting appear on the Preset "pill" in the camera UI?
-     * </pre>
-     *
-     * <code>optional bool is_caption = 3;</code>
-     * @return Whether the isCaption field is set.
-     */
-    @Override
-    public boolean hasIsCaption() {
-      return ((bitField0_ & 0x00000004) != 0);
-    }
-    /**
-     * <pre>
-     * Does this setting appear on the Preset "pill" in the camera UI?
-     * </pre>
-     *
-     * <code>optional bool is_caption = 3;</code>
-     * @return The isCaption.
-     */
-    @Override
-    public boolean getIsCaption() {
-      return isCaption_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeInt32(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeInt32(2, value_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        output.writeBool(3, isCaption_);
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, id_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, value_);
-      }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, isCaption_);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof PresetSetting)) {
-        return super.equals(obj);
-      }
-      PresetSetting other = (PresetSetting) obj;
-
-      if (hasId() != other.hasId()) return false;
-      if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
-      }
-      if (hasValue() != other.hasValue()) return false;
-      if (hasValue()) {
-        if (getValue()
-            != other.getValue()) return false;
-      }
-      if (hasIsCaption() != other.hasIsCaption()) return false;
-      if (hasIsCaption()) {
-        if (getIsCaption()
-            != other.getIsCaption()) return false;
-      }
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasId()) {
-        hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + getId();
-      }
-      if (hasValue()) {
-        hash = (37 * hash) + VALUE_FIELD_NUMBER;
-        hash = (53 * hash) + getValue();
-      }
-      if (hasIsCaption()) {
-        hash = (37 * hash) + IS_CAPTION_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getIsCaption());
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static PresetSetting parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetSetting parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetSetting parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetSetting parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetSetting parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static PresetSetting parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static PresetSetting parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static PresetSetting parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static PresetSetting parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static PresetSetting parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static PresetSetting parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static PresetSetting parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(PresetSetting prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
+     * <p>
      * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetSetting}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.PresetSetting)
-        PresetSettingOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor;
-      }
+    public static final class PresetSetting extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.PresetSetting)
+            PresetSettingOrBuilder {
+        private static final long serialVersionUID = 0L;
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                PresetSetting.class, Builder.class);
-      }
-
-      // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = 0;
-        value_ = 0;
-        isCaption_ = false;
-        return this;
-      }
-
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return PresetStatus.internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor;
-      }
-
-      @Override
-      public PresetSetting getDefaultInstanceForType() {
-        return PresetSetting.getDefaultInstance();
-      }
-
-      @Override
-      public PresetSetting build() {
-        PresetSetting result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    PresetSetting.class.getName());
         }
-        return result;
-      }
 
-      @Override
-      public PresetSetting buildPartial() {
-        PresetSetting result = new PresetSetting(this);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
+        // Use PresetSetting.newBuilder() to construct.
+        private PresetSetting(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
+        }
 
-      private void buildPartial0(PresetSetting result) {
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-          to_bitField0_ |= 0x00000001;
+        private PresetSetting() {
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.value_ = value_;
-          to_bitField0_ |= 0x00000002;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.isCaption_ = isCaption_;
-          to_bitField0_ |= 0x00000004;
-        }
-        result.bitField0_ |= to_bitField0_;
-      }
 
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof PresetSetting) {
-          return mergeFrom((PresetSetting)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetSetting_descriptor;
         }
-      }
 
-      public Builder mergeFrom(PresetSetting other) {
-        if (other == PresetSetting.getDefaultInstance()) return this;
-        if (other.hasId()) {
-          setId(other.getId());
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetSetting_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder.class);
         }
-        if (other.hasValue()) {
-          setValue(other.getValue());
-        }
-        if (other.hasIsCaption()) {
-          setIsCaption(other.getIsCaption());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
 
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
+        private int bitField0_;
+        public static final int ID_FIELD_NUMBER = 1;
+        private int id_ = 0;
 
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new NullPointerException();
+        /**
+         * <pre>
+         * Setting ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return Whether the id field is set.
+         */
+        @java.lang.Override
+        public boolean hasId() {
+            return ((bitField0_ & 0x00000001) != 0);
         }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-                id_ = input.readInt32();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 8
-              case 16: {
-                value_ = input.readInt32();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-              case 24: {
-                isCaption_ = input.readBool();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
+
+        /**
+         * <pre>
+         * Setting ID
+         * </pre>
+         *
+         * <code>optional int32 id = 1;</code>
+         *
+         * @return The id.
+         */
+        @java.lang.Override
+        public int getId() {
+            return id_;
+        }
+
+        public static final int VALUE_FIELD_NUMBER = 2;
+        private int value_ = 0;
+
+        /**
+         * <pre>
+         * Setting value
+         * </pre>
+         *
+         * <code>optional int32 value = 2;</code>
+         *
+         * @return Whether the value field is set.
+         */
+        @java.lang.Override
+        public boolean hasValue() {
+            return ((bitField0_ & 0x00000002) != 0);
+        }
+
+        /**
+         * <pre>
+         * Setting value
+         * </pre>
+         *
+         * <code>optional int32 value = 2;</code>
+         *
+         * @return The value.
+         */
+        @java.lang.Override
+        public int getValue() {
+            return value_;
+        }
+
+        public static final int IS_CAPTION_FIELD_NUMBER = 3;
+        private boolean isCaption_ = false;
+
+        /**
+         * <pre>
+         * Does this setting appear on the Preset "pill" in the camera UI?
+         * </pre>
+         *
+         * <code>optional bool is_caption = 3;</code>
+         *
+         * @return Whether the isCaption field is set.
+         */
+        @java.lang.Override
+        public boolean hasIsCaption() {
+            return ((bitField0_ & 0x00000004) != 0);
+        }
+
+        /**
+         * <pre>
+         * Does this setting appear on the Preset "pill" in the camera UI?
+         * </pre>
+         *
+         * <code>optional bool is_caption = 3;</code>
+         *
+         * @return The isCaption.
+         */
+        @java.lang.Override
+        public boolean getIsCaption() {
+            return isCaption_;
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            if (((bitField0_ & 0x00000001) != 0)) {
+                output.writeInt32(1, id_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                output.writeInt32(2, value_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                output.writeBool(3, isCaption_);
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            if (((bitField0_ & 0x00000001) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(1, id_);
+            }
+            if (((bitField0_ & 0x00000002) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(2, value_);
+            }
+            if (((bitField0_ & 0x00000004) != 0)) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeBoolSize(3, isCaption_);
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting other = (com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting) obj;
+
+            if (hasId() != other.hasId()) return false;
+            if (hasId()) {
+                if (getId()
+                        != other.getId()) return false;
+            }
+            if (hasValue() != other.hasValue()) return false;
+            if (hasValue()) {
+                if (getValue()
+                        != other.getValue()) return false;
+            }
+            if (hasIsCaption() != other.hasIsCaption()) return false;
+            if (hasIsCaption()) {
+                if (getIsCaption()
+                        != other.getIsCaption()) return false;
+            }
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (hasId()) {
+                hash = (37 * hash) + ID_FIELD_NUMBER;
+                hash = (53 * hash) + getId();
+            }
+            if (hasValue()) {
+                hash = (37 * hash) + VALUE_FIELD_NUMBER;
+                hash = (53 * hash) + getValue();
+            }
+            if (hasIsCaption()) {
+                hash = (37 * hash) + IS_CAPTION_FIELD_NUMBER;
+                hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getIsCaption());
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(java.nio.ByteBuffer data,
+                                                                                                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(com.google.protobuf.ByteString data,
+                                                                                                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(byte[] data,
+                                                                                                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(java.io.InputStream input,
+                                                                                                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseDelimitedFrom(java.io.InputStream input,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                                 com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         * *
+         * Setting representation that comprises a  &#64;ref Preset
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.PresetSetting}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.PresetSetting)
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSettingOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetSetting_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetSetting_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.class, com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.newBuilder()
+            private Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                id_ = 0;
+                value_ = 0;
+                isCaption_ = false;
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.internal_static_open_gopro_PresetSetting_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting build() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
                 }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
+                return result;
+            }
 
-      private int id_ ;
-      /**
-       * <pre>
-       * Setting ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return Whether the id field is set.
-       */
-      @Override
-      public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
-      }
-      /**
-       * <pre>
-       * Setting ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return The id.
-       */
-      @Override
-      public int getId() {
-        return id_;
-      }
-      /**
-       * <pre>
-       * Setting ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(int value) {
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting result = new com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting(this);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
 
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Setting ID
-       * </pre>
-       *
-       * <code>optional int32 id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = 0;
-        onChanged();
-        return this;
-      }
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting result) {
+                int from_bitField0_ = bitField0_;
+                int to_bitField0_ = 0;
+                if (((from_bitField0_ & 0x00000001) != 0)) {
+                    result.id_ = id_;
+                    to_bitField0_ |= 0x00000001;
+                }
+                if (((from_bitField0_ & 0x00000002) != 0)) {
+                    result.value_ = value_;
+                    to_bitField0_ |= 0x00000002;
+                }
+                if (((from_bitField0_ & 0x00000004) != 0)) {
+                    result.isCaption_ = isCaption_;
+                    to_bitField0_ |= 0x00000004;
+                }
+                result.bitField0_ |= to_bitField0_;
+            }
 
-      private int value_ ;
-      /**
-       * <pre>
-       * Setting value
-       * </pre>
-       *
-       * <code>optional int32 value = 2;</code>
-       * @return Whether the value field is set.
-       */
-      @Override
-      public boolean hasValue() {
-        return ((bitField0_ & 0x00000002) != 0);
-      }
-      /**
-       * <pre>
-       * Setting value
-       * </pre>
-       *
-       * <code>optional int32 value = 2;</code>
-       * @return The value.
-       */
-      @Override
-      public int getValue() {
-        return value_;
-      }
-      /**
-       * <pre>
-       * Setting value
-       * </pre>
-       *
-       * <code>optional int32 value = 2;</code>
-       * @param value The value to set.
-       * @return This builder for chaining.
-       */
-      public Builder setValue(int value) {
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting) other);
+                } else {
+                    super.mergeFrom(other);
+                    return this;
+                }
+            }
 
-        value_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Setting value
-       * </pre>
-       *
-       * <code>optional int32 value = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearValue() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        value_ = 0;
-        onChanged();
-        return this;
-      }
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting.getDefaultInstance())
+                    return this;
+                if (other.hasId()) {
+                    setId(other.getId());
+                }
+                if (other.hasValue()) {
+                    setValue(other.getValue());
+                }
+                if (other.hasIsCaption()) {
+                    setIsCaption(other.getIsCaption());
+                }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
 
-      private boolean isCaption_ ;
-      /**
-       * <pre>
-       * Does this setting appear on the Preset "pill" in the camera UI?
-       * </pre>
-       *
-       * <code>optional bool is_caption = 3;</code>
-       * @return Whether the isCaption field is set.
-       */
-      @Override
-      public boolean hasIsCaption() {
-        return ((bitField0_ & 0x00000004) != 0);
-      }
-      /**
-       * <pre>
-       * Does this setting appear on the Preset "pill" in the camera UI?
-       * </pre>
-       *
-       * <code>optional bool is_caption = 3;</code>
-       * @return The isCaption.
-       */
-      @Override
-      public boolean getIsCaption() {
-        return isCaption_;
-      }
-      /**
-       * <pre>
-       * Does this setting appear on the Preset "pill" in the camera UI?
-       * </pre>
-       *
-       * <code>optional bool is_caption = 3;</code>
-       * @param value The isCaption to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsCaption(boolean value) {
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
 
-        isCaption_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Does this setting appear on the Preset "pill" in the camera UI?
-       * </pre>
-       *
-       * <code>optional bool is_caption = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsCaption() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        isCaption_ = false;
-        onChanged();
-        return this;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
+                }
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 8: {
+                                id_ = input.readInt32();
+                                bitField0_ |= 0x00000001;
+                                break;
+                            } // case 8
+                            case 16: {
+                                value_ = input.readInt32();
+                                bitField0_ |= 0x00000002;
+                                break;
+                            } // case 16
+                            case 24: {
+                                isCaption_ = input.readBool();
+                                bitField0_ |= 0x00000004;
+                                break;
+                            } // case 24
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
 
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
+            private int bitField0_;
 
+            private int id_;
 
-      // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.PresetSetting)
-    }
+            /**
+             * <pre>
+             * Setting ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return Whether the id field is set.
+             */
+            @java.lang.Override
+            public boolean hasId() {
+                return ((bitField0_ & 0x00000001) != 0);
+            }
 
-    // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.PresetSetting)
-    private static final PresetSetting DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new PresetSetting();
-    }
+            /**
+             * <pre>
+             * Setting ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return The id.
+             */
+            @java.lang.Override
+            public int getId() {
+                return id_;
+            }
 
-    public static PresetSetting getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
+            /**
+             * <pre>
+             * Setting ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @param value The id to set.
+             * @return This builder for chaining.
+             */
+            public Builder setId(int value) {
 
-    @Deprecated public static final com.google.protobuf.Parser<PresetSetting>
-        PARSER = new com.google.protobuf.AbstractParser<PresetSetting>() {
-      @Override
-      public PresetSetting parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
+                id_ = value;
+                bitField0_ |= 0x00000001;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Setting ID
+             * </pre>
+             *
+             * <code>optional int32 id = 1;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearId() {
+                bitField0_ = (bitField0_ & ~0x00000001);
+                id_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int value_;
+
+            /**
+             * <pre>
+             * Setting value
+             * </pre>
+             *
+             * <code>optional int32 value = 2;</code>
+             *
+             * @return Whether the value field is set.
+             */
+            @java.lang.Override
+            public boolean hasValue() {
+                return ((bitField0_ & 0x00000002) != 0);
+            }
+
+            /**
+             * <pre>
+             * Setting value
+             * </pre>
+             *
+             * <code>optional int32 value = 2;</code>
+             *
+             * @return The value.
+             */
+            @java.lang.Override
+            public int getValue() {
+                return value_;
+            }
+
+            /**
+             * <pre>
+             * Setting value
+             * </pre>
+             *
+             * <code>optional int32 value = 2;</code>
+             *
+             * @param value The value to set.
+             * @return This builder for chaining.
+             */
+            public Builder setValue(int value) {
+
+                value_ = value;
+                bitField0_ |= 0x00000002;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Setting value
+             * </pre>
+             *
+             * <code>optional int32 value = 2;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearValue() {
+                bitField0_ = (bitField0_ & ~0x00000002);
+                value_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private boolean isCaption_;
+
+            /**
+             * <pre>
+             * Does this setting appear on the Preset "pill" in the camera UI?
+             * </pre>
+             *
+             * <code>optional bool is_caption = 3;</code>
+             *
+             * @return Whether the isCaption field is set.
+             */
+            @java.lang.Override
+            public boolean hasIsCaption() {
+                return ((bitField0_ & 0x00000004) != 0);
+            }
+
+            /**
+             * <pre>
+             * Does this setting appear on the Preset "pill" in the camera UI?
+             * </pre>
+             *
+             * <code>optional bool is_caption = 3;</code>
+             *
+             * @return The isCaption.
+             */
+            @java.lang.Override
+            public boolean getIsCaption() {
+                return isCaption_;
+            }
+
+            /**
+             * <pre>
+             * Does this setting appear on the Preset "pill" in the camera UI?
+             * </pre>
+             *
+             * <code>optional bool is_caption = 3;</code>
+             *
+             * @param value The isCaption to set.
+             * @return This builder for chaining.
+             */
+            public Builder setIsCaption(boolean value) {
+
+                isCaption_ = value;
+                bitField0_ |= 0x00000004;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Does this setting appear on the Preset "pill" in the camera UI?
+             * </pre>
+             *
+             * <code>optional bool is_caption = 3;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearIsCaption() {
+                bitField0_ = (bitField0_ & ~0x00000004);
+                isCaption_ = false;
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.PresetSetting)
         }
-        return builder.buildPartial();
-      }
-    };
 
-    public static com.google.protobuf.Parser<PresetSetting> parser() {
-      return PARSER;
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.PresetSetting)
+        private static final com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<PresetSetting>
+                PARSER = new com.google.protobuf.AbstractParser<PresetSetting>() {
+            @java.lang.Override
+            public PresetSetting parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                                  com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<PresetSetting> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<PresetSetting> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.PresetStatus.PresetSetting getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
 
-    @Override
-    public com.google.protobuf.Parser<PresetSetting> getParserForType() {
-      return PARSER;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_NotifyPresetStatus_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_NotifyPresetStatus_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_Preset_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_Preset_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_RequestCustomPresetUpdate_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_RequestCustomPresetUpdate_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_PresetGroup_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_PresetGroup_fieldAccessorTable;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_PresetSetting_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_PresetSetting_fieldAccessorTable;
+
+    public static com.google.protobuf.Descriptors.FileDescriptor
+    getDescriptor() {
+        return descriptor;
     }
 
-    @Override
-    public PresetSetting getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
+
+    static {
+        java.lang.String[] descriptorData = {
+                "\n\023preset_status.proto\022\ncom.sepp89117.goeasypro_android.gopro\"I\n\022Not" +
+                        "ifyPresetStatus\0223\n\022preset_group_array\030\001 " +
+                        "\003(\0132\027.com.sepp89117.goeasypro_android.gopro.PresetGroup\"\257\002\n\006Preset\022" +
+                        "\n\n\002id\030\001 \001(\005\022&\n\004mode\030\002 \001(\0162\030.com.sepp89117.goeasypro_android.gopro.E" +
+                        "numFlatMode\022-\n\010title_id\030\003 \001(\0162\033.open_gop" +
+                        "ro.EnumPresetTitle\022\024\n\014title_number\030\004 \001(\005" +
+                        "\022\024\n\014user_defined\030\005 \001(\010\022(\n\004icon\030\006 \001(\0162\032.o" +
+                        "pen_gopro.EnumPresetIcon\0220\n\rsetting_arra" +
+                        "y\030\007 \003(\0132\031.com.sepp89117.goeasypro_android.gopro.PresetSetting\022\023\n\013is" +
+                        "_modified\030\010 \001(\010\022\020\n\010is_fixed\030\t \001(\010\022\023\n\013cus" +
+                        "tom_name\030\n \001(\t\"\214\001\n\031RequestCustomPresetUp" +
+                        "date\022-\n\010title_id\030\001 \001(\0162\033.com.sepp89117.goeasypro_android.gopro.Enum" +
+                        "PresetTitle\022\023\n\013custom_name\030\002 \001(\t\022+\n\007icon" +
+                        "_id\030\003 \001(\0162\032.com.sepp89117.goeasypro_android.gopro.EnumPresetIcon\"\325\001" +
+                        "\n\013PresetGroup\022\'\n\002id\030\001 \001(\0162\033.com.sepp89117.goeasypro_android.gopro.E" +
+                        "numPresetGroup\022(\n\014preset_array\030\002 \003(\0132\022.o" +
+                        "pen_gopro.Preset\022\026\n\016can_add_preset\030\003 \001(\010" +
+                        "\022-\n\004icon\030\004 \001(\0162\037.com.sepp89117.goeasypro_android.gopro.EnumPresetGr" +
+                        "oupIcon\022,\n\nmode_array\030\005 \003(\0162\030.com.sepp89117.goeasypro_android.gopro" +
+                        ".EnumFlatMode\">\n\rPresetSetting\022\n\n\002id\030\001 \001" +
+                        "(\005\022\r\n\005value\030\002 \001(\005\022\022\n\nis_caption\030\003 \001(\010*\233\005" +
+                        "\n\014EnumFlatMode\022\036\n\021FLAT_MODE_UNKNOWN\020\377\377\377\377" +
+                        "\377\377\377\377\377\001\022\026\n\022FLAT_MODE_PLAYBACK\020\004\022\023\n\017FLAT_M" +
+                        "ODE_SETUP\020\005\022\023\n\017FLAT_MODE_VIDEO\020\014\022\036\n\032FLAT" +
+                        "_MODE_TIME_LAPSE_VIDEO\020\r\022\025\n\021FLAT_MODE_LO" +
+                        "OPING\020\017\022\032\n\026FLAT_MODE_PHOTO_SINGLE\020\020\022\023\n\017F" +
+                        "LAT_MODE_PHOTO\020\021\022\031\n\025FLAT_MODE_PHOTO_NIGH" +
+                        "T\020\022\022\031\n\025FLAT_MODE_PHOTO_BURST\020\023\022\036\n\032FLAT_M" +
+                        "ODE_TIME_LAPSE_PHOTO\020\024\022\037\n\033FLAT_MODE_NIGH" +
+                        "T_LAPSE_PHOTO\020\025\022\036\n\032FLAT_MODE_BROADCAST_R" +
+                        "ECORD\020\026\022!\n\035FLAT_MODE_BROADCAST_BROADCAST" +
+                        "\020\027\022\035\n\031FLAT_MODE_TIME_WARP_VIDEO\020\030\022\030\n\024FLA" +
+                        "T_MODE_LIVE_BURST\020\031\022\037\n\033FLAT_MODE_NIGHT_L" +
+                        "APSE_VIDEO\020\032\022\023\n\017FLAT_MODE_SLOMO\020\033\022\022\n\016FLA" +
+                        "T_MODE_IDLE\020\034\022\036\n\032FLAT_MODE_VIDEO_STAR_TR" +
+                        "AIL\020\035\022\"\n\036FLAT_MODE_VIDEO_LIGHT_PAINTING\020" +
+                        "\036\022\037\n\033FLAT_MODE_VIDEO_LIGHT_TRAIL\020\037\022\037\n\033FL" +
+                        "AT_MODE_VIDEO_BURST_SLOMO\020 *i\n\017EnumPrese" +
+                        "tGroup\022\032\n\025PRESET_GROUP_ID_VIDEO\020\350\007\022\032\n\025PR" +
+                        "ESET_GROUP_ID_PHOTO\020\351\007\022\036\n\031PRESET_GROUP_I" +
+                        "D_TIMELAPSE\020\352\007*\265\003\n\023EnumPresetGroupIcon\022\036" +
+                        "\n\032PRESET_GROUP_VIDEO_ICON_ID\020\000\022\036\n\032PRESET" +
+                        "_GROUP_PHOTO_ICON_ID\020\001\022\"\n\036PRESET_GROUP_T" +
+                        "IMELAPSE_ICON_ID\020\002\022\'\n#PRESET_GROUP_LONG_" +
+                        "BAT_VIDEO_ICON_ID\020\003\022(\n$PRESET_GROUP_ENDU" +
+                        "RANCE_VIDEO_ICON_ID\020\004\022\"\n\036PRESET_GROUP_MA" +
+                        "X_VIDEO_ICON_ID\020\005\022\"\n\036PRESET_GROUP_MAX_PH" +
+                        "OTO_ICON_ID\020\006\022&\n\"PRESET_GROUP_MAX_TIMELA" +
+                        "PSE_ICON_ID\020\007\022%\n!PRESET_GROUP_ND_MOD_VID" +
+                        "EO_ICON_ID\020\010\022%\n!PRESET_GROUP_ND_MOD_PHOT" +
+                        "O_ICON_ID\020\t\022)\n%PRESET_GROUP_ND_MOD_TIMEL" +
+                        "APSE_ICON_ID\020\n*\377\022\n\016EnumPresetIcon\022\025\n\021PRE" +
+                        "SET_ICON_VIDEO\020\000\022\030\n\024PRESET_ICON_ACTIVITY" +
+                        "\020\001\022\031\n\025PRESET_ICON_CINEMATIC\020\002\022\025\n\021PRESET_" +
+                        "ICON_PHOTO\020\003\022\032\n\026PRESET_ICON_LIVE_BURST\020\004" +
+                        "\022\025\n\021PRESET_ICON_BURST\020\005\022\033\n\027PRESET_ICON_P" +
+                        "HOTO_NIGHT\020\006\022\030\n\024PRESET_ICON_TIMEWARP\020\007\022\031" +
+                        "\n\025PRESET_ICON_TIMELAPSE\020\010\022\032\n\026PRESET_ICON" +
+                        "_NIGHTLAPSE\020\t\022\025\n\021PRESET_ICON_SNAIL\020\n\022\027\n\023" +
+                        "PRESET_ICON_VIDEO_2\020\013\022\027\n\023PRESET_ICON_PHO" +
+                        "TO_2\020\r\022\030\n\024PRESET_ICON_PANORAMA\020\016\022\027\n\023PRES" +
+                        "ET_ICON_BURST_2\020\017\022\032\n\026PRESET_ICON_TIMEWAR" +
+                        "P_2\020\020\022\033\n\027PRESET_ICON_TIMELAPSE_2\020\021\022\026\n\022PR" +
+                        "ESET_ICON_CUSTOM\020\022\022\023\n\017PRESET_ICON_AIR\020\023\022" +
+                        "\024\n\020PRESET_ICON_BIKE\020\024\022\024\n\020PRESET_ICON_EPI" +
+                        "C\020\025\022\026\n\022PRESET_ICON_INDOOR\020\026\022\025\n\021PRESET_IC" +
+                        "ON_MOTOR\020\027\022\027\n\023PRESET_ICON_MOUNTED\020\030\022\027\n\023P" +
+                        "RESET_ICON_OUTDOOR\020\031\022\023\n\017PRESET_ICON_POV\020" +
+                        "\032\022\026\n\022PRESET_ICON_SELFIE\020\033\022\025\n\021PRESET_ICON" +
+                        "_SKATE\020\034\022\024\n\020PRESET_ICON_SNOW\020\035\022\025\n\021PRESET" +
+                        "_ICON_TRAIL\020\036\022\026\n\022PRESET_ICON_TRAVEL\020\037\022\025\n" +
+                        "\021PRESET_ICON_WATER\020 \022\027\n\023PRESET_ICON_LOOP" +
+                        "ING\020!\022\025\n\021PRESET_ICON_STARS\020\"\022\026\n\022PRESET_I" +
+                        "CON_ACTION\020#\022\032\n\026PRESET_ICON_FOLLOW_CAM\020$" +
+                        "\022\024\n\020PRESET_ICON_SURF\020%\022\024\n\020PRESET_ICON_CI" +
+                        "TY\020&\022\025\n\021PRESET_ICON_SHAKY\020\'\022\026\n\022PRESET_IC" +
+                        "ON_CHESTY\020(\022\026\n\022PRESET_ICON_HELMET\020)\022\024\n\020P" +
+                        "RESET_ICON_BITE\020*\022 \n\034PRESET_ICON_CUSTOM_" +
+                        "CINEMATIC\020+\022\024\n\020PRESET_ICON_VLOG\020,\022\023\n\017PRE" +
+                        "SET_ICON_FPV\020-\022\023\n\017PRESET_ICON_HDR\020.\022\031\n\025P" +
+                        "RESET_ICON_LANDSCAPE\020/\022\023\n\017PRESET_ICON_LO" +
+                        "G\0200\022\034\n\030PRESET_ICON_CUSTOM_SLOMO\0201\022\026\n\022PRE" +
+                        "SET_ICON_TRIPOD\0202\022\031\n\025PRESET_ICON_MAX_VID" +
+                        "EO\0207\022\031\n\025PRESET_ICON_MAX_PHOTO\0208\022\034\n\030PRESE" +
+                        "T_ICON_MAX_TIMEWARP\0209\022\025\n\021PRESET_ICON_BAS" +
+                        "IC\020:\022\034\n\030PRESET_ICON_ULTRA_SLO_MO\020;\022\"\n\036PR" +
+                        "ESET_ICON_STANDARD_ENDURANCE\020<\022\"\n\036PRESET" +
+                        "_ICON_ACTIVITY_ENDURANCE\020=\022#\n\037PRESET_ICO" +
+                        "N_CINEMATIC_ENDURANCE\020>\022\037\n\033PRESET_ICON_S" +
+                        "LOMO_ENDURANCE\020?\022\034\n\030PRESET_ICON_STATIONA" +
+                        "RY_1\020@\022\034\n\030PRESET_ICON_STATIONARY_2\020A\022\034\n\030" +
+                        "PRESET_ICON_STATIONARY_3\020B\022\034\n\030PRESET_ICO" +
+                        "N_STATIONARY_4\020C\022\"\n\036PRESET_ICON_SIMPLE_S" +
+                        "UPER_PHOTO\020F\022\"\n\036PRESET_ICON_SIMPLE_NIGHT" +
+                        "_PHOTO\020G\022%\n!PRESET_ICON_HIGHEST_QUALITY_" +
+                        "VIDEO\020I\022&\n\"PRESET_ICON_STANDARD_QUALITY_" +
+                        "VIDEO\020J\022#\n\037PRESET_ICON_BASIC_QUALITY_VID" +
+                        "EO\020K\022\032\n\026PRESET_ICON_STAR_TRAIL\020L\022\036\n\032PRES" +
+                        "ET_ICON_LIGHT_PAINTING\020M\022\033\n\027PRESET_ICON_" +
+                        "LIGHT_TRAIL\020N\022\032\n\026PRESET_ICON_FULL_FRAME\020" +
+                        "O\022\036\n\032PRESET_ICON_EASY_MAX_VIDEO\020P\022\036\n\032PRE" +
+                        "SET_ICON_EASY_MAX_PHOTO\020Q\022!\n\035PRESET_ICON" +
+                        "_EASY_MAX_TIMEWARP\020R\022#\n\037PRESET_ICON_EASY" +
+                        "_MAX_STAR_TRAIL\020S\022\'\n#PRESET_ICON_EASY_MA" +
+                        "X_LIGHT_PAINTING\020T\022$\n PRESET_ICON_EASY_M" +
+                        "AX_LIGHT_TRAIL\020U\022\036\n\032PRESET_ICON_MAX_STAR" +
+                        "_TRAIL\020Y\022\"\n\036PRESET_ICON_MAX_LIGHT_PAINTI" +
+                        "NG\020Z\022\037\n\033PRESET_ICON_MAX_LIGHT_TRAIL\020[\022%\n" +
+                        "!PRESET_ICON_EASY_STANDARD_PROFILE\020d\022 \n\034" +
+                        "PRESET_ICON_EASY_HDR_PROFILE\020e\022\033\n\027PRESET" +
+                        "_ICON_BURST_SLOMO\020f\022 \n\033PRESET_ICON_TIMEL" +
+                        "APSE_PHOTO\020\350\007\022!\n\034PRESET_ICON_NIGHTLAPSE_" +
+                        "PHOTO\020\351\007*\267\021\n\017EnumPresetTitle\022\031\n\025PRESET_T" +
+                        "ITLE_ACTIVITY\020\000\022\031\n\025PRESET_TITLE_STANDARD" +
+                        "\020\001\022\032\n\026PRESET_TITLE_CINEMATIC\020\002\022\026\n\022PRESET" +
+                        "_TITLE_PHOTO\020\003\022\033\n\027PRESET_TITLE_LIVE_BURS" +
+                        "T\020\004\022\026\n\022PRESET_TITLE_BURST\020\005\022\026\n\022PRESET_TI" +
+                        "TLE_NIGHT\020\006\022\032\n\026PRESET_TITLE_TIME_WARP\020\007\022" +
+                        "\033\n\027PRESET_TITLE_TIME_LAPSE\020\010\022\034\n\030PRESET_T" +
+                        "ITLE_NIGHT_LAPSE\020\t\022\026\n\022PRESET_TITLE_VIDEO" +
+                        "\020\n\022\026\n\022PRESET_TITLE_SLOMO\020\013\022\030\n\024PRESET_TIT" +
+                        "LE_PHOTO_2\020\r\022\031\n\025PRESET_TITLE_PANORAMA\020\016\022" +
+                        "\034\n\030PRESET_TITLE_TIME_WARP_2\020\020\022\027\n\023PRESET_" +
+                        "TITLE_CUSTOM\020\022\022\024\n\020PRESET_TITLE_AIR\020\023\022\025\n\021" +
+                        "PRESET_TITLE_BIKE\020\024\022\025\n\021PRESET_TITLE_EPIC" +
+                        "\020\025\022\027\n\023PRESET_TITLE_INDOOR\020\026\022\026\n\022PRESET_TI" +
+                        "TLE_MOTOR\020\027\022\030\n\024PRESET_TITLE_MOUNTED\020\030\022\030\n" +
+                        "\024PRESET_TITLE_OUTDOOR\020\031\022\024\n\020PRESET_TITLE_" +
+                        "POV\020\032\022\027\n\023PRESET_TITLE_SELFIE\020\033\022\026\n\022PRESET" +
+                        "_TITLE_SKATE\020\034\022\025\n\021PRESET_TITLE_SNOW\020\035\022\026\n" +
+                        "\022PRESET_TITLE_TRAIL\020\036\022\027\n\023PRESET_TITLE_TR" +
+                        "AVEL\020\037\022\026\n\022PRESET_TITLE_WATER\020 \022\030\n\024PRESET" +
+                        "_TITLE_LOOPING\020!\022\026\n\022PRESET_TITLE_STARS\020\"" +
+                        "\022\027\n\023PRESET_TITLE_ACTION\020#\022\033\n\027PRESET_TITL" +
+                        "E_FOLLOW_CAM\020$\022\025\n\021PRESET_TITLE_SURF\020%\022\025\n" +
+                        "\021PRESET_TITLE_CITY\020&\022\026\n\022PRESET_TITLE_SHA" +
+                        "KY\020\'\022\027\n\023PRESET_TITLE_CHESTY\020(\022\027\n\023PRESET_" +
+                        "TITLE_HELMET\020)\022\025\n\021PRESET_TITLE_BITE\020*\022!\n" +
+                        "\035PRESET_TITLE_CUSTOM_CINEMATIC\020+\022\025\n\021PRES" +
+                        "ET_TITLE_VLOG\020,\022\024\n\020PRESET_TITLE_FPV\020-\022\024\n" +
+                        "\020PRESET_TITLE_HDR\020.\022\032\n\026PRESET_TITLE_LAND" +
+                        "SCAPE\020/\022\024\n\020PRESET_TITLE_LOG\0200\022\035\n\031PRESET_" +
+                        "TITLE_CUSTOM_SLOMO\0201\022\027\n\023PRESET_TITLE_TRI" +
+                        "POD\0202\022\026\n\022PRESET_TITLE_BASIC\020:\022\035\n\031PRESET_" +
+                        "TITLE_ULTRA_SLO_MO\020;\022#\n\037PRESET_TITLE_STA" +
+                        "NDARD_ENDURANCE\020<\022#\n\037PRESET_TITLE_ACTIVI" +
+                        "TY_ENDURANCE\020=\022$\n PRESET_TITLE_CINEMATIC" +
+                        "_ENDURANCE\020>\022 \n\034PRESET_TITLE_SLOMO_ENDUR" +
+                        "ANCE\020?\022\035\n\031PRESET_TITLE_STATIONARY_1\020@\022\035\n" +
+                        "\031PRESET_TITLE_STATIONARY_2\020A\022\035\n\031PRESET_T" +
+                        "ITLE_STATIONARY_3\020B\022\035\n\031PRESET_TITLE_STAT" +
+                        "IONARY_4\020C\022\035\n\031PRESET_TITLE_SIMPLE_VIDEO\020" +
+                        "D\022!\n\035PRESET_TITLE_SIMPLE_TIME_WARP\020E\022#\n\037" +
+                        "PRESET_TITLE_SIMPLE_SUPER_PHOTO\020F\022#\n\037PRE" +
+                        "SET_TITLE_SIMPLE_NIGHT_PHOTO\020G\022\'\n#PRESET" +
+                        "_TITLE_SIMPLE_VIDEO_ENDURANCE\020H\022 \n\034PRESE" +
+                        "T_TITLE_HIGHEST_QUALITY\020I\022!\n\035PRESET_TITL" +
+                        "E_EXTENDED_BATTERY\020J\022 \n\034PRESET_TITLE_LON" +
+                        "GEST_BATTERY\020K\022\033\n\027PRESET_TITLE_STAR_TRAI" +
+                        "L\020L\022\037\n\033PRESET_TITLE_LIGHT_PAINTING\020M\022\034\n\030" +
+                        "PRESET_TITLE_LIGHT_TRAIL\020N\022\033\n\027PRESET_TIT" +
+                        "LE_FULL_FRAME\020O\022\'\n#PRESET_TITLE_STANDARD" +
+                        "_QUALITY_VIDEO\020R\022$\n PRESET_TITLE_BASIC_Q" +
+                        "UALITY_VIDEO\020S\022&\n\"PRESET_TITLE_HIGHEST_Q" +
+                        "UALITY_VIDEO\020]\022)\n%PRESET_TITLE_USER_DEFI" +
+                        "NED_CUSTOM_NAME\020^\022&\n\"PRESET_TITLE_EASY_S" +
+                        "TANDARD_PROFILE\020c\022!\n\035PRESET_TITLE_EASY_H" +
+                        "DR_PROFILE\020d\022\034\n\030PRESET_TITLE_BURST_SLOMO" +
+                        "\020j"
+        };
+        descriptor = com.google.protobuf.Descriptors.FileDescriptor
+                .internalBuildGeneratedFileFrom(descriptorData,
+                        new com.google.protobuf.Descriptors.FileDescriptor[]{
+                        });
+        internal_static_open_gopro_NotifyPresetStatus_descriptor =
+                getDescriptor().getMessageTypes().get(0);
+        internal_static_open_gopro_NotifyPresetStatus_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_NotifyPresetStatus_descriptor,
+                new java.lang.String[]{"PresetGroupArray",});
+        internal_static_open_gopro_Preset_descriptor =
+                getDescriptor().getMessageTypes().get(1);
+        internal_static_open_gopro_Preset_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_Preset_descriptor,
+                new java.lang.String[]{"Id", "Mode", "TitleId", "TitleNumber", "UserDefined", "Icon", "SettingArray", "IsModified", "IsFixed", "CustomName",});
+        internal_static_open_gopro_RequestCustomPresetUpdate_descriptor =
+                getDescriptor().getMessageTypes().get(2);
+        internal_static_open_gopro_RequestCustomPresetUpdate_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_RequestCustomPresetUpdate_descriptor,
+                new java.lang.String[]{"TitleId", "CustomName", "IconId",});
+        internal_static_open_gopro_PresetGroup_descriptor =
+                getDescriptor().getMessageTypes().get(3);
+        internal_static_open_gopro_PresetGroup_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_PresetGroup_descriptor,
+                new java.lang.String[]{"Id", "PresetArray", "CanAddPreset", "Icon", "ModeArray",});
+        internal_static_open_gopro_PresetSetting_descriptor =
+                getDescriptor().getMessageTypes().get(4);
+        internal_static_open_gopro_PresetSetting_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_PresetSetting_descriptor,
+                new java.lang.String[]{"Id", "Value", "IsCaption",});
+        descriptor.resolveAllFeaturesImmutable();
     }
 
-  }
-
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sepp89117_goeasypro_android_gopro_Preset_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_fieldAccessorTable;
-
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    String[] descriptorData = {
-      "\n\031proto/preset_status.proto\022%com.sepp891" +
-      "17.goeasypro_android.gopro\"d\n\022NotifyPres" +
-      "etStatus\022N\n\022preset_group_array\030\001 \003(\01322.c" +
-      "om.sepp89117.goeasypro_android.gopro.Pre" +
-      "setGroup\"\206\003\n\006Preset\022\n\n\002id\030\001 \001(\005\022A\n\004mode\030" +
-      "\002 \001(\01623.com.sepp89117.goeasypro_android." +
-      "gopro.EnumFlatMode\022H\n\010title_id\030\003 \001(\01626.c" +
-      "om.sepp89117.goeasypro_android.gopro.Enu" +
-      "mPresetTitle\022\024\n\014title_number\030\004 \001(\005\022\024\n\014us" +
-      "er_defined\030\005 \001(\010\022C\n\004icon\030\006 \001(\01625.com.sep" +
-      "p89117.goeasypro_android.gopro.EnumPrese" +
-      "tIcon\022K\n\rsetting_array\030\007 \003(\01324.com.sepp8" +
-      "9117.goeasypro_android.gopro.PresetSetti" +
-      "ng\022\023\n\013is_modified\030\010 \001(\010\022\020\n\010is_fixed\030\t \001(" +
-      "\010\"\370\001\n\013PresetGroup\022B\n\002id\030\001 \001(\01626.com.sepp" +
-      "89117.goeasypro_android.gopro.EnumPreset" +
-      "Group\022C\n\014preset_array\030\002 \003(\0132-.com.sepp89" +
-      "117.goeasypro_android.gopro.Preset\022\026\n\016ca" +
-      "n_add_preset\030\003 \001(\010\022H\n\004icon\030\004 \001(\0162:.com.s" +
-      "epp89117.goeasypro_android.gopro.EnumPre" +
-      "setGroupIcon\">\n\rPresetSetting\022\n\n\002id\030\001 \001(" +
-      "\005\022\r\n\005value\030\002 \001(\005\022\022\n\nis_caption\030\003 \001(\010*\372\004\n" +
-      "\014EnumFlatMode\022\036\n\021FLAT_MODE_UNKNOWN\020\377\377\377\377\377" +
-      "\377\377\377\377\001\022\026\n\022FLAT_MODE_PLAYBACK\020\004\022\023\n\017FLAT_MO" +
-      "DE_SETUP\020\005\022\023\n\017FLAT_MODE_VIDEO\020\014\022\036\n\032FLAT_" +
-      "MODE_TIME_LAPSE_VIDEO\020\r\022\025\n\021FLAT_MODE_LOO" +
-      "PING\020\017\022\032\n\026FLAT_MODE_PHOTO_SINGLE\020\020\022\023\n\017FL" +
-      "AT_MODE_PHOTO\020\021\022\031\n\025FLAT_MODE_PHOTO_NIGHT" +
-      "\020\022\022\031\n\025FLAT_MODE_PHOTO_BURST\020\023\022\036\n\032FLAT_MO" +
-      "DE_TIME_LAPSE_PHOTO\020\024\022\037\n\033FLAT_MODE_NIGHT" +
-      "_LAPSE_PHOTO\020\025\022\036\n\032FLAT_MODE_BROADCAST_RE" +
-      "CORD\020\026\022!\n\035FLAT_MODE_BROADCAST_BROADCAST\020" +
-      "\027\022\035\n\031FLAT_MODE_TIME_WARP_VIDEO\020\030\022\030\n\024FLAT" +
-      "_MODE_LIVE_BURST\020\031\022\037\n\033FLAT_MODE_NIGHT_LA" +
-      "PSE_VIDEO\020\032\022\023\n\017FLAT_MODE_SLOMO\020\033\022\022\n\016FLAT" +
-      "_MODE_IDLE\020\034\022\036\n\032FLAT_MODE_VIDEO_STAR_TRA" +
-      "IL\020\035\022\"\n\036FLAT_MODE_VIDEO_LIGHT_PAINTING\020\036" +
-      "\022\037\n\033FLAT_MODE_VIDEO_LIGHT_TRAIL\020\037*\375\001\n\017En" +
-      "umPresetGroup\022\032\n\025PRESET_GROUP_ID_VIDEO\020\350" +
-      "\007\022\032\n\025PRESET_GROUP_ID_PHOTO\020\351\007\022\036\n\031PRESET_" +
-      "GROUP_ID_TIMELAPSE\020\352\007\022$\n\037PRESET_GROUP_ID" +
-      "_VIDEO_DUAL_LENS\020\353\007\022$\n\037PRESET_GROUP_ID_P" +
-      "HOTO_DUAL_LENS\020\354\007\022(\n#PRESET_GROUP_ID_TIM" +
-      "ELAPSE_DUAL_LENS\020\355\007\022\034\n\027PRESET_GROUP_ID_S" +
-      "PECIAL\020\356\007*\274\002\n\023EnumPresetGroupIcon\022\036\n\032PRE" +
-      "SET_GROUP_VIDEO_ICON_ID\020\000\022\036\n\032PRESET_GROU" +
-      "P_PHOTO_ICON_ID\020\001\022\"\n\036PRESET_GROUP_TIMELA" +
-      "PSE_ICON_ID\020\002\022\'\n#PRESET_GROUP_LONG_BAT_V" +
-      "IDEO_ICON_ID\020\003\022(\n$PRESET_GROUP_ENDURANCE" +
-      "_VIDEO_ICON_ID\020\004\022\"\n\036PRESET_GROUP_MAX_VID" +
-      "EO_ICON_ID\020\005\022\"\n\036PRESET_GROUP_MAX_PHOTO_I" +
-      "CON_ID\020\006\022&\n\"PRESET_GROUP_MAX_TIMELAPSE_I" +
-      "CON_ID\020\007*\230\017\n\016EnumPresetIcon\022\025\n\021PRESET_IC" +
-      "ON_VIDEO\020\000\022\030\n\024PRESET_ICON_ACTIVITY\020\001\022\031\n\025" +
-      "PRESET_ICON_CINEMATIC\020\002\022\025\n\021PRESET_ICON_P" +
-      "HOTO\020\003\022\032\n\026PRESET_ICON_LIVE_BURST\020\004\022\025\n\021PR" +
-      "ESET_ICON_BURST\020\005\022\033\n\027PRESET_ICON_PHOTO_N" +
-      "IGHT\020\006\022\030\n\024PRESET_ICON_TIMEWARP\020\007\022\031\n\025PRES" +
-      "ET_ICON_TIMELAPSE\020\010\022\032\n\026PRESET_ICON_NIGHT" +
-      "LAPSE\020\t\022\025\n\021PRESET_ICON_SNAIL\020\n\022\027\n\023PRESET" +
-      "_ICON_VIDEO_2\020\013\022\031\n\025PRESET_ICON_360_VIDEO" +
-      "\020\014\022\027\n\023PRESET_ICON_PHOTO_2\020\r\022\030\n\024PRESET_IC" +
-      "ON_PANORAMA\020\016\022\027\n\023PRESET_ICON_BURST_2\020\017\022\032" +
-      "\n\026PRESET_ICON_TIMEWARP_2\020\020\022\033\n\027PRESET_ICO" +
-      "N_TIMELAPSE_2\020\021\022\026\n\022PRESET_ICON_CUSTOM\020\022\022" +
-      "\023\n\017PRESET_ICON_AIR\020\023\022\024\n\020PRESET_ICON_BIKE" +
-      "\020\024\022\024\n\020PRESET_ICON_EPIC\020\025\022\026\n\022PRESET_ICON_" +
-      "INDOOR\020\026\022\025\n\021PRESET_ICON_MOTOR\020\027\022\027\n\023PRESE" +
-      "T_ICON_MOUNTED\020\030\022\027\n\023PRESET_ICON_OUTDOOR\020" +
-      "\031\022\023\n\017PRESET_ICON_POV\020\032\022\026\n\022PRESET_ICON_SE" +
-      "LFIE\020\033\022\025\n\021PRESET_ICON_SKATE\020\034\022\024\n\020PRESET_" +
-      "ICON_SNOW\020\035\022\025\n\021PRESET_ICON_TRAIL\020\036\022\026\n\022PR" +
-      "ESET_ICON_TRAVEL\020\037\022\025\n\021PRESET_ICON_WATER\020" +
-      " \022\027\n\023PRESET_ICON_LOOPING\020!\022\031\n\025PRESET_ICO" +
-      "N_MAX_VIDEO\0207\022\031\n\025PRESET_ICON_MAX_PHOTO\0208" +
-      "\022\034\n\030PRESET_ICON_MAX_TIMEWARP\0209\022\025\n\021PRESET" +
-      "_ICON_BASIC\020:\022\034\n\030PRESET_ICON_ULTRA_SLO_M" +
-      "O\020;\022\"\n\036PRESET_ICON_STANDARD_ENDURANCE\020<\022" +
-      "\"\n\036PRESET_ICON_ACTIVITY_ENDURANCE\020=\022#\n\037P" +
-      "RESET_ICON_CINEMATIC_ENDURANCE\020>\022\037\n\033PRES" +
-      "ET_ICON_SLOMO_ENDURANCE\020?\022\034\n\030PRESET_ICON" +
-      "_STATIONARY_1\020@\022\034\n\030PRESET_ICON_STATIONAR" +
-      "Y_2\020A\022\034\n\030PRESET_ICON_STATIONARY_3\020B\022\034\n\030P" +
-      "RESET_ICON_STATIONARY_4\020C\022\"\n\036PRESET_ICON" +
-      "_SIMPLE_SUPER_PHOTO\020F\022\"\n\036PRESET_ICON_SIM" +
-      "PLE_NIGHT_PHOTO\020G\022%\n!PRESET_ICON_HIGHEST" +
-      "_QUALITY_VIDEO\020I\022&\n\"PRESET_ICON_STANDARD" +
-      "_QUALITY_VIDEO\020J\022#\n\037PRESET_ICON_BASIC_QU" +
-      "ALITY_VIDEO\020K\022\032\n\026PRESET_ICON_STAR_TRAIL\020" +
-      "L\022\036\n\032PRESET_ICON_LIGHT_PAINTING\020M\022\033\n\027PRE" +
-      "SET_ICON_LIGHT_TRAIL\020N\022\032\n\026PRESET_ICON_FU" +
-      "LL_FRAME\020O\022\036\n\032PRESET_ICON_EASY_MAX_VIDEO" +
-      "\020P\022\036\n\032PRESET_ICON_EASY_MAX_PHOTO\020Q\022!\n\035PR" +
-      "ESET_ICON_EASY_MAX_TIMEWARP\020R\022#\n\037PRESET_" +
-      "ICON_EASY_MAX_STAR_TRAIL\020S\022\'\n#PRESET_ICO" +
-      "N_EASY_MAX_LIGHT_PAINTING\020T\022$\n PRESET_IC" +
-      "ON_EASY_MAX_LIGHT_TRAIL\020U\022\036\n\032PRESET_ICON" +
-      "_MAX_STAR_TRAIL\020Y\022\"\n\036PRESET_ICON_MAX_LIG" +
-      "HT_PAINTING\020Z\022\037\n\033PRESET_ICON_MAX_LIGHT_T" +
-      "RAIL\020[\022 \n\033PRESET_ICON_TIMELAPSE_PHOTO\020\350\007" +
-      "\022!\n\034PRESET_ICON_NIGHTLAPSE_PHOTO\020\351\007*\265\022\n\017" +
-      "EnumPresetTitle\022\031\n\025PRESET_TITLE_ACTIVITY" +
-      "\020\000\022\031\n\025PRESET_TITLE_STANDARD\020\001\022\032\n\026PRESET_" +
-      "TITLE_CINEMATIC\020\002\022\026\n\022PRESET_TITLE_PHOTO\020" +
-      "\003\022\033\n\027PRESET_TITLE_LIVE_BURST\020\004\022\026\n\022PRESET" +
-      "_TITLE_BURST\020\005\022\026\n\022PRESET_TITLE_NIGHT\020\006\022\032" +
-      "\n\026PRESET_TITLE_TIME_WARP\020\007\022\033\n\027PRESET_TIT" +
-      "LE_TIME_LAPSE\020\010\022\034\n\030PRESET_TITLE_NIGHT_LA" +
-      "PSE\020\t\022\026\n\022PRESET_TITLE_VIDEO\020\n\022\026\n\022PRESET_" +
-      "TITLE_SLOMO\020\013\022\032\n\026PRESET_TITLE_360_VIDEO\020" +
-      "\014\022\030\n\024PRESET_TITLE_PHOTO_2\020\r\022\031\n\025PRESET_TI" +
-      "TLE_PANORAMA\020\016\022\032\n\026PRESET_TITLE_360_PHOTO" +
-      "\020\017\022\034\n\030PRESET_TITLE_TIME_WARP_2\020\020\022\036\n\032PRES" +
-      "ET_TITLE_360_TIME_WARP\020\021\022\027\n\023PRESET_TITLE" +
-      "_CUSTOM\020\022\022\024\n\020PRESET_TITLE_AIR\020\023\022\025\n\021PRESE" +
-      "T_TITLE_BIKE\020\024\022\025\n\021PRESET_TITLE_EPIC\020\025\022\027\n" +
-      "\023PRESET_TITLE_INDOOR\020\026\022\026\n\022PRESET_TITLE_M" +
-      "OTOR\020\027\022\030\n\024PRESET_TITLE_MOUNTED\020\030\022\030\n\024PRES" +
-      "ET_TITLE_OUTDOOR\020\031\022\024\n\020PRESET_TITLE_POV\020\032" +
-      "\022\027\n\023PRESET_TITLE_SELFIE\020\033\022\026\n\022PRESET_TITL" +
-      "E_SKATE\020\034\022\025\n\021PRESET_TITLE_SNOW\020\035\022\026\n\022PRES" +
-      "ET_TITLE_TRAIL\020\036\022\027\n\023PRESET_TITLE_TRAVEL\020" +
-      "\037\022\026\n\022PRESET_TITLE_WATER\020 \022\030\n\024PRESET_TITL" +
-      "E_LOOPING\020!\022\036\n\032PRESET_TITLE_360_TIMELAPS" +
-      "E\0203\022 \n\034PRESET_TITLE_360_NIGHT_LAPSE\0204\022 \n" +
-      "\034PRESET_TITLE_360_NIGHT_PHOTO\0205\022 \n\034PRESE" +
-      "T_TITLE_PANO_TIME_LAPSE\0206\022\032\n\026PRESET_TITL" +
-      "E_MAX_VIDEO\0207\022\032\n\026PRESET_TITLE_MAX_PHOTO\020" +
-      "8\022\035\n\031PRESET_TITLE_MAX_TIMEWARP\0209\022\026\n\022PRES" +
-      "ET_TITLE_BASIC\020:\022\035\n\031PRESET_TITLE_ULTRA_S" +
-      "LO_MO\020;\022#\n\037PRESET_TITLE_STANDARD_ENDURAN" +
-      "CE\020<\022#\n\037PRESET_TITLE_ACTIVITY_ENDURANCE\020" +
-      "=\022$\n PRESET_TITLE_CINEMATIC_ENDURANCE\020>\022" +
-      " \n\034PRESET_TITLE_SLOMO_ENDURANCE\020?\022\035\n\031PRE" +
-      "SET_TITLE_STATIONARY_1\020@\022\035\n\031PRESET_TITLE" +
-      "_STATIONARY_2\020A\022\035\n\031PRESET_TITLE_STATIONA" +
-      "RY_3\020B\022\035\n\031PRESET_TITLE_STATIONARY_4\020C\022\035\n" +
-      "\031PRESET_TITLE_SIMPLE_VIDEO\020D\022!\n\035PRESET_T" +
-      "ITLE_SIMPLE_TIME_WARP\020E\022#\n\037PRESET_TITLE_" +
-      "SIMPLE_SUPER_PHOTO\020F\022#\n\037PRESET_TITLE_SIM" +
-      "PLE_NIGHT_PHOTO\020G\022\'\n#PRESET_TITLE_SIMPLE" +
-      "_VIDEO_ENDURANCE\020H\022 \n\034PRESET_TITLE_HIGHE" +
-      "ST_QUALITY\020I\022!\n\035PRESET_TITLE_EXTENDED_BA" +
-      "TTERY\020J\022 \n\034PRESET_TITLE_LONGEST_BATTERY\020" +
-      "K\022\033\n\027PRESET_TITLE_STAR_TRAIL\020L\022\037\n\033PRESET" +
-      "_TITLE_LIGHT_PAINTING\020M\022\034\n\030PRESET_TITLE_" +
-      "LIGHT_TRAIL\020N\022\033\n\027PRESET_TITLE_FULL_FRAME" +
-      "\020O\022\037\n\033PRESET_TITLE_MAX_LENS_VIDEO\020P\022\"\n\036P" +
-      "RESET_TITLE_MAX_LENS_TIMEWARP\020Q\022\'\n#PRESE" +
-      "T_TITLE_STANDARD_QUALITY_VIDEO\020R\022$\n PRES" +
-      "ET_TITLE_BASIC_QUALITY_VIDEO\020S\022\037\n\033PRESET" +
-      "_TITLE_EASY_MAX_VIDEO\020T\022\037\n\033PRESET_TITLE_" +
-      "EASY_MAX_PHOTO\020U\022\"\n\036PRESET_TITLE_EASY_MA" +
-      "X_TIMEWARP\020V\022$\n PRESET_TITLE_EASY_MAX_ST" +
-      "AR_TRAIL\020W\022(\n$PRESET_TITLE_EASY_MAX_LIGH" +
-      "T_PAINTING\020X\022%\n!PRESET_TITLE_EASY_MAX_LI" +
-      "GHT_TRAIL\020Y\022\037\n\033PRESET_TITLE_MAX_STAR_TRA" +
-      "IL\020Z\022#\n\037PRESET_TITLE_MAX_LIGHT_PAINTING\020" +
-      "[\022 \n\034PRESET_TITLE_MAX_LIGHT_TRAIL\020\\\022&\n\"P" +
-      "RESET_TITLE_HIGHEST_QUALITY_VIDEO\020]"
-    };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sepp89117_goeasypro_android_gopro_NotifyPresetStatus_descriptor,
-        new String[] { "PresetGroupArray", });
-    internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_sepp89117_goeasypro_android_gopro_Preset_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sepp89117_goeasypro_android_gopro_Preset_descriptor,
-        new String[] { "Id", "Mode", "TitleId", "TitleNumber", "UserDefined", "Icon", "SettingArray", "IsModified", "IsFixed", });
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sepp89117_goeasypro_android_gopro_PresetGroup_descriptor,
-        new String[] { "Id", "PresetArray", "CanAddPreset", "Icon", });
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sepp89117_goeasypro_android_gopro_PresetSetting_descriptor,
-        new String[] { "Id", "Value", "IsCaption", });
-  }
-
-  // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(outer_class_scope)
 }
+

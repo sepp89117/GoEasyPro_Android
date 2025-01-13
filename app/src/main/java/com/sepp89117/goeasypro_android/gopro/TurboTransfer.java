@@ -7,6 +7,16 @@ public final class TurboTransfer {
     private TurboTransfer() {
     }
 
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                /* major= */ 4,
+                /* minor= */ 29,
+                /* patch= */ 2,
+                /* suffix= */ "",
+                TurboTransfer.class.getName());
+    }
+
     public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
     }
 
@@ -15,7 +25,7 @@ public final class TurboTransfer {
     }
 
     public interface RequestSetTurboActiveOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:RequestSetTurboActive)
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive)
             com.google.protobuf.MessageOrBuilder {
 
         /**
@@ -42,38 +52,49 @@ public final class TurboTransfer {
     }
 
     /**
-     * Protobuf type {@code RequestSetTurboActive}
+     * <pre>
+     * *
+     * Enable/disable display of "Transferring Media" UI
+     *
+     * Response: &#64;ref ResponseGeneric
+     * </pre>
+     * <p>
+     * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive}
      */
     public static final class RequestSetTurboActive extends
-            com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:RequestSetTurboActive)
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive)
             RequestSetTurboActiveOrBuilder {
         private static final long serialVersionUID = 0L;
 
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    RequestSetTurboActive.class.getName());
+        }
+
         // Use RequestSetTurboActive.newBuilder() to construct.
-        private RequestSetTurboActive(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        private RequestSetTurboActive(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
             super(builder);
         }
 
-        RequestSetTurboActive() {
-        }
-
-        @java.lang.Override
-        @SuppressWarnings({"unused"})
-        protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
-            return new RequestSetTurboActive();
+        private RequestSetTurboActive() {
         }
 
         public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-            return TurboTransfer.internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor;
+            return com.sepp89117.goeasypro_android.gopro.TurboTransfer.internal_static_open_gopro_RequestSetTurboActive_descriptor;
         }
 
         @java.lang.Override
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-            return TurboTransfer.internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(TurboTransfer.RequestSetTurboActive.class, TurboTransfer.RequestSetTurboActive.Builder.class);
+            return com.sepp89117.goeasypro_android.gopro.TurboTransfer.internal_static_open_gopro_RequestSetTurboActive_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.class, com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.Builder.class);
         }
 
         private int bitField0_;
@@ -153,10 +174,10 @@ public final class TurboTransfer {
             if (obj == this) {
                 return true;
             }
-            if (!(obj instanceof TurboTransfer.RequestSetTurboActive)) {
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive)) {
                 return super.equals(obj);
             }
-            TurboTransfer.RequestSetTurboActive other = (TurboTransfer.RequestSetTurboActive) obj;
+            com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive other = (com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive) obj;
 
             if (hasActive() != other.hasActive()) return false;
             if (hasActive()) {
@@ -183,75 +204,75 @@ public final class TurboTransfer {
             return hash;
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(java.nio.ByteBuffer data)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(java.nio.ByteBuffer data)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(java.nio.ByteBuffer data,
-                                                                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(java.nio.ByteBuffer data,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data, extensionRegistry);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.ByteString data)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.ByteString data)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.ByteString data,
-                                                                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.ByteString data,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data, extensionRegistry);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(byte[] data)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(byte[] data)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(byte[] data,
-                                                                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(byte[] data,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws com.google.protobuf.InvalidProtocolBufferException {
             return PARSER.parseFrom(data, extensionRegistry);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(java.io.InputStream input)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(java.io.InputStream input)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseWithIOException(PARSER, input);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(java.io.InputStream input,
-                                                                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(java.io.InputStream input,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseWithIOException(PARSER, input, extensionRegistry);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseDelimitedFrom(java.io.InputStream input)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseDelimitedFrom(java.io.InputStream input)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseDelimitedWithIOException(PARSER, input);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseDelimitedFrom(java.io.InputStream input,
-                                                                             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseDelimitedFrom(java.io.InputStream input,
+                                                                                                                   com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.CodedInputStream input)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.CodedInputStream input)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseWithIOException(PARSER, input);
         }
 
-        public static TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.CodedInputStream input,
-                                                                    com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                                          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
                 throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3
+            return com.google.protobuf.GeneratedMessage
                     .parseWithIOException(PARSER, input, extensionRegistry);
         }
 
@@ -264,7 +285,7 @@ public final class TurboTransfer {
             return DEFAULT_INSTANCE.toBuilder();
         }
 
-        public static Builder newBuilder(TurboTransfer.RequestSetTurboActive prototype) {
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive prototype) {
             return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
         }
 
@@ -275,36 +296,43 @@ public final class TurboTransfer {
         }
 
         @java.lang.Override
-        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
             Builder builder = new Builder(parent);
             return builder;
         }
 
         /**
-         * Protobuf type {@code RequestSetTurboActive}
+         * <pre>
+         * *
+         * Enable/disable display of "Transferring Media" UI
+         *
+         * Response: &#64;ref ResponseGeneric
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive}
          */
         public static final class Builder extends
-                com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:RequestSetTurboActive)
-                TurboTransfer.RequestSetTurboActiveOrBuilder {
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive)
+                com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActiveOrBuilder {
             public static final com.google.protobuf.Descriptors.Descriptor
             getDescriptor() {
-                return TurboTransfer.internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor;
+                return com.sepp89117.goeasypro_android.gopro.TurboTransfer.internal_static_open_gopro_RequestSetTurboActive_descriptor;
             }
 
             @java.lang.Override
-            protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
             internalGetFieldAccessorTable() {
-                return TurboTransfer.internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_fieldAccessorTable
-                        .ensureFieldAccessorsInitialized(TurboTransfer.RequestSetTurboActive.class, TurboTransfer.RequestSetTurboActive.Builder.class);
+                return com.sepp89117.goeasypro_android.gopro.TurboTransfer.internal_static_open_gopro_RequestSetTurboActive_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.class, com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.Builder.class);
             }
 
-            // Construct using TurboTransfer.RequestSetTurboActive.newBuilder()
+            // Construct using com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.newBuilder()
             Builder() {
 
             }
 
-            private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
                 super(parent);
 
             }
@@ -320,17 +348,17 @@ public final class TurboTransfer {
             @java.lang.Override
             public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
-                return TurboTransfer.internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor;
+                return com.sepp89117.goeasypro_android.gopro.TurboTransfer.internal_static_open_gopro_RequestSetTurboActive_descriptor;
             }
 
             @java.lang.Override
-            public TurboTransfer.RequestSetTurboActive getDefaultInstanceForType() {
-                return TurboTransfer.RequestSetTurboActive.getDefaultInstance();
+            public com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.getDefaultInstance();
             }
 
             @java.lang.Override
-            public TurboTransfer.RequestSetTurboActive build() {
-                TurboTransfer.RequestSetTurboActive result = buildPartial();
+            public com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive build() {
+                com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive result = buildPartial();
                 if (!result.isInitialized()) {
                     throw newUninitializedMessageException(result);
                 }
@@ -338,8 +366,8 @@ public final class TurboTransfer {
             }
 
             @java.lang.Override
-            public TurboTransfer.RequestSetTurboActive buildPartial() {
-                TurboTransfer.RequestSetTurboActive result = new TurboTransfer.RequestSetTurboActive(this);
+            public com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive result = new com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive(this);
                 if (bitField0_ != 0) {
                     buildPartial0(result);
                 }
@@ -347,7 +375,7 @@ public final class TurboTransfer {
                 return result;
             }
 
-            private void buildPartial0(TurboTransfer.RequestSetTurboActive result) {
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive result) {
                 int from_bitField0_ = bitField0_;
                 int to_bitField0_ = 0;
                 if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -358,50 +386,18 @@ public final class TurboTransfer {
             }
 
             @java.lang.Override
-            public Builder clone() {
-                return super.clone();
-            }
-
-            @java.lang.Override
-            public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field,
-                                    java.lang.Object value) {
-                return super.setField(field, value);
-            }
-
-            @java.lang.Override
-            public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-                return super.clearField(field);
-            }
-
-            @java.lang.Override
-            public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-                return super.clearOneof(oneof);
-            }
-
-            @java.lang.Override
-            public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field,
-                                            int index, java.lang.Object value) {
-                return super.setRepeatedField(field, index, value);
-            }
-
-            @java.lang.Override
-            public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field,
-                                            java.lang.Object value) {
-                return super.addRepeatedField(field, value);
-            }
-
-            @java.lang.Override
             public Builder mergeFrom(com.google.protobuf.Message other) {
-                if (other instanceof TurboTransfer.RequestSetTurboActive) {
-                    return mergeFrom((TurboTransfer.RequestSetTurboActive) other);
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive) other);
                 } else {
                     super.mergeFrom(other);
                     return this;
                 }
             }
 
-            public Builder mergeFrom(TurboTransfer.RequestSetTurboActive other) {
-                if (other == TurboTransfer.RequestSetTurboActive.getDefaultInstance()) return this;
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive.getDefaultInstance())
+                    return this;
                 if (other.hasActive()) {
                     setActive(other.getActive());
                 }
@@ -520,33 +516,21 @@ public final class TurboTransfer {
                 return this;
             }
 
-            @java.lang.Override
-            public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return super.setUnknownFields(unknownFields);
-            }
-
-            @java.lang.Override
-            public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return super.mergeUnknownFields(unknownFields);
-            }
-
-
-            // @@protoc_insertion_point(builder_scope:RequestSetTurboActive)
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive)
         }
 
-        // @@protoc_insertion_point(class_scope:RequestSetTurboActive)
-        private static final TurboTransfer.RequestSetTurboActive DEFAULT_INSTANCE;
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.RequestSetTurboActive)
+        private static final com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive DEFAULT_INSTANCE;
 
         static {
-            DEFAULT_INSTANCE = new TurboTransfer.RequestSetTurboActive();
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive();
         }
 
-        public static TurboTransfer.RequestSetTurboActive getDefaultInstance() {
+        public static com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive getDefaultInstance() {
             return DEFAULT_INSTANCE;
         }
 
-        @java.lang.Deprecated
-        public static final com.google.protobuf.Parser<RequestSetTurboActive>
+        private static final com.google.protobuf.Parser<RequestSetTurboActive>
                 PARSER = new com.google.protobuf.AbstractParser<RequestSetTurboActive>() {
             @java.lang.Override
             public RequestSetTurboActive parsePartialFrom(com.google.protobuf.CodedInputStream input,
@@ -577,17 +561,17 @@ public final class TurboTransfer {
         }
 
         @java.lang.Override
-        public TurboTransfer.RequestSetTurboActive getDefaultInstanceForType() {
+        public com.sepp89117.goeasypro_android.gopro.TurboTransfer.RequestSetTurboActive getDefaultInstanceForType() {
             return DEFAULT_INSTANCE;
         }
 
     }
 
     private static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor;
+            internal_static_open_gopro_RequestSetTurboActive_descriptor;
     private static final
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_fieldAccessorTable;
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_RequestSetTurboActive_fieldAccessorTable;
 
     public static com.google.protobuf.Descriptors.FileDescriptor
     getDescriptor() {
@@ -599,20 +583,21 @@ public final class TurboTransfer {
 
     static {
         java.lang.String[] descriptorData = {
-                "\n\032proto/turbo_transfer.proto\022%com.sepp89" +
-                        "117.goeasypro_android.gopro\"\'\n\025RequestSe" +
-                        "tTurboActive\022\016\n\006active\030\001 \002(\010"
+                "\n\024turbo_transfer.proto\022\nopen_gopro\"\'\n\025Re" +
+                        "questSetTurboActive\022\016\n\006active\030\001 \002(\010"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
                         new com.google.protobuf.Descriptors.FileDescriptor[]{
                         });
-        internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor =
+        internal_static_open_gopro_RequestSetTurboActive_descriptor =
                 getDescriptor().getMessageTypes().get(0);
-        internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_com_sepp89117_goeasypro_android_gopro_RequestSetTurboActive_descriptor,
+        internal_static_open_gopro_RequestSetTurboActive_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_RequestSetTurboActive_descriptor,
                 new java.lang.String[]{"Active",});
+        descriptor.resolveAllFeaturesImmutable();
     }
 
     // @@protoc_insertion_point(outer_class_scope)
 }
+

@@ -4,1089 +4,1161 @@
 package com.sepp89117.goeasypro_android.gopro;
 
 public final class RequestGetPresetStatusOuterClass {
-  private RequestGetPresetStatusOuterClass() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+    private RequestGetPresetStatusOuterClass() {
+    }
 
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-  /**
-   * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus}
-   */
-  public enum EnumRegisterPresetStatus
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <pre>
-     * Send notification when properties of a preset change
-     * </pre>
-     *
-     * <code>REGISTER_PRESET_STATUS_PRESET = 1;</code>
-     */
-    REGISTER_PRESET_STATUS_PRESET(1),
-    /**
-     * <pre>
-     * Send notification when properties of a preset group change
-     * </pre>
-     *
-     * <code>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2;</code>
-     */
-    REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY(2),
-    ;
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                /* major= */ 4,
+                /* minor= */ 29,
+                /* patch= */ 2,
+                /* suffix= */ "",
+                RequestGetPresetStatusOuterClass.class.getName());
+    }
 
-    /**
-     * <pre>
-     * Send notification when properties of a preset change
-     * </pre>
-     *
-     * <code>REGISTER_PRESET_STATUS_PRESET = 1;</code>
-     */
-    public static final int REGISTER_PRESET_STATUS_PRESET_VALUE = 1;
-    /**
-     * <pre>
-     * Send notification when properties of a preset group change
-     * </pre>
-     *
-     * <code>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2;</code>
-     */
-    public static final int REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY_VALUE = 2;
+    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
+    }
 
-
-    public final int getNumber() {
-      return value;
+    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
+        registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
     }
 
     /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
+     * Protobuf enum {@code com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus}
      */
-    @Deprecated
-    public static EnumRegisterPresetStatus valueOf(int value) {
-      return forNumber(value);
-    }
+    public enum EnumRegisterPresetStatus
+            implements com.google.protobuf.ProtocolMessageEnum {
+        /**
+         * <pre>
+         * Send notification when properties of a preset change
+         * </pre>
+         *
+         * <code>REGISTER_PRESET_STATUS_PRESET = 1;</code>
+         */
+        REGISTER_PRESET_STATUS_PRESET(1),
+        /**
+         * <pre>
+         * Send notification when properties of a preset group change
+         * </pre>
+         *
+         * <code>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2;</code>
+         */
+        REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY(2),
+        ;
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static EnumRegisterPresetStatus forNumber(int value) {
-      switch (value) {
-        case 1: return REGISTER_PRESET_STATUS_PRESET;
-        case 2: return REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY;
-        default: return null;
-      }
-    }
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    EnumRegisterPresetStatus.class.getName());
+        }
 
-    public static com.google.protobuf.Internal.EnumLiteMap<EnumRegisterPresetStatus>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        EnumRegisterPresetStatus> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<EnumRegisterPresetStatus>() {
-            public EnumRegisterPresetStatus findValueByNumber(int number) {
-              return EnumRegisterPresetStatus.forNumber(number);
+        /**
+         * <pre>
+         * Send notification when properties of a preset change
+         * </pre>
+         *
+         * <code>REGISTER_PRESET_STATUS_PRESET = 1;</code>
+         */
+        public static final int REGISTER_PRESET_STATUS_PRESET_VALUE = 1;
+        /**
+         * <pre>
+         * Send notification when properties of a preset group change
+         * </pre>
+         *
+         * <code>REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY = 2;</code>
+         */
+        public static final int REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY_VALUE = 2;
+
+
+        public final int getNumber() {
+            return value;
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         * @deprecated Use {@link #forNumber(int)} instead.
+         */
+        @java.lang.Deprecated
+        public static EnumRegisterPresetStatus valueOf(int value) {
+            return forNumber(value);
+        }
+
+        /**
+         * @param value The numeric wire value of the corresponding enum entry.
+         * @return The enum associated with the given numeric wire value.
+         */
+        public static EnumRegisterPresetStatus forNumber(int value) {
+            switch (value) {
+                case 1:
+                    return REGISTER_PRESET_STATUS_PRESET;
+                case 2:
+                    return REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY;
+                default:
+                    return null;
             }
-          };
+        }
 
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        public static com.google.protobuf.Internal.EnumLiteMap<EnumRegisterPresetStatus>
+        internalGetValueMap() {
+            return internalValueMap;
+        }
+
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+                EnumRegisterPresetStatus> internalValueMap =
+                new com.google.protobuf.Internal.EnumLiteMap<EnumRegisterPresetStatus>() {
+                    public EnumRegisterPresetStatus findValueByNumber(int number) {
+                        return EnumRegisterPresetStatus.forNumber(number);
+                    }
+                };
+
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
+            return getDescriptor().getValues().get(ordinal());
+        }
+
+        public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return RequestGetPresetStatusOuterClass.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final EnumRegisterPresetStatus[] VALUES = values();
-
-    public static EnumRegisterPresetStatus valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private EnumRegisterPresetStatus(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus)
-  }
-
-  public interface RequestGetPresetStatusOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @return A list containing the registerPresetStatus.
-     */
-    java.util.List<EnumRegisterPresetStatus> getRegisterPresetStatusList();
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @return The count of registerPresetStatus.
-     */
-    int getRegisterPresetStatusCount();
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @param index The index of the element to return.
-     * @return The registerPresetStatus at the given index.
-     */
-    EnumRegisterPresetStatus getRegisterPresetStatus(int index);
-
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @return A list containing the unregisterPresetStatus.
-     */
-    java.util.List<EnumRegisterPresetStatus> getUnregisterPresetStatusList();
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @return The count of unregisterPresetStatus.
-     */
-    int getUnregisterPresetStatusCount();
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @param index The index of the element to return.
-     * @return The unregisterPresetStatus at the given index.
-     */
-    EnumRegisterPresetStatus getUnregisterPresetStatus(int index);
-  }
-  /**
-   * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus}
-   */
-  public static final class RequestGetPresetStatus extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
-      RequestGetPresetStatusOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use RequestGetPresetStatus.newBuilder() to construct.
-    private RequestGetPresetStatus(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private RequestGetPresetStatus() {
-      registerPresetStatus_ = java.util.Collections.emptyList();
-      unregisterPresetStatus_ = java.util.Collections.emptyList();
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RequestGetPresetStatus();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return RequestGetPresetStatusOuterClass.internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor;
-    }
-
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return RequestGetPresetStatusOuterClass.internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              RequestGetPresetStatus.class, Builder.class);
-    }
-
-    public static final int REGISTER_PRESET_STATUS_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private java.util.List<Integer> registerPresetStatus_;
-    private static final com.google.protobuf.Internal.ListAdapter.Converter<
-        Integer, EnumRegisterPresetStatus> registerPresetStatus_converter_ =
-            new com.google.protobuf.Internal.ListAdapter.Converter<
-                Integer, EnumRegisterPresetStatus>() {
-              public EnumRegisterPresetStatus convert(Integer from) {
-                EnumRegisterPresetStatus result = EnumRegisterPresetStatus.forNumber(from);
-                return result == null ? EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET : result;
-              }
-            };
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @return A list containing the registerPresetStatus.
-     */
-    @Override
-    public java.util.List<EnumRegisterPresetStatus> getRegisterPresetStatusList() {
-      return new com.google.protobuf.Internal.ListAdapter<
-          Integer, EnumRegisterPresetStatus>(registerPresetStatus_, registerPresetStatus_converter_);
-    }
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @return The count of registerPresetStatus.
-     */
-    @Override
-    public int getRegisterPresetStatusCount() {
-      return registerPresetStatus_.size();
-    }
-    /**
-     * <pre>
-     * Array of Preset statuses to be notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-     * @param index The index of the element to return.
-     * @return The registerPresetStatus at the given index.
-     */
-    @Override
-    public EnumRegisterPresetStatus getRegisterPresetStatus(int index) {
-      return registerPresetStatus_converter_.convert(registerPresetStatus_.get(index));
-    }
-
-    public static final int UNREGISTER_PRESET_STATUS_FIELD_NUMBER = 2;
-    @SuppressWarnings("serial")
-    private java.util.List<Integer> unregisterPresetStatus_;
-    private static final com.google.protobuf.Internal.ListAdapter.Converter<
-        Integer, EnumRegisterPresetStatus> unregisterPresetStatus_converter_ =
-            new com.google.protobuf.Internal.ListAdapter.Converter<
-                Integer, EnumRegisterPresetStatus>() {
-              public EnumRegisterPresetStatus convert(Integer from) {
-                EnumRegisterPresetStatus result = EnumRegisterPresetStatus.forNumber(from);
-                return result == null ? EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET : result;
-              }
-            };
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @return A list containing the unregisterPresetStatus.
-     */
-    @Override
-    public java.util.List<EnumRegisterPresetStatus> getUnregisterPresetStatusList() {
-      return new com.google.protobuf.Internal.ListAdapter<
-          Integer, EnumRegisterPresetStatus>(unregisterPresetStatus_, unregisterPresetStatus_converter_);
-    }
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @return The count of unregisterPresetStatus.
-     */
-    @Override
-    public int getUnregisterPresetStatusCount() {
-      return unregisterPresetStatus_.size();
-    }
-    /**
-     * <pre>
-     * Array of Preset statuses to stop being notified about
-     * </pre>
-     *
-     * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-     * @param index The index of the element to return.
-     * @return The unregisterPresetStatus at the given index.
-     */
-    @Override
-    public EnumRegisterPresetStatus getUnregisterPresetStatus(int index) {
-      return unregisterPresetStatus_converter_.convert(unregisterPresetStatus_.get(index));
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (int i = 0; i < registerPresetStatus_.size(); i++) {
-        output.writeEnum(1, registerPresetStatus_.get(i));
-      }
-      for (int i = 0; i < unregisterPresetStatus_.size(); i++) {
-        output.writeEnum(2, unregisterPresetStatus_.get(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < registerPresetStatus_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeEnumSizeNoTag(registerPresetStatus_.get(i));
+            return getDescriptor();
         }
-        size += dataSize;
-        size += 1 * registerPresetStatus_.size();
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < unregisterPresetStatus_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeEnumSizeNoTag(unregisterPresetStatus_.get(i));
+
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+            return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.getDescriptor().getEnumTypes().get(0);
         }
-        size += dataSize;
-        size += 1 * unregisterPresetStatus_.size();
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
+
+        private static final EnumRegisterPresetStatus[] VALUES = values();
+
+        public static EnumRegisterPresetStatus valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+            if (desc.getType() != getDescriptor()) {
+                throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            }
+            return VALUES[desc.getIndex()];
+        }
+
+        private final int value;
+
+        private EnumRegisterPresetStatus(int value) {
+            this.value = value;
+        }
+
+        // @@protoc_insertion_point(enum_scope:com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus)
     }
 
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof RequestGetPresetStatus)) {
-        return super.equals(obj);
-      }
-      RequestGetPresetStatus other = (RequestGetPresetStatus) obj;
+    public interface RequestGetPresetStatusOrBuilder extends
+            // @@protoc_insertion_point(interface_extends:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+            com.google.protobuf.MessageOrBuilder {
 
-      if (!registerPresetStatus_.equals(other.registerPresetStatus_)) return false;
-      if (!unregisterPresetStatus_.equals(other.unregisterPresetStatus_)) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @return A list containing the registerPresetStatus.
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getRegisterPresetStatusList();
 
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (getRegisterPresetStatusCount() > 0) {
-        hash = (37 * hash) + REGISTER_PRESET_STATUS_FIELD_NUMBER;
-        hash = (53 * hash) + registerPresetStatus_.hashCode();
-      }
-      if (getUnregisterPresetStatusCount() > 0) {
-        hash = (37 * hash) + UNREGISTER_PRESET_STATUS_FIELD_NUMBER;
-        hash = (53 * hash) + unregisterPresetStatus_.hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @return The count of registerPresetStatus.
+         */
+        int getRegisterPresetStatusCount();
 
-    public static RequestGetPresetStatus parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static RequestGetPresetStatus parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static RequestGetPresetStatus parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The registerPresetStatus at the given index.
+         */
+        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getRegisterPresetStatus(int index);
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @return A list containing the unregisterPresetStatus.
+         */
+        java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getUnregisterPresetStatusList();
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @return The count of unregisterPresetStatus.
+         */
+        int getUnregisterPresetStatusCount();
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The unregisterPresetStatus at the given index.
+         */
+        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getUnregisterPresetStatus(int index);
     }
 
-    public static RequestGetPresetStatus parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static RequestGetPresetStatus parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static RequestGetPresetStatus parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(RequestGetPresetStatus prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
     /**
+     * <pre>
+     * *
+     * Get the set of currently available presets and optionally register to be notified when it changes.
+     *
+     * Response: &#64;ref NotifyPresetStatus sent immediately
+     *
+     * Notification: &#64;ref NotifyPresetStatus sent periodically as preset status changes, if registered.
+     *
+     * The preset status changes when:
+     *
+     * - A client changes one of a preset's captioned settings via the API
+     * - The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+     * - The user creates/deletes/reorders a preset within a group
+     * </pre>
+     * <p>
      * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus}
      */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
-        RequestGetPresetStatusOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return RequestGetPresetStatusOuterClass.internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor;
-      }
+    public static final class RequestGetPresetStatus extends
+            com.google.protobuf.GeneratedMessage implements
+            // @@protoc_insertion_point(message_implements:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+            RequestGetPresetStatusOrBuilder {
+        private static final long serialVersionUID = 0L;
 
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return RequestGetPresetStatusOuterClass.internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                RequestGetPresetStatus.class, Builder.class);
-      }
-
-      // Construct using com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.newBuilder()
-      Builder() {
-
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        registerPresetStatus_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        unregisterPresetStatus_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        return this;
-      }
-
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return RequestGetPresetStatusOuterClass.internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor;
-      }
-
-      @Override
-      public RequestGetPresetStatus getDefaultInstanceForType() {
-        return RequestGetPresetStatus.getDefaultInstance();
-      }
-
-      @Override
-      public RequestGetPresetStatus build() {
-        RequestGetPresetStatus result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+        static {
+            com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+                    com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+                    /* major= */ 4,
+                    /* minor= */ 29,
+                    /* patch= */ 2,
+                    /* suffix= */ "",
+                    RequestGetPresetStatus.class.getName());
         }
-        return result;
-      }
 
-      @Override
-      public RequestGetPresetStatus buildPartial() {
-        RequestGetPresetStatus result = new RequestGetPresetStatus(this);
-        buildPartialRepeatedFields(result);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartialRepeatedFields(RequestGetPresetStatus result) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          registerPresetStatus_ = java.util.Collections.unmodifiableList(registerPresetStatus_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+        // Use RequestGetPresetStatus.newBuilder() to construct.
+        private RequestGetPresetStatus(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+            super(builder);
         }
-        result.registerPresetStatus_ = registerPresetStatus_;
-        if (((bitField0_ & 0x00000002) != 0)) {
-          unregisterPresetStatus_ = java.util.Collections.unmodifiableList(unregisterPresetStatus_);
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.unregisterPresetStatus_ = unregisterPresetStatus_;
-      }
 
-      private void buildPartial0(RequestGetPresetStatus result) {
-        int from_bitField0_ = bitField0_;
-      }
-
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof RequestGetPresetStatus) {
-          return mergeFrom((RequestGetPresetStatus)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
+        private RequestGetPresetStatus() {
+            registerPresetStatus_ = emptyIntList();
+            unregisterPresetStatus_ = emptyIntList();
         }
-      }
 
-      public Builder mergeFrom(RequestGetPresetStatus other) {
-        if (other == RequestGetPresetStatus.getDefaultInstance()) return this;
-        if (!other.registerPresetStatus_.isEmpty()) {
-          if (registerPresetStatus_.isEmpty()) {
-            registerPresetStatus_ = other.registerPresetStatus_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureRegisterPresetStatusIsMutable();
-            registerPresetStatus_.addAll(other.registerPresetStatus_);
-          }
-          onChanged();
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.internal_static_open_gopro_RequestGetPresetStatus_descriptor;
         }
-        if (!other.unregisterPresetStatus_.isEmpty()) {
-          if (unregisterPresetStatus_.isEmpty()) {
-            unregisterPresetStatus_ = other.unregisterPresetStatus_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureUnregisterPresetStatusIsMutable();
-            unregisterPresetStatus_.addAll(other.unregisterPresetStatus_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
 
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new NullPointerException();
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.internal_static_open_gopro_RequestGetPresetStatus_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.class, com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder.class);
         }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-                int tmpRaw = input.readEnum();
-                EnumRegisterPresetStatus tmpValue =
-                    EnumRegisterPresetStatus.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(1, tmpRaw);
+
+        public static final int REGISTER_PRESET_STATUS_FIELD_NUMBER = 1;
+        @SuppressWarnings("serial")
+        private com.google.protobuf.Internal.IntList registerPresetStatus_;
+        private static final com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> registerPresetStatus_converter_ =
+                new com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>() {
+                    public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus convert(int from) {
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus result = com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(from);
+                        return result == null ? com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET : result;
+                    }
+                };
+
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @return A list containing the registerPresetStatus.
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getRegisterPresetStatusList() {
+            return new com.google.protobuf.Internal.IntListAdapter<
+                    com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>(registerPresetStatus_, registerPresetStatus_converter_);
+        }
+
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @return The count of registerPresetStatus.
+         */
+        @java.lang.Override
+        public int getRegisterPresetStatusCount() {
+            return registerPresetStatus_.size();
+        }
+
+        /**
+         * <pre>
+         * Array of Preset statuses to be notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The registerPresetStatus at the given index.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getRegisterPresetStatus(int index) {
+            return registerPresetStatus_converter_.convert(registerPresetStatus_.getInt(index));
+        }
+
+        public static final int UNREGISTER_PRESET_STATUS_FIELD_NUMBER = 2;
+        @SuppressWarnings("serial")
+        private com.google.protobuf.Internal.IntList unregisterPresetStatus_;
+        private static final com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> unregisterPresetStatus_converter_ =
+                new com.google.protobuf.Internal.IntListAdapter.IntConverter<
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>() {
+                    public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus convert(int from) {
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus result = com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(from);
+                        return result == null ? com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET : result;
+                    }
+                };
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @return A list containing the unregisterPresetStatus.
+         */
+        @java.lang.Override
+        public java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getUnregisterPresetStatusList() {
+            return new com.google.protobuf.Internal.IntListAdapter<
+                    com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>(unregisterPresetStatus_, unregisterPresetStatus_converter_);
+        }
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @return The count of unregisterPresetStatus.
+         */
+        @java.lang.Override
+        public int getUnregisterPresetStatusCount() {
+            return unregisterPresetStatus_.size();
+        }
+
+        /**
+         * <pre>
+         * Array of Preset statuses to stop being notified about
+         * </pre>
+         *
+         * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+         *
+         * @param index The index of the element to return.
+         * @return The unregisterPresetStatus at the given index.
+         */
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getUnregisterPresetStatus(int index) {
+            return unregisterPresetStatus_converter_.convert(unregisterPresetStatus_.getInt(index));
+        }
+
+        private byte memoizedIsInitialized = -1;
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            byte isInitialized = memoizedIsInitialized;
+            if (isInitialized == 1) return true;
+            if (isInitialized == 0) return false;
+
+            memoizedIsInitialized = 1;
+            return true;
+        }
+
+        @java.lang.Override
+        public void writeTo(com.google.protobuf.CodedOutputStream output)
+                throws java.io.IOException {
+            for (int i = 0; i < registerPresetStatus_.size(); i++) {
+                output.writeEnum(1, registerPresetStatus_.getInt(i));
+            }
+            for (int i = 0; i < unregisterPresetStatus_.size(); i++) {
+                output.writeEnum(2, unregisterPresetStatus_.getInt(i));
+            }
+            getUnknownFields().writeTo(output);
+        }
+
+        @java.lang.Override
+        public int getSerializedSize() {
+            int size = memoizedSize;
+            if (size != -1) return size;
+
+            size = 0;
+            {
+                int dataSize = 0;
+                for (int i = 0; i < registerPresetStatus_.size(); i++) {
+                    dataSize += com.google.protobuf.CodedOutputStream
+                            .computeEnumSizeNoTag(registerPresetStatus_.getInt(i));
+                }
+                size += dataSize;
+                size += 1 * registerPresetStatus_.size();
+            }
+            {
+                int dataSize = 0;
+                for (int i = 0; i < unregisterPresetStatus_.size(); i++) {
+                    dataSize += com.google.protobuf.CodedOutputStream
+                            .computeEnumSizeNoTag(unregisterPresetStatus_.getInt(i));
+                }
+                size += dataSize;
+                size += 1 * unregisterPresetStatus_.size();
+            }
+            size += getUnknownFields().getSerializedSize();
+            memoizedSize = size;
+            return size;
+        }
+
+        @java.lang.Override
+        public boolean equals(final java.lang.Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus)) {
+                return super.equals(obj);
+            }
+            com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus other = (com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus) obj;
+
+            if (!registerPresetStatus_.equals(other.registerPresetStatus_)) return false;
+            if (!unregisterPresetStatus_.equals(other.unregisterPresetStatus_)) return false;
+            if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+            return true;
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            if (memoizedHashCode != 0) {
+                return memoizedHashCode;
+            }
+            int hash = 41;
+            hash = (19 * hash) + getDescriptor().hashCode();
+            if (getRegisterPresetStatusCount() > 0) {
+                hash = (37 * hash) + REGISTER_PRESET_STATUS_FIELD_NUMBER;
+                hash = (53 * hash) + registerPresetStatus_.hashCode();
+            }
+            if (getUnregisterPresetStatusCount() > 0) {
+                hash = (37 * hash) + UNREGISTER_PRESET_STATUS_FIELD_NUMBER;
+                hash = (53 * hash) + unregisterPresetStatus_.hashCode();
+            }
+            hash = (29 * hash) + getUnknownFields().hashCode();
+            memoizedHashCode = hash;
+            return hash;
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(java.nio.ByteBuffer data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(java.nio.ByteBuffer data,
+                                                                                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(com.google.protobuf.ByteString data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(com.google.protobuf.ByteString data,
+                                                                                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(byte[] data)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(byte[] data,
+                                                                                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException {
+            return PARSER.parseFrom(data, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(java.io.InputStream input,
+                                                                                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseDelimitedFrom(java.io.InputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseDelimitedFrom(java.io.InputStream input,
+                                                                                                                                       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(com.google.protobuf.CodedInputStream input)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input);
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus parseFrom(com.google.protobuf.CodedInputStream input,
+                                                                                                                              com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException {
+            return com.google.protobuf.GeneratedMessage
+                    .parseWithIOException(PARSER, input, extensionRegistry);
+        }
+
+        @java.lang.Override
+        public Builder newBuilderForType() {
+            return newBuilder();
+        }
+
+        public static Builder newBuilder() {
+            return DEFAULT_INSTANCE.toBuilder();
+        }
+
+        public static Builder newBuilder(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus prototype) {
+            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+        }
+
+        @java.lang.Override
+        public Builder toBuilder() {
+            return this == DEFAULT_INSTANCE
+                    ? new Builder() : new Builder().mergeFrom(this);
+        }
+
+        @java.lang.Override
+        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            Builder builder = new Builder(parent);
+            return builder;
+        }
+
+        /**
+         * <pre>
+         * *
+         * Get the set of currently available presets and optionally register to be notified when it changes.
+         *
+         * Response: &#64;ref NotifyPresetStatus sent immediately
+         *
+         * Notification: &#64;ref NotifyPresetStatus sent periodically as preset status changes, if registered.
+         *
+         * The preset status changes when:
+         *
+         * - A client changes one of a preset's captioned settings via the API
+         * - The user exits from a preset's settings UI on the camera (e.g. long-press the preset pill and then press the back arrow)
+         * - The user creates/deletes/reorders a preset within a group
+         * </pre>
+         * <p>
+         * Protobuf type {@code com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus}
+         */
+        public static final class Builder extends
+                com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+                // @@protoc_insertion_point(builder_implements:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatusOrBuilder {
+            public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+                return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.internal_static_open_gopro_RequestGetPresetStatus_descriptor;
+            }
+
+            @java.lang.Override
+            protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+                return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.internal_static_open_gopro_RequestGetPresetStatus_fieldAccessorTable
+                        .ensureFieldAccessorsInitialized(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.class, com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder.class);
+            }
+
+            // Construct using com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.newBuilder()
+            Builder() {
+
+            }
+
+            private Builder(com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+                super(parent);
+
+            }
+
+            @java.lang.Override
+            public Builder clear() {
+                super.clear();
+                bitField0_ = 0;
+                registerPresetStatus_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000001);
+                unregisterPresetStatus_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000002);
+                return this;
+            }
+
+            @java.lang.Override
+            public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+                return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.internal_static_open_gopro_RequestGetPresetStatus_descriptor;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus getDefaultInstanceForType() {
+                return com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.getDefaultInstance();
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus build() {
+                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus result = buildPartial();
+                if (!result.isInitialized()) {
+                    throw newUninitializedMessageException(result);
+                }
+                return result;
+            }
+
+            @java.lang.Override
+            public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus buildPartial() {
+                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus result = new com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus(this);
+                buildPartialRepeatedFields(result);
+                if (bitField0_ != 0) {
+                    buildPartial0(result);
+                }
+                onBuilt();
+                return result;
+            }
+
+            private void buildPartialRepeatedFields(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus result) {
+                if (((bitField0_ & 0x00000001) != 0)) {
+                    registerPresetStatus_.makeImmutable();
+                    bitField0_ = (bitField0_ & ~0x00000001);
+                }
+                result.registerPresetStatus_ = registerPresetStatus_;
+                if (((bitField0_ & 0x00000002) != 0)) {
+                    unregisterPresetStatus_.makeImmutable();
+                    bitField0_ = (bitField0_ & ~0x00000002);
+                }
+                result.unregisterPresetStatus_ = unregisterPresetStatus_;
+            }
+
+            private void buildPartial0(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus result) {
+                int from_bitField0_ = bitField0_;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.Message other) {
+                if (other instanceof com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus) {
+                    return mergeFrom((com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus) other);
                 } else {
-                  ensureRegisterPresetStatusIsMutable();
-                  registerPresetStatus_.add(tmpRaw);
+                    super.mergeFrom(other);
+                    return this;
                 }
-                break;
-              } // case 8
-              case 10: {
-                int length = input.readRawVarint32();
-                int oldLimit = input.pushLimit(length);
-                while(input.getBytesUntilLimit() > 0) {
-                  int tmpRaw = input.readEnum();
-                  EnumRegisterPresetStatus tmpValue =
-                      EnumRegisterPresetStatus.forNumber(tmpRaw);
-                  if (tmpValue == null) {
-                    mergeUnknownVarintField(1, tmpRaw);
-                  } else {
-                    ensureRegisterPresetStatusIsMutable();
-                    registerPresetStatus_.add(tmpRaw);
-                  }
+            }
+
+            public Builder mergeFrom(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus other) {
+                if (other == com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus.getDefaultInstance())
+                    return this;
+                if (!other.registerPresetStatus_.isEmpty()) {
+                    if (registerPresetStatus_.isEmpty()) {
+                        registerPresetStatus_ = other.registerPresetStatus_;
+                        bitField0_ = (bitField0_ & ~0x00000001);
+                    } else {
+                        ensureRegisterPresetStatusIsMutable();
+                        registerPresetStatus_.addAll(other.registerPresetStatus_);
+                    }
+                    onChanged();
                 }
-                input.popLimit(oldLimit);
-                break;
-              } // case 10
-              case 16: {
-                int tmpRaw = input.readEnum();
-                EnumRegisterPresetStatus tmpValue =
-                    EnumRegisterPresetStatus.forNumber(tmpRaw);
-                if (tmpValue == null) {
-                  mergeUnknownVarintField(2, tmpRaw);
-                } else {
-                  ensureUnregisterPresetStatusIsMutable();
-                  unregisterPresetStatus_.add(tmpRaw);
+                if (!other.unregisterPresetStatus_.isEmpty()) {
+                    if (unregisterPresetStatus_.isEmpty()) {
+                        unregisterPresetStatus_ = other.unregisterPresetStatus_;
+                        bitField0_ = (bitField0_ & ~0x00000002);
+                    } else {
+                        ensureUnregisterPresetStatusIsMutable();
+                        unregisterPresetStatus_.addAll(other.unregisterPresetStatus_);
+                    }
+                    onChanged();
                 }
-                break;
-              } // case 16
-              case 18: {
-                int length = input.readRawVarint32();
-                int oldLimit = input.pushLimit(length);
-                while(input.getBytesUntilLimit() > 0) {
-                  int tmpRaw = input.readEnum();
-                  EnumRegisterPresetStatus tmpValue =
-                      EnumRegisterPresetStatus.forNumber(tmpRaw);
-                  if (tmpValue == null) {
-                    mergeUnknownVarintField(2, tmpRaw);
-                  } else {
-                    ensureUnregisterPresetStatusIsMutable();
-                    unregisterPresetStatus_.add(tmpRaw);
-                  }
+                this.mergeUnknownFields(other.getUnknownFields());
+                onChanged();
+                return this;
+            }
+
+            @java.lang.Override
+            public final boolean isInitialized() {
+                return true;
+            }
+
+            @java.lang.Override
+            public Builder mergeFrom(com.google.protobuf.CodedInputStream input,
+                                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws java.io.IOException {
+                if (extensionRegistry == null) {
+                    throw new java.lang.NullPointerException();
                 }
-                input.popLimit(oldLimit);
-                break;
-              } // case 18
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
+                try {
+                    boolean done = false;
+                    while (!done) {
+                        int tag = input.readTag();
+                        switch (tag) {
+                            case 0:
+                                done = true;
+                                break;
+                            case 8: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(1, tmpRaw);
+                                } else {
+                                    ensureRegisterPresetStatusIsMutable();
+                                    registerPresetStatus_.addInt(tmpRaw);
+                                }
+                                break;
+                            } // case 8
+                            case 10: {
+                                int length = input.readRawVarint32();
+                                int oldLimit = input.pushLimit(length);
+                                while (input.getBytesUntilLimit() > 0) {
+                                    int tmpRaw = input.readEnum();
+                                    com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus tmpValue =
+                                            com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(tmpRaw);
+                                    if (tmpValue == null) {
+                                        mergeUnknownVarintField(1, tmpRaw);
+                                    } else {
+                                        ensureRegisterPresetStatusIsMutable();
+                                        registerPresetStatus_.addInt(tmpRaw);
+                                    }
+                                }
+                                input.popLimit(oldLimit);
+                                break;
+                            } // case 10
+                            case 16: {
+                                int tmpRaw = input.readEnum();
+                                com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus tmpValue =
+                                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(tmpRaw);
+                                if (tmpValue == null) {
+                                    mergeUnknownVarintField(2, tmpRaw);
+                                } else {
+                                    ensureUnregisterPresetStatusIsMutable();
+                                    unregisterPresetStatus_.addInt(tmpRaw);
+                                }
+                                break;
+                            } // case 16
+                            case 18: {
+                                int length = input.readRawVarint32();
+                                int oldLimit = input.pushLimit(length);
+                                while (input.getBytesUntilLimit() > 0) {
+                                    int tmpRaw = input.readEnum();
+                                    com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus tmpValue =
+                                            com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.forNumber(tmpRaw);
+                                    if (tmpValue == null) {
+                                        mergeUnknownVarintField(2, tmpRaw);
+                                    } else {
+                                        ensureUnregisterPresetStatusIsMutable();
+                                        unregisterPresetStatus_.addInt(tmpRaw);
+                                    }
+                                }
+                                input.popLimit(oldLimit);
+                                break;
+                            } // case 18
+                            default: {
+                                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                    done = true; // was an endgroup tag
+                                }
+                                break;
+                            } // default:
+                        } // switch (tag)
+                    } // while (!done)
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.unwrapIOException();
+                } finally {
+                    onChanged();
+                } // finally
+                return this;
+            }
+
+            private int bitField0_;
+
+            private com.google.protobuf.Internal.IntList registerPresetStatus_ =
+                    emptyIntList();
+
+            private void ensureRegisterPresetStatusIsMutable() {
+                if (!((bitField0_ & 0x00000001) != 0)) {
+                    registerPresetStatus_ = makeMutableCopy(registerPresetStatus_);
+                    bitField0_ |= 0x00000001;
                 }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
+            }
 
-      private java.util.List<Integer> registerPresetStatus_ =
-        java.util.Collections.emptyList();
-      private void ensureRegisterPresetStatusIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
-          registerPresetStatus_ = new java.util.ArrayList<Integer>(registerPresetStatus_);
-          bitField0_ |= 0x00000001;
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @return A list containing the registerPresetStatus.
-       */
-      public java.util.List<EnumRegisterPresetStatus> getRegisterPresetStatusList() {
-        return new com.google.protobuf.Internal.ListAdapter<
-            Integer, EnumRegisterPresetStatus>(registerPresetStatus_, registerPresetStatus_converter_);
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @return The count of registerPresetStatus.
-       */
-      public int getRegisterPresetStatusCount() {
-        return registerPresetStatus_.size();
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @param index The index of the element to return.
-       * @return The registerPresetStatus at the given index.
-       */
-      public EnumRegisterPresetStatus getRegisterPresetStatus(int index) {
-        return registerPresetStatus_converter_.convert(registerPresetStatus_.get(index));
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The registerPresetStatus to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRegisterPresetStatus(
-          int index, EnumRegisterPresetStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRegisterPresetStatusIsMutable();
-        registerPresetStatus_.set(index, value.getNumber());
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @param value The registerPresetStatus to add.
-       * @return This builder for chaining.
-       */
-      public Builder addRegisterPresetStatus(EnumRegisterPresetStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureRegisterPresetStatusIsMutable();
-        registerPresetStatus_.add(value.getNumber());
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @param values The registerPresetStatus to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllRegisterPresetStatus(
-          Iterable<? extends EnumRegisterPresetStatus> values) {
-        ensureRegisterPresetStatusIsMutable();
-        for (EnumRegisterPresetStatus value : values) {
-          registerPresetStatus_.add(value.getNumber());
-        }
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to be notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRegisterPresetStatus() {
-        registerPresetStatus_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @return A list containing the registerPresetStatus.
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getRegisterPresetStatusList() {
+                return new com.google.protobuf.Internal.IntListAdapter<
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>(registerPresetStatus_, registerPresetStatus_converter_);
+            }
 
-      private java.util.List<Integer> unregisterPresetStatus_ =
-        java.util.Collections.emptyList();
-      private void ensureUnregisterPresetStatusIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
-          unregisterPresetStatus_ = new java.util.ArrayList<Integer>(unregisterPresetStatus_);
-          bitField0_ |= 0x00000002;
-        }
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @return A list containing the unregisterPresetStatus.
-       */
-      public java.util.List<EnumRegisterPresetStatus> getUnregisterPresetStatusList() {
-        return new com.google.protobuf.Internal.ListAdapter<
-            Integer, EnumRegisterPresetStatus>(unregisterPresetStatus_, unregisterPresetStatus_converter_);
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @return The count of unregisterPresetStatus.
-       */
-      public int getUnregisterPresetStatusCount() {
-        return unregisterPresetStatus_.size();
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @param index The index of the element to return.
-       * @return The unregisterPresetStatus at the given index.
-       */
-      public EnumRegisterPresetStatus getUnregisterPresetStatus(int index) {
-        return unregisterPresetStatus_converter_.convert(unregisterPresetStatus_.get(index));
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @param index The index to set the value at.
-       * @param value The unregisterPresetStatus to set.
-       * @return This builder for chaining.
-       */
-      public Builder setUnregisterPresetStatus(
-          int index, EnumRegisterPresetStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureUnregisterPresetStatusIsMutable();
-        unregisterPresetStatus_.set(index, value.getNumber());
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @param value The unregisterPresetStatus to add.
-       * @return This builder for chaining.
-       */
-      public Builder addUnregisterPresetStatus(EnumRegisterPresetStatus value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureUnregisterPresetStatusIsMutable();
-        unregisterPresetStatus_.add(value.getNumber());
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @param values The unregisterPresetStatus to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllUnregisterPresetStatus(
-          Iterable<? extends EnumRegisterPresetStatus> values) {
-        ensureUnregisterPresetStatusIsMutable();
-        for (EnumRegisterPresetStatus value : values) {
-          unregisterPresetStatus_.add(value.getNumber());
-        }
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * Array of Preset statuses to stop being notified about
-       * </pre>
-       *
-       * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearUnregisterPresetStatus() {
-        unregisterPresetStatus_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @return The count of registerPresetStatus.
+             */
+            public int getRegisterPresetStatusCount() {
+                return registerPresetStatus_.size();
+            }
 
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @param index The index of the element to return.
+             * @return The registerPresetStatus at the given index.
+             */
+            public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getRegisterPresetStatus(int index) {
+                return registerPresetStatus_converter_.convert(registerPresetStatus_.getInt(index));
+            }
 
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @param index The index to set the value at.
+             * @param value The registerPresetStatus to set.
+             * @return This builder for chaining.
+             */
+            public Builder setRegisterPresetStatus(int index, com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureRegisterPresetStatusIsMutable();
+                registerPresetStatus_.setInt(index, value.getNumber());
+                onChanged();
+                return this;
+            }
 
-      // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @param value The registerPresetStatus to add.
+             * @return This builder for chaining.
+             */
+            public Builder addRegisterPresetStatus(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureRegisterPresetStatusIsMutable();
+                registerPresetStatus_.addInt(value.getNumber());
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @param values The registerPresetStatus to add.
+             * @return This builder for chaining.
+             */
+            public Builder addAllRegisterPresetStatus(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> values) {
+                ensureRegisterPresetStatusIsMutable();
+                for (com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value : values) {
+                    registerPresetStatus_.addInt(value.getNumber());
+                }
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to be notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus register_preset_status = 1;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearRegisterPresetStatus() {
+                registerPresetStatus_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000001);
+                onChanged();
+                return this;
+            }
+
+            private com.google.protobuf.Internal.IntList unregisterPresetStatus_ =
+                    emptyIntList();
+
+            private void ensureUnregisterPresetStatusIsMutable() {
+                if (!((bitField0_ & 0x00000002) != 0)) {
+                    unregisterPresetStatus_ = makeMutableCopy(unregisterPresetStatus_);
+                    bitField0_ |= 0x00000002;
+                }
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @return A list containing the unregisterPresetStatus.
+             */
+            public java.util.List<com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> getUnregisterPresetStatusList() {
+                return new com.google.protobuf.Internal.IntListAdapter<
+                        com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus>(unregisterPresetStatus_, unregisterPresetStatus_converter_);
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @return The count of unregisterPresetStatus.
+             */
+            public int getUnregisterPresetStatusCount() {
+                return unregisterPresetStatus_.size();
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @param index The index of the element to return.
+             * @return The unregisterPresetStatus at the given index.
+             */
+            public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus getUnregisterPresetStatus(int index) {
+                return unregisterPresetStatus_converter_.convert(unregisterPresetStatus_.getInt(index));
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @param index The index to set the value at.
+             * @param value The unregisterPresetStatus to set.
+             * @return This builder for chaining.
+             */
+            public Builder setUnregisterPresetStatus(int index, com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureUnregisterPresetStatusIsMutable();
+                unregisterPresetStatus_.setInt(index, value.getNumber());
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @param value The unregisterPresetStatus to add.
+             * @return This builder for chaining.
+             */
+            public Builder addUnregisterPresetStatus(com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                ensureUnregisterPresetStatusIsMutable();
+                unregisterPresetStatus_.addInt(value.getNumber());
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @param values The unregisterPresetStatus to add.
+             * @return This builder for chaining.
+             */
+            public Builder addAllUnregisterPresetStatus(java.lang.Iterable<? extends com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus> values) {
+                ensureUnregisterPresetStatusIsMutable();
+                for (com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus value : values) {
+                    unregisterPresetStatus_.addInt(value.getNumber());
+                }
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <pre>
+             * Array of Preset statuses to stop being notified about
+             * </pre>
+             *
+             * <code>repeated .com.sepp89117.goeasypro_android.gopro.EnumRegisterPresetStatus unregister_preset_status = 2;</code>
+             *
+             * @return This builder for chaining.
+             */
+            public Builder clearUnregisterPresetStatus() {
+                unregisterPresetStatus_ = emptyIntList();
+                bitField0_ = (bitField0_ & ~0x00000002);
+                onChanged();
+                return this;
+            }
+
+            // @@protoc_insertion_point(builder_scope:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+        }
+
+        // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
+        private static final com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus DEFAULT_INSTANCE;
+
+        static {
+            DEFAULT_INSTANCE = new com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus();
+        }
+
+        public static com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus getDefaultInstance() {
+            return DEFAULT_INSTANCE;
+        }
+
+        private static final com.google.protobuf.Parser<RequestGetPresetStatus>
+                PARSER = new com.google.protobuf.AbstractParser<RequestGetPresetStatus>() {
+            @java.lang.Override
+            public RequestGetPresetStatus parsePartialFrom(com.google.protobuf.CodedInputStream input,
+                                                           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+                Builder builder = newBuilder();
+                try {
+                    builder.mergeFrom(input, extensionRegistry);
+                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                    throw e.setUnfinishedMessage(builder.buildPartial());
+                } catch (com.google.protobuf.UninitializedMessageException e) {
+                    throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+                } catch (java.io.IOException e) {
+                    throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                            .setUnfinishedMessage(builder.buildPartial());
+                }
+                return builder.buildPartial();
+            }
+        };
+
+        public static com.google.protobuf.Parser<RequestGetPresetStatus> parser() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Parser<RequestGetPresetStatus> getParserForType() {
+            return PARSER;
+        }
+
+        @java.lang.Override
+        public com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatusOuterClass.RequestGetPresetStatus getDefaultInstanceForType() {
+            return DEFAULT_INSTANCE;
+        }
+
     }
 
-    // @@protoc_insertion_point(class_scope:com.sepp89117.goeasypro_android.gopro.RequestGetPresetStatus)
-    private static final RequestGetPresetStatus DEFAULT_INSTANCE;
+    private static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_open_gopro_RequestGetPresetStatus_descriptor;
+    private static final
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+            internal_static_open_gopro_RequestGetPresetStatus_fieldAccessorTable;
+
+    public static com.google.protobuf.Descriptors.FileDescriptor
+    getDescriptor() {
+        return descriptor;
+    }
+
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
+
     static {
-      DEFAULT_INSTANCE = new RequestGetPresetStatus();
+        java.lang.String[] descriptorData = {
+                "\n\037request_get_preset_status.proto\022\nopen_" +
+                        "gopro\"\246\001\n\026RequestGetPresetStatus\022D\n\026regi" +
+                        "ster_preset_status\030\001 \003(\0162$.com.sepp89117.goeasypro_android.gopro.En" +
+                        "umRegisterPresetStatus\022F\n\030unregister_pre" +
+                        "set_status\030\002 \003(\0162$.com.sepp89117.goeasypro_android.gopro.EnumRegist" +
+                        "erPresetStatus*l\n\030EnumRegisterPresetStat" +
+                        "us\022!\n\035REGISTER_PRESET_STATUS_PRESET\020\001\022-\n" +
+                        ")REGISTER_PRESET_STATUS_PRESET_GROUP_ARR" +
+                        "AY\020\002"
+        };
+        descriptor = com.google.protobuf.Descriptors.FileDescriptor
+                .internalBuildGeneratedFileFrom(descriptorData,
+                        new com.google.protobuf.Descriptors.FileDescriptor[]{
+                        });
+        internal_static_open_gopro_RequestGetPresetStatus_descriptor =
+                getDescriptor().getMessageTypes().get(0);
+        internal_static_open_gopro_RequestGetPresetStatus_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessage.FieldAccessorTable(internal_static_open_gopro_RequestGetPresetStatus_descriptor,
+                new java.lang.String[]{"RegisterPresetStatus", "UnregisterPresetStatus",});
+        descriptor.resolveAllFeaturesImmutable();
     }
 
-    public static RequestGetPresetStatus getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @Deprecated public static final com.google.protobuf.Parser<RequestGetPresetStatus>
-        PARSER = new com.google.protobuf.AbstractParser<RequestGetPresetStatus>() {
-      @Override
-      public RequestGetPresetStatus parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<RequestGetPresetStatus> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<RequestGetPresetStatus> getParserForType() {
-      return PARSER;
-    }
-
-    @Override
-    public RequestGetPresetStatus getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_fieldAccessorTable;
-
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    String[] descriptorData = {
-      "\n%proto/request_get_preset_status.proto\022" +
-      "%com.sepp89117.goeasypro_android.gopro\"\334" +
-      "\001\n\026RequestGetPresetStatus\022_\n\026register_pr" +
-      "eset_status\030\001 \003(\0162?.com.sepp89117.goeasy" +
-      "pro_android.gopro.EnumRegisterPresetStat" +
-      "us\022a\n\030unregister_preset_status\030\002 \003(\0162?.c" +
-      "om.sepp89117.goeasypro_android.gopro.Enu" +
-      "mRegisterPresetStatus*l\n\030EnumRegisterPre" +
-      "setStatus\022!\n\035REGISTER_PRESET_STATUS_PRES" +
-      "ET\020\001\022-\n)REGISTER_PRESET_STATUS_PRESET_GR" +
-      "OUP_ARRAY\020\002"
-    };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_sepp89117_goeasypro_android_gopro_RequestGetPresetStatus_descriptor,
-        new String[] { "RegisterPresetStatus", "UnregisterPresetStatus", });
-  }
-
-  // @@protoc_insertion_point(outer_class_scope)
+    // @@protoc_insertion_point(outer_class_scope)
 }
+

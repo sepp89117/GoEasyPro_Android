@@ -158,8 +158,8 @@
     <string name="str_multishot">Prise de vue multiple</string>
     <string name="str_burst">Rafale</string>
     <string name="str_night_lapse">Time-lapse de nuit</string>
-    <string name="str_enable_localization">Activer le GPS</string>
-    <string name="str_disable_localization">Désactiver le GPS</string>
+    <string name="str_enable_localization">Activer Bip</string>
+    <string name="str_disable_localization">Désactiver Bip</string>
     <string name="str_set_date_time">Définir la date et l\'heure</string>
     <string name="str_put_to_sleep">Mettre en veille</string>
     <string name="str_connection">Connexion</string>
