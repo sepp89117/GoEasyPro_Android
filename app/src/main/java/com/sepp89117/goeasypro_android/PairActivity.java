@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -224,8 +225,9 @@ public class PairActivity extends AppCompatActivity {
             public void run() {
 
                 listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.bt_listitem, mDeviceStrList) {
+                    @NonNull
                     @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
+                    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                         TextView textView = (TextView) super.getView(position, convertView, parent);
 
                         String text = textView.getText().toString();

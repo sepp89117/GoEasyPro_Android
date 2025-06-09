@@ -153,7 +153,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         httpClient.newCall(startPreview).enqueue(new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("requestStream", "fail");
                 e.printStackTrace();
             }
