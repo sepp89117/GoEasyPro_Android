@@ -8,34 +8,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import com.arthenica.ffmpegkit.FFmpegKit;
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackException;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.StyledPlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSource;
 import com.sepp89117.goeasypro_android.gopro.GoProDevice;
+
+import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.MediaPlayer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,21 +45,23 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PreviewActivity extends AppCompatActivity {
-    private ExoPlayer player;
+    private static final String TAG = "PreviewActivity";
+
     private OkHttpClient httpClient;
     private static String startStream_query = "";
-    private String ffmpeg_output_uri;
-    private String stream_input_uri;
     private Timer keepStreamAliveTimer = null;
-    private StyledPlayerView playerView;
     private TextView textView_mode_preset;
     private ImageView rec_icon;
-    private boolean streamStarted = false;
     private byte[] keepStreamAliveData;
     private InetAddress inetAddress;
     private DatagramSocket udpSocket = null;
     private GoProDevice streamingDevice;
     private Animation fadeAnimation;
+
+    private SurfaceView surfaceView;
+
+    private LibVLC libVLC;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +70,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         init();
 
-        ffmpegThread.start();
-
-        createPlayer();
+        requestStream();
     }
 
     @Override
@@ -84,6 +81,24 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     private void init() {
+        surfaceView = findViewById(R.id.surfaceView);
+        SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
+        mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+                if (mediaPlayer != null)
+                    mediaPlayer.getVLCVout().setWindowSize(surfaceHolder.getSurfaceFrame().width(), surfaceHolder.getSurfaceFrame().height());
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
+            }
+        });
+
         fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.tween);
         streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         textView_mode_preset = findViewById(R.id.textView_mode_preset);
@@ -96,9 +111,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
             setModePresetText();
         }));
-        stream_input_uri = "udp://:8554"; // maybe different depending on gopro modelID?
-        ffmpeg_output_uri = "udp://@localhost:8555";
-        playerView = findViewById(R.id.player_view);
+
         String keepAlive_str = streamingDevice.keepAlive_msg;
         startStream_query = ((MyApplication) this.getApplication()).getFocusedDevice().startStream_query;
         keepStreamAliveData = keepAlive_str.getBytes();
@@ -116,8 +129,8 @@ public class PreviewActivity extends AppCompatActivity {
 
     private void setModePresetText() {
         String _mode_preset;
-        if(streamingDevice.hasProtoPresets() && streamingDevice.protoPreset != null) {
-            _mode_preset =  streamingDevice.protoPreset.getSettingsString();
+        if (streamingDevice.hasProtoPresets() && streamingDevice.protoPreset != null) {
+            _mode_preset = streamingDevice.protoPreset.getSettingsString();
         } else {
             _mode_preset = streamingDevice.mode.getTitle() + "\n" + streamingDevice.preset.getTitle();
         }
@@ -133,32 +146,20 @@ public class PreviewActivity extends AppCompatActivity {
         }
     }
 
-    private final Thread ffmpegThread = new Thread(() -> {
-        try {
-            final String command = "-fflags nobuffer -flags low_delay -f:v mpegts -an -probesize 100000 -i " + stream_input_uri + " -f mpegts -vcodec copy udp://localhost:8555?pkt_size=1316"; // -probesize 100000 is minimum for Hero 10
-
-            FFmpegKit.execute(command);
-
-            this.finish();
-        } catch (Exception e) {
-            Log.e("FFmpeg", "Exception on command execution: " + e);
-        }
-    });
-
     private void requestStream() {
-        final Request startPreview = new Request.Builder()
-                .url(HttpUrl.get(URI.create(startStream_query)))
-                .build();
+        streamingDevice.setSetting(64, 4); // Set Secondary Stream Window Size to 480p
+
+        final Request startPreview = new Request.Builder().url(Objects.requireNonNull(HttpUrl.get(URI.create(startStream_query)))).build();
 
         httpClient.newCall(startPreview).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, IOException e) {
                 Log.e("requestStream", "fail");
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (!response.isSuccessful()) {
                     Log.e("requestStream", "Request response = not success");
                 } else {
@@ -174,36 +175,6 @@ public class PreviewActivity extends AppCompatActivity {
         });
     }
 
-    private void createPlayer() {
-        //Max. Puffer: Die maximale Dauer der Medien, die der Player zu puffern versucht, in Millisekunden. Sobald der Puffer Max Buffer erreicht, hört er auf, ihn aufzufüllen.
-        //Min. Puffer: Die Mindestdauer von Medien, die der Player sicherstellen wird, dass sie jederzeit gepuffert werden, in Millisekunden.
-        //Puffer für Wiedergabe: Die Standarddauer von Medien, die gepuffert werden müssen, damit die Wiedergabe nach einer Benutzeraktion wie einer Suche gestartet oder fortgesetzt wird, in Millisekunden.
-        //Puffer für Wiedergabe nach Rebuffer: Die Dauer der Medien, die gepuffert werden müssen, damit die Wiedergabe nach einem Rebuffer fortgesetzt wird, in Millisekunden.
-
-        DefaultLoadControl loadControl = new DefaultLoadControl.Builder()
-                .setPrioritizeTimeOverSizeThresholds(true)
-                .setBufferDurationsMs(1000, 5000, 900, 900)
-                .build();
-
-        TrackSelector trackSelector = new DefaultTrackSelector(this);
-        MediaSource mediaSource = new ProgressiveMediaSource.Factory(new DefaultDataSource.Factory(getApplicationContext())).createMediaSource(MediaItem.fromUri(Uri.parse(ffmpeg_output_uri)));
-
-        player = new ExoPlayer.Builder(this)
-                .setTrackSelector(trackSelector)
-                .setLoadControl(loadControl)
-                .build();
-
-        playerView.setPlayer(player);
-        player.addListener(playerListener);
-        player.setMediaSource(mediaSource);
-        player.setPlayWhenReady(true);
-        player.prepare();
-
-        playerView.requestFocus();
-
-        Log.i("createPlayer", "Player created");
-    }
-
     private void initRequestTimer() {
         keepStreamAliveTimer = new Timer();
         keepStreamAliveTimer.schedule(keepStreamAlive, 0, 7000);
@@ -211,8 +182,7 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     private void killKeepStreamAliveTimer() {
-        if (keepStreamAliveTimer == null)
-            return;
+        if (keepStreamAliveTimer == null) return;
 
         keepStreamAliveTimer.cancel();
         keepStreamAliveTimer.purge();
@@ -225,45 +195,16 @@ public class PreviewActivity extends AppCompatActivity {
             try {
                 DatagramPacket keepStreamAlivePacket = new DatagramPacket(keepStreamAliveData, keepStreamAliveData.length, inetAddress, 8554);
                 udpSocket.send(keepStreamAlivePacket);
-                Log.i("keepStreamAlive", "sent");
+                // Log.i("keepStreamAlive", "sent");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
 
-    private final Player.Listener playerListener = new Player.Listener() {
-        @Override
-        public void onPlaybackStateChanged(int playbackState) {
-            Player.Listener.super.onPlaybackStateChanged(playbackState);
-            switch (playbackState) {
-                case Player.STATE_IDLE:
-                case Player.STATE_ENDED:
-                    PreviewActivity.this.finish();
-                    break;
-                case Player.STATE_BUFFERING:
-                    if (!streamStarted) {
-                        streamStarted = true;
-                        requestStream();
-                    }
-                    break;
-                case Player.STATE_READY:
-                    break;
-            }
-        }
-
-        @Override
-        public void onPlayerError(PlaybackException error) {
-            Player.Listener.super.onPlayerError(error);
-            Log.e("onPlayerError", error.getMessage() + "\n" + error.getCause());
-        }
-    };
-
     public void onShutterClick(View v) {
-        if (streamingDevice.isRecording)
-            streamingDevice.shutterOff();
-        else
-            streamingDevice.shutterOn();
+        if (streamingDevice.isRecording) streamingDevice.shutterOff();
+        else streamingDevice.shutterOn();
     }
 
     public void onHighlightClick(View v) {
@@ -286,8 +227,7 @@ public class PreviewActivity extends AppCompatActivity {
         @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            if (item.hasSubMenu())
-                return true;
+            if (item.hasSubMenu()) return true;
 
             switch (item.getItemId()) {
                 case R.id.mode_video_single:
@@ -318,18 +258,54 @@ public class PreviewActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        int cachingTimeMs = 500;
+        ArrayList<String> options = new ArrayList<>();
+        options.add("--network-caching=" + cachingTimeMs);
+        options.add("--drop-late-frames");
+        options.add("--audio-time-stretch");
+        options.add("--h264-fps=30");
+        options.add("--ts-cc-check");
+
+        libVLC = new LibVLC(this, options);
+        mediaPlayer = new MediaPlayer(libVLC);
+
+        mediaPlayer.getVLCVout().setVideoView(surfaceView);
+        mediaPlayer.getVLCVout().attachViews();
+
+        String url = "udp://@:8554";
+        Media media = new Media(libVLC, Uri.parse(url));
+        media.setHWDecoderEnabled(true, false);
+        media.addOption(":network-caching=" + cachingTimeMs);
+        mediaPlayer.setMedia(media);
+        media.release();
+
+        mediaPlayer.play();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d(TAG, "onStop");
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.getVLCVout().detachViews();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (libVLC != null) {
+            libVLC.release();
+            libVLC = null;
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        FFmpegKit.cancel();
         killKeepStreamAliveTimer();
-
-        if (udpSocket != null)
-            udpSocket.disconnect();
-
-        if (player != null) {
-            player.stop();
-            player.release();
-        }
-        player = null;
+        if (udpSocket != null) udpSocket.disconnect();
     }
 }

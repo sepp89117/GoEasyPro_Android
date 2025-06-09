@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'com.sepp89117.goeasypro_android'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId 'com.sepp89117.goeasypro_android'
         minSdk 27
         targetSdk 34
-        versionCode 175
-        versionName '1.7.5'
+        versionCode 176
+        versionName '1.7.6'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -33,15 +33,15 @@ dependencies {
     implementation 'com.google.protobuf:protobuf-java:4.29.2'
     implementation 'me.saket.cascade:cascade:2.1.0' /* do not update 2.1.0 */
     implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
-    implementation 'com.arthenica:ffmpeg-kit-min:6.0.LTS'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.14'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.9.0' /* do not update 1.9.0 */
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'androidx.preference:preference:1.2.1'
-    implementation 'androidx.activity:activity:1.9.3'
+    implementation 'androidx.activity:activity:1.10.1'
     implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'org.videolan.android:libvlc-all:4.0.0-eap20'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'

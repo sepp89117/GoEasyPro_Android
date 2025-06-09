@@ -312,14 +312,14 @@ public class PairActivity extends AppCompatActivity {
                 }
             } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 btn_scan.setEnabled(false);
-                Toast.makeText(getApplicationContext(), "Discovering nearby bluetooth devices...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Discovering nearby bluetooth devices...", Toast.LENGTH_SHORT).show();
                 bt_search_symbol.setVisibility(View.VISIBLE);
                 bt_search_symbol.startAnimation(fadeAnimation);
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 btn_scan.setEnabled(true);
                 fadeAnimation.cancel();
                 bt_search_symbol.setVisibility(View.INVISIBLE);
-                Toast.makeText(getApplicationContext(), "Discovery finished!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Discovery finished!", Toast.LENGTH_SHORT).show();
             }
         }
     };
