@@ -28,6 +28,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MyApplication extends Application {
+    private boolean ignoreAutoOff = false;
+    private boolean autoConnect = false;
+    private boolean checkFirmware = true;
+    private boolean checkAppUpdate = true;
+    private boolean keepAliveWhenPaused = true;
+    private boolean appIsPaused = false;
+
+    private BluetoothAdapter _bluetoothAdapter;
+    private ArrayList<GoProDevice> _goProDevices = new ArrayList<>();
+    private GoProDevice _focusedDevice = null;
+    private JSONObject settingsValues = null;
+    private ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,13 +54,6 @@ public class MyApplication extends Application {
 
         loadSettingsValuesFromRes();
     }
-
-    private boolean ignoreAutoOff = false;
-    private boolean autoConnect = false;
-    private boolean checkFirmware = true;
-    private boolean checkAppUpdate = true;
-    private boolean keepAliveWhenPaused = true;
-    private boolean appIsPaused = false;
 
     @Override
     public void onTrimMemory(int level) {
@@ -90,8 +96,6 @@ public class MyApplication extends Application {
         return keepAliveWhenPaused;
     }
 
-    private BluetoothAdapter _bluetoothAdapter;
-
     public BluetoothAdapter getBluetoothAdapter() {
         return _bluetoothAdapter;
     }
@@ -99,8 +103,6 @@ public class MyApplication extends Application {
     public void setBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
         _bluetoothAdapter = bluetoothAdapter;
     }
-
-    private ArrayList<GoProDevice> _goProDevices = new ArrayList<>();
 
     public ArrayList<GoProDevice> getGoProDevices() {
         return _goProDevices;
@@ -129,8 +131,6 @@ public class MyApplication extends Application {
         return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
-    private GoProDevice _focusedDevice = null;
-
     public GoProDevice getFocusedDevice() {
         return _focusedDevice;
     }
@@ -138,8 +138,6 @@ public class MyApplication extends Application {
     public void setFocusedDevice(GoProDevice goProDevice) {
         _focusedDevice = goProDevice;
     }
-
-    private ArrayList<GoMediaFile> _goMediaFiles = new ArrayList<>();
 
     public ArrayList<GoMediaFile> getGoMediaFiles() {
         return _goMediaFiles;
@@ -152,8 +150,6 @@ public class MyApplication extends Application {
     public JSONObject getSettingsValues() {
         return settingsValues;
     }
-
-    private JSONObject settingsValues = null;
 
     private void loadSettingsValuesFromRes() {
         InputStream is = getResources().openRawResource(R.raw.go_settings);

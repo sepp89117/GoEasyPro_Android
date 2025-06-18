@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -26,12 +27,14 @@ import android.provider.Settings;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +47,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.sepp89117.goeasypro_android.adapters.GoListAdapter;
 import com.sepp89117.goeasypro_android.gopro.GoMediaFile;
@@ -59,7 +63,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -81,10 +84,14 @@ public class MainActivity extends AppCompatActivity {
     private final ArrayList<GoProDevice> goProDevices = new ArrayList<>();
     private GoListAdapter goListAdapter;
     private ListView goListView;
+    private FlexboxLayout flexboxLayout;
+    private LinearLayout linearLayout;
+
     private View mLayout;
     private final OkHttpClient httpClient = new OkHttpClient();
     private int lastCamClickedIndex = -1;
     private final Map<Integer, String> firmwareCatalog = new HashMap<>();
+    private MyApplication myApplication;
 
     private static final int BT_PERMISSIONS_CODE = 87;
     private static final int WIFI_PERMISSIONS_CODE = 41;
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLayout = findViewById(R.id.main_layout);
+        myApplication = (MyApplication) this.getApplication();
 
         //get bluetoothManager and bluetoothAdapter
         BluetoothManager bluetoothManager = getSystemService(BluetoothManager.class);
@@ -110,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        ((MyApplication) this.getApplication()).setBluetoothAdapter(bluetoothAdapter);
-        ((MyApplication) this.getApplication()).setGoProDevices(goProDevices);
+        myApplication.setBluetoothAdapter(bluetoothAdapter);
+        myApplication.setGoProDevices(goProDevices);
 
         goListAdapter = new GoListAdapter(goProDevices, this);
 
@@ -136,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
 
             popupMenu.show();
         });
+        flexboxLayout = findViewById(R.id.flex_button_container);
+        linearLayout = findViewById(R.id.views_container);
 
         //request maybe bluetooth permission
         if (!hasBtPermissions()) {
@@ -158,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         goListView.setAdapter(goListAdapter);
         setOnDataChanged();
 
-        ((MyApplication) this.getApplication()).resetIsAppPaused();
+        myApplication.resetIsAppPaused();
         if (hasBtPermissions())
             bluetoothAdapter.startDiscovery();
     }
@@ -184,6 +194,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Log.i("MainActivity", "onDestroy()");
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int margin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                10,
+                getResources().getDisplayMetrics()
+        );
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+            flexboxLayout.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 2f));
+
+            LinearLayout.LayoutParams goListViewParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 3f);
+            goListViewParams.setMargins(margin, 0, margin, 0);
+            goListView.setLayoutParams(goListViewParams);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+            flexboxLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            LinearLayout.LayoutParams goListViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 3f);
+            goListViewParams.setMargins(margin, margin, margin, 0);
+            goListView.setLayoutParams(goListViewParams);
+        }
     }
 
     private final PopupMenu.OnMenuItemClickListener camMenuItemClickListener = new PopupMenu.OnMenuItemClickListener() {
@@ -586,7 +623,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!goMediaFiles.isEmpty()) {
-            ((MyApplication) this.getApplication()).setGoMediaFiles(goMediaFiles);
+            myApplication.setGoMediaFiles(goMediaFiles);
             Intent storageBrowserActivityIntent = new Intent(MainActivity.this, StorageBrowserActivity.class);
             startActivity(storageBrowserActivityIntent);
         } else {

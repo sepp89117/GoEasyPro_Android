@@ -5,8 +5,8 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="20dp"
     android:background="@color/dark_gray"
+    android:minHeight="20dp"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -64,199 +64,110 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/views_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flex_button_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="7dp"
-                android:background="@drawable/border"
-                android:padding="10dp">
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                app:flexWrap="wrap">
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickShutterOn"
+                    android:text="@string/str_Shutter_on"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/shutter2_symbol"
+                    app:layout_flexGrow="1" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal">
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickShutterOff"
+                    android:text="@string/str_Shutter_off"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/shutter2_off_symbol"
+                    app:layout_flexGrow="1" />
 
-                        <Button
-                            android:id="@+id/button3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickShutterOn"
-                            android:text="@string/str_Shutter_on"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/shutter2_symbol" />
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickHighlight"
+                    android:text="@string/str_Highlight"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/highlight_symbol"
+                    app:layout_flexGrow="1" />
 
-                        <Button
-                            android:id="@+id/button2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickShutterOff"
-                            android:text="@string/str_Shutter_off"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/shutter2_off_symbol" />
-                    </TableRow>
+                <Button
+                    android:id="@+id/btnSyncSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickSyncSettings"
+                    android:text="Sync"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/settings_symbol"
+                    app:layout_flexGrow="1" />
 
-                    <!--<TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal">
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickSleep"
+                    android:text="@string/str_Sleep"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/sleep_symbol"
+                    app:layout_flexGrow="1" />
 
-                        <Button
-                            android:id="@+id/button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10px"
-                            android:onClick="onClickWifiApOn"
-                            android:text="WiFi AP: on"
-                            android:textAllCaps="false" />
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickSetMode"
+                    android:text="@string/str_Set_mode"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/mode_select_symbol"
+                    app:layout_flexGrow="1" />
 
-                        <Button
-                            android:id="@+id/button6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10px"
-                            android:onClick="onClickWifiApOff"
-                            android:text="WiFi AP: off"
-                            android:textAllCaps="false" />
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="onClickSetPreset"
+                    android:text="@string/str_Set_Preset"
+                    android:textAllCaps="false"
+                    app:icon="@drawable/preset_symbol"
+                    app:layout_flexGrow="1" />
 
-                    </TableRow>-->
+            </com.google.android.flexbox.FlexboxLayout>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal">
-
-                        <Button
-                            android:id="@+id/button4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickSleep"
-                            android:text="@string/str_Sleep"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/sleep_symbol" />
-
-                        <Button
-                            android:id="@+id/button5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickHighlight"
-                            android:text="@string/str_Highlight"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/highlight_symbol" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal">
-
-                        <Button
-                            android:id="@+id/button6"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickSetMode"
-                            android:text="@string/str_Set_mode"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/mode_select_symbol" />
-
-                        <Button
-                            android:id="@+id/button7"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickSetPreset"
-                            android:text="@string/str_Set_Preset"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/preset_symbol" />
-
-                        <Button
-                            android:id="@+id/btnSyncSettings"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:onClick="onClickSyncSettings"
-                            android:text="Sync"
-                            android:textAllCaps="false"
-                            app:icon="@drawable/settings_symbol" />
-                    </TableRow>
-
-                </TableLayout>
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:background="#1c1c1c"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/str_mcc"
-                android:textColor="#fff"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:translationY="-4dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <RelativeLayout
+            <ListView
+                android:id="@+id/goListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="7dp"
-                android:background="@drawable/border"
-                android:padding="10dp">
-
-
-                <ListView
-                    android:id="@+id/goListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="#4d4d4d"
-                    android:dividerHeight="1dip"
-                    android:longClickable="false"
-                    tools:listitem="@layout/golist_item" >
-                </ListView>
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:background="#1c1c1c"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
-                android:text="@string/str_cams"
-                android:textColor="#fff"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:translationY="-4dp" />
-        </RelativeLayout>
-
-
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:divider="#4d4d4d"
+                android:dividerHeight="1dip"
+                android:longClickable="false"
+                tools:listitem="@layout/golist_item" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
