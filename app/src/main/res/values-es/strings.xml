@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- configuración de la aplicación -->
+    <string name="str_Cameras">Cámaras</string>
     <string name="str_Check_update">Buscar actualizaciones disponibles</string>
     <string name="str_Check_update_desc">Cuando inicies la aplicación, verificará si hay una nueva versión de la aplicación disponible y, si es necesario, te preguntará si deseas abrir la página de descarga.</string>
     <string name="str_Automatically_connect">Conectar automáticamente con todas las cámaras disponibles</string>
@@ -11,6 +12,8 @@
     <string name="str_keep_alive_at_pause_desc">Mantiene la cámara encendida incluso cuando la aplicación está en pausa, siempre que la cámara admita el comando "mantenerse activa". Si esta función está desactivada, la cámara se apagará después del tiempo programado para "Auto Off".</string>
     <string name="str_Check_firmware">Buscar actualizaciones de firmware</string>
     <string name="str_Check_firmware_desc">Verifica el firmware de la cámara tan pronto como se conecta. Si hay una nueva versión de firmware disponible, se mostrará una notificación.</string>
+    <string name="str_ui_scale">Escala de interfaz</string>
+    <string name="str_ui_scale_desc">Escala la interfaz de usuario.\nConfiguración actual: %s</string>
 
     <!-- Vistas -->
     <string name="str_Content_from">Contenido de \'%1$s\'</string>

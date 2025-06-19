@@ -1,5 +1,6 @@
 <resources>
-    <!-- app settings -->
+    <!-- App-Einstellungen -->
+    <string name="str_Cameras">Kameras</string>
     <string name="str_Check_update">Nach verfügbaren Updates suchen</string>
     <string name="str_Check_update_desc">Wenn Sie die App starten, wird überprüft, ob eine neue Version der App verfügbar ist, und gegebenenfalls gefragt, ob Sie die Download-Seite öffnen möchten.</string>
     <string name="str_Automatically_connect">Automatisch mit allen verfügbaren Kameras verbinden</string>
@@ -10,6 +11,8 @@
     <string name="str_keep_alive_at_pause_desc">Hält die Kamera auch dann wach, wenn die App pausiert ist, sofern die Kamera den Befehl "keepAlive" unterstützt. Wenn diese Funktion deaktiviert ist, schaltet sich die Kamera nach der programmierten Auto-Off-Zeit aus.</string>
     <string name="str_Check_firmware">Nach Firmware-Updates suchen</string>
     <string name="str_Check_firmware_desc">Überprüft die Firmware der Kamera, sobald sie verbunden ist. Wenn eine neue Firmware verfügbar ist, wird eine Meldung angezeigt.</string>
+    <string name="str_ui_scale">UI-Skalierung</string>
+    <string name="str_ui_scale_desc">Skaliert die Benutzeroberfläche.\nAktuelle Einstellung: %s</string>
 
     <!-- Ansichten -->
     <string name="str_Content_from">Inhalt von \'%1$s\'</string>

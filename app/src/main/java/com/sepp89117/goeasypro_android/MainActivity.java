@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.LocationManager;
@@ -46,6 +47,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,6 +101,27 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] BT_PERMISSIONS_R_DOWN = {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String[] WIFI_PERMISSIONS_Q_UP = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.CHANGE_NETWORK_STATE};
     private static final String[] WIFI_PERMISSIONS_P_DOWN = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE};
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(base);
+        Configuration configuration = new Configuration(base.getResources().getConfiguration());
+        String scale = sharedPref.getString("ui_scale", "na");
+        if (scale.equals("na")) {
+            if (configuration.densityDpi <= 320f) {
+                scale = "0.75";
+            } else {
+                scale = "1";
+            }
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putFloat("ui_scale", Float.parseFloat(scale));
+            editor.apply();
+        }
+        configuration.fontScale = Float.parseFloat(sharedPref.getString("ui_scale", scale));
+        Context scaledContext = base.createConfigurationContext(configuration);
+
+        super.attachBaseContext(scaledContext);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +188,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration configuration = new Configuration(this.getResources().getConfiguration());
+        float prefsScale = Float.parseFloat(sharedPref.getString("ui_scale", "1"));
+        float configFontScale = configuration.fontScale;
+        if (prefsScale != configFontScale) {
+            this.recreate();
+        }
+
         goListView.setAdapter(goListAdapter);
         setOnDataChanged();
 

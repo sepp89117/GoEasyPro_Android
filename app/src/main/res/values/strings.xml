@@ -6,6 +6,7 @@
     <string name="str_UNK" translatable="false">UNK</string><!-- unknown -->
 
     <!-- app settings -->
+    <string name="str_Cameras">"Cameras"</string>
     <string name="str_Check_update">Check for available update</string>
     <string name="str_Check_update_desc">When you start the app, it checks whether a new version is available and, if necessary, asks whether you want to open the download page.</string>
     <string name="str_Automatically_connect">Automatically connect to all available cameras</string>
@@ -16,6 +17,8 @@
     <string name="str_keep_alive_at_pause_desc">Keeps the camera alive even when the app is paused if the camera supports the keepAlive command. If disabled, the camera will turn off after the programmed Auto Off time.</string>
     <string name="str_Check_firmware">Check for firmware updates</string>
     <string name="str_Check_firmware_desc">Checks the camera\'s firmware once it is connected. If new firmware is available, a message will be displayed.</string>
+    <string name="str_ui_scale">UI Scale</string>
+    <string name="str_ui_scale_desc">Scales the user interface.\nCurrent setting: %s</string>
 
     <!-- views -->
     <string name="str_Content_from">Content from \'%1$s\'</string>

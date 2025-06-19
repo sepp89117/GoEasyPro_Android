@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Configurações do aplicativo -->
+    <string name="str_Cameras">Câmeras</string>
     <string name="str_Check_update">Verificar atualizações disponíveis</string>
     <string name="str_Check_update_desc">Ao iniciar o aplicativo, será verificado se uma nova versão do aplicativo está disponível, e, se for o caso, você será perguntado se deseja abrir a página de download.</string>
     <string name="str_Automatically_connect">Conectar automaticamente a todas as câmeras disponíveis</string>
@@ -11,6 +12,8 @@
     <string name="str_keep_alive_at_pause_desc">Mantém a câmera acordada mesmo quando o aplicativo está em pausa, desde que a câmera suporte o comando "keepAlive". Se essa função estiver desativada, a câmera será desligada após o tempo programado de "Auto Off".</string>
     <string name="str_Check_firmware">Verificar atualizações de firmware</string>
     <string name="str_Check_firmware_desc">Verifica o firmware da câmera assim que estiver conectada. Se houver uma nova atualização de firmware disponível, uma mensagem será exibida.</string>
+    <string name="str_ui_scale">Escala da interface</string>
+    <string name="str_ui_scale_desc">Ajusta a escala da interface do usuário.\nConfiguração atual: %s</string>
 
     <!-- Vistas -->
     <string name="str_Content_from">Conteúdo de \'%1$s\'</string>

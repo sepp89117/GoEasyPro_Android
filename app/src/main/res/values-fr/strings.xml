@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Paramètres de l\'application -->
+    <string name="str_Cameras">Caméras</string>
     <string name="str_Check_update">Vérifier les mises à jour disponibles</string>
     <string name="str_Check_update_desc">Lorsque vous démarrez l\'application, elle vérifie si une nouvelle version de l\'application est disponible, et le cas échéant, vous demande si vous souhaitez ouvrir la page de téléchargement.</string>
     <string name="str_Automatically_connect">Se connecter automatiquement à toutes les caméras disponibles</string>
@@ -11,6 +12,8 @@
     <string name="str_keep_alive_at_pause_desc">Maintient la caméra active même lorsque l\'application est en pause, à condition que la caméra prenne en charge la commande "keepAlive". Si cette fonction est désactivée, la caméra s\'éteindra après la durée programmée de mise hors tension automatique.</string>
     <string name="str_Check_firmware">Rechercher les mises à jour du firmware</string>
     <string name="str_Check_firmware_desc">Vérifie le firmware de la caméra dès qu\'elle est connectée. En cas de disponibilité d\'une nouvelle mise à jour du firmware, un message s\'affiche.</string>
+    <string name="str_ui_scale">Échelle de l\'interface</string>
+    <string name="str_ui_scale_desc">Ajuste l\'échelle de l\'interface utilisateur.\nParamètre actuel : %s</string>
 
     <!-- Vues -->
     <string name="str_Content_from">Contenu de \'%1$s\'</string>
