@@ -1,6 +1,7 @@
 package com.sepp89117.goeasypro_android.gopro;
 
 import static com.sepp89117.goeasypro_android.MyApplication.getReadableFileSize;
+import static com.sepp89117.goeasypro_android.gopro.GoProProtocol.packetizeMessage;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -38,6 +39,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -223,6 +225,7 @@ public class GoProDevice {
     private BluetoothGattCharacteristic queryRespCharacteristic = null;
     private BluetoothGattCharacteristic modelNoCharacteristic = null;
     private BluetoothGattCharacteristic nwManCmdCharacteristic = null;
+    private BluetoothGattCharacteristic nwManRespCharacteristic = null;
     private int registerForAutoValueUpdatesCounter = 0;
     private ByteBuffer packBuffer;
     private boolean communicationInitiated = false;
@@ -259,6 +262,10 @@ public class GoProDevice {
     public String getThumbNail_query = "";
     public String keepAlive_msg = "";
     private BroadcastReceiver pairingReceiver;
+
+    public NetworkManagement.EnumScanning scanningState = NetworkManagement.EnumScanning.SCANNING_UNKNOWN;
+    public List<NetworkManagement.ResponseGetApEntries.ScanEntry> apEntries = new ArrayList<>();
+    public LiveStreaming.NotifyLiveStreamStatus liveStreamStatus = new LiveStreaming.NotifyLiveStreamStatus();
 
     public GoProDevice(Context context, Application application, BluetoothDevice device) {
         _application = application;
@@ -390,7 +397,7 @@ public class GoProDevice {
                                     nwManCmdCharacteristic = characteristic;
                                     break;
                                 case nwManRespUUID:
-                                    // nwManRespCharacteristic = characteristic; // currently not used
+                                    nwManRespCharacteristic = characteristic;
                                     break;
                                 case queryUUID:
                                     queryCharacteristic = characteristic;
@@ -470,6 +477,7 @@ public class GoProDevice {
                     getUTCDateTime();
                 } else if (descriptor.getCharacteristic() == queryRespCharacteristic) {
                     registerForAllStatusValueUpdates();
+                    getLivestreamStatus();
                 }
             }
         }
@@ -505,12 +513,13 @@ public class GoProDevice {
     }
 
     private void initCommunication() {
-        if (!communicationInitiated && commandCharacteristic != null && commandRespCharacteristic != null && settingsCharacteristic != null && settingsRespCharacteristic != null && queryCharacteristic != null && queryRespCharacteristic != null && modelNoCharacteristic != null && wifiSsidCharacteristic != null && wifiPwCharacteristic != null && wifiStateCharacteristic != null) {
+        if (!communicationInitiated && commandCharacteristic != null && commandRespCharacteristic != null && settingsCharacteristic != null && settingsRespCharacteristic != null && queryCharacteristic != null && queryRespCharacteristic != null && modelNoCharacteristic != null && wifiSsidCharacteristic != null && wifiPwCharacteristic != null && wifiStateCharacteristic != null && nwManRespCharacteristic != null) {
             communicationInitiated = true;
 
             startCrcNotification();
             startSrcNotification();
             startQrcNotification();
+            startNmcNotification();
 
             readWifiApPw();
         }
@@ -661,11 +670,11 @@ public class GoProDevice {
 
     private void parseProtobuf() {
         /**
-         * Steps to compiling protocol buffers:
+         * Steps to compiling protocol buffers with Windows:
          * 1. Download compiler from 'https://github.com/protocolbuffers/protobuf/releases/latest' and extract
          * 2. Download needed protocol buffers from 'https://github.com/gopro/OpenGoPro/tree/main/protobuf'
          * 3. Copy or move downloaded protocol buffers to path of protoc
-         * 3. run 'protoc -I=C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin --java_out=C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin\java C:\Users\Sebastian\Downloads\protoc-29.2-win64\bin\your.proto'
+         * 3. run 'protoc -I=C:\Users\%USER%\Downloads\protoc-29.2-win64\bin --java_out=C:\Users\%USER%\Downloads\protoc-29.2-win64\bin\java C:\Users\%USER%\Downloads\protoc-29.2-win64\bin\your.proto'
          */
         // Remove FeatureID and ActionID from packBuffer to parse protobuf
         byte[] byteArray = new byte[packBuffer.limit() - 2];
@@ -681,22 +690,61 @@ public class GoProDevice {
             case 11:
                 // Handle case 0x0B
                 // Async status update response
+                try {
+                    NetworkManagement.NotifStartScanning notifStartScanning = NetworkManagement.NotifStartScanning.parseFrom(byteArray);
+                    scanningState = notifStartScanning.getScanningState();
+
+                    if (scanningState == NetworkManagement.EnumScanning.SCANNING_SUCCESS)
+                        getApEntries(notifStartScanning.getScanId());
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 12:
                 // Handle case 0x0C
                 // Async status update response
+                try {
+                    NetworkManagement.NotifProvisioningState response = NetworkManagement.NotifProvisioningState.parseFrom(byteArray);
+                    NetworkManagement.EnumProvisioning provisioningState = response.getProvisioningState();
+                    // TODO Should provisioning state be handled?
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 130:
                 // Handle case 0x82
                 // Start scan response
+                try {
+                    NetworkManagement.ResponseStartScanning response = NetworkManagement.ResponseStartScanning.parseFrom(byteArray);
+                    scanningState = response.getScanningState();
+
+                    if (networkChangedCallback != null) networkChangedCallback.onNetworkChanged();
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 131:
                 // Handle case 0x83
                 // Get AP entries response
+                try {
+                    NetworkManagement.ResponseGetApEntries response = NetworkManagement.ResponseGetApEntries.parseFrom(byteArray);
+                    apEntries = response.getEntriesList();
+
+                    if (networkChangedCallback != null) networkChangedCallback.onNetworkChanged();
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 132:
                 // Handle case 0x84
                 // Connect AP response
+                try {
+                    NetworkManagement.ResponseConnect response = NetworkManagement.ResponseConnect.parseFrom(byteArray);
+                    NetworkManagement.EnumProvisioning provisioningState = response.getProvisioningState();
+                    // TODO Should provisioning state be handled?
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 133:
                 // Handle case 0x85
@@ -712,19 +760,27 @@ public class GoProDevice {
                 break;
             case 249:
                 // Handle case 0xF9
-                // Request set live stream response
+                // Request set live stream response (ResponseGeneric)
+                try {
+                    ResponseGenericOuterClass.ResponseGeneric responseGeneric = ResponseGenericOuterClass.ResponseGeneric.parseFrom(byteArray);
+                    // TODO Should live stream response be handled?
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             case 242: // Handle case 0xF2 (Synchronously via initial response to RequestGetPresetStatus)
             case 243: // Handle case 0xF3 (Asynchronously when Preset change if registered in RequestGetPresetStatus)
                 handlePresetStatusNotification(byteArray);
                 break;
-            case 244:
-                // Handle case 0xF4
-                // Request get live stream status response
-                break;
-            case 245:
-                // Handle case 0xF5
-                // Async status update response
+            case 244: // Handle case 0xF4 (Request get live stream status response)
+            case 245: // Handle case 0xF5 (Async live stream status)
+                try {
+                    liveStreamStatus = LiveStreaming.NotifyLiveStreamStatus.parseFrom(byteArray);
+
+                    if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
+                } catch (InvalidProtocolBufferException e) {
+                    Log.e("parseBtData", e.getMessage());
+                }
                 break;
             default:
                 break;
@@ -1282,6 +1338,7 @@ public class GoProDevice {
         if (bluetoothGatt != null) {
             gattHelper.setNotification(commandRespCharacteristic, false, null);
             gattHelper.setNotification(settingsRespCharacteristic, false, null);
+            gattHelper.setNotification(nwManRespCharacteristic, false, null);
             gattHelper.setNotification(queryRespCharacteristic, false, success -> gattHelper.disconnect());
         }
 
@@ -1291,6 +1348,7 @@ public class GoProDevice {
         settingsRespCharacteristic = null;
         queryCharacteristic = null;
         queryRespCharacteristic = null;
+        nwManRespCharacteristic = null;
         modelNoCharacteristic = null;
         wifiSsidCharacteristic = null;
         wifiPwCharacteristic = null;
@@ -1344,6 +1402,10 @@ public class GoProDevice {
 
     private void startQrcNotification() {
         setNotification(queryRespCharacteristic, "startQrcNotification");
+    }
+
+    private void startNmcNotification() {
+        setNotification(nwManRespCharacteristic, "startNmcNotification");
     }
 
     private void setNotification(BluetoothGattCharacteristic characteristic, String tag) {
@@ -1452,7 +1514,6 @@ public class GoProDevice {
         } */
     }
 
-
     public void setSetting(int settingId, int optionId) {
         if (btConnectionStage < BT_FETCHING_DATA)
             return;
@@ -1511,7 +1572,6 @@ public class GoProDevice {
         return new byte[]{0x09, 0x0d, 0x07, yyH, yyL, (byte) month, (byte) day, (byte) hour, (byte) minute, (byte) second};
     }
 
-
     public void setSubMode(int mode, int subMode) {
         if (btConnectionStage < BT_FETCHING_DATA)
             return;
@@ -1551,7 +1611,6 @@ public class GoProDevice {
         }
     }
 
-
     public void shutterOff() {
         if (btConnectionStage < BT_FETCHING_DATA)
             return;
@@ -1561,7 +1620,6 @@ public class GoProDevice {
             Log.e("shutterOff", "not sent");
         }
     }
-
 
     public void sleep() {
         if (btConnectionStage < BT_FETCHING_DATA)
@@ -1578,7 +1636,6 @@ public class GoProDevice {
         }
     }
 
-
     public void wifiApOn() {
         if (btConnectionStage < BT_FETCHING_DATA)
             return;
@@ -1592,7 +1649,6 @@ public class GoProDevice {
             Log.e("wifiApOn", "not sent");
         }
     }
-
 
     public void wifiApOff() {
         if (btConnectionStage < BT_FETCHING_DATA)
@@ -1808,43 +1864,135 @@ public class GoProDevice {
             Log.e("getCurrentMode", "not sent");
         }
     }
+
+
+    private void getLivestreamStatus() {
+        if (btConnectionStage < BT_FETCHING_DATA)
+            return;
+
+        byte[] msg = {0x02, (byte)0xf5, 0x74};
+        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, success -> {
+            if (success) {
+                lastOtherQueries = new Date();
+            }
+        })) {
+            Log.e("getCurrentMode", "not sent");
+        }
+    }
     //endregion
 
     //region Protobuf
     public void requestSetTurboActive(boolean active) {
-        if (btConnectionStage < BT_FETCHING_DATA)
-            return;
+        byte[] protobufMsg = new TurboTransfer.RequestSetTurboActive.Builder()
+                .setActive(active)
+                .build()
+                .toByteArray();
 
-        byte[] proto = new TurboTransfer.RequestSetTurboActive.Builder().setActive(active).build().toByteArray();
-        byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF1, 0x6B};
-        byte[] msg = new byte[cmd.length + proto.length];
-        System.arraycopy(cmd, 0, msg, 0, cmd.length);
-        System.arraycopy(proto, 0, msg, cmd.length, proto.length);
-
-        if (gattHelper == null || !gattHelper.writeCharacteristic(commandCharacteristic, msg, null)) {
-            Log.e("requestSetTurboActive", "not sent");
-        }
+        sendProto(commandCharacteristic, 0xF1, 0x6B, protobufMsg);
     }
 
     private void requestGetPresetStatus() {
-        if (btConnectionStage < BT_FETCHING_DATA)
-            return;
-
-        byte[] proto = new RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder()
+        byte[] protobufMsg = new RequestGetPresetStatusOuterClass.RequestGetPresetStatus.Builder()
                 .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET)
                 .addRegisterPresetStatus(RequestGetPresetStatusOuterClass.EnumRegisterPresetStatus.REGISTER_PRESET_STATUS_PRESET_GROUP_ARRAY)
                 .build()
                 .toByteArray();
 
-        byte[] cmd = {(byte) (proto.length + 2), (byte) 0xF5, 0x72};
+        sendProto(queryCharacteristic, 0xF5, 0x72, protobufMsg);
+    }
 
-        byte[] msg = new byte[cmd.length + proto.length];
-        System.arraycopy(cmd, 0, msg, 0, cmd.length);
-        System.arraycopy(proto, 0, msg, cmd.length, proto.length);
+    public void requestStartScan() {
+        byte[] protobufMsg = new NetworkManagement.RequestStartScan.Builder()
+                .build()
+                .toByteArray();
 
-        if (gattHelper == null || !gattHelper.writeCharacteristic(queryCharacteristic, msg, null)) {
-            Log.e("requestGetPresetStatus", "not sent");
+        sendProto(nwManCmdCharacteristic, 0x02, 0x02, protobufMsg);
+    }
+
+    public void getApEntries(int scanID) {
+        byte[] protobufMsg = new NetworkManagement.RequestGetApEntries.Builder()
+                .setStartIndex(0)
+                .setMaxEntries(8)
+                .setScanId(scanID)
+                .build()
+                .toByteArray();
+
+        sendProto(nwManCmdCharacteristic, 0x02, 0x03, protobufMsg);
+    }
+
+    public void connectToAP(String ssid) {
+        /* TODO
+         *  Warning
+         *  This operation can only be used on an Access Point that has been previously configured. Therefore it is first necessary to Scan for Access Points, then Get AP Scan Results to ensure that the relevant Scan Entry has the SCAN_FLAG_CONFIGURED bit set.
+        */
+        byte[] protobufMsg = new NetworkManagement.RequestConnect.Builder()
+                .setSsid(ssid)
+                .build()
+                .toByteArray();
+
+        sendProto(nwManCmdCharacteristic, 0x02, 0x04, protobufMsg);
+    }
+
+    public void requestGetLiveStream(String url, int windowSize, int lens, boolean encode) {
+        byte[] protobufMsg = new LiveStreaming.RequestSetLiveStreamMode.Builder()
+                .setUrl(url.trim())
+                .setWindowSize(LiveStreaming.EnumWindowSize.forNumber(windowSize))
+                .setLens(LiveStreaming.EnumLens.forNumber(lens))
+                .setEncode(encode)
+                .build()
+                .toByteArray();
+
+        sendProto(commandCharacteristic, 0xF1, 0x79, protobufMsg);
+    }
+
+    private void sendProto(BluetoothGattCharacteristic characteristic, int featureID, int messageID, byte[] protobufMsg) {
+        if (btConnectionStage < BT_FETCHING_DATA || gattHelper == null)
+            return;
+
+        byte[] protoHeader = {(byte) featureID, (byte) messageID};
+        byte[] payload = new byte[protoHeader.length + protobufMsg.length];
+        System.arraycopy(protoHeader, 0, payload, 0, protoHeader.length);
+        System.arraycopy(protobufMsg, 0, payload, protoHeader.length, protobufMsg.length);
+
+        List<byte[]> packets = packetizeMessage(payload);
+
+        for (byte[] packet : packets) {
+            if (!gattHelper.writeCharacteristic(characteristic, packet, null)) break;
         }
+    }
+
+    private static byte[] prepareMultiChunk(byte[] command) {
+        int length = command.length;
+        int chunkSize = 20;
+        int chunksCount = length / chunkSize;
+        int estimatedSize = length + chunksCount;
+        byte[] buffer = new byte[estimatedSize];
+
+        int i = 0; // index for buffer
+        int j = 0; // index for command
+        int headerCont = 0x80;
+        int remain = length;
+        int chunkLen = 0;
+
+        while (remain > 0) {
+            while (remain > 0 && chunkLen < chunkSize) {
+                buffer[i++] = command[j++];
+                remain--;
+                chunkLen++;
+            }
+
+            chunkLen = 0;
+
+            if (remain > 0) {
+                buffer[i++] = (byte) (headerCont++);
+                if (headerCont > 0x8F)
+                    headerCont = 0x80;
+                chunkLen++;
+            }
+        }
+
+        // In case buffer is larger than actually used
+        return Arrays.copyOf(buffer, i);
     }
     //endregion
 
@@ -1957,6 +2105,16 @@ public class GoProDevice {
 
             if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
         }
+    }
+
+    public interface NetworkChangedCallbackInterface {
+        void onNetworkChanged();
+    }
+
+    private NetworkChangedCallbackInterface networkChangedCallback;
+
+    public void getNetworkChanges(NetworkChangedCallbackInterface _networkChangedCallback) {
+        networkChangedCallback = _networkChangedCallback;
     }
 
     public interface DataChangedCallbackInterface {

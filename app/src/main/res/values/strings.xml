@@ -155,6 +155,10 @@
     <string name="str_wait_dl_complete">Please wait until the download is complete!</string>
     <string name="str_wait_setting_set">Please wait until the new setting has been made!</string>
     <string name="str_set_setting">Set new setting</string>
+    <string name="str_select_ap">Select AP</string>
+    <string name="str_resolution">Resolution</string>
+    <string name="str_lens">Lens</string>
+    <string name="str_save_to_sd_while_streaming">Save to SD while streaming</string>
 
     <!-- Menus -->
     <string name="str_device_control">Device control</string>
@@ -202,4 +206,5 @@
     <string name="str_Capture">Capture</string>
     <string name="str_Others">Others</string>
     <string name="str_voice_control">Voice Control</string>
+    <string name="str_Start_Live_Stream">Livestream</string>
 </resources>

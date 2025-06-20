@@ -147,6 +147,10 @@
     <string name="str_wait_dl_complete">¡Espera hasta que la descarga esté completa!</string>
     <string name="str_wait_setting_set">¡Espera hasta que la nueva configuración esté establecida!</string>
     <string name="str_set_setting">Configurar nueva configuración</string>
+    <string name="str_select_ap">Seleccionar punto de acceso</string>
+    <string name="str_resolution">Resolución</string>
+    <string name="str_lens">Lente</string>
+    <string name="str_save_to_sd_while_streaming">Guardar en SD durante la transmisión</string>
 
     <!-- Menús -->
     <string name="str_device_control">Control de la cámara</string>
@@ -194,4 +198,5 @@
     <string name="str_Capture">Captura</string>
     <string name="str_Others">Otros</string>
     <string name="str_voice_control">Control de voz</string>
+    <string name="str_Start_Live_Stream">Livestream</string>
 </resources>

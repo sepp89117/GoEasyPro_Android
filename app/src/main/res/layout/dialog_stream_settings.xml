@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_select_ap" />
+
+        <Spinner
+            android:id="@+id/apEntriesSelect"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:prompt="@string/str_select_ap" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="RTMP-URL" />
+
+        <EditText
+            android:id="@+id/urlInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="RTMP-URL"
+            android:inputType="textUri" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/str_resolution" />
+
+        <Spinner
+            android:id="@+id/windowSizeSelect"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/str_lens" />
+
+        <Spinner
+            android:id="@+id/lensSelect"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <Switch
+            android:id="@+id/encodeSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/str_save_to_sd_while_streaming"
+            android:checked="true"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</ScrollView>

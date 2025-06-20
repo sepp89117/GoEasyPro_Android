@@ -4,6 +4,7 @@ import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTED;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.HERO12_BLACK;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.HERO8_BLACK;
+import static com.sepp89117.goeasypro_android.gopro.NetworkManagement.EnumScanEntryFlags.SCAN_FLAG_CONFIGURED;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -34,9 +35,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -65,7 +70,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -349,6 +356,9 @@ public class MainActivity extends AppCompatActivity {
                         //Shutter: off
                         goProDevice.shutterOff();
                         break;
+                    case R.id.start_live_stream:
+                        requestLiveStream(goProDevice);
+                        break;
                     case R.id.ap_on:
                         //Shutter: on
                         goProDevice.wifiApOn();
@@ -453,6 +463,127 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    @SuppressLint("SetTextI18n")
+    private void requestLiveStream(GoProDevice goProDevice) {
+        final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).setTitle("Scanning for available WiFi networks...").setMessage("Please wait while the WiFi scan is performed!").setCancelable(false).create();
+        alert.show();
+
+        goProDevice.getNetworkChanges(() -> runOnUiThread(() -> {
+            switch (goProDevice.scanningState) {
+                case SCANNING_STARTED:
+                    // TODO Should SCANNING_STARTED be handled?
+                    break;
+                case SCANNING_SUCCESS:
+                    alert.dismiss();
+                    if (!goProDevice.apEntries.isEmpty()) {
+                        showStreamSettingsDialog(goProDevice);
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "No WiFi networks found!", Toast.LENGTH_SHORT).show());
+                    }
+                    break;
+            }
+        }));
+
+        goProDevice.requestStartScan();
+    }
+
+    private void showStreamSettingsDialog(GoProDevice goProDevice) {
+        List<String> ssids = new ArrayList<>();
+        for (int i = 0; i < goProDevice.apEntries.size(); i++) {
+            // TODO Unconfigured networks are filtered out here. The 'connectNewAP' function needs to be implemented.
+            if ((goProDevice.apEntries.get(i).getScanEntryFlags() & SCAN_FLAG_CONFIGURED.getNumber()) == 0)
+                continue;
+
+            String ssid = goProDevice.apEntries.get(i).getSsid();
+            //int signalStrengthBars = goProDevice.apEntries.get(i).getSignalStrengthBars(); // TODO Implement visualization of signalStrengthBars
+            ssids.add(ssid);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_stream_settings, null);
+        builder.setView(dialogView);
+        builder.setTitle("Stream Settings");
+
+        Spinner apEntriesSelect = dialogView.findViewById(R.id.apEntriesSelect);
+        EditText urlInput = dialogView.findViewById(R.id.urlInput);
+        Spinner windowSizeSelect = dialogView.findViewById(R.id.windowSizeSelect);
+        Spinner lensSelect = dialogView.findViewById(R.id.lensSelect);
+        Switch encodeSwitch = dialogView.findViewById(R.id.encodeSwitch);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String savedStreamUrl = sharedPref.getString("stream_url", "rtmp://");
+        urlInput.setText(savedStreamUrl);
+
+        // Fill apEntriesSelect with SSIDs
+        ArrayAdapter<String> ssidAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ssids);
+        ssidAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        apEntriesSelect.setAdapter(ssidAdapter);
+        apEntriesSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                String selectedSsid = (String) apEntriesSelect.getSelectedItem();
+                goProDevice.connectToAP(selectedSsid);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // Ignore this event, because 'apEntries' can never be empty at this point and therefore an empty selection is not possible
+            }
+        });
+
+
+        // windowSizeSelect
+        List<String> windowSizes = Arrays.asList("480p", "720p", "1080p");
+        ArrayAdapter<String> windowSizeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, windowSizes);
+        windowSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        windowSizeSelect.setAdapter(windowSizeAdapter);
+
+        // lensSelect
+        List<String> lensOptions = Arrays.asList("wide", "linear", "superview");
+        ArrayAdapter<String> lensAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lensOptions);
+        lensAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lensSelect.setAdapter(lensAdapter);
+
+        encodeSwitch.setChecked(true);
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String url = urlInput.getText().toString();
+            int windowSizeValue = getWindowSizeValue((String) windowSizeSelect.getSelectedItem());
+            int lensValue = getLensValue((String) lensSelect.getSelectedItem());
+            boolean encodeEnabled = encodeSwitch.isChecked();
+
+            // save url
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("stream_url", url);
+            editor.apply();
+
+            goProDevice.requestGetLiveStream(url, windowSizeValue, lensValue, encodeEnabled);
+        });
+
+        builder.setNegativeButton("Abbrechen", null);
+        builder.show();
+    }
+
+    // Mapping-Funktionen
+    private int getWindowSizeValue(String label) {
+        switch (label) {
+            case "480p": return 4;
+            case "720p": return 7;
+            case "1080p": return 12;
+            default: return -1;
+        }
+    }
+
+    private int getLensValue(String label) {
+        switch (label) {
+            case "wide": return 0;
+            case "linear": return 4;
+            case "superview": return 3;
+            default: return -1;
+        }
+    }
 
     private static class ssidInputFilter implements InputFilter {
         private static final int MAX_LENGTH = 32;

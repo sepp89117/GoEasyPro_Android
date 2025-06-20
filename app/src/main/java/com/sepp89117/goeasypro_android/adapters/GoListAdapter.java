@@ -1,9 +1,15 @@
 package com.sepp89117.goeasypro_android.adapters;
 
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTED;
-import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTING;
-import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_FETCHING_DATA;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_COMPLETE_STAY_ON;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_CONFIG;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_FAILED_STAY_ON;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_IDLE;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_READY;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_RECONNECTING;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_STREAMING;
+import static com.sepp89117.goeasypro_android.gopro.LiveStreaming.EnumLiveStreamStatus.LIVE_STREAM_STATE_UNAVAILABLE;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,13 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 import com.sepp89117.goeasypro_android.R;
-import com.sepp89117.goeasypro_android.gopro.GoSetting;
+import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 public class GoListAdapter extends ArrayAdapter<GoProDevice> {
     Context context;
@@ -125,6 +129,35 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             mViewHolder.shutter_symbol.setVisibility(View.INVISIBLE);
         }
 
+        // Visualize live stream status
+        String modeTitle = "";
+        // If Livestream status is not idle 'modeTitle' must contain "Live"
+        if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_IDLE) {
+            // Initial status. Livestream has not yet been configured
+            // ignore
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_CONFIG) {
+            // Livestream is being configured
+            modeTitle = "Livestream configured";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_READY) {
+            // Livestream has finished configuration and is ready to start streaming
+            modeTitle = "Livestream ready";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_STREAMING) {
+            // Livestream is actively streaming
+            modeTitle = "Livestream active";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_COMPLETE_STAY_ON) {
+            // Live stream is exiting. No errors occurred.
+            modeTitle = "Livestream exiting";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_FAILED_STAY_ON) {
+            // Live stream is exiting. An error occurred.
+            modeTitle = "Livestream error exiting";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_RECONNECTING) {
+            // An error occurred during livestream and stream is attempting to reconnect.
+            modeTitle = "Livestream reconnect";
+        } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_UNAVAILABLE) {
+            // Live stream setup is unavailable due to camera lens configuration
+            modeTitle = "Livestream unavailable";
+        }
+
         if (goProDevice.isCold) {
             mViewHolder.cold_view.setVisibility(View.VISIBLE);
         } else {
@@ -155,25 +188,30 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             } catch (Exception ignore) {
 
             }
-            String modeTitle;
-            if(goProDevice.hasProtoPresets() && goProDevice.protoPreset != null) {
-                modeTitle = goProDevice.protoPreset.getModeTitle();
-                mViewHolder.mode.setText(goProDevice.protoPreset.getPresetTitle());
-            } else {
-                modeTitle = goProDevice.mode.getTitle();
-                mViewHolder.mode.setText(modeTitle);
+
+            if (modeTitle.isEmpty()) {
+                if (goProDevice.hasProtoPresets() && goProDevice.protoPreset != null) {
+                    modeTitle = goProDevice.protoPreset.getModeTitle();
+                    mViewHolder.mode.setText(goProDevice.protoPreset.getPresetTitle());
+                } else {
+                    modeTitle = goProDevice.mode.getTitle();
+                    mViewHolder.mode.setText(modeTitle);
+                }
             }
 
             mViewHolder.mode_symbol.setVisibility(View.VISIBLE);
 
-            if(modeTitle.contains("Video")) {
+            if (modeTitle.contains("Video")) {
                 mViewHolder.mode_symbol.setImageResource(R.drawable.mode_video_symbol);
-            } else if(modeTitle.contains("Photo")) {
+            } else if (modeTitle.contains("Photo")) {
                 mViewHolder.mode_symbol.setImageResource(R.drawable.mode_photo_symbol);
-            } else if(modeTitle.contains("Lapse")) {
+            } else if (modeTitle.contains("Lapse")) {
                 mViewHolder.mode_symbol.setImageResource(R.drawable.mode_timelapse_symbol);
-            } else if(modeTitle.contains("Multi")) {
+            } else if (modeTitle.contains("Multi")) {
                 mViewHolder.mode_symbol.setImageResource(R.drawable.mode_multishot_symbol);
+            } else if (modeTitle.contains("Live")) {
+                mViewHolder.mode.setText(modeTitle);
+                mViewHolder.mode_symbol.setImageResource(R.drawable.live_symbol);
             } else {
                 // Unknown Mode
                 mViewHolder.mode_symbol.setVisibility(View.GONE);

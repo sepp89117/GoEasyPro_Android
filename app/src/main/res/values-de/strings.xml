@@ -146,6 +146,10 @@
     <string name="str_wait_dl_complete">Bitte warte, bis der Download abgeschlossen ist!</string>
     <string name="str_wait_setting_set">Bitte warte, bis die neue Einstellung vorgenommen wurde!</string>
     <string name="str_set_setting">Neue Einstellung festlegen</string>
+    <string name="str_select_ap">AP auswählen</string>
+    <string name="str_resolution">Auflösung</string>
+    <string name="str_lens">Objektiv</string>
+    <string name="str_save_to_sd_while_streaming">Während des Streamings auf SD speichern</string>
 
     <!-- Menüs -->
     <string name="str_device_control">Steuerung</string>
@@ -193,4 +197,5 @@
     <string name="str_Capture">Aufnahme</string>
     <string name="str_Others">Andere</string>
     <string name="str_voice_control">Sprachsteuerung</string>
+    <string name="str_Start_Live_Stream">Livestream</string>
 </resources>

@@ -64,6 +64,11 @@
                 </menu>
             </item>
 
+            <item
+                android:id="@+id/start_live_stream"
+                android:icon="@drawable/live_symbol"
+                android:title="@string/str_Start_Live_Stream" />
+
             <item android:id="@+id/preset_select"
                 android:icon="@drawable/preset_symbol"
                 android:title="Preset">
