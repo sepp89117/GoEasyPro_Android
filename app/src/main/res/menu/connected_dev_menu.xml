@@ -71,7 +71,8 @@
 
             <item android:id="@+id/preset_select"
                 android:icon="@drawable/preset_symbol"
-                android:title="Preset">
+                android:title="Preset"
+                tools:ignore="HardcodedText">
                 <menu>
                     <item
                         android:id="@+id/preset_standard"

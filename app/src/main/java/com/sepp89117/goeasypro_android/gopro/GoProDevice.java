@@ -207,7 +207,6 @@ public class GoProDevice {
     public String remainingMemory;
     private boolean autoValueUpdatesRegistered = false;
     public int btRssi = 0;
-    private String LE = "None"; // last error
     private Date lastKeepAlive = new Date();
     private int keepAliveInterval = 60000; // ms
     private Date lastOtherQueries = new Date();
@@ -670,7 +669,7 @@ public class GoProDevice {
     }
 
     private void parseProtobuf() {
-        /**
+        /*
          * Steps to compiling protocol buffers with Windows:
          * 1. Download compiler from 'https://github.com/protocolbuffers/protobuf/releases/latest' and extract
          * 2. Download needed protocol buffers from 'https://github.com/gopro/OpenGoPro/tree/main/protobuf'
@@ -796,17 +795,18 @@ public class GoProDevice {
         if (commandId == 91 /* keep alive */)
             return;
 
+        String errorString;
         switch (error) {
             case 1:
-                LE = "Error";
+                errorString = "Error";
                 break;
             case 2:
-                LE = "Invalid Parameter";
+                errorString = "Invalid Parameter";
                 break;
             default:
-                LE = "Unknown error";
+                errorString = "Unknown error";
         }
-        Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + LE + ") to command id " + commandId);
+        Log.e("GoProDevice", btDeviceName + " responds with error code " + error + " (" + errorString + ") to command id " + commandId);
     }
 
     private boolean isProtobuf(byte[] response) {
@@ -1337,6 +1337,10 @@ public class GoProDevice {
         camBtAvailable = false;
         registerForAutoValueUpdatesCounter = 0;
         goProtoPresets = new ArrayList<>();
+        scanningState = NetworkManagement.EnumScanning.SCANNING_UNKNOWN;
+        apEntries = new ArrayList<>();
+        liveStreamStatus = new LiveStreaming.NotifyLiveStreamStatus();
+        provisioningState = NetworkManagement.EnumProvisioning.PROVISIONING_UNKNOWN;
 
         wifiApState = -1;
         isHot = false;
@@ -1413,7 +1417,6 @@ public class GoProDevice {
             }
         })) {
             Log.e("setCamName", "SSID not sent");
-            return;
         }
     }
     //endregion

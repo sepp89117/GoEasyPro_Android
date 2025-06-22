@@ -151,6 +151,21 @@
     <string name="str_resolution">Resolução</string>
     <string name="str_lens">Lente</string>
     <string name="str_save_to_sd_while_streaming">Salvar no SD durante a transmissão</string>
+    <string name="str_ScanningforavailableWiFinetworks">Procurando redes Wi-Fi disponíveis…</string>
+    <string name="str_PleasewaitwhiletheWiFiscanisperformed">Aguarde enquanto a varredura de Wi-Fi é realizada!</string>
+    <string name="str_NoWiFinetworksfound">Nenhuma rede Wi-Fi encontrada!</string>
+    <string name="str_WiFiabortedbysystem">Wi-Fi cancelado pelo sistema!</string>
+    <string name="str_WiFiscancancelledbyuser">Varredura de Wi-Fi cancelada pelo usuário!</string>
+    <string name="str_WiFiscannotstarted">A varredura de Wi-Fi não foi iniciada!</string>
+    <string name="str_WiFiscanrequestfailed">Falha na solicitação de varredura de Wi-Fi!</string>
+    <string name="str_StreamSettings">Configurações de Transmissão</string>
+    <string name="str_FailedtorequestlivestreamTryagain">Falha ao solicitar transmissão ao vivo! Tente novamente!</string>
+    <string name="str_Livestreamrequested">Transmissão ao vivo solicitada.</string>
+    <string name="str_PleasewaitforAPconnection">Aguarde a conexão com o ponto de acesso!</string>
+    <string name="str_ErrorPleasetryagain">Erro! Tente novamente!</string>
+    <string name="str_Thenetworkisnotsupported">A rede %1$s não é suportada!</string>
+    <string name="str_FailedtorequestconnecttoAP">Falha ao solicitar conexão com o ponto de acesso!</string>
+    <string name="str_enter_the_ap_password">Introduza a senha do AP</string>
 
     <!-- Menüs -->
     <string name="str_device_control">Controle</string>

@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter the AP Password" />
+        android:text="@string/str_enter_the_ap_password" />
 
     <EditText
         android:id="@+id/pwInput"

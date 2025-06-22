@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getGroupId() <= 0) {
                 switch (item.getItemId()) {
                     case R.id.dev_settings:
-                        if (goProDevice.goSettings.size() > 0) {
+                        if (!goProDevice.goSettings.isEmpty()) {
                             Intent goSettingsActivityIntent = new Intent(MainActivity.this, GoSettingsActivity.class);
                             startActivity(goSettingsActivityIntent);
                         } else {
@@ -397,9 +397,7 @@ public class MainActivity extends AppCompatActivity {
                             if (!connected)
                                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), String.format(getResources().getString(R.string.str_powered_on), goProDevice.displayName), Toast.LENGTH_SHORT).show());
 
-                            runOnUiThread(() -> {
-                                goListAdapter.notifyDataSetChanged();
-                            });
+                            runOnUiThread(() -> goListAdapter.notifyDataSetChanged());
                         });
                         break;
                     case R.id.del_device:
@@ -469,9 +467,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    // TODO Translations for strings
     private void requestInitLiveStream(GoProDevice goProDevice) {
-        final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).setTitle("Scanning for available WiFi networks...").setMessage("Please wait while the WiFi scan is performed!").setCancelable(false).create();
+        final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).setTitle(R.string.str_ScanningforavailableWiFinetworks).setMessage(R.string.str_PleasewaitwhiletheWiFiscanisperformed).setCancelable(false).create();
         alert.show();
         goProDevice.getNetworkChanges(() -> runOnUiThread(() -> {
             switch (goProDevice.scanningState) {
@@ -483,31 +480,30 @@ public class MainActivity extends AppCompatActivity {
                     if (!goProDevice.apEntries.isEmpty()) {
                         showStreamSettingsDialog(goProDevice);
                     } else {
-                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "No WiFi networks found!", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_NoWiFinetworksfound, Toast.LENGTH_SHORT).show());
                     }
                     break;
                 case SCANNING_ABORTED_BY_SYSTEM:
                     alert.dismiss();
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi aborted by system!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_WiFiabortedbysystem, Toast.LENGTH_SHORT).show());
                     break;
                 case SCANNING_CANCELLED_BY_USER:
                     alert.dismiss();
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan cancelled by user!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_WiFiscancancelledbyuser, Toast.LENGTH_SHORT).show());
                     break;
                 default:
                     alert.dismiss();
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan not started!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_WiFiscannotstarted, Toast.LENGTH_SHORT).show());
                     break;
             }
         }));
 
         if (!goProDevice.requestStartAPScan()) {
             alert.dismiss();
-            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan request failed!", Toast.LENGTH_SHORT).show());
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_WiFiscanrequestfailed, Toast.LENGTH_SHORT).show());
         }
     }
 
-    // TODO Translations for strings
     private void showStreamSettingsDialog(GoProDevice goProDevice) {
         List<String> ssids = new ArrayList<>();
         for (int i = 0; i < goProDevice.apEntries.size(); i++) {
@@ -520,7 +516,7 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_stream_settings, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setTitle("Stream Settings")
+                .setTitle(R.string.str_StreamSettings)
                 .setPositiveButton("OK", null)
                 .setNegativeButton(getResources().getString(R.string.str_Cancel), null);
 
@@ -584,16 +580,16 @@ public class MainActivity extends AppCompatActivity {
                     case PROVISIONING_SUCCESS_NEW_AP:
                     case PROVISIONING_SUCCESS_OLD_AP:
                         if (!goProDevice.requestGetLiveStream(url, windowSizeValue, lensValue, encodeEnabled))
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request live stream! Try again!", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_FailedtorequestlivestreamTryagain, Toast.LENGTH_SHORT).show());
                         else
-                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Live stream requested.", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_Livestreamrequested, Toast.LENGTH_SHORT).show());
                         dialog.dismiss();
                         break;
                     case PROVISIONING_STARTED:
-                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please wait for AP connection!", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_PleasewaitforAPconnection, Toast.LENGTH_SHORT).show());
                         break;
                     default:
-                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error! Please try again!", Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_ErrorPleasetryagain, Toast.LENGTH_SHORT).show());
                         dialog.dismiss();
                         break;
                 }
@@ -622,14 +618,14 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             if (apIsUnsupported) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), String.format("The network %s is not supported!", ssid), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), String.format(getResources().getString(R.string.str_Thenetworkisnotsupported), ssid), Toast.LENGTH_SHORT).show());
                 continue;
             }
 
             if (apIsConfigured) {
                 // This network has been previously provisioned
                 if (!goProDevice.connectToAP(selectedSsid))
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_FailedtorequestconnecttoAP, Toast.LENGTH_SHORT).show());
             } else if (!apIsOpen) {
                 // Get AP Password from user an connect new
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_ap_pw_input, null);
@@ -641,7 +637,7 @@ public class MainActivity extends AppCompatActivity {
                                 .setPositiveButton("OK", (dialog, which) -> {
                                     String password = passwordInput.getText().toString();
                                     if (!goProDevice.connectToNewAP(selectedSsid, password))
-                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_FailedtorequestconnecttoAP, Toast.LENGTH_SHORT).show());
                                 })
                                 .setNegativeButton(getResources().getString(R.string.str_Cancel), null)
                                 .show()
@@ -657,7 +653,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // This network does not require authentication
                 if (!goProDevice.connectToNewAP(selectedSsid, "")) // TODO Is this the right way to connect to an open WiFi network?
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), R.string.str_FailedtorequestconnecttoAP, Toast.LENGTH_SHORT).show());
             }
         }
     }
@@ -755,13 +751,13 @@ public class MainActivity extends AppCompatActivity {
 
                         httpClient.newCall(request).enqueue(new Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                                 Log.e("HTTP GET error", e.toString());
                                 alert.dismiss();
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) {
+                            public void onResponse(@NonNull Call call, @NonNull Response response) {
                                 if (response.isSuccessful()) {
                                     // preview stream available
                                     if (!streamCanceled[0]) {
@@ -831,13 +827,13 @@ public class MainActivity extends AppCompatActivity {
 
                         httpClient.newCall(request).enqueue(new Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                                 Log.e("HTTP GET error", e.toString());
                                 alert.dismiss();
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) {
+                            public void onResponse(@NonNull Call call, @NonNull Response response) {
                                 if (response.isSuccessful()) {
                                     try {
                                         String resp_Str = response.body().string();
@@ -1018,6 +1014,7 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    @SuppressLint("NonConstantResourceId")
     private final PopupMenu.OnMenuItemClickListener modeMenuItemClickListener = item -> {
         if (item.hasSubMenu()) return true;
 
@@ -1121,6 +1118,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     private final PopupMenu.OnMenuItemClickListener presetMenuItemClickListener = item -> {
         if (item.hasSubMenu()) return true;
 
@@ -1374,28 +1372,28 @@ public class MainActivity extends AppCompatActivity {
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            switch (action) {
-                case BluetoothAdapter.ACTION_STATE_CHANGED:
-                    if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF)
-                        isBtEnabled();
-                    break;
-                case BluetoothDevice.ACTION_FOUND:
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                    goProDevices.stream().filter(goProDevice -> Objects.equals(goProDevice.btMacAddress, device.getAddress())).findFirst().ifPresent(goProDevice -> {
-                        goProDevice.camBtAvailable = true;
-                        if (((MyApplication) getApplication()).shouldAutoConnect() && goProDevice.btConnectionStage == BT_NOT_CONNECTED && !goProDevice.shouldNotBeReconnected) {
-                            goProDevice.connectBt(connected -> runOnUiThread(() -> {
-                                goListAdapter.notifyDataSetChanged();
-                            }));
-                        }
-                        goListAdapter.notifyDataSetChanged();
-                    });
-                    break;
-                case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
-                    if (!((MyApplication) getApplication()).isAppPaused())
-                        bluetoothAdapter.startDiscovery();
-                    break;
+            if (action != null) {
+                switch (action) {
+                    case BluetoothAdapter.ACTION_STATE_CHANGED:
+                        if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF)
+                            isBtEnabled();
+                        break;
+                    case BluetoothDevice.ACTION_FOUND:
+                        BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                        if (device == null) return;
+                        goProDevices.stream().filter(goProDevice -> Objects.equals(goProDevice.btMacAddress, device.getAddress())).findFirst().ifPresent(goProDevice -> {
+                            goProDevice.camBtAvailable = true;
+                            if (((MyApplication) getApplication()).shouldAutoConnect() && goProDevice.btConnectionStage == BT_NOT_CONNECTED && !goProDevice.shouldNotBeReconnected) {
+                                goProDevice.connectBt(connected -> runOnUiThread(() -> goListAdapter.notifyDataSetChanged()));
+                            }
+                            goListAdapter.notifyDataSetChanged();
+                        });
+                        break;
+                    case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
+                        if (!((MyApplication) getApplication()).isAppPaused())
+                            bluetoothAdapter.startDiscovery();
+                        break;
+                }
             }
         }
     };
@@ -1414,12 +1412,12 @@ public class MainActivity extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("HTTP GET Firmware Catalog error", e.toString());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String jsonResponse = response.body().string();
                     try {
@@ -1454,12 +1452,12 @@ public class MainActivity extends AppCompatActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("HTTP GET Latest app release error", e.toString());
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String jsonResponse = response.body().string();
                     try {

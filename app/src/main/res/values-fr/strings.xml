@@ -151,6 +151,21 @@
     <string name="str_resolution">Résolution</string>
     <string name="str_lens">Objectif</string>
     <string name="str_save_to_sd_while_streaming">Enregistrer sur la carte SD pendant le streaming</string>
+    <string name="str_ScanningforavailableWiFinetworks">Recherche des réseaux Wi-Fi disponibles…</string>
+    <string name="str_PleasewaitwhiletheWiFiscanisperformed">Veuillez patienter pendant la recherche Wi-Fi!</string>
+    <string name="str_NoWiFinetworksfound">Aucun réseau Wi-Fi trouvé!</string>
+    <string name="str_WiFiabortedbysystem">Wi-Fi annulé par le système!</string>
+    <string name="str_WiFiscancancelledbyuser">Recherche Wi-Fi annulée par l\'utilisateur!</string>
+    <string name="str_WiFiscannotstarted">La recherche Wi-Fi n’a pas démarré!</string>
+    <string name="str_WiFiscanrequestfailed">La demande de recherche Wi-Fi a échoué!</string>
+    <string name="str_StreamSettings">Paramètres de streaming</string>
+    <string name="str_FailedtorequestlivestreamTryagain">Échec de la demande de streaming en direct! Réessayez!</string>
+    <string name="str_Livestreamrequested">Diffusion en direct demandée.</string>
+    <string name="str_PleasewaitforAPconnection">Veuillez attendre la connexion au point d\'accès!</string>
+    <string name="str_ErrorPleasetryagain">Erreur! Veuillez réessayer!</string>
+    <string name="str_Thenetworkisnotsupported">Le réseau %1$s n\'est pas pris en charge!</string>
+    <string name="str_FailedtorequestconnecttoAP">Échec de la demande de connexion au point d\'accès!</string>
+    <string name="str_enter_the_ap_password">Entrez le mot de passe AP</string>
 
     <!-- Menus -->
     <string name="str_device_control">Contrôle de la caméra</string>

@@ -151,6 +151,21 @@
     <string name="str_resolution">Resolución</string>
     <string name="str_lens">Lente</string>
     <string name="str_save_to_sd_while_streaming">Guardar en SD durante la transmisión</string>
+    <string name="str_ScanningforavailableWiFinetworks">Buscando redes WiFi disponibles…</string>
+    <string name="str_PleasewaitwhiletheWiFiscanisperformed">Por favor, espera mientras se realiza el escaneo de WiFi.</string>
+    <string name="str_NoWiFinetworksfound">¡No se encontraron redes WiFi!</string>
+    <string name="str_WiFiabortedbysystem">¡WiFi cancelado por el sistema!</string>
+    <string name="str_WiFiscancancelledbyuser">¡Escaneo WiFi cancelado por el usuario!</string>
+    <string name="str_WiFiscannotstarted">¡No se inició el escaneo WiFi!</string>
+    <string name="str_WiFiscanrequestfailed">¡Falló la solicitud de escaneo WiFi!</string>
+    <string name="str_StreamSettings">Configuración del streaming</string>
+    <string name="str_FailedtorequestlivestreamTryagain">¡Error al solicitar el streaming en vivo! ¡Inténtalo de nuevo!</string>
+    <string name="str_Livestreamrequested">Streaming en vivo solicitado.</string>
+    <string name="str_PleasewaitforAPconnection">¡Por favor, espera la conexión al AP!</string>
+    <string name="str_ErrorPleasetryagain">¡Error! ¡Inténtalo de nuevo!</string>
+    <string name="str_Thenetworkisnotsupported">¡La red %1$s no es compatible!</string>
+    <string name="str_FailedtorequestconnecttoAP">¡Fallo al solicitar la conexión al AP!</string>
+    <string name="str_enter_the_ap_password">Ingrese la contraseña de AP</string>
 
     <!-- Menús -->
     <string name="str_device_control">Control de la cámara</string>

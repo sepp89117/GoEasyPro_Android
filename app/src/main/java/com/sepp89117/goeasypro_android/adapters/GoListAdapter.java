@@ -22,6 +22,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.sepp89117.goeasypro_android.R;
 import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 
@@ -80,7 +82,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         ViewHolder mViewHolder;
 
         if (convertView == null) {
@@ -239,6 +241,7 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             mViewHolder.memory.setText(R.string.str_NC);
             mViewHolder.battery.setText(R.string.str_NC);
             mViewHolder.rssi.setText(R.string.str_NC);
+            mViewHolder.mode_symbol.setVisibility(View.GONE);
 
             if (goProDevice.btConnectionStage == BT_NOT_CONNECTED) {
                 mViewHolder.mode.setText(R.string.str_not_connected);

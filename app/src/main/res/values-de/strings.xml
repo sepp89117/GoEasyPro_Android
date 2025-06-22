@@ -34,7 +34,7 @@
 
     <!-- Voreinstellungen und Modi -->
     <string name="str_not_connected">Nicht verbunden</string>
-    <string name="str_connecting">Verbinde...</string>
+    <string name="str_connecting">Verbinde…</string>
     <string name="str_Preset">Preset</string>
     <string name="str_Mode">Modus</string>
     <string name="str_Standard">Standard</string>
@@ -142,7 +142,7 @@
     <string name="str_wait_wifi_con">Bitte warte, bis die WLAN-Verbindung hergestellt ist!\nWenn die GoPro gerade eingeschaltet wurde, kann dies eine Weile dauern! Wenn Sie wiederholt Verbindungsprobleme haben, versuchen Sie, das WLAN-Band der Kamera von 5 GHz auf 2,4 GHz zu ändern.</string>
     <string name="str_Rename">\'%1$s\' umbenennen</string>
     <string name="str_enter_new_name">Gib einen neuen Namen für \'%1$s\' ein\n\nMindestens 8 und maximal 32 Zeichen\n</string>
-    <string name="str_Downloading">Wird heruntergeladen...</string>
+    <string name="str_Downloading">Wird heruntergeladen…</string>
     <string name="str_wait_dl_complete">Bitte warte, bis der Download abgeschlossen ist!</string>
     <string name="str_wait_setting_set">Bitte warte, bis die neue Einstellung vorgenommen wurde!</string>
     <string name="str_set_setting">Neue Einstellung festlegen</string>
@@ -150,6 +150,21 @@
     <string name="str_resolution">Auflösung</string>
     <string name="str_lens">Objektiv</string>
     <string name="str_save_to_sd_while_streaming">Während des Streamings auf SD speichern</string>
+    <string name="str_ScanningforavailableWiFinetworks">Suche nach verfügbaren WLAN-Netzwerken…</string>
+    <string name="str_PleasewaitwhiletheWiFiscanisperformed">Bitte warten, während die WLAN-Suche durchgeführt wird!</string>
+    <string name="str_NoWiFinetworksfound">Keine WLAN-Netzwerke gefunden!</string>
+    <string name="str_WiFiabortedbysystem">WLAN wurde vom System abgebrochen!</string>
+    <string name="str_WiFiscancancelledbyuser">WLAN-Suche vom Benutzer abgebrochen!</string>
+    <string name="str_WiFiscannotstarted">WLAN-Suche wurde nicht gestartet!</string>
+    <string name="str_WiFiscanrequestfailed">WLAN-Suchanfrage fehlgeschlagen!</string>
+    <string name="str_StreamSettings">Stream-Einstellungen</string>
+    <string name="str_FailedtorequestlivestreamTryagain">Livestream-Anfrage fehlgeschlagen! Bitte erneut versuchen!</string>
+    <string name="str_Livestreamrequested">Livestream wurde angefordert.</string>
+    <string name="str_PleasewaitforAPconnection">Bitte auf die AP-Verbindung warten!</string>
+    <string name="str_ErrorPleasetryagain">Fehler! Bitte erneut versuchen!</string>
+    <string name="str_Thenetworkisnotsupported">Das Netzwerk %1$s wird nicht unterstützt!</string>
+    <string name="str_FailedtorequestconnecttoAP">Verbindung zum AP konnte nicht angefordert werden!</string>
+    <string name="str_enter_the_ap_password">AP-Passwort eingeben</string>
 
     <!-- Menüs -->
     <string name="str_device_control">Steuerung</string>
