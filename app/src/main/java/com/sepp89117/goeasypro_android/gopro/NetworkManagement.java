@@ -3537,7 +3537,7 @@ public final class NetworkManagement {
       }
 
       // Construct using com.sepp89117.goeasypro_android.gopro.NetworkManagement.RequestConnectNew.newBuilder()
-      private Builder() {
+      Builder() {
 
       }
 

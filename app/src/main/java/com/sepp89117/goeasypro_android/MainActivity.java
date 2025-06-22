@@ -4,7 +4,10 @@ import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_CONNECTED;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.HERO12_BLACK;
 import static com.sepp89117.goeasypro_android.gopro.GoProDevice.HERO8_BLACK;
+import static com.sepp89117.goeasypro_android.gopro.NetworkManagement.EnumScanEntryFlags.SCAN_FLAG_ASSOCIATED;
 import static com.sepp89117.goeasypro_android.gopro.NetworkManagement.EnumScanEntryFlags.SCAN_FLAG_CONFIGURED;
+import static com.sepp89117.goeasypro_android.gopro.NetworkManagement.EnumScanEntryFlags.SCAN_FLAG_OPEN;
+import static com.sepp89117.goeasypro_android.gopro.NetworkManagement.EnumScanEntryFlags.SCAN_FLAG_UNSUPPORTED_TYPE;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -37,6 +40,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -61,6 +65,7 @@ import com.sepp89117.goeasypro_android.gopro.GoMediaFile;
 import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 import com.sepp89117.goeasypro_android.gopro.GoProtoPreset;
 import com.sepp89117.goeasypro_android.gopro.GoSetting;
+import com.sepp89117.goeasypro_android.gopro.NetworkManagement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
             GoProDevice goProDevice = goProDevices.get(position);
             ((MyApplication) MainActivity.this.getApplication()).setFocusedDevice(goProDevice);
 
-            if(item.getGroupId() <= 0) {
+            if (item.getGroupId() <= 0) {
                 switch (item.getItemId()) {
                     case R.id.dev_settings:
                         if (goProDevice.goSettings.size() > 0) {
@@ -357,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
                         goProDevice.shutterOff();
                         break;
                     case R.id.start_live_stream:
-                        requestLiveStream(goProDevice);
+                        requestInitLiveStream(goProDevice);
                         break;
                     case R.id.ap_on:
                         //Shutter: on
@@ -456,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
                         goProDevice.setPreset("nightLapse");
                         break;
                 }
-            } else if(item.getGroupId() == 1) {
+            } else if (item.getGroupId() == 1) {
                 // protoPreset
                 goProDevice.setPresetById(item.getItemId());
             }
@@ -464,15 +469,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @SuppressLint("SetTextI18n")
-    private void requestLiveStream(GoProDevice goProDevice) {
+    // TODO Translations for strings
+    private void requestInitLiveStream(GoProDevice goProDevice) {
         final AlertDialog alert = new AlertDialog.Builder(MainActivity.this).setTitle("Scanning for available WiFi networks...").setMessage("Please wait while the WiFi scan is performed!").setCancelable(false).create();
         alert.show();
-
         goProDevice.getNetworkChanges(() -> runOnUiThread(() -> {
             switch (goProDevice.scanningState) {
                 case SCANNING_STARTED:
-                    // TODO Should SCANNING_STARTED be handled?
+                    // no action
                     break;
                 case SCANNING_SUCCESS:
                     alert.dismiss();
@@ -482,28 +486,43 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(() -> Toast.makeText(getApplicationContext(), "No WiFi networks found!", Toast.LENGTH_SHORT).show());
                     }
                     break;
+                case SCANNING_ABORTED_BY_SYSTEM:
+                    alert.dismiss();
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi aborted by system!", Toast.LENGTH_SHORT).show());
+                    break;
+                case SCANNING_CANCELLED_BY_USER:
+                    alert.dismiss();
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan cancelled by user!", Toast.LENGTH_SHORT).show());
+                    break;
+                default:
+                    alert.dismiss();
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan not started!", Toast.LENGTH_SHORT).show());
+                    break;
             }
         }));
 
-        goProDevice.requestStartScan();
+        if (!goProDevice.requestStartAPScan()) {
+            alert.dismiss();
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "WiFi scan request failed!", Toast.LENGTH_SHORT).show());
+        }
     }
 
+    // TODO Translations for strings
     private void showStreamSettingsDialog(GoProDevice goProDevice) {
         List<String> ssids = new ArrayList<>();
         for (int i = 0; i < goProDevice.apEntries.size(); i++) {
-            // TODO Unconfigured networks are filtered out here. The 'connectNewAP' function needs to be implemented.
-            if ((goProDevice.apEntries.get(i).getScanEntryFlags() & SCAN_FLAG_CONFIGURED.getNumber()) == 0)
-                continue;
-
+            // TODO Implement visualization of ScanEntryFlags
+            // int signalStrengthBars = goProDevice.apEntries.get(i).getSignalStrengthBars(); // TODO Implement visualization of signalStrengthBars
             String ssid = goProDevice.apEntries.get(i).getSsid();
-            //int signalStrengthBars = goProDevice.apEntries.get(i).getSignalStrengthBars(); // TODO Implement visualization of signalStrengthBars
             ssids.add(ssid);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_stream_settings, null);
-        builder.setView(dialogView);
-        builder.setTitle("Stream Settings");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setTitle("Stream Settings")
+                .setPositiveButton("OK", null)
+                .setNegativeButton(getResources().getString(R.string.str_Cancel), null);
 
         Spinner apEntriesSelect = dialogView.findViewById(R.id.apEntriesSelect);
         EditText urlInput = dialogView.findViewById(R.id.urlInput);
@@ -523,8 +542,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                String selectedSsid = (String) apEntriesSelect.getSelectedItem();
-                goProDevice.connectToAP(selectedSsid);
+                onAPSelected(apEntriesSelect, goProDevice);
             }
 
             @Override
@@ -532,7 +550,6 @@ public class MainActivity extends AppCompatActivity {
                 // Ignore this event, because 'apEntries' can never be empty at this point and therefore an empty selection is not possible
             }
         });
-
 
         // windowSizeSelect
         List<String> windowSizes = Arrays.asList("480p", "720p", "1080p");
@@ -546,42 +563,129 @@ public class MainActivity extends AppCompatActivity {
         lensAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lensSelect.setAdapter(lensAdapter);
 
+        // Save to SD while streaming by default
         encodeSwitch.setChecked(true);
 
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            String url = urlInput.getText().toString();
-            int windowSizeValue = getWindowSizeValue((String) windowSizeSelect.getSelectedItem());
-            int lensValue = getLensValue((String) lensSelect.getSelectedItem());
-            boolean encodeEnabled = encodeSwitch.isChecked();
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(d -> {
+            Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            okButton.setOnClickListener(v -> {
+                String url = urlInput.getText().toString();
+                int windowSizeValue = getWindowSizeValue((String) windowSizeSelect.getSelectedItem());
+                int lensValue = getLensValue((String) lensSelect.getSelectedItem());
+                boolean encodeEnabled = encodeSwitch.isChecked();
 
-            // save url
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("stream_url", url);
-            editor.apply();
+                // save url
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("stream_url", url);
+                editor.apply();
 
-            goProDevice.requestGetLiveStream(url, windowSizeValue, lensValue, encodeEnabled);
+                switch (goProDevice.provisioningState) {
+                    case PROVISIONING_SUCCESS_NEW_AP:
+                    case PROVISIONING_SUCCESS_OLD_AP:
+                        if (!goProDevice.requestGetLiveStream(url, windowSizeValue, lensValue, encodeEnabled))
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request live stream! Try again!", Toast.LENGTH_SHORT).show());
+                        else
+                            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Live stream requested.", Toast.LENGTH_SHORT).show());
+                        dialog.dismiss();
+                        break;
+                    case PROVISIONING_STARTED:
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Please wait for AP connection!", Toast.LENGTH_SHORT).show());
+                        break;
+                    default:
+                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Error! Please try again!", Toast.LENGTH_SHORT).show());
+                        dialog.dismiss();
+                        break;
+                }
+            });
         });
 
-        builder.setNegativeButton("Abbrechen", null);
-        builder.show();
+        dialog.show();
+    }
+
+    private void onAPSelected(Spinner apEntriesSelect, GoProDevice goProDevice) {
+        String selectedSsid = (String) apEntriesSelect.getSelectedItem();
+
+        for (int i = 0; i < goProDevice.apEntries.size(); i++) {
+            NetworkManagement.ResponseGetApEntries.ScanEntry scanEntry = goProDevice.apEntries.get(i);
+            boolean apIsUnsupported = (scanEntry.getScanEntryFlags() & SCAN_FLAG_UNSUPPORTED_TYPE.getNumber()) != 0;
+            boolean apIsConfigured = (scanEntry.getScanEntryFlags() & SCAN_FLAG_CONFIGURED.getNumber()) != 0;
+            boolean apIsAssociated = (scanEntry.getScanEntryFlags() & SCAN_FLAG_ASSOCIATED.getNumber()) != 0;
+            boolean apIsOpen = (scanEntry.getScanEntryFlags() & SCAN_FLAG_OPEN.getNumber()) != 0;
+
+            String ssid = scanEntry.getSsid();
+            // Is the selected Network?
+            if (!ssid.equals(selectedSsid))
+                continue;
+
+            if (apIsAssociated) // Camera is connected to this AP
+                return;
+
+            if (apIsUnsupported) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), String.format("The network %s is not supported!", ssid), Toast.LENGTH_SHORT).show());
+                continue;
+            }
+
+            if (apIsConfigured) {
+                // This network has been previously provisioned
+                if (!goProDevice.connectToAP(selectedSsid))
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+            } else if (!apIsOpen) {
+                // Get AP Password from user an connect new
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_ap_pw_input, null);
+                EditText passwordInput = dialogView.findViewById(R.id.pwInput);
+                runOnUiThread(() ->
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("AP password")
+                                .setView(dialogView)
+                                .setPositiveButton("OK", (dialog, which) -> {
+                                    String password = passwordInput.getText().toString();
+                                    if (!goProDevice.connectToNewAP(selectedSsid, password))
+                                        runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+                                })
+                                .setNegativeButton(getResources().getString(R.string.str_Cancel), null)
+                                .show()
+                );
+
+                // TODO handle other protobuf fields?
+                //    optional bytes  static_ip         = 3;  // Static IP address
+                //    optional bytes  gateway           = 4;  // Gateway IP address
+                //    optional bytes  subnet            = 5;  // Subnet mask
+                //    optional bytes  dns_primary       = 6;  // Primary DNS
+                //    optional bytes  dns_secondary     = 7;  // Secondary DNS
+                //    optional bool   bypass_eula_check = 10; // Allow network configuration without internet connectivity
+            } else {
+                // This network does not require authentication
+                if (!goProDevice.connectToNewAP(selectedSsid, "")) // TODO Is this the right way to connect to an open WiFi network?
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Failed to request connect to AP!", Toast.LENGTH_SHORT).show());
+            }
+        }
     }
 
     // Mapping-Funktionen
     private int getWindowSizeValue(String label) {
         switch (label) {
-            case "480p": return 4;
-            case "720p": return 7;
-            case "1080p": return 12;
-            default: return -1;
+            case "480p":
+                return 4;
+            case "720p":
+                return 7;
+            case "1080p":
+                return 12;
+            default:
+                return -1;
         }
     }
 
     private int getLensValue(String label) {
         switch (label) {
-            case "wide": return 0;
-            case "linear": return 4;
-            case "superview": return 3;
-            default: return -1;
+            case "wide":
+                return 0;
+            case "linear":
+                return 4;
+            case "superview":
+                return 3;
+            default:
+                return -1;
         }
     }
 
@@ -1266,7 +1370,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return numConnected;
     }
-    
+
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();

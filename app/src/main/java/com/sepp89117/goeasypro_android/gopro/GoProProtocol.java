@@ -24,7 +24,7 @@ public class GoProProtocol {
         int chunkSize = 19; // 1 byte for the header
 
         // First packet with 2-byte header
-        int firstPayloadLen = Math.min(len, chunkSize - 1);
+        int firstPayloadLen = chunkSize - 1;
         byte[] firstPacket = new byte[2 + firstPayloadLen];
         firstPacket[0] = (byte) ((header >> 8) & 0xFF); // High byte
         firstPacket[1] = (byte) (header & 0xFF);        // Low byte
