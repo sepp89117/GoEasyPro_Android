@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
                 scale = "1";
             }
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putFloat("ui_scale", Float.parseFloat(scale));
+            editor.putString("ui_scale", scale);
             editor.apply();
         }
-        configuration.fontScale = Float.parseFloat(sharedPref.getString("ui_scale", scale));
+        configuration.fontScale = Float.parseFloat(scale);
         Context scaledContext = base.createConfigurationContext(configuration);
 
         super.attachBaseContext(scaledContext);
@@ -643,7 +643,7 @@ public class MainActivity extends AppCompatActivity {
                                 .show()
                 );
 
-                // TODO handle other protobuf fields?
+                // TODO handle other protobuf fields? Maybe in an expandable field "Advanced Settings"
                 //    optional bytes  static_ip         = 3;  // Static IP address
                 //    optional bytes  gateway           = 4;  // Gateway IP address
                 //    optional bytes  subnet            = 5;  // Subnet mask

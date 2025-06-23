@@ -10,8 +10,8 @@ android {
         applicationId 'com.sepp89117.goeasypro_android'
         minSdk 27
         targetSdk 34
-        versionCode 176
-        versionName '1.7.6'
+        versionCode 180
+        versionName '1.8.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.activity:activity:1.10.1'
-    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'org.videolan.android:libvlc-all:4.0.0-eap20'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     testImplementation 'junit:junit:4.13.2'

@@ -765,12 +765,12 @@ public class GoProDevice {
             case 249:
                 // Handle case 0xF9
                 // Request set live stream response (ResponseGeneric)
-                try {
+                /*try {
                     ResponseGenericOuterClass.ResponseGeneric responseGeneric = ResponseGenericOuterClass.ResponseGeneric.parseFrom(byteArray);
-                    // TODO Should live stream response be handled?
+                    // Should live stream response be handled? Not currently necessary
                 } catch (InvalidProtocolBufferException e) {
                     Log.e("parseBtData", e.getMessage());
-                }
+                }*/
                 break;
             case 242: // Handle case 0xF2 (Synchronously via initial response to RequestGetPresetStatus)
             case 243: // Handle case 0xF3 (Asynchronously when Preset change if registered in RequestGetPresetStatus)
