@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.sepp89117.goeasypro_android.gopro.GoProDevice;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.interfaces.IMedia;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -57,11 +59,11 @@ public class PreviewActivity extends AppCompatActivity {
     private DatagramSocket udpSocket = null;
     private GoProDevice streamingDevice;
     private Animation fadeAnimation;
-
     private SurfaceView surfaceView;
-
     private LibVLC libVLC;
     private MediaPlayer mediaPlayer;
+    private TimerTask keepStreamAlive;
+    private SurfaceHolder.Callback surfaceHolderCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,24 +82,111 @@ public class PreviewActivity extends AppCompatActivity {
         ((MyApplication) this.getApplication()).resetIsAppPaused();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d(TAG, "onRestart");
+
+        if (mediaPlayer != null) {
+            mediaPlayer.play();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        int cachingTimeMs = 500;
+        final ArrayList<String> options = new ArrayList<>();
+        options.add("--network-caching=" + cachingTimeMs);
+        options.add("--drop-late-frames");
+        options.add("--audio-time-stretch");
+        options.add("--h264-fps=30");
+        options.add("--ts-cc-check");
+
+        libVLC = new LibVLC(this, options);
+        mediaPlayer = new MediaPlayer(libVLC);
+
+        mediaPlayer.getVLCVout().setVideoView(surfaceView);
+        mediaPlayer.getVLCVout().attachViews();
+
+        String url = "udp://@:8554";
+        Media media = new Media(libVLC, Uri.parse(url));
+        media.setHWDecoderEnabled(true, true);
+        media.addOption(":network-caching=" + cachingTimeMs);
+        media.addOption(":clock-jitter=0");
+        media.addOption(":clock-synchro=0");
+        mediaPlayer.setMedia(media);
+        media.release();
+
+        mediaPlayer.play();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        stopPlayer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        stopPlayer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d(TAG, "onDestroy");
+
+        surfaceView.getHolder().removeCallback(surfaceHolderCallback);
+
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            libVLC.release();
+        }
+
+        killKeepStreamAliveTimer();
+        if (udpSocket != null) udpSocket.disconnect();
+    }
+
     private void init() {
-        surfaceView = findViewById(R.id.surfaceView);
-        SurfaceHolder mSurfaceHolder = surfaceView.getHolder();
-        mSurfaceHolder.addCallback(new SurfaceHolder.Callback() {
+        keepStreamAlive = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    DatagramPacket keepStreamAlivePacket = new DatagramPacket(keepStreamAliveData, keepStreamAliveData.length, inetAddress, 8554);
+                    udpSocket.send(keepStreamAlivePacket);
+                } catch (Exception ignored) {
+                }
+            }
+        };
+
+        surfaceHolderCallback = new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
             }
 
             @Override
             public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                if (mediaPlayer != null)
+                if (mediaPlayer != null) {
                     mediaPlayer.getVLCVout().setWindowSize(surfaceHolder.getSurfaceFrame().width(), surfaceHolder.getSurfaceFrame().height());
+                }
             }
 
             @Override
             public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
             }
-        });
+        };
+
+        surfaceView = findViewById(R.id.surfaceView);
+        final SurfaceHolder surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(surfaceHolderCallback);
+        surfaceHolder.setKeepScreenOn(true);
 
         fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.tween);
         streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
@@ -119,7 +208,8 @@ public class PreviewActivity extends AppCompatActivity {
             inetAddress = InetAddress.getByName(GoProDevice.goProIp);
             udpSocket = new DatagramSocket();
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(this, "An " + e.getClass().getSimpleName() + " occurred. Please try again or report an error.", Toast.LENGTH_LONG).show();
+            finish();
         }
 
         httpClient = new OkHttpClient();
@@ -154,8 +244,11 @@ public class PreviewActivity extends AppCompatActivity {
         httpClient.newCall(startPreview).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("requestStream", "fail");
-                e.printStackTrace();
+                Log.e("requestStream", "failed");
+                runOnUiThread(() -> {
+                    Toast.makeText(PreviewActivity.this, "An " + e.getClass().getSimpleName() + " occurred. Please try again or report an error.", Toast.LENGTH_LONG).show();
+                    finish();
+                });
             }
 
             @Override
@@ -178,7 +271,6 @@ public class PreviewActivity extends AppCompatActivity {
     private void initRequestTimer() {
         keepStreamAliveTimer = new Timer();
         keepStreamAliveTimer.schedule(keepStreamAlive, 0, 7000);
-        Log.i("initRequestTimer", "requestTimer init successfully");
     }
 
     private void killKeepStreamAliveTimer() {
@@ -189,18 +281,18 @@ public class PreviewActivity extends AppCompatActivity {
         keepStreamAliveTimer = null;
     }
 
-    private final TimerTask keepStreamAlive = new TimerTask() {
-        @Override
-        public void run() {
-            try {
-                DatagramPacket keepStreamAlivePacket = new DatagramPacket(keepStreamAliveData, keepStreamAliveData.length, inetAddress, 8554);
-                udpSocket.send(keepStreamAlivePacket);
-                // Log.i("keepStreamAlive", "sent");
-            } catch (Exception e) {
-                e.printStackTrace();
+    private void stopPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            final IMedia media = mediaPlayer.getMedia();
+            if (media != null) {
+                media.setEventListener(null);
+                media.release();
             }
+            mediaPlayer.setMedia(null);
+            mediaPlayer.getVLCVout().detachViews();
         }
-    };
+    }
 
     public void onShutterClick(View v) {
         if (streamingDevice.isRecording) streamingDevice.shutterOff();
@@ -257,55 +349,4 @@ public class PreviewActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        int cachingTimeMs = 500;
-        ArrayList<String> options = new ArrayList<>();
-        options.add("--network-caching=" + cachingTimeMs);
-        options.add("--drop-late-frames");
-        options.add("--audio-time-stretch");
-        options.add("--h264-fps=30");
-        options.add("--ts-cc-check");
-
-        libVLC = new LibVLC(this, options);
-        mediaPlayer = new MediaPlayer(libVLC);
-
-        mediaPlayer.getVLCVout().setVideoView(surfaceView);
-        mediaPlayer.getVLCVout().attachViews();
-
-        String url = "udp://@:8554";
-        Media media = new Media(libVLC, Uri.parse(url));
-        media.setHWDecoderEnabled(true, false);
-        media.addOption(":network-caching=" + cachingTimeMs);
-        mediaPlayer.setMedia(media);
-        media.release();
-
-        mediaPlayer.play();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Log.d(TAG, "onStop");
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.getVLCVout().detachViews();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (libVLC != null) {
-            libVLC.release();
-            libVLC = null;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        killKeepStreamAliveTimer();
-        if (udpSocket != null) udpSocket.disconnect();
-    }
 }
