@@ -45,6 +45,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Create notification channels (both are BLOCKED by default so users can enable them individually).
+        NotificationHelper.ensureChannels(this);
+
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         ignoreAutoOff = sharedPref.getBoolean("ignore_auto_off", false);
         autoConnect = sharedPref.getBoolean("auto_connect", false);

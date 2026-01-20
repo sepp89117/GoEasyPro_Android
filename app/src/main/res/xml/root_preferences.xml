@@ -22,6 +22,14 @@
             app:entries="@array/ui_scale_entries"
             app:entryValues="@array/ui_scale_values"
             app:summary="@string/str_ui_scale_desc" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_notifications_enabled"
+            android:title="@string/pref_notifications_enabled_title"
+            android:summaryOn="@string/pref_notifications_enabled_summary_on"
+            android:summaryOff="@string/pref_notifications_enabled_summary_off"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/str_Cameras">

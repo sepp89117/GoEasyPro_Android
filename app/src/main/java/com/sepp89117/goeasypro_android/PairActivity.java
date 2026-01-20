@@ -80,8 +80,8 @@ public class PairActivity extends AppCompatActivity {
             GoProDevice newGoProDevice = newGoProDevices.get(position);
             if (!newGoProDevice.btPaired) {
                 AlertDialog alert = new AlertDialog.Builder(PairActivity.this)
-                        .setTitle("Pairing")
-                        .setMessage("Please wait while the pairing is established!")
+                        .setTitle(getString(R.string.str_pairing_title))
+                        .setMessage(getString(R.string.str_pairing_message))
                         .setCancelable(true)
                         .create();
                 alert.show();
@@ -95,34 +95,34 @@ public class PairActivity extends AppCompatActivity {
                                         connected -> {
                                             alert.dismiss();
                                             if (connected)
-                                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (connected)\n" + newGoProDevice.btMacAddress); //green
+                                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_connected) + ")\n" + newGoProDevice.btMacAddress); //green
                                             else
-                                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (disconnected)\n" + newGoProDevice.btMacAddress); //red
+                                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_disconnected) + ")\n" + newGoProDevice.btMacAddress); //red
 
                                             setListAdapter();
                                         });
                             } else {
                                 alert.dismiss();
-                                Toast.makeText(getApplicationContext(), "Pairing '" + newGoProDevice.btDeviceName + "' failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), getString(R.string.str_pairing_failed, newGoProDevice.btDeviceName), Toast.LENGTH_SHORT).show();
                             }
                         });
             } else {
                 if (newGoProDevice.btConnectionStage != BT_NOT_CONNECTED) {
-                    Toast.makeText(getApplicationContext(), "Device always connected!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.str_device_already_connected), Toast.LENGTH_SHORT).show();
                 } else {
-                    mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (connecting...)\n" + newGoProDevice.btMacAddress); //yellow
+                    mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_connecting) + ")\n" + newGoProDevice.btMacAddress); //yellow
                     setListAdapter();
                     newGoProDevice.connectBt(connected -> {
                         if (connected) {
                             if (newGoProDevice.btConnectionStage == BT_CONNECTED) {
-                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (connected)\n" + newGoProDevice.btMacAddress); //green
+                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_connected) + ")\n" + newGoProDevice.btMacAddress); //green
                             } else if (newGoProDevice.btConnectionStage == BT_CONNECTING || newGoProDevice.btConnectionStage == BT_FETCHING_DATA) {
-                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (connecting...)\n" + newGoProDevice.btMacAddress); //red
+                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_connecting) + ")\n" + newGoProDevice.btMacAddress); //red
                             } else {
-                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (disconnected)\n" + newGoProDevice.btMacAddress); //red
+                                mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_disconnected) + ")\n" + newGoProDevice.btMacAddress); //red
                             }
                         } else {
-                            mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (disconnected)\n" + newGoProDevice.btMacAddress); //red
+                            mDeviceStrList.set(position, newGoProDevice.btDeviceName + " (" + getString(R.string.str_status_disconnected) + ")\n" + newGoProDevice.btMacAddress); //red
                         }
                         setListAdapter();
                     });

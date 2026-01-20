@@ -31,9 +31,9 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:text="GoPro XXXX"
+                android:text="@string/str_gopro_xxxx"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -41,8 +41,8 @@
                 android:id="@+id/model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hero X Black"
-                android:textColor="#fff"
+                android:text="@string/str_hero_x_black"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -82,8 +82,8 @@
                     android:gravity="bottom"
                     android:paddingBottom="2dp"
                     android:singleLine="true"
-                    android:text="Not connected"
-                    android:textColor="#fff"
+                    android:text="@string/str_not_connected"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -93,8 +93,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="Preset"
-                android:textColor="#fff"
+                android:text="@string/str_Preset"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -168,8 +168,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="NC"
-                android:textColor="#fff"
+                android:text="@string/str_NC"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -198,8 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="NC"
-                android:textColor="#fff"
+                android:text="@string/str_NC"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -226,9 +226,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="NC"
+                android:text="@string/str_NC"
                 android:textAlignment="center"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
 

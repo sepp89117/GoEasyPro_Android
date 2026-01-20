@@ -5,7 +5,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray"
+    android:background="@color/bg_gray"
     android:minHeight="20dp"
     tools:context=".MainActivity">
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="GoEasyPro Android"
+                android:text="@string/app_name"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -64,6 +64,23 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/bg_gray"
+            android:backgroundTint="@color/bg_gray"
+            android:keepScreenOn="true"
+            android:visibility="gone"
+            app:resize_mode="fit"
+            app:show_buffering="when_playing"
+            app:show_shuffle_button="true"
+            app:use_controller="false"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="5dp" />
+
         <LinearLayout
             android:id="@+id/views_container"
             android:layout_width="match_parent"
@@ -84,10 +101,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickShutterOn"
                     android:text="@string/str_Shutter_on"
                     android:textAllCaps="false"
-                    app:icon="@drawable/shutter2_symbol"
+                    app:icon="@drawable/rec_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -96,10 +115,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickShutterOff"
                     android:text="@string/str_Shutter_off"
                     android:textAllCaps="false"
-                    app:icon="@drawable/shutter2_off_symbol"
+                    app:icon="@drawable/stop_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -108,10 +129,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickHighlight"
                     android:text="@string/str_Highlight"
                     android:textAllCaps="false"
                     app:icon="@drawable/highlight_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -120,10 +143,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickSyncSettings"
-                    android:text="Sync"
+                    android:text="@string/str_sync"
                     android:textAllCaps="false"
                     app:icon="@drawable/settings_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -132,10 +157,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickSleep"
                     android:text="@string/str_Sleep"
                     android:textAllCaps="false"
                     app:icon="@drawable/sleep_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -144,10 +171,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickSetMode"
                     android:text="@string/str_Set_mode"
                     android:textAllCaps="false"
                     app:icon="@drawable/mode_select_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
                 <Button
@@ -156,10 +185,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp"
+                    android:backgroundTint="@color/btn_gray"
                     android:onClick="onClickSetPreset"
                     android:text="@string/str_Set_Preset"
                     android:textAllCaps="false"
                     app:icon="@drawable/preset_symbol"
+                    app:iconTint="@null"
                     app:layout_flexGrow="1" />
 
             </com.google.android.flexbox.FlexboxLayout>

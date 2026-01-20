@@ -247,6 +247,10 @@ public class GoProDevice {
     private int lastPackNo = -1;
     public Calendar deviceTime;
     public boolean shouldNotBeReconnected = false;
+    public boolean isPreviewStreaming = false;
+
+    // Used to suppress "unexpected disconnect" notifications for user/app initiated disconnects.
+    private boolean expectedDisconnect = false;
 
     //Wifi
     private WiFiHelper wiFiHelper = null;
@@ -297,6 +301,9 @@ public class GoProDevice {
     private void saveNewDisplayName(String newName) {
         displayName = newName;
         sharedPreferences.edit().putString("display_name_" + btDeviceName, displayName).apply();
+
+        // Keep "connected cameras" notification up to date if the user renames a camera.
+        com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
     }
 
     public String getCurrentSettingsString() {
@@ -349,18 +356,48 @@ public class GoProDevice {
                     requestHighPriorityConnection();
                     btConnectionStage = BT_FETCHING_DATA;
                     if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
+                    // Update "connected cameras" notification.
+                    com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
                     bluetoothGatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED && !btRetryConnect) {
                     Log.i("onConnectionStateChange", "Camera " + btDeviceName + " disconnected");
-                    showToast(String.format(res.getString(R.string.str_cam_disconnected), displayName), Toast.LENGTH_SHORT);
+                    if (!expectedDisconnect) {
+                        showToast(String.format(res.getString(R.string.str_cam_disconnected), displayName), Toast.LENGTH_SHORT);
+                        // Per-camera disconnected notification.
+                        String name = (displayName != null && !displayName.isEmpty()) ? displayName : btDeviceName;
+                        String mac = (btMacAddress != null && !btMacAddress.isEmpty()) ? btMacAddress : bluetoothDevice.getAddress();
+                        com.sepp89117.goeasypro_android.NotificationHelper.showDisconnectedNotification(_application, name == null ? _application.getString(R.string.str_camera_generic) : name, mac);
+                    }
                     setDisconnected();
+                    com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
                 }
 
                 btRetryConnect = false;
+            } else if (status == 19 /* Unknown Disconnect Error */) {
+                // Per-camera disconnected notification.
+                String name = (displayName != null && !displayName.isEmpty()) ? displayName : btDeviceName;
+                String mac = (btMacAddress != null && !btMacAddress.isEmpty()) ? btMacAddress : bluetoothDevice.getAddress();
+                com.sepp89117.goeasypro_android.NotificationHelper.showDisconnectedNotification(_application, name == null ? _application.getString(R.string.str_camera_generic) : name, mac);
+
+                setDisconnected();
+                com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
+            } else if (status == BluetoothGatt.GATT_CONNECTION_TIMEOUT) {
+                showToast(res.getString(R.string.str_connection_timed_out), Toast.LENGTH_SHORT);
+                setDisconnected();
+                com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
+            } else if (status == BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION) {
+                // Per-camera disconnected notification.
+                String name = (displayName != null && !displayName.isEmpty()) ? displayName : btDeviceName;
+                String mac = (btMacAddress != null && !btMacAddress.isEmpty()) ? btMacAddress : bluetoothDevice.getAddress();
+                com.sepp89117.goeasypro_android.NotificationHelper.showDisconnectedNotification(_application, name == null ? _application.getString(R.string.str_camera_generic) : name, mac);
+
+                setDisconnected();
+                com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
             } else {
                 Log.e("onConnectionStateChange", "Gatt connect not successful with status " + status);
                 showToast(res.getString(R.string.str_gatt_connect_problem), Toast.LENGTH_SHORT);
                 setDisconnected();
+                com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
             }
         }
 
@@ -1285,6 +1322,7 @@ public class GoProDevice {
 
     private void disconnectGoProDevice(boolean withoutReconnect) {
         Log.d("disconnectBt", "Disconnect forced");
+        expectedDisconnect = true;
         this.shouldNotBeReconnected = withoutReconnect;
         if (isWifiConnected()) wiFiHelper.disconnectWifi();
 
@@ -1332,6 +1370,7 @@ public class GoProDevice {
         }
 
         btConnectionStage = BT_NOT_CONNECTED;
+        expectedDisconnect = false;
         autoValueUpdatesRegistered = false;
         communicationInitiated = false;
         camBtAvailable = false;
@@ -1347,6 +1386,14 @@ public class GoProDevice {
         isCold = false;
 
         if (dataChangedCallback != null) dataChangedCallback.onDataChanged();
+
+        // Update "connected cameras" notification.
+        com.sepp89117.goeasypro_android.NotificationHelper.refreshConnectedNotification(_application);
+    }
+
+    /** True if this device is currently connected via Bluetooth (GATT). */
+    public boolean isBtConnected() {
+        return btConnectionStage != BT_NOT_CONNECTED;
     }
 
     private void startCrcNotification() {

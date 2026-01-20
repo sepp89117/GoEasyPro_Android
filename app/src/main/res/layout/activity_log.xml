@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/dark_gray"
+        android:background="@color/bg_gray"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Shutter Log"
+            android:text="@string/str_shutter_log"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
             android:layout_marginTop="5pt"
             android:layout_marginEnd="15pt"
             android:layout_marginBottom="5pt"
-            android:text="Clear Log" />
+            android:text="@string/str_clear_log" />
 
     </LinearLayout>
 

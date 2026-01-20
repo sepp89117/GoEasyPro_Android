@@ -15,4 +15,8 @@
     <color name="blue">#005eab</color>
     <color name="dark_blue">#002e54</color>
     <color name="light_blue">#009fe0</color>
+
+    <color name="selected_stream">#002070</color>
+    <color name="bg_gray">#161719</color>
+    <color name="btn_gray">#313439</color>
 </resources>

@@ -88,12 +88,7 @@
     <string name="str_get_ble_services_problem">Hubo un problema al obtener los servicios BLE.</string>
     <string name="str_connect_cam_problem">Hay un problema al conectar con la cámara %1$s. ¡Inténtalo de nuevo!</string>
     <string name="str_pairing_failed">Error en el emparejamiento con %1$s.</string>
-    <string name="str_connect_first">¡Conéctate primero a %1$s!</string>
-    <string name="str_ssid_unk">La SSID de %1$s es desconocida. La recuperaré. ¡Inténtalo de nuevo!</string>
-    <string name="str_psk_unk">La PSK de %1$s es desconocida. La recuperaré. ¡Inténtalo de nuevo!</string>
     <string name="str_something_wrong">¡Algo salió mal!</string>
-    <string name="str_ap_na">El punto de acceso de %1$s no está disponible.</string>
-    <string name="str_wifi_lost">Conexión WiFi a %1$s perdida.</string>
     <string name="str_no_media">¡No hay medios en el almacenamiento!</string>
     <string name="str_no_bt">¡El Bluetooth no está admitido! ¡Usa otro dispositivo!</string>
     <string name="str_wait_bt_con">¡Espera a que se establezca la conexión!</string>
@@ -108,7 +103,6 @@
     <string name="str_stream_unavailable">¡La transmisión en tiempo real no está disponible en este momento!</string>
     <string name="str_firmware_uptodate">¡No funciona! ¿Tienes una tarjeta SD insertada y el firmware de GoPro está actualizado?</string>
     <string name="str_dl_completed">¡Descarga completada!</string>
-    <string name="str_dl_error">Error al descargar el archivo %1$s.</string>
     <string name="str_dl_may_not_success">La descarga podría no haber tenido éxito. ¡Puede que quieras intentarlo de nuevo!</string>
     <string name="str_need_permissions">¡Se requieren permisos primero!</string>
     <string name="str_no_available_options">Esta cámara no admite las opciones disponibles para la configuración.</string>
@@ -191,6 +185,7 @@
     <string name="str_delete_device">Eliminar dispositivo</string>
     <string name="str_media">Medios</string>
     <string name="str_start_live_preview">Vista en vivo</string>
+    <string name="str_preview">Vista</string>
     <string name="str_browse_storage">Explorar almacenamiento</string>
     <string name="str_device_settings">Configuración del dispositivo</string>
     <string name="str_device_settings_setup">Configurar</string>
@@ -214,4 +209,69 @@
     <string name="str_Others">Otros</string>
     <string name="str_voice_control">Control de voz</string>
     <string name="str_Start_Live_Stream">Livestream</string>
+
+    <string name="str_gopro_placeholder">GoPro 0000</string>
+    <string name="str_sync">Sincronizar</string>
+    <string name="str_mode_preset_multiline">Modo
+Preajuste</string>
+    <string name="str_rtmp_url">RTMP-URL</string>
+    <string name="str_filename">NOMBRE DE ARCHIVO</string>
+    <string name="str_date">FECHA</string>
+    <string name="str_size">TAMANO</string>
+    <string name="str_xx">XX</string>
+    <string name="str_lrv">LRV</string>
+    <string name="str_gopro_xxxx">GoPro XXXX</string>
+    <string name="str_hero_x_black">Hero X Black</string>
+    <string name="str_setting">AJUSTE</string>
+    <string name="str_option">OPCION</string>
+    <string name="str_no_logs_available">No hay registros disponibles</string>
+    <string name="str_shutter_log">Registro de obturador</string>
+    <string name="str_clear_log">Borrar registro</string>
+    <string name="str_clear_log_confirm">¿Seguro que quieres borrar el registro?</string>
+    <string name="str_delete_entry_confirm">¿Quieres eliminar esta entrada?</string>
+    <string name="str_No">No</string>
+    <string name="str_settings_not_available">Los ajustes no estan disponibles actualmente</string>
+    <string name="str_sync_to_title">Sincronizar con %1$s</string>
+    <string name="str_sync_wait_message">Espera hasta que todas las camaras se hayan sincronizado.</string>
+    <string name="str_min_8_chars_required">¡Se requieren al menos 8 caracteres!</string>
+    <string name="str_ap_password_title">Contrasena del AP</string>
+    <string name="str_connecting_to_wifi">Conectando a Wi‑Fi...</string>
+    <string name="str_stream_http_get_error">Error de HTTP GET del stream</string>
+    <string name="str_stream_http_get_failed">HTTP GET del stream fallo (%1$d)</string>
+    <string name="str_camera_wifi_not_connected">Wi‑Fi de la camara no conectado.</string>
+    <string name="str_app_update_available_title">Actualizacion disponible</string>
+    <string name="str_app_update_available_message">Hay una nueva actualizacion para esta app.
+¿Quieres ir a la pagina de descarga?
+
+Notas de la version:
+%1$s</string>
+    <string name="str_pairing_title">Emparejando</string>
+    <string name="str_pairing_message">Espera mientras se establece el emparejamiento.</string>
+    <string name="str_device_already_connected">¡Dispositivo ya conectado!</string>
+    <string name="str_livestream_configured">Livestream configurado</string>
+    <string name="str_livestream_ready">Livestream listo</string>
+    <string name="str_livestream_active">Livestream activo</string>
+    <string name="str_livestream_exiting">Saliendo del livestream</string>
+    <string name="str_livestream_error_exiting">Error al salir del livestream</string>
+    <string name="str_livestream_reconnect">Reconectar livestream</string>
+    <string name="str_livestream_unavailable">Livestream no disponible</string>
+    <string name="str_notif_channel_connected_name">Bluetooth conectado</string>
+    <string name="str_notif_channel_connected_desc">Notificacion silenciosa mientras al menos una camara este conectada por Bluetooth.</string>
+    <string name="str_notif_channel_disconnected_name">Bluetooth desconectado</string>
+    <string name="str_notif_channel_disconnected_desc">Notificacion cuando una camara se desconecta inesperadamente.</string>
+    <string name="str_notif_connected_title">Camaras conectadas</string>
+    <string name="str_notif_disconnected_title">Camara desconectada</string>
+    <string name="str_camera_generic">Camara</string>
+    <string name="str_http_status_error">¡Error! Código de estado HTTP: %1$d</string>
+    <string name="str_status_connected_label">(conectado)</string>
+    <string name="str_status_disconnected_label">(desconectado)</string>
+    <string name="str_status_connecting_label">(conectando...)</string>
+    <string name="str_status_connected">Conectado</string>
+    <string name="str_status_disconnected">Desconectado</string>
+    <string name="str_status_connecting">Conectando…</string>
+    <string name="str_connection_timed_out">Tiempo de espera de la conexión agotado</string>
+    <string name="pref_notifications_enabled_title">Activar notificaciones</string>
+    <string name="pref_notifications_enabled_summary_on">Las notificaciones están activadas para esta app. Toca para administrar.</string>
+    <string name="pref_notifications_enabled_summary_off">Las notificaciones están desactivadas para esta app. Toca para activarlas.</string>
+
 </resources>

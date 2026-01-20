@@ -33,8 +33,8 @@ public class LogActivity extends AppCompatActivity {
 
         clearLogButton.setOnClickListener(view -> {
             final AlertDialog alert = new AlertDialog.Builder(LogActivity.this)
-                    .setTitle("Clear Log")
-                    .setMessage("Are you sure you want to clear the log?")
+                    .setTitle(getString(R.string.str_clear_log))
+                    .setMessage(getString(R.string.str_clear_log_confirm))
                     .setPositiveButton(getResources().getString(R.string.str_Yes), (dialog, which) -> {
                         clearShutterLog();
                         displayShutterLog();
@@ -64,8 +64,8 @@ public class LogActivity extends AppCompatActivity {
 
     private void showDeleteConfirmationDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to delete this entry?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.str_delete_entry_confirm))
+                .setPositiveButton(getString(R.string.str_Yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Lösche das ausgewählte Shutter-Log-Eintrag
@@ -75,7 +75,7 @@ public class LogActivity extends AppCompatActivity {
                         displayShutterLog();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.str_No), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Benutzer hat "No" ausgewählt, tue hier nichts

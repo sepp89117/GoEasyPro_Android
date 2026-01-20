@@ -87,12 +87,7 @@
     <string name="str_get_ble_services_problem">Es gab ein Problem beim Abrufen der BLE-Dienste.</string>
     <string name="str_connect_cam_problem">Es gibt ein Problem bei der Verbindung zur Kamera %1$s! Bitte versuche es erneut.</string>
     <string name="str_pairing_failed">Koppeln mit %1$s fehlgeschlagen!</string>
-    <string name="str_connect_first">Bitte zuerst mit %1$s verbinden!</string>
-    <string name="str_ssid_unk">SSID von %1$s ist unbekannt. Ich werde sie abrufen. Bitte versuche es erneut!</string>
-    <string name="str_psk_unk">PSK von %1$s ist unbekannt. Ich werde sie abrufen. Bitte versuche es erneut!</string>
     <string name="str_something_wrong">Etwas ist schiefgelaufen!</string>
-    <string name="str_ap_na">AP von %1$s ist nicht verfügbar!</string>
-    <string name="str_wifi_lost">WLAN-Verbindung zu %1$s verloren!</string>
     <string name="str_no_media">Es gibt keine Medien auf dem Speicher!</string>
     <string name="str_no_bt">Bluetooth wird nicht unterstützt! Bitte verwende ein anderes Gerät!</string>
     <string name="str_wait_bt_con">Bitte warte, bis die Verbindung hergestellt wurde!</string>
@@ -107,13 +102,12 @@
     <string name="str_stream_unavailable">Der Vorschaustream ist derzeit nicht verfügbar!</string>
     <string name="str_firmware_uptodate">Funktioniert nicht! Ist eine SD-Karte eingelegt und die GoPro-Firmware auf dem neuesten Stand?</string>
     <string name="str_dl_completed">Download abgeschlossen!</string>
-    <string name="str_dl_error">Fehler beim Herunterladen der Datei %1$s!</string>
     <string name="str_dl_may_not_success">Der Download war möglicherweise nicht erfolgreich. Versuche es vielleicht erneut!</string>
     <string name="str_need_permissions">Zuerst Berechtigungen erforderlich!</string>
     <string name="str_no_available_options">Diese Kamera bietet nicht die verfügbaren Optionen für die Einstellungen.</string>
     <string name="str_set_dt_success">Datum/Uhrzeit wurde erfolgreich eingestellt</string>
     <string name="str_set_dt_not_success">Datum/Uhrzeit wurde nicht eingestellt!</string>
-    <string name="str_new_fw_available">Neue Firmware für %1$s verfügbar! Aktualisiere mit der Quik-App</string>
+    <string name="str_new_fw_available">Neue Firmware für %1$s verfügbar! Öffne Quik-App!</string>
     <string name="str_incompletely_file_deleted">Unvollständig heruntergeladene Datei %1$s gelöscht.</string>
     <string name="str_clock_is_wrong">Die Uhrzeit in %1$s ist falsch und wird korrigiert!</string>
 
@@ -190,6 +184,7 @@
     <string name="str_delete_device">Entfernen</string>
     <string name="str_media">Medien</string>
     <string name="str_start_live_preview">Live-Vorschau</string>
+    <string name="str_preview">Vorschau</string>
     <string name="str_browse_storage">Speicher</string>
     <string name="str_device_settings">Einstellungen</string>
     <string name="str_device_settings_setup">Einstellen</string>
@@ -213,4 +208,69 @@
     <string name="str_Others">Andere</string>
     <string name="str_voice_control">Sprachsteuerung</string>
     <string name="str_Start_Live_Stream">Livestream</string>
+
+    <string name="str_gopro_placeholder">GoPro 0000</string>
+    <string name="str_sync">Synchronisieren</string>
+    <string name="str_mode_preset_multiline">Modus
+Preset</string>
+    <string name="str_rtmp_url">RTMP-URL</string>
+    <string name="str_filename">DATEINAME</string>
+    <string name="str_date">DATUM</string>
+    <string name="str_size">GROESSE</string>
+    <string name="str_xx">XX</string>
+    <string name="str_lrv">LRV</string>
+    <string name="str_gopro_xxxx">GoPro XXXX</string>
+    <string name="str_hero_x_black">Hero X Black</string>
+    <string name="str_setting">EINSTELLUNG</string>
+    <string name="str_option">OPTION</string>
+    <string name="str_no_logs_available">Keine Protokolle verfuegbar</string>
+    <string name="str_shutter_log">Ausloeser-Protokoll</string>
+    <string name="str_clear_log">Protokoll loeschen</string>
+    <string name="str_clear_log_confirm">Moechtest du das Protokoll wirklich loeschen?</string>
+    <string name="str_delete_entry_confirm">Moechtest du diesen Eintrag loeschen?</string>
+    <string name="str_No">Nein</string>
+    <string name="str_settings_not_available">Einstellungen sind derzeit nicht verfuegbar</string>
+    <string name="str_sync_to_title">Synchronisieren mit %1$s</string>
+    <string name="str_sync_wait_message">Bitte warten, bis alle Kameras synchronisiert wurden!</string>
+    <string name="str_min_8_chars_required">Mindestens 8 Zeichen erforderlich!</string>
+    <string name="str_ap_password_title">AP-Passwort</string>
+    <string name="str_connecting_to_wifi">Verbinde mit WLAN…</string>
+    <string name="str_stream_http_get_error">Stream-HTTP-GET-Fehler</string>
+    <string name="str_stream_http_get_failed">Stream-HTTP-GET fehlgeschlagen (%1$d)</string>
+    <string name="str_camera_wifi_not_connected">Kamera-WLAN nicht verbunden.</string>
+    <string name="str_app_update_available_title">App-Update verfuegbar</string>
+    <string name="str_app_update_available_message">Ein neues Update fuer diese App ist verfuegbar.
+Moechtest du zur Download-Seite gehen?
+
+Release Notes:
+%1$s</string>
+    <string name="str_pairing_title">Koppeln</string>
+    <string name="str_pairing_message">Bitte warten, waehrend die Kopplung hergestellt wird!</string>
+    <string name="str_device_already_connected">Geraet bereits verbunden!</string>
+    <string name="str_livestream_configured">Livestream konfiguriert</string>
+    <string name="str_livestream_ready">Livestream bereit</string>
+    <string name="str_livestream_active">Livestream aktiv</string>
+    <string name="str_livestream_exiting">Livestream wird beendet</string>
+    <string name="str_livestream_error_exiting">Livestream Fehler beim Beenden</string>
+    <string name="str_livestream_reconnect">Livestream erneut verbinden</string>
+    <string name="str_livestream_unavailable">Livestream nicht verfuegbar</string>
+    <string name="str_notif_channel_connected_name">Bluetooth verbunden</string>
+    <string name="str_notif_channel_connected_desc">Stille Benachrichtigung, solange mindestens eine Kamera per Bluetooth verbunden ist.</string>
+    <string name="str_notif_channel_disconnected_name">Bluetooth getrennt</string>
+    <string name="str_notif_channel_disconnected_desc">Benachrichtigung, wenn eine Kamera unerwartet getrennt wird.</string>
+    <string name="str_notif_connected_title">Verbundene Kameras</string>
+    <string name="str_notif_disconnected_title">Kamera getrennt</string>
+    <string name="str_camera_generic">Kamera</string>
+    <string name="str_http_status_error">Fehler! HTTP-Statuscode: %1$d</string>
+    <string name="str_status_connected_label">(verbunden)</string>
+    <string name="str_status_disconnected_label">(getrennt)</string>
+    <string name="str_status_connecting_label">(verbinde...)</string>
+    <string name="str_status_connected">Verbunden</string>
+    <string name="str_status_disconnected">Getrennt</string>
+    <string name="str_status_connecting">Verbinde…</string>
+    <string name="str_connection_timed_out">Zeitüberschreitung bei der Verbindung</string>
+    <string name="pref_notifications_enabled_title">Benachrichtigungen aktivieren</string>
+    <string name="pref_notifications_enabled_summary_on">Benachrichtigungen sind für diese App aktiviert. Tippen zum Verwalten.</string>
+    <string name="pref_notifications_enabled_summary_off">Benachrichtigungen sind für diese App deaktiviert. Tippen zum Aktivieren.</string>
+
 </resources>

@@ -139,25 +139,25 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
             // ignore
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_CONFIG) {
             // Livestream is being configured
-            modeTitle = "Livestream configured";
+            modeTitle = context.getString(R.string.str_livestream_configured);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_READY) {
             // Livestream has finished configuration and is ready to start streaming
-            modeTitle = "Livestream ready";
+            modeTitle = context.getString(R.string.str_livestream_ready);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_STREAMING) {
             // Livestream is actively streaming
-            modeTitle = "Livestream active";
+            modeTitle = context.getString(R.string.str_livestream_active);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_COMPLETE_STAY_ON) {
             // Live stream is exiting. No errors occurred.
-            modeTitle = "Livestream exiting";
+            modeTitle = context.getString(R.string.str_livestream_exiting);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_FAILED_STAY_ON) {
             // Live stream is exiting. An error occurred.
-            modeTitle = "Livestream error exiting";
+            modeTitle = context.getString(R.string.str_livestream_error_exiting);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_RECONNECTING) {
             // An error occurred during livestream and stream is attempting to reconnect.
-            modeTitle = "Livestream reconnect";
+            modeTitle = context.getString(R.string.str_livestream_reconnect);
         } else if (goProDevice.liveStreamStatus.getLiveStreamStatus() == LIVE_STREAM_STATE_UNAVAILABLE) {
             // Live stream setup is unavailable due to camera lens configuration
-            modeTitle = "Livestream unavailable";
+            modeTitle = context.getString(R.string.str_livestream_unavailable);
         }
 
         if (goProDevice.isCold) {
@@ -181,7 +181,11 @@ public class GoListAdapter extends ArrayAdapter<GoProDevice> {
         mViewHolder.model.setText(goProDevice.modelName);
 
         if (goProDevice.btConnectionStage == BT_CONNECTED) {
-            mViewHolder.name.setTextColor(LIGHT_BLUE);
+            if (goProDevice.isPreviewStreaming)
+                mViewHolder.name.setTextColor(Color.GREEN);
+            else
+                mViewHolder.name.setTextColor(LIGHT_BLUE);
+
             mViewHolder.rssi.setText(String.valueOf(goProDevice.btRssi));
             Locale locale = context.getResources().getConfiguration().getLocales().get(0);
             mViewHolder.battery.setText(String.format(locale, "%d%%", goProDevice.remainingBatteryPercent));

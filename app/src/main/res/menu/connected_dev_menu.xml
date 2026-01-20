@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.MainActivity" >
-
+    <item
+        android:id="@+id/preview_here"
+        android:icon="@drawable/preview_here_symbol"
+        android:title="@string/str_preview" />
     <item
         android:id="@+id/control"
         android:icon="@drawable/control_symbol"

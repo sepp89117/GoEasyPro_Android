@@ -6,4 +6,4 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:text="No logs available" />
+        android:text="@string/str_no_logs_available" />

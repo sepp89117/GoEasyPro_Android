@@ -96,12 +96,7 @@
     <string name="str_get_ble_services_problem">There was a problem getting BLE services.</string>
     <string name="str_connect_cam_problem">There is a problem connecting to the camera %1$s! Please try again.</string>
     <string name="str_pairing_failed">Pairing with %1$s failed!</string>
-    <string name="str_connect_first">Please connect with %1$s first!</string>
-    <string name="str_ssid_unk">SSID from %1$s is unknown. I retrieve it. Please try again!</string>
-    <string name="str_psk_unk">PSK from %1$s is unknown. I retrieve it. Please try again!</string>
     <string name="str_something_wrong">Something went wrong!</string>
-    <string name="str_ap_na">AP from %1$s is not available!</string>
-    <string name="str_wifi_lost">WiFi connection to %1$s lost!</string>
     <string name="str_no_media">There is no media on the storage!</string>
     <string name="str_no_bt">Bluetooth is not supported! Please use other device!</string>
     <string name="str_wait_bt_con">Please wait until the connection has been established!</string>
@@ -116,7 +111,6 @@
     <string name="str_stream_unavailable">The preview stream is currently unavailable!</string>
     <string name="str_firmware_uptodate">Doesn\'t work! Is a SD-Card inserted and the GoPro firmware up to date?</string>
     <string name="str_dl_completed">Download completed!</string>
-    <string name="str_dl_error">File %1$s download error!</string>
     <string name="str_dl_may_not_success">Download may not have been successful. Maybe try again!</string>
     <string name="str_need_permissions">Need permissions first!</string>
     <string name="str_no_available_options">This camera does not provide the available options for the settings.</string>
@@ -199,6 +193,7 @@
     <string name="str_delete_device">Delete device</string>
     <string name="str_media">Media</string>
     <string name="str_start_live_preview">Start live preview</string>
+    <string name="str_preview">Preview</string>
     <string name="str_browse_storage">Browse storage</string>
     <string name="str_device_settings">Device settings</string>
     <string name="str_device_settings_setup">Setup</string>
@@ -222,4 +217,69 @@
     <string name="str_Others">Others</string>
     <string name="str_voice_control">Voice Control</string>
     <string name="str_Start_Live_Stream">Livestream</string>
+
+    <string name="str_gopro_placeholder">GoPro 0000</string>
+    <string name="str_sync">Sync</string>
+    <string name="str_mode_preset_multiline">Mode
+Preset</string>
+    <string name="str_rtmp_url">RTMP-URL</string>
+    <string name="str_filename">FILENAME</string>
+    <string name="str_date">DATE</string>
+    <string name="str_size">SIZE</string>
+    <string name="str_xx">XX</string>
+    <string name="str_lrv">LRV</string>
+    <string name="str_gopro_xxxx">GoPro XXXX</string>
+    <string name="str_hero_x_black">Hero X Black</string>
+    <string name="str_setting">SETTING</string>
+    <string name="str_option">OPTION</string>
+    <string name="str_no_logs_available">No logs available</string>
+    <string name="str_shutter_log">Shutter Log</string>
+    <string name="str_clear_log">Clear Log</string>
+    <string name="str_clear_log_confirm">Are you sure you want to clear the log?</string>
+    <string name="str_delete_entry_confirm">Would you like to delete this entry?</string>
+    <string name="str_No">No</string>
+    <string name="str_settings_not_available">Settings are currently not available</string>
+    <string name="str_sync_to_title">Sync to %1$s</string>
+    <string name="str_sync_wait_message">Please wait until all cameras have been synchronized!</string>
+    <string name="str_min_8_chars_required">At least 8 characters are required!</string>
+    <string name="str_ap_password_title">AP password</string>
+    <string name="str_connecting_to_wifi">Connecting to WiFi...</string>
+    <string name="str_stream_http_get_error">Stream HTTP GET error</string>
+    <string name="str_stream_http_get_failed">Stream HTTP GET failed %1$d</string>
+    <string name="str_camera_wifi_not_connected">Camera WiFi not connected.</string>
+    <string name="str_app_update_available_title">App update available</string>
+    <string name="str_app_update_available_message">A new update for this app is available.
+Do you want to go to the download page?
+
+Release notes:
+%1$s</string>
+    <string name="str_pairing_title">Pairing</string>
+    <string name="str_pairing_message">Please wait while the pairing is established!</string>
+    <string name="str_device_already_connected">Device already connected!</string>
+    <string name="str_livestream_configured">Livestream configured</string>
+    <string name="str_livestream_ready">Livestream ready</string>
+    <string name="str_livestream_active">Livestream active</string>
+    <string name="str_livestream_exiting">Livestream exiting</string>
+    <string name="str_livestream_error_exiting">Livestream error exiting</string>
+    <string name="str_livestream_reconnect">Livestream reconnect</string>
+    <string name="str_livestream_unavailable">Livestream unavailable</string>
+    <string name="str_notif_channel_connected_name">Bluetooth connected</string>
+    <string name="str_notif_channel_connected_desc">Silent notification while at least one camera is connected via Bluetooth.</string>
+    <string name="str_notif_channel_disconnected_name">Bluetooth disconnected</string>
+    <string name="str_notif_channel_disconnected_desc">Notification when a camera disconnects unexpectedly.</string>
+    <string name="str_notif_connected_title">Connected cameras</string>
+    <string name="str_notif_disconnected_title">Camera disconnected</string>
+    <string name="str_camera_generic">Camera</string>
+    <string name="str_http_status_error">Error! HTTP status code: %1$d</string>
+    <string name="str_status_connected_label">(connected)</string>
+    <string name="str_status_disconnected_label">(disconnected)</string>
+    <string name="str_status_connecting_label">(connecting...)</string>
+    <string name="str_status_connected">Connected</string>
+    <string name="str_status_disconnected">Disconnected</string>
+    <string name="str_status_connecting">Connecting…</string>
+    <string name="str_connection_timed_out">Connection timed out</string>
+    <string name="pref_notifications_enabled_title">Enable notifications</string>
+    <string name="pref_notifications_enabled_summary_on">Notifications are enabled for this app. Tap to manage.</string>
+    <string name="pref_notifications_enabled_summary_off">Notifications are disabled for this app. Tap to enable.</string>
+
 </resources>

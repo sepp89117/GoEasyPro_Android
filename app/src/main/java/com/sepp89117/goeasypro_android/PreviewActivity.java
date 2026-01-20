@@ -4,66 +4,31 @@ import static com.sepp89117.goeasypro_android.gopro.GoProDevice.BT_NOT_CONNECTED
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
 import com.sepp89117.goeasypro_android.gopro.GoProDevice;
-
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.MediaPlayer;
-import org.videolan.libvlc.interfaces.IMedia;
-
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.sepp89117.goeasypro_android.stream.GoProStreamManager;
 
 import me.saket.cascade.CascadePopupMenu;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class PreviewActivity extends AppCompatActivity {
     private static final String TAG = "PreviewActivity";
-
-    private OkHttpClient httpClient;
-    private static String startStream_query = "";
-    private Timer keepStreamAliveTimer = null;
     private TextView textView_mode_preset;
     private ImageView rec_icon;
-    private byte[] keepStreamAliveData;
-    private InetAddress inetAddress;
-    private DatagramSocket udpSocket = null;
     private GoProDevice streamingDevice;
     private Animation fadeAnimation;
-    private SurfaceView surfaceView;
-    private LibVLC libVLC;
-    private MediaPlayer mediaPlayer;
-    private TimerTask keepStreamAlive;
-    private SurfaceHolder.Callback surfaceHolderCallback;
+
+    private GoProStreamManager streamManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +36,6 @@ public class PreviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preview);
 
         init();
-
-        requestStream();
     }
 
     @Override
@@ -87,54 +50,22 @@ public class PreviewActivity extends AppCompatActivity {
         super.onRestart();
 
         Log.d(TAG, "onRestart");
-
-        if (mediaPlayer != null) {
-            mediaPlayer.play();
-        }
+        //if (player != null) player.play();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        int cachingTimeMs = 500;
-        final ArrayList<String> options = new ArrayList<>();
-        options.add("--network-caching=" + cachingTimeMs);
-        options.add("--drop-late-frames");
-        options.add("--audio-time-stretch");
-        options.add("--h264-fps=30");
-        options.add("--ts-cc-check");
-
-        libVLC = new LibVLC(this, options);
-        mediaPlayer = new MediaPlayer(libVLC);
-
-        mediaPlayer.getVLCVout().setVideoView(surfaceView);
-        mediaPlayer.getVLCVout().attachViews();
-
-        String url = "udp://@:8554";
-        Media media = new Media(libVLC, Uri.parse(url));
-        media.setHWDecoderEnabled(true, true);
-        media.addOption(":network-caching=" + cachingTimeMs);
-        media.addOption(":clock-jitter=0");
-        media.addOption(":clock-synchro=0");
-        mediaPlayer.setMedia(media);
-        media.release();
-
-        mediaPlayer.play();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        stopPlayer();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        stopPlayer();
     }
 
     @Override
@@ -143,51 +74,12 @@ public class PreviewActivity extends AppCompatActivity {
 
         Log.d(TAG, "onDestroy");
 
-        surfaceView.getHolder().removeCallback(surfaceHolderCallback);
-
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            libVLC.release();
+        if (streamManager != null) {
+            streamManager.stopStream();
         }
-
-        killKeepStreamAliveTimer();
-        if (udpSocket != null) udpSocket.disconnect();
     }
 
     private void init() {
-        keepStreamAlive = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    DatagramPacket keepStreamAlivePacket = new DatagramPacket(keepStreamAliveData, keepStreamAliveData.length, inetAddress, 8554);
-                    udpSocket.send(keepStreamAlivePacket);
-                } catch (Exception ignored) {
-                }
-            }
-        };
-
-        surfaceHolderCallback = new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-            }
-
-            @Override
-            public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.getVLCVout().setWindowSize(surfaceHolder.getSurfaceFrame().width(), surfaceHolder.getSurfaceFrame().height());
-                }
-            }
-
-            @Override
-            public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-            }
-        };
-
-        surfaceView = findViewById(R.id.surfaceView);
-        final SurfaceHolder surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(surfaceHolderCallback);
-        surfaceHolder.setKeepScreenOn(true);
-
         fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.tween);
         streamingDevice = ((MyApplication) this.getApplication()).getFocusedDevice();
         textView_mode_preset = findViewById(R.id.textView_mode_preset);
@@ -201,18 +93,8 @@ public class PreviewActivity extends AppCompatActivity {
             setModePresetText();
         }));
 
-        String keepAlive_str = streamingDevice.keepAlive_msg;
-        startStream_query = ((MyApplication) this.getApplication()).getFocusedDevice().startStream_query;
-        keepStreamAliveData = keepAlive_str.getBytes();
-        try {
-            inetAddress = InetAddress.getByName(GoProDevice.goProIp);
-            udpSocket = new DatagramSocket();
-        } catch (Exception e) {
-            Toast.makeText(this, "An " + e.getClass().getSimpleName() + " occurred. Please try again or report an error.", Toast.LENGTH_LONG).show();
-            finish();
-        }
-
-        httpClient = new OkHttpClient();
+        streamManager = new GoProStreamManager(this, findViewById(R.id.player_view), streamingDevice);
+        streamManager.startStream();
 
         Log.i("PreviewActivity", "init done");
     }
@@ -233,64 +115,6 @@ public class PreviewActivity extends AppCompatActivity {
         } else if (!streamingDevice.isRecording && rec_icon.getVisibility() == View.VISIBLE) {
             rec_icon.clearAnimation();
             rec_icon.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void requestStream() {
-        streamingDevice.setSetting(64, 4); // Set Secondary Stream Window Size to 480p
-
-        final Request startPreview = new Request.Builder().url(Objects.requireNonNull(HttpUrl.get(URI.create(startStream_query)))).build();
-
-        httpClient.newCall(startPreview).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("requestStream", "failed");
-                runOnUiThread(() -> {
-                    Toast.makeText(PreviewActivity.this, "An " + e.getClass().getSimpleName() + " occurred. Please try again or report an error.", Toast.LENGTH_LONG).show();
-                    finish();
-                });
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
-                if (!response.isSuccessful()) {
-                    Log.e("requestStream", "Request response = not success");
-                } else {
-                    Log.i("requestStream", "Request response = success");
-                    runOnUiThread(() -> {
-                        if (keepStreamAliveTimer == null) {
-                            initRequestTimer();
-                        }
-                    });
-                }
-                response.close();
-            }
-        });
-    }
-
-    private void initRequestTimer() {
-        keepStreamAliveTimer = new Timer();
-        keepStreamAliveTimer.schedule(keepStreamAlive, 0, 7000);
-    }
-
-    private void killKeepStreamAliveTimer() {
-        if (keepStreamAliveTimer == null) return;
-
-        keepStreamAliveTimer.cancel();
-        keepStreamAliveTimer.purge();
-        keepStreamAliveTimer = null;
-    }
-
-    private void stopPlayer() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            final IMedia media = mediaPlayer.getMedia();
-            if (media != null) {
-                media.setEventListener(null);
-                media.release();
-            }
-            mediaPlayer.setMedia(null);
-            mediaPlayer.getVLCVout().detachViews();
         }
     }
 
