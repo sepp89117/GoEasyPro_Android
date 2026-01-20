@@ -8,6 +8,23 @@ Easily control multiple GoPros with your android device with bluetooth<br>
 Live preview, media browsing and download incl. LRV download and much more is supported!</b><br><br>
 [Download latest release](https://github.com/sepp89117/GoEasyPro_Android/releases/latest)<br>
 
+## New in version 1.8.2
+- [FFmpegKit](https://github.com/sk3llo/ffmpeg-kit-flutter) is back and replaces LibVLC
+- **Live preview in main activity**
+  - Tap on a connected camera and select "Preview" from the menu that appears
+- **Persistent notification while a camera is connected**
+  - Shown on the **lockscreen**
+  - Updates automatically if multiple cameras are connected
+  - Silent / non-intrusive (no sound or vibration)
+- **Separate notification when a camera disconnects unexpectedly**
+  - Only shown if the disconnect was *not* initiated by the user
+  - Helps you notice immediately if the connection drops
+- **Full user control**
+  - Both notifications use **separate Android notification channels**
+  - They are **disabled by default**
+  - Each one can be enabled or disabled individually
+- **Tapping a notification opens the app**<br><br>
+
 ## New in version 1.8.0
 - FFmpegKit for the live preview has been replaced by LibVLC due to its official discontinuation.
 - Landscape mode for the main screen has been implemented.
@@ -57,7 +74,7 @@ Live preview, media browsing and download incl. LRV download and much more is su
 </ul>
 
 ## Hardware and software requirements
-- Supported Android versions: 8.1 (API Level 27) to 15 (API Level 35) (currently not all tested)
+- Supported Android versions: 8.1 (API Level 27) to 16 (API Level 36) (currently not all tested)
 - Android device with Bluetooth support
 - Android device with WiFi support; only needed for preview stream and media browsing
 
@@ -70,17 +87,14 @@ Live preview, media browsing and download incl. LRV download and much more is su
 ## Libraries used in this app
 - [CascadePopupMenu](https://github.com/saket/cascade) with [Apache-2.0 license](https://github.com/saket/cascade/blob/trunk/LICENSE.txt) by [saket](https://github.com/saket)
 - [ffmpeg-kit-min](https://github.com/arthenica/ffmpeg-kit) with [LGPL-3.0 license](https://github.com/arthenica/ffmpeg-kit/blob/main/LICENSE) by [arthenica](https://github.com/arthenica) until version 1.7.5
-- [LibVLC](https://code.videolan.org/videolan/vlc-android/) with [GPLv2 (or later)](https://code.videolan.org/videolan/vlc-android/-/blob/master/COPYING) by [VideoLAN](https://code.videolan.org/videolan) since version 1.8.0
+- [LibVLC](https://code.videolan.org/videolan/vlc-android/) with [GPLv2 (or later)](https://code.videolan.org/videolan/vlc-android/-/blob/master/COPYING) by [VideoLAN](https://code.videolan.org/videolan) from version 1.8.0 to version 1.8.1
+- [ffmpeg-kit-min](https://github.com/sk3llo/ffmpeg_kit_flutter) with [LGPL-3.0 license](https://github.com/sk3llo/ffmpeg_kit_flutter/blob/master/LICENSE) by [sk3llo](https://github.com/sk3llo) since version 1.8.2
 - [OkHttp](https://github.com/square/okhttp) with [Apache-2.0 license](https://github.com/square/okhttp/blob/master/LICENSE.txt) by [square](https://github.com/square)
 - [ExoPlayer](https://github.com/google/ExoPlayer) with [Apache-2.0 license](https://github.com/google/ExoPlayer/blob/release-v2/LICENSE) by [google](https://github.com/google)
 
 ## Debugging on
-- Samsung Galaxy S23 (Android 15)
-- Samsung Galaxy S10 (Android 12)
-- Xiaomi Redmi Note 11s (Android 11)
-- Samsung Tab S4 (Android 10)
-- Gigaset GS270 plus (Android 8.1)
-- with Hero5 Black, Hero8 Black, Hero10 Black and Hero 12 only!<br>
+- Samsung Galaxy S23 (Android 16)
+- with Hero 12 only!<br>
 <br>
 
 I hope you can help to get the app running safely on other smartphones too!
